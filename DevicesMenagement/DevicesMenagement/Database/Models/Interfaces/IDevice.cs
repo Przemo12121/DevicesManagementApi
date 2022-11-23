@@ -1,6 +1,6 @@
 ﻿namespace DevicesMenagement.Database.Models
 {
-    public interface IDevice
+    public interface IDevice : IUpdatableModel
     {
     }
 }

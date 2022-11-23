@@ -2,7 +2,7 @@
 
 namespace DevicesMenagement.Modules.DeviceCommunicationApi
 {
-    public interface IDeviceCommunicationApi<T> where T : IMessage<string>
+    public interface IUserCommunicationApi<T> where T : IMessage<string>
     {
         public T? Send(T message);
         public T? SendAsync(T message);

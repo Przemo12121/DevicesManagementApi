@@ -1,6 +1,6 @@
 ﻿namespace DevicesMenagement.Database.Models
 {
-    public interface IDeviceHistory
+    public interface IDeviceHistory : ICreatableModel
     {
     }
 }

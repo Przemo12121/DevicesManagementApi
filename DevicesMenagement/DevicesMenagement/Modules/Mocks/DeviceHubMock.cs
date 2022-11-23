@@ -3,7 +3,7 @@ using DevicesMenagement.Modules.Communication.TcpIp;
 
 namespace DevicesMenagement.Modules.Mocks
 {
-    public class DeviceHubMock : IDeviceCommunicationApi<ITcpIpMessage<string>>
+    public class DeviceHubMock : IUserCommunicationApi<ITcpIpMessage<string>>
     {
         public ITcpIpMessage<string>? Send(ITcpIpMessage<string> message)
         {
