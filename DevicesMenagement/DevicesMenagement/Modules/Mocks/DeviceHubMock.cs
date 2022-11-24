@@ -3,14 +3,14 @@ using DevicesMenagement.Modules.Communication.TcpIp;
 
 namespace DevicesMenagement.Modules.Mocks
 {
-    public class DeviceHubMock : IUserCommunicationApi<ITcpIpMessage<string>>
+    public class DeviceHubMock
     {
-        public ITcpIpMessage<string>? Send(ITcpIpMessage<string> message)
+        public ITcpIpMessage<string>? Forward(ITcpIpMessage<string> message)
         {
             throw new NotImplementedException();
         }
 
-        public ITcpIpMessage<string>? SendAsync(ITcpIpMessage<string> message)
+        public ITcpIpMessage<string>? ForwardAsync(ITcpIpMessage<string> message)
         {
             throw new NotImplementedException();
         }

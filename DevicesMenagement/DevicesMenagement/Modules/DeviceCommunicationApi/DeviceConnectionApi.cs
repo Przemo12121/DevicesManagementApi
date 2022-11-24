@@ -2,14 +2,25 @@
 
 namespace DevicesMenagement.Modules.DeviceCommunicationApi
 {
-    public class DeviceConnectionApi<T> : IUserCommunicationApi<T> where T : IMessage<string>
-    {
+    public class DeviceConnectionApi<T> : IDeviceCommunicationApi<T> where T : IMessage<string>
+    { 
+
+        public T? Receive(T message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<T> ReceiveAsync(T message)
+        {
+            throw new NotImplementedException();
+        }
+
         public T? Send(T message)
         {
             throw new NotImplementedException();
         }
 
-        public T? SendAsync(T message)
+        public Task<T> SendAsync(T message)
         {
             throw new NotImplementedException();
         }

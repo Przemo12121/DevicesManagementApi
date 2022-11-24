@@ -1,6 +1,6 @@
 ﻿namespace DevicesMenagement.Database.Models
 {
-    public class User : UpdatableModel
+    public class User : UpdatableModel, IUser
     {
         /// <summary>
         /// Employee unique identified. Allows to find employee's devices in device database.
@@ -14,5 +14,15 @@
         public bool Enabled { get; set; }
 
         public AccessLevel AccessLevel { get; set; }
+
+        public override UserDto ToDto()
+        {
+            return new UserDto();
+        }
+    }
+
+    public class UserDto
+    {
+
     }
 }

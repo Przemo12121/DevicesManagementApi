@@ -20,7 +20,7 @@ namespace DevicesMenagement.Modules.DatabaseApi
             throw new NotImplementedException();
         }
 
-        public void AddHistory(IDevice device, ICreatableModelBuilder<IDeviceHistory> command)
+        public void AddHistory(IDevice device, ICreatableModelBuilder<ICommandHistory> command)
         {
             throw new NotImplementedException();
         }
@@ -61,6 +61,26 @@ namespace DevicesMenagement.Modules.DatabaseApi
         }
 
         public IDevice FindByIn(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetCommands()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetCommands(ISearchOptions<ICommand> options)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetHistory()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetHistory(ISearchOptions<ICommandHistory> options)
         {
             throw new NotImplementedException();
         }
