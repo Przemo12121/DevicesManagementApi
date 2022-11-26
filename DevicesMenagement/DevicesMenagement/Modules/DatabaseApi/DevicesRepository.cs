@@ -15,27 +15,22 @@ namespace DevicesMenagement.Modules.DatabaseApi
             throw new NotImplementedException();
         }
 
-        public void AddCommand(IDevice device, ICreatableModelBuilder<ICommand> command)
+        public void AddCommand(IDevice device, ICreatableModelBuilder<ICommand> builder)
         {
             throw new NotImplementedException();
         }
 
-        public void AddHistory(IDevice device, ICreatableModelBuilder<ICommandHistory> command)
+        public void AddCommandHistory(IDevice device, ICreatableModelBuilder<ICommandHistory> builder)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddMessageHistory(IDevice device, ICreatableModelBuilder<ICommandHistory> builder)
         {
             throw new NotImplementedException();
         }
 
         public void Delete(IDevice entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteCommand(IDevice device)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteHistory(IDevice device)
         {
             throw new NotImplementedException();
         }
@@ -60,27 +55,37 @@ namespace DevicesMenagement.Modules.DatabaseApi
             throw new NotImplementedException();
         }
 
-        public IDevice FindByIn(int id)
+        public IDevice FindById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void GetCommands()
+        public List<ICommandHistory> GetCommandHistory(int deviceId)
         {
             throw new NotImplementedException();
         }
 
-        public void GetCommands(ISearchOptions<ICommand> options)
+        public List<ICommandHistory> GetCommandHistory(int deviceId, ISearchOptions<ICommandHistory> options)
         {
             throw new NotImplementedException();
         }
 
-        public void GetHistory()
+        public List<ICommand> GetCommands(int deviceId)
         {
             throw new NotImplementedException();
         }
 
-        public void GetHistory(ISearchOptions<ICommandHistory> options)
+        public List<ICommand> GetCommands(int deviceId, ISearchOptions<ICommand> options)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<IMessage> GetMessageHistory(int deviceId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<IMessage> GetMessageHistory(int deviceId, ISearchOptions<ICommandHistory> options)
         {
             throw new NotImplementedException();
         }
