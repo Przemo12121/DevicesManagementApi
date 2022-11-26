@@ -9,17 +9,17 @@ namespace DevicesMenagement.Controllers
     public class DevicesController : ControllerBase
     {
         [HttpGet, Route("/")]
-        public List<IDevice> ListAllDevices()
+        public List<IUser> ListAllDevices()
         {
             // endpoint will be used to list brief information about all devices
-            return new List<IDevice>();
+            return new List<IUser>();
         }
 
         [HttpGet, Route("/:employeeId")]
-        public List<IDevice> ListUserDevices(int employeeId)
+        public List<IUser> ListUserDevices(int employeeId)
         {
             // endpoint will be used to list brief information about requesting user's devices
-            return new List<IDevice>();
+            return new List<IUser>();
         }
 
         [HttpGet, Route("/:deviceId/commands")]
@@ -30,7 +30,7 @@ namespace DevicesMenagement.Controllers
         }
 
         [HttpPost, Route("/")]
-        public IDevice RegisterDevice(IDevice device)
+        public IUser RegisterDevice(IUser device)
         {
             // adds new device
             throw new NotImplementedException();

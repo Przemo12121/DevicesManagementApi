@@ -22,23 +22,6 @@ namespace DevicesMenagement.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("DevicesMenagement.Database.Models.AccessLevel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AccessLevels");
-                });
-
             modelBuilder.Entity("DevicesMenagement.Database.Models.Command", b =>
                 {
                     b.Property<int>("Id")
@@ -50,6 +33,9 @@ namespace DevicesMenagement.Migrations
                     b.Property<string>("Body")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
@@ -71,32 +57,7 @@ namespace DevicesMenagement.Migrations
                     b.ToTable("Commands");
                 });
 
-            modelBuilder.Entity("DevicesMenagement.Database.Models.Device", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Devices");
-                });
-
-            modelBuilder.Entity("DevicesMenagement.Database.Models.DeviceHistory", b =>
+            modelBuilder.Entity("DevicesMenagement.Database.Models.CommandHistory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -110,14 +71,19 @@ namespace DevicesMenagement.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int?>("DeviceId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CommandId");
 
-                    b.ToTable("DevicesHistory");
+                    b.HasIndex("DeviceId");
+
+                    b.ToTable("DevicesCommandHistory");
                 });
 
-            modelBuilder.Entity("DevicesMenagement.Database.Models.User", b =>
+            modelBuilder.Entity("DevicesMenagement.Database.Models.Device", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -125,21 +91,18 @@ namespace DevicesMenagement.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AccessLevelId")
-                        .HasColumnType("integer");
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<bool>("Enabled")
-                        .HasColumnType("boolean");
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Login")
+                    b.Property<string>("EmployeeId")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -148,9 +111,40 @@ namespace DevicesMenagement.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AccessLevelId");
+                    b.ToTable("Devices");
+                });
 
-                    b.ToTable("Users");
+            modelBuilder.Entity("DevicesMenagement.Database.Models.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("DeviceId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("From")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("To")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DeviceId");
+
+                    b.ToTable("DevicesMessageHistory");
                 });
 
             modelBuilder.Entity("DevicesMenagement.Database.Models.Command", b =>
@@ -160,14 +154,7 @@ namespace DevicesMenagement.Migrations
                         .HasForeignKey("DeviceId");
                 });
 
-            modelBuilder.Entity("DevicesMenagement.Database.Models.Device", b =>
-                {
-                    b.HasOne("DevicesMenagement.Database.Models.User", null)
-                        .WithMany("Devices")
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("DevicesMenagement.Database.Models.DeviceHistory", b =>
+            modelBuilder.Entity("DevicesMenagement.Database.Models.CommandHistory", b =>
                 {
                     b.HasOne("DevicesMenagement.Database.Models.Command", "Command")
                         .WithMany()
@@ -175,28 +162,27 @@ namespace DevicesMenagement.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("DevicesMenagement.Database.Models.Device", null)
+                        .WithMany("CommandHistory")
+                        .HasForeignKey("DeviceId");
+
                     b.Navigation("Command");
                 });
 
-            modelBuilder.Entity("DevicesMenagement.Database.Models.User", b =>
+            modelBuilder.Entity("DevicesMenagement.Database.Models.Message", b =>
                 {
-                    b.HasOne("DevicesMenagement.Database.Models.AccessLevel", "AccessLevel")
-                        .WithMany()
-                        .HasForeignKey("AccessLevelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AccessLevel");
+                    b.HasOne("DevicesMenagement.Database.Models.Device", null)
+                        .WithMany("MessageHistory")
+                        .HasForeignKey("DeviceId");
                 });
 
             modelBuilder.Entity("DevicesMenagement.Database.Models.Device", b =>
                 {
-                    b.Navigation("Commands");
-                });
+                    b.Navigation("CommandHistory");
 
-            modelBuilder.Entity("DevicesMenagement.Database.Models.User", b =>
-                {
-                    b.Navigation("Devices");
+                    b.Navigation("Commands");
+
+                    b.Navigation("MessageHistory");
                 });
 #pragma warning restore 612, 618
         }
