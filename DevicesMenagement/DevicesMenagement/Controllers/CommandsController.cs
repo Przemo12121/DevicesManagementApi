@@ -16,6 +16,7 @@ namespace DevicesMenagement.Controllers
         }
 
         [HttpPatch, Route("/:commandId")]
+        //!!! tutaj musze sie jeszcze pobawic w wysylanie i bindowanie requestow wiec beda parametry przerobione
         public ICommand EditCommand(int commandId, ICommand command)
         {
             // then send command to mocked device

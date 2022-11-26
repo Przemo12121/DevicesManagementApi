@@ -9,7 +9,7 @@ namespace DevicesMenagement.Controllers
     public class DevicesController : ControllerBase
     {
         [HttpGet, Route("/")]
-        public List<IUser> ListAllDevices()
+        public List<IUser> ListAllDevices(int? limit, int? offset, string? order)
         {
             // endpoint will be used to list brief information about all devices
             return new List<IUser>();
@@ -23,20 +23,21 @@ namespace DevicesMenagement.Controllers
         }
 
         [HttpGet, Route("/:deviceId/commands")]
-        public List<ICommand> ListDeviceCommands(int deviceId)
+        public List<ICommand> ListDeviceCommands(int deviceId, int? limit, int? offset, string? order)
         {
             // return commands registered to device
             return new List<ICommand>();
         }
 
         [HttpPost, Route("/")]
-        public IUser RegisterDevice(IUser device)
+        public IDevice RegisterDevice(IDevice device)
         {
             // adds new device
             throw new NotImplementedException();
         }
 
         [HttpPost, Route("/:deviceId/commands")]
+        //!!! tutaj musze sie jeszcze pobawic w wysylanie i bindowanie requestow wiec beda parametry przerobione
         public ICommand RegisterCommand(int deviceId, ICommand command)
         {
             // then send create new command

@@ -9,7 +9,7 @@ namespace DevicesMenagement.Controllers
     public class UsersController : ControllerBase
     {
         [HttpGet, Route("/employees")]
-        public List<IUser> GetEmployees()
+        public List<IUser> GetEmployees(int? limit, int? offset, string? order)
         {
             return new List<IUser>();
         }
@@ -22,7 +22,8 @@ namespace DevicesMenagement.Controllers
         }
 
         [HttpPatch, Route("/employees/:userId")]
-        public IUser EditEmployee(int userId)
+        //!!! tutaj musze sie jeszcze pobawic w wysylanie i bindowanie requestow wiec beda parametry przerobione
+        public IUser EditEmployee(int userId, IUser user)
         {
             // then send command to mocked device
             throw new NotImplementedException();
