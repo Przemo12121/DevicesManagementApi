@@ -1,0 +1,42 @@
+version: '3.3'
+
+services:
+    device-database:
+        image: postgres:14-alpine
+        restart: 'no'
+        environment:
+            POSTGRES_USER: devices
+            POSTGRES_PASSWORD: testpassword
+            POSTGRES_DB: devices_menagement
+        volumes:
+          - device-database:/var/lib/postgresql
+          #- ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+        ports:
+          - 127.0.0.1:6000:5432
+        healthcheck:
+            test: ["CMD", "nc", "-z", "localhost:6000"]
+            interval: 3s
+            timeout: 1s
+            retries: 3
+
+    local-auth-database:
+        image: postgres:14-alpine
+        restart: 'no'
+        environment:
+            POSTGRES_USER: devices_auth
+            POSTGRES_PASSWORD: testpassword_auth
+            POSTGRES_DB: devices_menagement_auth
+        volumes:
+          - local-auth-database:/var/lib/postgresql
+          #- ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+        ports:
+          - 127.0.0.1:6001:5432
+        healthcheck:
+            test: ["CMD", "nc", "-z", "localhost:6001"]
+            interval: 3s
+            timeout: 1s
+            retries: 3
+
+volumes:
+    device-database:
+    local-auth-database:
