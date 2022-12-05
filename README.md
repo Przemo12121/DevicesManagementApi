@@ -1,2 +1,2 @@
-# DevicesMenagementApi
-REST API for menaging connected devices
+# DevicesManagementApi
+REST API for managing connected devices
