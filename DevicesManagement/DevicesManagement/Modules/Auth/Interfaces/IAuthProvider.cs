@@ -1,4 +1,4 @@
-﻿using DevicesMenagement.Database.Models;
+﻿using Database.Models.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace DevicesMenagement.Modules.Auth

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using DevicesMenagement.Database.Models;
+using Database.Models.Interfaces;
 
 namespace DevicesMenagement.Controllers
 {
