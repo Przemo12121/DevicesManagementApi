@@ -3,7 +3,7 @@ using Database.Models.Interfaces;
 
 namespace Database.Models;
 
-public class Message : CreatableModel, IMessage
+public sealed class Message : CreatableModel, IMessage
 {
     public string Content { get; set ; }
     public string From { get; set; }

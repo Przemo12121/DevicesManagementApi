@@ -3,7 +3,7 @@ using Database.Models.Interfaces;
 
 namespace Database.Models;
 
-public class CommandHistory : CreatableModel, ICommandHistory
+public sealed class CommandHistory : CreatableModel, ICommandHistory
 {
     public Command Command { get; set; }
 }

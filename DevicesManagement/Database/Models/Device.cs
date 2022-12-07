@@ -3,7 +3,7 @@ using Database.Models.Interfaces;
 
 namespace Database.Models;
 
-public class Device : UpdatableModel, IDevice
+public sealed class Device : UpdatableModel, IDevice
 {
     public string Name { get; set; }
     public string Address { get; set; }

@@ -4,7 +4,7 @@ using Database.Models.Interfaces;
 
 namespace Database.Models;
 
-public class AccessLevel : DatabaseModel, IAccessLevel
+public sealed class AccessLevel : DatabaseModel, IAccessLevel
 {
     public string? Description { get; set; }
     public AccessLevels Value { get ; set ; }

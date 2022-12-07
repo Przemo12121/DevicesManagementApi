@@ -3,7 +3,7 @@ using Database.Models.Interfaces;
 
 namespace Database.Models;
 
-public class User : UpdatableModel, IUser
+public sealed class User : UpdatableModel, IUser
 {
     public string EmployeeId { get; set; }
     public string Name { get; set; }
@@ -12,6 +12,5 @@ public class User : UpdatableModel, IUser
 
     public string Password { get; set; }
     public bool Enabled { get; set; }
-
     public AccessLevel AccessLevel { get; set; }
 }

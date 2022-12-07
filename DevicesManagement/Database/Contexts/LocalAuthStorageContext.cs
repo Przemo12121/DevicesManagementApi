@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Database.Contexts;
 
-public class LocalAuthStorageContext : DbContext
+public sealed class LocalAuthStorageContext : DbContext
 {
     public DbSet<AccessLevel> AccessLevels { get; set; }
     public DbSet<User> Users { get; set; }

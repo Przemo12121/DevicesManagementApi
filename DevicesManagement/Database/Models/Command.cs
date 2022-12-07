@@ -3,7 +3,7 @@ using Database.Models.Interfaces;
 
 namespace Database.Models;
 
-public class Command : UpdatableModel, ICommand
+public sealed class Command : UpdatableModel, ICommand
 {
     public string Name { get; set; }
     public string? Description { get; set; }

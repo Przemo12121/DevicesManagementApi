@@ -3,7 +3,7 @@ using Database.Models;
 
 namespace Database.Contexts;
 
-public class DeviceMenagementContext : DbContext
+public sealed class DeviceMenagementContext : DbContext
 {
     public DbSet<Command> Commands { get; set; }
     public DbSet<Device> Devices { get; set; } 
