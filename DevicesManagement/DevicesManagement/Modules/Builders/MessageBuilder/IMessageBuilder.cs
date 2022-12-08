@@ -1,4 +1,4 @@
-﻿using DevicesMenagement.Modules.Communication;
+﻿using Communication;
 
 namespace DevicesMenagement.Modules.Builders;
 

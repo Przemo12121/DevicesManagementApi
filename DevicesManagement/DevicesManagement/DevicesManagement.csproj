@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Communication\Communication.csproj" />
     <ProjectReference Include="..\Database\Database.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,4 @@
-﻿using DevicesMenagement.Modules.Communication.TcpIp;
+﻿using Communication.TcpIp;
 
 namespace DevicesMenagement.Modules.Builders.MessageBuilder
 {
