@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Database.Models.Interfaces;
 
-namespace DevicesMenagement.Controllers;
+namespace DevicesManagement.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
