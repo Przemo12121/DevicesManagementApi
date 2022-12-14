@@ -1,5 +1,5 @@
-﻿
-using Database.Models.Interfaces;
+﻿using Database.Models.Interfaces;
+using Database.Models;
 using Database.Repositories.Builders;
 using Database.Repositories.InnerDependencies;
 using Database.Repositories.Interfaces;
@@ -13,9 +13,10 @@ public class CommandsRepository : DisposableRepository<DeviceMenagementContext>,
     {
     }
 
-    public void Delete(ICommand command)
+    public void Delete(Command command)
     {
-        throw new NotImplementedException();
+        _context.Commands.Remove(command);
+        _context.SaveChanges();
     }
 
     public void Update(IUpdatableModelBuilder<ICommand> builder)
