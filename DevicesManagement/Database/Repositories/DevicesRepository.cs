@@ -6,9 +6,9 @@ using Database.Repositories.Interfaces;
 
 namespace Database.Repositories;
 
-public class DevicesRepository : DisposableRepository<DeviceMenagementContext>, IDeviceRepository
+public class DevicesRepository : DisposableRepository<DeviceManagementContext>, IDeviceRepository
 {
-    public DevicesRepository(DeviceMenagementContext context) : base(context) { }
+    public DevicesRepository(DeviceManagementContext context) : base(context) { }
 
     public void Add(ICreatableModelBuilder<IDevice> builder)
     {

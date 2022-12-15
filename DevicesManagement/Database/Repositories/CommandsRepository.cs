@@ -7,9 +7,9 @@ using Database.Contexts;
 
 namespace Database.Repositories;
 
-public class CommandsRepository : DisposableRepository<DeviceMenagementContext>, IUpdatableRepository<ICommand>
+public class CommandsRepository : DisposableRepository<DeviceManagementContext>, IUpdatableRepository<ICommand>
 {
-    public CommandsRepository(DeviceMenagementContext context) : base(context)
+    public CommandsRepository(DeviceManagementContext context) : base(context)
     {
     }
 
@@ -21,6 +21,7 @@ public class CommandsRepository : DisposableRepository<DeviceMenagementContext>,
 
     public void Update(IUpdatableModelBuilder<ICommand> builder)
     {
-        throw new NotImplementedException();
+        _context.Update(builder.Build());
+        _context.SaveChanges();
     }
 }

@@ -3,8 +3,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Database.Contexts;
 
-public sealed class LocalAuthStorageContext : DbContext
+public class LocalAuthStorageContext : DbContext
 {
+    public LocalAuthStorageContext(DbContextOptions options) : base(options) { }
+    public LocalAuthStorageContext() : base() { }
+
     public DbSet<AccessLevel> AccessLevels { get; set; }
     public DbSet<User> Users { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

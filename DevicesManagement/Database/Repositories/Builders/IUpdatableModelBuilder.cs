@@ -8,5 +8,5 @@ namespace Database.Repositories.Builders;
 /// <typeparam name="T">Updatable database entity.</typeparam>
 public interface IUpdatableModelBuilder<T> where T : IUpdatableModel
 {
-    public T Build(T updatedEntity);
+    public T Build();
 }

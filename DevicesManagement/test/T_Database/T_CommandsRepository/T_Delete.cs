@@ -1,12 +1,16 @@
 using Database.Contexts;
 using Database.Models;
 using Database.Repositories;
+using T_Database;
+using FluentAssertions;
 
 namespace T_Database.T_CommandsRepository;
 
 public class T_Delete : DeviceMenagementDatabaseTest
 {
-    private void Seed(DeviceMenagementContext context)
+    public T_Delete() : base("Delete") { }
+    
+    private void Seed(DeviceManagementContextTest context)
     {
         context.Commands.Add(new Command
         {
@@ -44,7 +48,7 @@ public class T_Delete : DeviceMenagementDatabaseTest
     {
         Command entity;
 
-        using (var context = new DeviceMenagementContext(ContextOptions))
+        using (var context = new DeviceManagementContextTest(ContextOptions))
         {
             EnsureClear(context);
             Seed(context);
@@ -57,16 +61,16 @@ public class T_Delete : DeviceMenagementDatabaseTest
             }
         }
 
-        using (var context = new DeviceMenagementContext(ContextOptions))
+        using (var context = new DeviceManagementContextTest(ContextOptions))
         {
-            Assert.DoesNotContain(entity, context.Commands);
+            context.Commands.Should().NotContain(entity);
         }
     }
 
     [Fact]
     public void Delete_GivenEntity_DeletesEntityFromSet()
     {
-        using (var context = new DeviceMenagementContext(ContextOptions))
+        using (var context = new DeviceManagementContextTest(ContextOptions))
         {
             EnsureClear(context);
             Seed(context);
@@ -79,9 +83,9 @@ public class T_Delete : DeviceMenagementDatabaseTest
             }
         }
 
-        using (var context = new DeviceMenagementContext(ContextOptions))
+        using (var context = new DeviceManagementContextTest(ContextOptions))
         {
-            Assert.True(context.Commands.Count() == 2);
+            context.Commands.Should().HaveCount(2);
         }
     }
 
@@ -92,7 +96,7 @@ public class T_Delete : DeviceMenagementDatabaseTest
         Command entity1;
         Command entity2;
 
-        using (var context = new DeviceMenagementContext(ContextOptions))
+        using (var context = new DeviceManagementContextTest(ContextOptions))
         {
             EnsureClear(context);
             Seed(context);
@@ -107,23 +111,13 @@ public class T_Delete : DeviceMenagementDatabaseTest
             }
         }
 
-        using (var context = new DeviceMenagementContext(ContextOptions))
+        using (var context = new DeviceManagementContextTest(ContextOptions))
         {
             var entity1_after = context.Commands.Skip(0).First();
-            Assert.Equal(entity1_after.Id, entity1.Id);
-            Assert.Equal(entity1_after.Name, entity1.Name);
-            Assert.Equal(entity1_after.CreatedDate, entity1.CreatedDate);
-            Assert.Equal(entity1_after.UpdatedDate, entity1.UpdatedDate);
-            Assert.Equal(entity1_after.Description, entity1.Description);
-            Assert.Equal(entity1_after.Body, entity1.Body);
-
+            entity1_after.Should().BeEquivalentTo(entity1);
+            
             var entity2_after = context.Commands.Skip(1).First();
-            Assert.Equal(entity2_after.Id, entity2.Id);
-            Assert.Equal(entity2_after.Name, entity2.Name);
-            Assert.Equal(entity2_after.CreatedDate, entity2.CreatedDate);
-            Assert.Equal(entity2_after.UpdatedDate, entity2.UpdatedDate);
-            Assert.Equal(entity2_after.Description, entity2.Description);
-            Assert.Equal(entity2_after.Body, entity2.Body);
+            entity2_after.Should().BeEquivalentTo(entity2);
         }
     }
 }
