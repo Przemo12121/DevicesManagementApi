@@ -1,13 +1,11 @@
-﻿using Database.Models.Interfaces;
-using Database.Models;
-using Database.Repositories.Builders;
+﻿using Database.Models;
 using Database.Repositories.InnerDependencies;
 using Database.Repositories.Interfaces;
 using Database.Contexts;
 
 namespace Database.Repositories;
 
-public class CommandsRepository : DisposableRepository<DeviceManagementContext>, IUpdatableRepository<ICommand>
+public class CommandsRepository : DisposableRepository<DeviceManagementContext>, ICommandsRepository<Command>
 {
     public CommandsRepository(DeviceManagementContext context) : base(context)
     {
@@ -19,9 +17,9 @@ public class CommandsRepository : DisposableRepository<DeviceManagementContext>,
         _context.SaveChanges();
     }
 
-    public void Update(IUpdatableModelBuilder<ICommand> builder)
+    public void Update(Command entity)
     {
-        _context.Update(builder.Build());
+        _context.Commands.Update(entity);
         _context.SaveChanges();
     }
 }

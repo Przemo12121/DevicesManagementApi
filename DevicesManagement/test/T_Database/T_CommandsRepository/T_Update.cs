@@ -1,12 +1,3 @@
-using Database.Contexts;
-using Database.Models;
-using Database.Repositories;
-using T_Database;
-using Database.Repositories.Builders;
-using Database.Models.Interfaces;
-using T_Database.T_CommandsRepository.UpdateBuilders;
-using FluentAssertions;
-
 namespace T_Database.T_CommandsRepository;
 
 public class T_Update : DeviceMenagementDatabaseTest
@@ -47,7 +38,7 @@ public class T_Update : DeviceMenagementDatabaseTest
 
     
     [Fact]
-    public void Update_BuilderModifyingDescription_UpdatesDescription()
+    public void Update_Description_UpdatesDescription()
     {
         Command entity;
         using (var context = new DeviceManagementContextTest(ContextOptions))
@@ -59,8 +50,8 @@ public class T_Update : DeviceMenagementDatabaseTest
             {
                 entity = context.Commands.Skip(1).First();
 
-                var builder = new DescriptionUpdateBuilder(entity).SetDescription("New Description");
-                repo.Update(builder);
+                entity.Description = "New Description";
+                repo.Update(entity);
             }
         }
 
@@ -69,6 +60,68 @@ public class T_Update : DeviceMenagementDatabaseTest
             var entity_after = context.Commands.Where(e => e.Id.Equals(entity.Id)).Single();
 
             entity_after.Description.Should().Be("New Description");
+        }
+    }
+
+    [Fact]
+    public void Update_Description_DoesNotUpdatesOtherAttributes()
+    {
+        Command entity;
+        using (var context = new DeviceManagementContextTest(ContextOptions))
+        {
+            EnsureClear(context);
+            Seed(context);
+
+            using (var repo = new CommandsRepository(context))
+            {
+                entity = context.Commands.Skip(1).First();
+
+                entity.Description = "New Description";
+                repo.Update(entity);
+            }
+        }
+
+        using (var context = new DeviceManagementContextTest(ContextOptions))
+        {
+            var entity_after = context.Commands.Where(e => e.Id.Equals(entity.Id)).Single();
+
+            entity_after.Name.Should().Be(entity.Name);
+            entity_after.CreatedDate.Should().Be(entity.CreatedDate);
+            entity_after.UpdatedDate.Should().Be(entity.UpdatedDate);
+            entity_after.Body.Should().Be(entity.Body);
+        }
+    }
+
+    [Fact]
+    public void Update_Description_DoesNotUpdatesOthers()
+    {
+        Command entityUpdated;
+        Command entity1;
+        Command entity2;
+
+        using (var context = new DeviceManagementContextTest(ContextOptions))
+        {
+            EnsureClear(context);
+            Seed(context);
+
+            using (var repo = new CommandsRepository(context))
+            {
+                entity1 = context.Commands.Skip(0).First();
+                entityUpdated = context.Commands.Skip(1).First();
+                entity2 = context.Commands.Skip(2).First();
+
+                entityUpdated.Description = "New Description";
+                repo.Update(entityUpdated);
+            }
+        }
+
+        using (var context = new DeviceManagementContextTest(ContextOptions))
+        {
+            var entity1_after = context.Commands.Where(e => e.Id.Equals(entity1.Id)).Single();
+            entity1_after.Should().BeEquivalentTo(entity1);
+
+            var entity2_after = context.Commands.Where(e => e.Id.Equals(entity2.Id)).Single();
+            entity2_after.Should().BeEquivalentTo(entity2);
         }
     }
 }

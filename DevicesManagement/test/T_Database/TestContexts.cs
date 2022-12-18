@@ -15,9 +15,9 @@ public class DeviceManagementContextTest : DeviceManagementContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
 }
 
-public class LocalAuthStorageContextTest : LocalAuthStorageContext
+public class LocalAuthContextTest : LocalAuthStorageContext
 {
-    public LocalAuthStorageContextTest(DbContextOptions options) : base(options) { }
+    public LocalAuthContextTest(DbContextOptions options) : base(options) { }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
 }

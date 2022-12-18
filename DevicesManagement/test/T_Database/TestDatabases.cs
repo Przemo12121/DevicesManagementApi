@@ -17,10 +17,10 @@ public abstract class DatabaseTest<T> where T : DbContext
 
 public abstract class DeviceMenagementDatabaseTest : DatabaseTest<DeviceManagementContextTest>
 {
-    public DeviceMenagementDatabaseTest(string key)
+    public DeviceMenagementDatabaseTest(string methodKey)
         : base(
             new DbContextOptionsBuilder<DeviceManagementContextTest>()
-                .UseInMemoryDatabase("T_DeviceMenagementDatabase." + key)
+                .UseInMemoryDatabase("T_DeviceMenagementDatabase." + methodKey)
                 .Options
             )
     {
@@ -36,19 +36,19 @@ public abstract class DeviceMenagementDatabaseTest : DatabaseTest<DeviceManageme
     }
 }
 
-public abstract class LocalAuthStorageDatabaseTest : DatabaseTest<LocalAuthStorageContextTest>
+public abstract class LocalAuthDatabaseTest : DatabaseTest<LocalAuthContextTest>
 {
-    public LocalAuthStorageDatabaseTest()
+    public LocalAuthDatabaseTest(string methodKey)
         : base(
-            new DbContextOptionsBuilder<LocalAuthStorageContextTest>()
-                .UseInMemoryDatabase("T_LocalAuthStorageDatabase.")
+            new DbContextOptionsBuilder<LocalAuthContextTest>()
+                .UseInMemoryDatabase("T_LocalAuthStorageDatabase." + methodKey)
                 .Options
             )
     {
 
     }
 
-    protected override void EnsureClear(LocalAuthStorageContextTest context)
+    protected override void EnsureClear(LocalAuthContextTest context)
     {
         context.RemoveRange(context.Users);
         context.RemoveRange(context.AccessLevels);
