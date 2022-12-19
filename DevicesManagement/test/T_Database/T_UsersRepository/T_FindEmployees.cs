@@ -66,7 +66,7 @@ public class T_FindEmployees : LocalAuthDatabaseTest
 
 
     [Fact]
-    public void FindAllAdmins_ReturnsThreeRecords()
+    public void FindEmployees_ReturnsThreeRecords()
     {
         using var context = new LocalAuthContextTest(ContextOptions);
         EnsureClear(context);
@@ -79,7 +79,7 @@ public class T_FindEmployees : LocalAuthDatabaseTest
     }
 
     [Fact]
-    public void FindAllAdmins_ReturnsOnlyEmployeesRecords()
+    public void FindEmployees_ReturnsOnlyEmployeesRecords()
     {
         using var context = new LocalAuthContextTest(ContextOptions);
         EnsureClear(context);
@@ -94,7 +94,7 @@ public class T_FindEmployees : LocalAuthDatabaseTest
     }
 
     [Fact]
-    public void FindAllAdmins_WithLimitOfTwo_ReturnsTwoRecords()
+    public void FindEmployees_WithLimitOfTwo_ReturnsTwoRecords()
     {
         using var context = new LocalAuthContextTest(ContextOptions);
         EnsureClear(context);
@@ -109,7 +109,7 @@ public class T_FindEmployees : LocalAuthDatabaseTest
     }
 
     [Fact]
-    public void FindAllAdmins_WithOffsetOfTwo_ReturnsOneRecord()
+    public void FindEmployees_WithOffsetOfTwo_ReturnsOneRecord()
     {
         using var context = new LocalAuthContextTest(ContextOptions);
         EnsureClear(context);
@@ -124,7 +124,7 @@ public class T_FindEmployees : LocalAuthDatabaseTest
     }
 
     [Fact]
-    public void FindAllAdmins_WithOffsetOfOne_ReturnsSecondAndThirdEmployee()
+    public void FindEmployees_WithOffsetOfOne_ReturnsSecondAndThirdEmployee()
     {
         using var context = new LocalAuthContextTest(ContextOptions);
         EnsureClear(context);
@@ -141,7 +141,7 @@ public class T_FindEmployees : LocalAuthDatabaseTest
     }
 
     [Fact]
-    public void FindAllAdmins_WithOrderNameASC_ReturnsEmployeesOrderByNameASC()
+    public void FindEmployees_WithOrderNameASC_ReturnsEmployeesOrderByNameASC()
     {
         using var context = new LocalAuthContextTest(ContextOptions);
         EnsureClear(context);
@@ -156,7 +156,7 @@ public class T_FindEmployees : LocalAuthDatabaseTest
     }
 
     [Fact]
-    public void FindAllAdmins_WithOrderNameDESC_ReturnsEmployeesOrderByNameDESC()
+    public void FindEmployees_WithOrderNameDESC_ReturnsEmployeesOrderByNameDESC()
     {
         using var context = new LocalAuthContextTest(ContextOptions);
         EnsureClear(context);

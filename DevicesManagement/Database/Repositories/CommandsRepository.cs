@@ -11,6 +11,7 @@ public class CommandsRepository : DisposableRepository<DeviceManagementContext>,
     {
     }
 
+
     public void Delete(Command command)
     {
         _context.Commands.Remove(command);

@@ -68,7 +68,7 @@ public class T_FindByEmployeId : LocalAuthDatabaseTest
 
 
     [Fact]
-    public void FindByEmployeId_ReturnsEmployeeWithThatEID()
+    public void FindByEmployeId_ExistingEid_ReturnsEmployeeWithThatEID()
     {
         using var context = new LocalAuthContextTest(ContextOptions);
         EnsureClear(context);
@@ -78,5 +78,18 @@ public class T_FindByEmployeId : LocalAuthDatabaseTest
         var entity = repo.FindByEmployeeId("some id 3");
 
         entity.Should().BeEquivalentTo(searchedUser);
+    }
+
+    [Fact]
+    public void FindByEmployeId_NonexistingEid_ReturnsNull()
+    {
+        using var context = new LocalAuthContextTest(ContextOptions);
+        EnsureClear(context);
+        Seed(context);
+        using var repo = new UsersRepository(context);
+
+        var entity = repo.FindByEmployeeId("non existing eid");
+
+        entity.Should().Be(null);
     }
 }

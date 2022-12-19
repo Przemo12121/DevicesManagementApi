@@ -63,10 +63,10 @@ public class UsersRepository : DisposableRepository<LocalAuthStorageContext>, IU
                 .ToList();
     }
 
-    public User FindByEmployeeId(string eid)
+    public User? FindByEmployeeId(string eid)
     {
        return _context.Users
             .Where(user => user.EmployeeId.Equals(eid))
-            .Single();
+            .SingleOrDefault();
     }
 }

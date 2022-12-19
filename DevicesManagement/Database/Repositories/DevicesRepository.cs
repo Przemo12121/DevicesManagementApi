@@ -4,6 +4,7 @@ using Database.Repositories.Builders;
 using Database.Models;
 using Database.Models.Interfaces;
 using Database.Repositories.Interfaces;
+using Database.Models.Enums;
 
 namespace Database.Repositories;
 
@@ -13,7 +14,20 @@ public class DevicesRepository : DisposableRepository<DeviceManagementContext>, 
 
     public void Add(Device entity)
     {
-        throw new NotImplementedException();
+        _context.Devices.Add(entity);
+        _context.SaveChanges();
+    }
+
+    public void Update(Device entity)
+    {
+        _context.Devices.Update(entity);
+        _context.SaveChanges();
+    }
+
+    public void Delete(Device entity)
+    {
+        _context.Devices.Remove(entity);
+        _context.SaveChanges();
     }
 
     public void AddCommand(Device device, ICreatableModelBuilder<ICommand> builder)
@@ -31,24 +45,19 @@ public class DevicesRepository : DisposableRepository<DeviceManagementContext>, 
         throw new NotImplementedException();
     }
 
-    public void Delete(Device entity)
+    public List<Device> FindAll<TOrderKey>(ISearchOptions<Device, TOrderKey> options)
     {
-        throw new NotImplementedException();
-    }
-
-    public List<Device> FindAll()
-    {
-        throw new NotImplementedException();
-    }
-
-    public List<Device> FindAll<T>(ISearchOptions<Device, T> options)
-    {
-        throw new NotImplementedException();
-    }
-
-    public List<Device> FindAllByEmployeeId(string employeeId)
-    {
-        throw new NotImplementedException();
+        return options.OrderDirection == OrderDirections.ASCENDING
+            ? _context.Devices
+                .Skip(options.Offset)
+                .OrderBy(options.Order)
+                .Take(options.Limit)
+                .ToList()
+            : _context.Devices
+                .Skip(options.Offset)
+                .OrderByDescending(options.Order)
+                .Take(options.Limit)
+                .ToList();
     }
 
     public List<Device> FindAllByEmployeeId<T>(string employeeId, ISearchOptions<Device, T> options)
@@ -56,22 +65,14 @@ public class DevicesRepository : DisposableRepository<DeviceManagementContext>, 
         throw new NotImplementedException();
     }
 
-    public Device FindById(int id)
+    public Device? FindById(Guid id)
     {
-        throw new NotImplementedException();
-    }
-
-    public List<ICommandHistory> GetCommandHistory(int deviceId)
-    {
-        throw new NotImplementedException();
+        return _context.Devices
+            .Where(device => device.Id == id)
+            .SingleOrDefault();
     }
 
     public List<ICommandHistory> GetCommandHistory<U>(int deviceId, ISearchOptions<ICommandHistory, U> options)
-    {
-        throw new NotImplementedException();
-    }
-
-    public List<ICommand> GetCommands(int deviceId)
     {
         throw new NotImplementedException();
     }
@@ -81,17 +82,7 @@ public class DevicesRepository : DisposableRepository<DeviceManagementContext>, 
         throw new NotImplementedException();
     }
 
-    public List<IMessage> GetMessageHistory(int deviceId)
-    {
-        throw new NotImplementedException();
-    }
-
     public List<IMessage> GetMessageHistory<U>(int deviceId, ISearchOptions<ICommandHistory, U> options)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void Update(Device entity)
     {
         throw new NotImplementedException();
     }

@@ -9,7 +9,7 @@ public interface IUsersRepository<T> : IDisposable where T : IUser
     void Delete(T user);
     void Update(T user);
 
-    T FindByEmployeeId(string eid);
+    T? FindByEmployeeId(string eid);
     List<T> FindEmployees<TOrderKey>(ISearchOptions<T, TOrderKey> options);
     List<T> FindAdmins<TOrderKey>(ISearchOptions<T, TOrderKey> options);
 }

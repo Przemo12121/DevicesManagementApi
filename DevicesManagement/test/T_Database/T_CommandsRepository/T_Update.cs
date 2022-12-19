@@ -2,7 +2,7 @@ namespace T_Database.T_CommandsRepository;
 
 public class T_Update : DeviceMenagementDatabaseTest
 {
-    public T_Update() : base("Update") { }
+    public T_Update() : base("CommandsRepository.Update") { }
 
     private void Seed(DeviceManagementContextTest context)
     {

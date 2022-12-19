@@ -2,7 +2,7 @@ namespace T_Database.T_CommandsRepository;
 
 public class T_Delete : DeviceMenagementDatabaseTest
 {
-    public T_Delete() : base("Delete") { }
+    public T_Delete() : base("CommandsRepository.Delete") { }
     
     private void Seed(DeviceManagementContextTest context)
     {
