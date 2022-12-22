@@ -8,7 +8,7 @@ using Database.Models.Enums;
 
 namespace Database.Repositories;
 
-public class DevicesRepository : DisposableRepository<DeviceManagementContext>, IDeviceRepository<Device>
+public class DevicesRepository : DisposableRepository<DeviceManagementContext>, IDeviceRepository<Device, Command, CommandHistory, Message>
 {
     public DevicesRepository(DeviceManagementContext context) : base(context) { }
 
@@ -30,17 +30,17 @@ public class DevicesRepository : DisposableRepository<DeviceManagementContext>, 
         _context.SaveChanges();
     }
 
-    public void AddCommand(Device device, ICreatableModelBuilder<ICommand> builder)
+    public void AddCommand(Device device, Command command)
     {
         throw new NotImplementedException();
     }
 
-    public void AddCommandHistory(Device device, ICreatableModelBuilder<ICommandHistory> builder)
+    public void AddCommandHistory(Device device, CommandHistory commandHistory)
     {
         throw new NotImplementedException();
     }
 
-    public void AddMessageHistory(Device device, ICreatableModelBuilder<ICommandHistory> builder)
+    public void AddMessageToHistory(Device device, Message message)
     {
         throw new NotImplementedException();
     }
@@ -62,7 +62,19 @@ public class DevicesRepository : DisposableRepository<DeviceManagementContext>, 
 
     public List<Device> FindAllByEmployeeId<T>(string employeeId, ISearchOptions<Device, T> options)
     {
-        throw new NotImplementedException();
+        return options.OrderDirection == OrderDirections.ASCENDING
+            ? _context.Devices
+                .Where(device => device.EmployeeId == employeeId)
+                .Skip(options.Offset)
+                .OrderBy(options.Order)
+                .Take(options.Limit)
+                .ToList()
+            : _context.Devices
+                .Where(device => device.EmployeeId == employeeId)
+                .Skip(options.Offset)
+                .OrderByDescending(options.Order)
+                .Take(options.Limit)
+                .ToList();
     }
 
     public Device? FindById(Guid id)
