@@ -24,12 +24,7 @@ public interface IDevice : IUpdatableModel
     public List<Command> Commands { get; set; }
 
     /// <summary>
-    /// List of all device commands history. Only selecting entries, and creating new are possible.
-    /// </summary>
-    public List<CommandHistory> CommandHistory { get; set; }
-
-    /// <summary>
     /// List of all device message history. Only selecting entries, and creating new are possible.
     /// </summary>
-    public List<Message> MessageHistory { get; set; }
+    public List<Message> Messages { get; set; }
 }

@@ -1,14 +1,11 @@
-﻿using Database.Models.Enums;
-using Database.Repositories.Interfaces;
-
-namespace T_Database.T_UsersRepository.SearchOptions;
+﻿namespace T_Database.SearchOptions.UserOptions;
 
 public class OrderableByNameDescSearchOptions : ISearchOptions<User, string>
 {
 
     public int Limit { get; } = 100;
     public int Offset { get; } = 0;
-    public Func<User, string> Order { get; } = (user) => user.Name;
+    public Func<User, string> Order { get; } = device => device.Name;
 
     public OrderDirections OrderDirection { get; } = OrderDirections.DESCENDING;
 }

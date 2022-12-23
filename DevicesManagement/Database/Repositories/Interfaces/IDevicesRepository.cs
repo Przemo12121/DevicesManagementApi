@@ -15,13 +15,12 @@ public interface IDeviceRepository<T, U, V, W> : IDisposable
     void Add(T entity);
     void Update(T entity);
     void Delete(T entity);
-    void AddMessageToHistory(T device, W message);
+    void AddMessage(T device, W message);
     T? FindById(Guid id);
     List<T> FindAll<TOrderKey>(ISearchOptions<T, TOrderKey> options);
     List<T> FindAllByEmployeeId<TOrderKey>(string employeeId, ISearchOptions<T, TOrderKey> options);
-    List<ICommand> GetCommands<TOrderKey>(int deviceId, ISearchOptions<ICommand, TOrderKey> options);
+    List<U> GetCommands<TOrderKey>(Guid deviceId, ISearchOptions<U, TOrderKey> options);
     void AddCommand(T device, U command);
-    List<ICommandHistory> GetCommandHistory<TOrderKey>(int deviceId, ISearchOptions<ICommandHistory, TOrderKey> options);
-    void AddCommandHistory(T device, V commandHistory);
-    List<IMessage> GetMessageHistory<TOrderKey>(int deviceId, ISearchOptions<ICommandHistory, TOrderKey> options);
+    List<V> GetCommandHistories<TOrderKey>(Guid deviceId, ISearchOptions<V, TOrderKey> options);
+    List<W> GetMessages<TOrderKey>(Guid deviceId, ISearchOptions<W, TOrderKey> options);
 }

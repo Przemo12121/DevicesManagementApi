@@ -1,7 +1,4 @@
-﻿using Database.Models.Enums;
-using Database.Repositories.Interfaces;
-
-namespace T_Database.T_UsersRepository.SearchOptions;
+﻿namespace T_Database.SearchOptions.UserOptions;
 
 public class LimitableSearchOptions : ISearchOptions<User, DateTime>
 {
@@ -9,7 +6,7 @@ public class LimitableSearchOptions : ISearchOptions<User, DateTime>
 
     public int Limit { get; }
     public int Offset { get; } = 0;
-    public Func<User, DateTime> Order { get; } = user => user.CreatedDate;
+    public Func<User, DateTime> Order { get; } = device => device.CreatedDate;
 
     public OrderDirections OrderDirection { get; } = OrderDirections.ASCENDING;
 }

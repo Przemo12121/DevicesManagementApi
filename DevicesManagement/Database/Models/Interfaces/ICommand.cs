@@ -12,4 +12,6 @@ public interface ICommand : IUpdatableModel
     public string? Description { get; set; }
         
     public string Body { get; set; }
- }
+
+    public List<CommandHistory> CommandHistories { get; set; }
+}

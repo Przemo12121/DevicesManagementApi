@@ -1,5 +1,4 @@
-using T_Database.T_UsersRepository.SearchOptions;
-using Database.Models.Enums;
+using T_Database.SearchOptions.UserOptions;
 
 namespace T_Database.T_UsersRepository;
 

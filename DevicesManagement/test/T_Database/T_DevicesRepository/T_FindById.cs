@@ -1,5 +1,4 @@
-using T_Database.T_DevicesRepository.SearchOptions;
-using Database.Models.Enums;
+using T_Database.SearchOptions.DeviceOptions;
 
 namespace T_Database.T_DevicesRepository;
 
@@ -13,9 +12,8 @@ public class T_FindById : DeviceMenagementDatabaseTest
         Id = Guid.Parse("12345678-abcd-1234-abcd-123456abcdef"),
         EmployeeId = "some employee id 2",
         Address = "some address 2",
-        CommandHistory = new List<CommandHistory>(),
         Commands = new List<Command>(),
-        MessageHistory = new List<Message>()
+        Messages = new List<Message>()
     };
 
 public T_FindById() : base("DevicesRepository.FindById") { }
@@ -30,9 +28,8 @@ public T_FindById() : base("DevicesRepository.FindById") { }
             Id = Guid.NewGuid(),
             EmployeeId = "some employee id",
             Address = "some address",
-            CommandHistory = new List<CommandHistory>(),
             Commands = new List<Command>(),
-            MessageHistory = new List<Message>()
+            Messages = new List<Message>()
         });
         context.Devices.Add(searchedDevice);
         context.Devices.Add(new Device
@@ -43,9 +40,8 @@ public T_FindById() : base("DevicesRepository.FindById") { }
             Id = Guid.NewGuid(),
             EmployeeId = "some employee id 3",
             Address = "some address 3",
-            CommandHistory = new List<CommandHistory>(),
             Commands = new List<Command>(),
-            MessageHistory = new List<Message>()
+            Messages = new List<Message>()
         });
         context.Devices.Add(new Device
         {
@@ -55,9 +51,8 @@ public T_FindById() : base("DevicesRepository.FindById") { }
             Id = Guid.NewGuid(),
             EmployeeId = "some employee id 3",
             Address = "some address 4",
-            CommandHistory = new List<CommandHistory>(),
             Commands = new List<Command>(),
-            MessageHistory = new List<Message>()
+            Messages = new List<Message>()
         });
         context.Devices.Add(new Device
         {
@@ -67,9 +62,8 @@ public T_FindById() : base("DevicesRepository.FindById") { }
             Id = Guid.NewGuid(),
             EmployeeId = "some employee id 2",
             Address = "some address 5",
-            CommandHistory = new List<CommandHistory>(),
             Commands = new List<Command>(),
-            MessageHistory = new List<Message>()
+            Messages = new List<Message>()
         });
         context.SaveChanges();
     }

@@ -1,3 +1,5 @@
+using T_Database.SearchOptions.DeviceOptions;
+
 namespace T_Database.T_DevicesRepository;
 
 public class T_Update : DeviceMenagementDatabaseTest
@@ -14,9 +16,8 @@ public class T_Update : DeviceMenagementDatabaseTest
             Id = Guid.NewGuid(),
             EmployeeId = "some employee id",
             Address = "some address",
-            CommandHistory = new List<CommandHistory>(),
             Commands = new List<Command>(),
-            MessageHistory = new List<Message>()
+            Messages = new List<Message>()
         });
         context.Devices.Add(new Device
         {
@@ -26,9 +27,8 @@ public class T_Update : DeviceMenagementDatabaseTest
             Id = Guid.NewGuid(),
             EmployeeId = "some employee id 2",
             Address = "some address 2",
-            CommandHistory = new List<CommandHistory>(),
             Commands = new List<Command>(),
-            MessageHistory = new List<Message>()
+            Messages = new List<Message>()
         });
         context.Devices.Add(new Device
         {
@@ -38,9 +38,8 @@ public class T_Update : DeviceMenagementDatabaseTest
             Id = Guid.NewGuid(),
             EmployeeId = "some employee id 3",
             Address = "some address 3",
-            CommandHistory = new List<CommandHistory>(),
             Commands = new List<Command>(),
-            MessageHistory = new List<Message>()
+            Messages = new List<Message>()
         });
         context.SaveChanges();
     }

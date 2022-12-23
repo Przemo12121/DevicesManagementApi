@@ -1,4 +1,6 @@
-﻿namespace T_Database.T_UsersRepository;
+﻿using T_Database.SearchOptions.UserOptions;
+
+namespace T_Database.T_UsersRepository;
 
 public class T_Add: LocalAuthDatabaseTest
 {

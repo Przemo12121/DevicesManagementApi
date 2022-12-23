@@ -1,7 +1,4 @@
-﻿using Database.Models.Enums;
-using Database.Repositories.Interfaces;
-
-namespace T_Database.T_DevicesRepository.SearchOptions;
+﻿namespace T_Database.SearchOptions.DeviceOptions;
 
 public class OrderableByNameAscSearchOptions : ISearchOptions<Device, string>
 {

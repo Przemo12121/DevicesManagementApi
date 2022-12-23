@@ -1,7 +1,7 @@
 ﻿using Database.Models.Enums;
 using Database.Repositories.Interfaces;
 
-namespace T_Database.T_DevicesRepository.SearchOptions;
+namespace T_Database.SearchOptions.DeviceOptions;
 
 public class OffsetableSearchOptions : ISearchOptions<Device, DateTime>
 {
@@ -12,5 +12,5 @@ public class OffsetableSearchOptions : ISearchOptions<Device, DateTime>
     public Func<Device, DateTime> Order { get; } = device => device.CreatedDate;
 
 
-    public OrderDirections OrderDirection { get; } = OrderDirections.DESCENDING;
+    public OrderDirections OrderDirection { get; } = OrderDirections.ASCENDING;
 }
