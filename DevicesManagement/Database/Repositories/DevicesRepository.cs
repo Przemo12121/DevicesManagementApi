@@ -1,97 +1,145 @@
 ﻿using Database.Repositories.InnerDependencies;
 using Database.Contexts;
 using Database.Repositories.Builders;
+using Database.Models;
 using Database.Models.Interfaces;
 using Database.Repositories.Interfaces;
+using Database.Models.Enums;
+using System.Linq;
 
 namespace Database.Repositories;
 
-public class DevicesRepository : DisposableRepository<DeviceMenagementContext>, IDeviceRepository
+public class DevicesRepository : DisposableRepository<DeviceManagementContext>, IDeviceRepository<Device, Command, CommandHistory, Message>
 {
-    public DevicesRepository(DeviceMenagementContext context) : base(context) { }
+    public DevicesRepository(DeviceManagementContext context) : base(context) { }
 
-    public void Add(ICreatableModelBuilder<IDevice> builder)
+    public void Add(Device entity)
     {
-        throw new NotImplementedException();
+        _context.Devices.Add(entity);
+        _context.SaveChanges();
     }
 
-    public void AddCommand(IDevice device, ICreatableModelBuilder<ICommand> builder)
+    public void Update(Device entity)
     {
-        throw new NotImplementedException();
+        _context.Devices.Update(entity);
+        _context.SaveChanges();
     }
 
-    public void AddCommandHistory(IDevice device, ICreatableModelBuilder<ICommandHistory> builder)
+    public void Delete(Device entity)
     {
-        throw new NotImplementedException();
+        _context.Devices.Remove(entity);
+        _context.SaveChanges();
     }
 
-    public void AddMessageHistory(IDevice device, ICreatableModelBuilder<ICommandHistory> builder)
+    public void AddCommand(Device device, Command command)
     {
-        throw new NotImplementedException();
+        _context.Commands.Add(command);
+        device.Commands.Add(command);
+        _context.SaveChanges();
     }
 
-    public void Delete(IDevice entity)
+    public void AddMessage(Device device, Message message)
     {
-        throw new NotImplementedException();
+        _context.DevicesMessageHistory.Add(message);
+        device.Messages.Add(message);
+        _context.SaveChanges();
     }
 
-    public List<IDevice> FindAll()
+    public List<Device> FindAll<TOrderKey>(ISearchOptions<Device, TOrderKey> options)
     {
-        throw new NotImplementedException();
+        return options.OrderDirection == OrderDirections.ASCENDING
+            ? _context.Devices
+                .OrderBy(options.Order)
+                .Skip(options.Offset)
+                .Take(options.Limit)
+                .ToList()
+            : _context.Devices
+                .OrderByDescending(options.Order)
+                .Skip(options.Offset)
+                .Take(options.Limit)
+                .ToList();
     }
 
-    public List<IDevice> FindAll(ISearchOptions<IDevice> options)
+    public List<Device> FindAllByEmployeeId<T>(string employeeId, ISearchOptions<Device, T> options)
     {
-        throw new NotImplementedException();
+        return options.OrderDirection == OrderDirections.ASCENDING
+            ? _context.Devices
+                .Where(device => device.EmployeeId.Equals(employeeId))
+                .Skip(options.Offset)
+                .OrderBy(options.Order)
+                .Take(options.Limit)
+                .ToList()
+            : _context.Devices
+                .Where(device => device.EmployeeId.Equals(employeeId))
+                .Skip(options.Offset)
+                .OrderByDescending(options.Order)
+                .Take(options.Limit)
+                .ToList();
     }
 
-    public List<IDevice> FindAllByEmployeeId(string employeeId)
+    public Device? FindById(Guid id)
     {
-        throw new NotImplementedException();
+        return _context.Devices
+            .Where(device => device.Id.Equals(id))
+            .SingleOrDefault();
     }
 
-    public List<IDevice> FindAllByEmployeeId(string employeeId, ISearchOptions<IDevice> options)
+    public List<CommandHistory> GetCommandHistories<U>(Guid deviceId, ISearchOptions<CommandHistory, U> options)
     {
-        throw new NotImplementedException();
+        return options.OrderDirection == OrderDirections.ASCENDING
+            ? _context.Devices
+                .Where(device => device.Id.Equals(deviceId))
+                .SelectMany(device => device.Commands)
+                .SelectMany(command => command.CommandHistories)
+                .OrderBy(options.Order)
+                .Skip(options.Offset)
+                .Take(options.Limit)
+                .ToList()
+            : _context.Devices
+                .Where(device => device.Id.Equals(deviceId))
+                .SelectMany(device => device.Commands)
+                .SelectMany(command => command.CommandHistories)
+                .OrderByDescending(options.Order)
+                .Skip(options.Offset)
+                .Take(options.Limit)
+                .ToList();
     }
 
-    public IDevice FindById(int id)
+    public List<Command> GetCommands<U>(Guid deviceId, ISearchOptions<Command, U> options)
     {
-        throw new NotImplementedException();
+        return options.OrderDirection == OrderDirections.ASCENDING
+            ? _context.Devices
+                .Where(device => device.Id.Equals(deviceId))
+                .SelectMany(device => device.Commands)
+                .OrderBy(options.Order)
+                .Skip(options.Offset)
+                .Take(options.Limit)
+                .ToList()
+            : _context.Devices
+                .Where(device => device.Id.Equals(deviceId))
+                .SelectMany(device => device.Commands)
+                .OrderByDescending(options.Order)
+                .Skip(options.Offset)
+                .Take(options.Limit)
+                .ToList();
     }
 
-    public List<ICommandHistory> GetCommandHistory(int deviceId)
+    public List<Message> GetMessages<U>(Guid deviceId, ISearchOptions<Message, U> options)
     {
-        throw new NotImplementedException();
-    }
-
-    public List<ICommandHistory> GetCommandHistory(int deviceId, ISearchOptions<ICommandHistory> options)
-    {
-        throw new NotImplementedException();
-    }
-
-    public List<ICommand> GetCommands(int deviceId)
-    {
-        throw new NotImplementedException();
-    }
-
-    public List<ICommand> GetCommands(int deviceId, ISearchOptions<ICommand> options)
-    {
-        throw new NotImplementedException();
-    }
-
-    public List<IMessage> GetMessageHistory(int deviceId)
-    {
-        throw new NotImplementedException();
-    }
-
-    public List<IMessage> GetMessageHistory(int deviceId, ISearchOptions<ICommandHistory> options)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void Update(IUpdatableModelBuilder<IDevice> builder)
-    {
-        throw new NotImplementedException();
+        return options.OrderDirection == OrderDirections.ASCENDING
+            ? _context.Devices
+                .Where(device => device.Id.Equals(deviceId))
+                .SelectMany(device => device.Messages)
+                .OrderBy(options.Order)
+                .Skip(options.Offset)
+                .Take(options.Limit)
+                .ToList()
+            : _context.Devices
+                .Where(device => device.Id.Equals(deviceId))
+                .SelectMany(device => device.Messages)
+                .OrderByDescending(options.Order)
+                .Skip(options.Offset)
+                .Take(options.Limit)
+                .ToList();
     }
 }

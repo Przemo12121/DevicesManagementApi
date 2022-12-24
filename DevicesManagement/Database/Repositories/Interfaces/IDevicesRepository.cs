@@ -6,20 +6,21 @@ namespace Database.Repositories.Interfaces;
 /// <summary>
 /// Allows for using devices table, and associated message histories and command histories to them.
 /// </summary>
-public interface IDeviceRepository : IDisposable, IUpdatableRepository<IDevice>, ICreatableRepository<IDevice>
+public interface IDeviceRepository<T, U, V, W> : IDisposable 
+    where T : IDevice 
+    where U : ICommand
+    where V : ICommandHistory
+    where W : IMessage
 {
-    IDevice FindById(int id);
-    List<IDevice> FindAll();
-    List<IDevice> FindAll(ISearchOptions<IDevice> options);
-    List<IDevice> FindAllByEmployeeId(string employeeId);
-    List<IDevice> FindAllByEmployeeId(string employeeId, ISearchOptions<IDevice> options);
-    List<ICommand> GetCommands(int deviceId);
-    List<ICommand> GetCommands(int deviceId, ISearchOptions<ICommand> options);
-    void AddCommand(IDevice device, ICreatableModelBuilder<ICommand> builder);
-    List<ICommandHistory> GetCommandHistory(int deviceId);
-    List<ICommandHistory> GetCommandHistory(int deviceId, ISearchOptions<ICommandHistory> options);
-    void AddCommandHistory(IDevice device, ICreatableModelBuilder<ICommandHistory> builder);
-    List<IMessage> GetMessageHistory(int deviceId);
-    List<IMessage> GetMessageHistory(int deviceId, ISearchOptions<ICommandHistory> options);
-    void AddMessageHistory(IDevice device, ICreatableModelBuilder<ICommandHistory> builder);
+    void Add(T entity);
+    void Update(T entity);
+    void Delete(T entity);
+    void AddMessage(T device, W message);
+    T? FindById(Guid id);
+    List<T> FindAll<TOrderKey>(ISearchOptions<T, TOrderKey> options);
+    List<T> FindAllByEmployeeId<TOrderKey>(string employeeId, ISearchOptions<T, TOrderKey> options);
+    List<U> GetCommands<TOrderKey>(Guid deviceId, ISearchOptions<U, TOrderKey> options);
+    void AddCommand(T device, U command);
+    List<V> GetCommandHistories<TOrderKey>(Guid deviceId, ISearchOptions<V, TOrderKey> options);
+    List<W> GetMessages<TOrderKey>(Guid deviceId, ISearchOptions<W, TOrderKey> options);
 }

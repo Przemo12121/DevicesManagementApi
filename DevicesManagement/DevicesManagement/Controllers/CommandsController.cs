@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Database.Models.Interfaces;
 
-namespace DevicesMenagement.Controllers;
+namespace DevicesManagement.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -20,7 +20,7 @@ public class CommandsController : ControllerBase
     public ICommand EditCommand(int commandId, ICommand command)
     {
         // then send command to mocked device
-        throw new NotImplementedException(); 
+        throw new NotImplementedException();
     }
 
     [HttpDelete, Route("/:commandId")]

@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Database.Migrations
 {
-    [DbContext(typeof(DeviceMenagementContext))]
+    [DbContext(typeof(DeviceManagementContext))]
     [Migration("20221207094012_InitDb")]
     partial class InitDb
     {

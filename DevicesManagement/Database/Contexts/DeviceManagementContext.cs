@@ -3,8 +3,11 @@ using Database.Models;
 
 namespace Database.Contexts;
 
-public sealed class DeviceMenagementContext : DbContext
+public class DeviceManagementContext : DbContext
 {
+    public DeviceManagementContext(DbContextOptions options) : base(options) { }
+    public DeviceManagementContext() : base() { }
+
     public DbSet<Command> Commands { get; set; }
     public DbSet<Device> Devices { get; set; } 
     public DbSet<CommandHistory> DevicesCommandHistory { get; set; }

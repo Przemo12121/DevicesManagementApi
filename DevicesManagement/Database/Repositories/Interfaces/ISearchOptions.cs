@@ -1,4 +1,5 @@
 ﻿using Database.Models.Base;
+using Database.Models.Enums;
 
 namespace Database.Repositories.Interfaces;
 
@@ -6,11 +7,13 @@ namespace Database.Repositories.Interfaces;
 /// Object representing additional select constraints.
 /// </summary>
 /// <typeparam name="T">Type of entities.</typeparam>
-public interface ISearchOptions<T> where T : IDatabaseModel
+public interface ISearchOptions<T, TOrderKey> where T : IDatabaseModel
 {
-    public int? Limit { get; set; }
+    public int Limit { get; }
 
-    public int? Offset { get; set; }
+    public int Offset { get; }
 
-    public Func<bool, T>? Order { get; set; }
+    public Func<T, TOrderKey> Order { get; }
+
+    public OrderDirections OrderDirection { get; }
 }

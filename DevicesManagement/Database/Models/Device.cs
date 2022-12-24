@@ -13,6 +13,5 @@ public sealed class Device : UpdatableModel, IDevice
     public string EmployeeId { get; set; }
 
     public List<Command> Commands { get; set; }
-    public List<CommandHistory> CommandHistory { get; set; }
-    public List<Message> MessageHistory { get; set; }
+    public List<Message> Messages { get; set; }
 }

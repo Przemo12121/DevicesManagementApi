@@ -1,25 +1,31 @@
-﻿
-using Database.Models.Interfaces;
-using Database.Repositories.Builders;
+﻿using Database.Models;
 using Database.Repositories.InnerDependencies;
 using Database.Repositories.Interfaces;
 using Database.Contexts;
 
 namespace Database.Repositories;
 
-public class CommandsRepository : DisposableRepository<DeviceMenagementContext>, IUpdatableRepository<ICommand>
+public class CommandsRepository : DisposableRepository<DeviceManagementContext>, ICommandsRepository<Command, CommandHistory>
 {
-    public CommandsRepository(DeviceMenagementContext context) : base(context)
+    public CommandsRepository(DeviceManagementContext context) : base(context)
     {
     }
 
-    public void Delete(ICommand command)
+    public void Delete(Command command)
     {
-        throw new NotImplementedException();
+        _context.Commands.Remove(command);
+        _context.SaveChanges();
     }
 
-    public void Update(IUpdatableModelBuilder<ICommand> builder)
+    public void Update(Command entity)
     {
-        throw new NotImplementedException();
+        _context.Commands.Update(entity);
+        _context.SaveChanges();
+    }
+    public void AddCommandHistory(Command command, CommandHistory commandHistory)
+    {
+        _context.DevicesCommandHistory.Add(commandHistory);
+        command.CommandHistories.Add(commandHistory);
+        _context.SaveChanges();
     }
 }
