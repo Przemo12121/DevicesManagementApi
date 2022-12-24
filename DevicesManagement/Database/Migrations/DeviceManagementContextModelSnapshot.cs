@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Database.Migrations
 {
     [DbContext(typeof(DeviceManagementContext))]
-    partial class DeviceMenagementContextModelSnapshot : ModelSnapshot
+    partial class DeviceManagementContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -67,14 +67,9 @@ namespace Database.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid?>("DeviceId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CommandId");
-
-                    b.HasIndex("DeviceId");
 
                     b.ToTable("DevicesCommandHistory");
                 });
@@ -149,14 +144,10 @@ namespace Database.Migrations
             modelBuilder.Entity("Database.Models.CommandHistory", b =>
                 {
                     b.HasOne("Database.Models.Command", "Command")
-                        .WithMany()
+                        .WithMany("CommandHistories")
                         .HasForeignKey("CommandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Database.Models.Device", null)
-                        .WithMany("CommandHistory")
-                        .HasForeignKey("DeviceId");
 
                     b.Navigation("Command");
                 });
@@ -164,17 +155,20 @@ namespace Database.Migrations
             modelBuilder.Entity("Database.Models.Message", b =>
                 {
                     b.HasOne("Database.Models.Device", null)
-                        .WithMany("MessageHistory")
+                        .WithMany("Messages")
                         .HasForeignKey("DeviceId");
+                });
+
+            modelBuilder.Entity("Database.Models.Command", b =>
+                {
+                    b.Navigation("CommandHistories");
                 });
 
             modelBuilder.Entity("Database.Models.Device", b =>
                 {
-                    b.Navigation("CommandHistory");
-
                     b.Navigation("Commands");
 
-                    b.Navigation("MessageHistory");
+                    b.Navigation("Messages");
                 });
 #pragma warning restore 612, 618
         }

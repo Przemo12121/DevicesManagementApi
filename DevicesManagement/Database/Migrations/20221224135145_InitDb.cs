@@ -76,7 +76,6 @@ namespace Database.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     CommandId = table.Column<Guid>(type: "uuid", nullable: false),
-                    DeviceId = table.Column<Guid>(type: "uuid", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
@@ -88,11 +87,6 @@ namespace Database.Migrations
                         principalTable: "Commands",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DevicesCommandHistory_Devices_DeviceId",
-                        column: x => x.DeviceId,
-                        principalTable: "Devices",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -104,11 +98,6 @@ namespace Database.Migrations
                 name: "IX_DevicesCommandHistory_CommandId",
                 table: "DevicesCommandHistory",
                 column: "CommandId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DevicesCommandHistory_DeviceId",
-                table: "DevicesCommandHistory",
-                column: "DeviceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DevicesMessageHistory_DeviceId",
