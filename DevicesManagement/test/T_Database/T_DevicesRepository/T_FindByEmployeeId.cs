@@ -73,7 +73,7 @@ public class T_FindAllByEmployeId : DeviceMenagementDatabaseTest
     [Fact]
     public void FindAllByEmployeId_ExistingEmployeeId_ReturnsDevicesWithThatEmployeeId()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);
@@ -88,7 +88,7 @@ public class T_FindAllByEmployeId : DeviceMenagementDatabaseTest
     [Fact]
     public void FindAllByEmployeId_WithLimitOf1_Returns1Device()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);
@@ -101,7 +101,7 @@ public class T_FindAllByEmployeId : DeviceMenagementDatabaseTest
     [Fact]
     public void FindAllByEmployeId_WithOffsetOf1_ReturnsSecondMatchingDevice()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);
@@ -114,7 +114,7 @@ public class T_FindAllByEmployeId : DeviceMenagementDatabaseTest
     [Fact]
     public void FindAllByEmployeId_WithOrderByNameAsc_ReturnsDevicesOrderedByNameAsc()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);
@@ -128,7 +128,7 @@ public class T_FindAllByEmployeId : DeviceMenagementDatabaseTest
     [Fact]
     public void FindAllByEmployeId_WithOrderByNameDesc_ReturnsDevicesOrderedByNameDesc()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);
@@ -142,7 +142,7 @@ public class T_FindAllByEmployeId : DeviceMenagementDatabaseTest
     [Fact]
     public void FindByEmployeId_NonexistingEmployeeId_ReturnsEmptyCollection()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);

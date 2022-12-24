@@ -70,7 +70,7 @@ public class T_AddCommandHistory : DeviceMenagementDatabaseTest
     {
         Command entity;
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             EnsureClear(context);
             Seed(context);
@@ -91,7 +91,7 @@ public class T_AddCommandHistory : DeviceMenagementDatabaseTest
             }
         }
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             context.Commands.Should().Contain(entity);
         }
@@ -102,7 +102,7 @@ public class T_AddCommandHistory : DeviceMenagementDatabaseTest
     {
         Command entity;
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             EnsureClear(context);
             Seed(context);
@@ -123,7 +123,7 @@ public class T_AddCommandHistory : DeviceMenagementDatabaseTest
             }
         }
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             context.Commands.Should().HaveCount(4);
         }
@@ -134,7 +134,7 @@ public class T_AddCommandHistory : DeviceMenagementDatabaseTest
     {
         Command entity;
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             EnsureClear(context);
             Seed(context);
@@ -155,7 +155,7 @@ public class T_AddCommandHistory : DeviceMenagementDatabaseTest
             }
         }
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             var testDeviceCommands = context.Devices
                 .Where(d => d.Id.Equals(testDevice.Id))

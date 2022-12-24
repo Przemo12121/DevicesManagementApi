@@ -50,7 +50,7 @@ public class T_Delete : DeviceMenagementDatabaseTest
     {
         Device entity;
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             EnsureClear(context);
             Seed(context);
@@ -63,7 +63,7 @@ public class T_Delete : DeviceMenagementDatabaseTest
             }
         }
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             context.Devices.Should().NotContain(entity);
         }
@@ -72,7 +72,7 @@ public class T_Delete : DeviceMenagementDatabaseTest
     [Fact]
     public void Delete_GivenEntity_DeletesEntityFromSet()
     {
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             EnsureClear(context);
             Seed(context);
@@ -85,7 +85,7 @@ public class T_Delete : DeviceMenagementDatabaseTest
             }
         }
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             context.Devices.Should().HaveCount(2);
         }
@@ -98,7 +98,7 @@ public class T_Delete : DeviceMenagementDatabaseTest
         Device entity1;
         Device entity2;
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             EnsureClear(context);
             Seed(context);
@@ -113,7 +113,7 @@ public class T_Delete : DeviceMenagementDatabaseTest
             }
         }
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             var entity1_after = context.Devices.Skip(0).First();
             entity1_after.Should().BeEquivalentTo(entity1);

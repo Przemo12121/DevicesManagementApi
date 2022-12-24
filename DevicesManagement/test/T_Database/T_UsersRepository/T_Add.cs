@@ -37,7 +37,7 @@ public class T_Add: LocalAuthDatabaseTest
     {
         User entity;
 
-        using (var context = new LocalAuthContextTest(ContextOptions))
+        using (var context = new LocalAuthContextTest(Key))
         {
             EnsureClear(context);
             Seed(context);
@@ -59,7 +59,7 @@ public class T_Add: LocalAuthDatabaseTest
             }
         }
 
-        using (var context = new LocalAuthContextTest(ContextOptions))
+        using (var context = new LocalAuthContextTest(Key))
         {
             context.Users.Should().Contain(entity);
         }
@@ -70,7 +70,7 @@ public class T_Add: LocalAuthDatabaseTest
     {
         User entity;
 
-        using (var context = new LocalAuthContextTest(ContextOptions))
+        using (var context = new LocalAuthContextTest(Key))
         {
             EnsureClear(context);
             Seed(context);
@@ -92,7 +92,7 @@ public class T_Add: LocalAuthDatabaseTest
             }
         }
 
-        using (var context = new LocalAuthContextTest(ContextOptions))
+        using (var context = new LocalAuthContextTest(Key))
         {
             context.Users.Should().HaveCount(3);
         }

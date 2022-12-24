@@ -67,7 +67,7 @@ public class T_AddMessage : DeviceMenagementDatabaseTest
     {
         Message entity;
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             EnsureClear(context);
             Seed(context);
@@ -87,7 +87,7 @@ public class T_AddMessage : DeviceMenagementDatabaseTest
             }
         }
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             context.DevicesMessageHistory.Should().Contain(entity);
         }
@@ -98,7 +98,7 @@ public class T_AddMessage : DeviceMenagementDatabaseTest
     {
         Message entity;
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             EnsureClear(context);
             Seed(context);
@@ -118,7 +118,7 @@ public class T_AddMessage : DeviceMenagementDatabaseTest
             }
         }
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             context.DevicesMessageHistory.Should().HaveCount(4);
         }
@@ -129,7 +129,7 @@ public class T_AddMessage : DeviceMenagementDatabaseTest
     {
         Message entity;
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             EnsureClear(context);
             Seed(context);
@@ -149,7 +149,7 @@ public class T_AddMessage : DeviceMenagementDatabaseTest
             }
         }
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             var testDeviceMessages = context.Devices
                 .Where(d => d.Id.Equals(testDevice.Id))

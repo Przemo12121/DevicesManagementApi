@@ -67,7 +67,7 @@ public class T_FindEmployees : LocalAuthDatabaseTest
     [Fact]
     public void FindEmployees_ReturnsThreeRecords()
     {
-        using var context = new LocalAuthContextTest(ContextOptions);
+        using var context = new LocalAuthContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new UsersRepository(context);
@@ -80,7 +80,7 @@ public class T_FindEmployees : LocalAuthDatabaseTest
     [Fact]
     public void FindEmployees_ReturnsOnlyEmployeesRecords()
     {
-        using var context = new LocalAuthContextTest(ContextOptions);
+        using var context = new LocalAuthContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new UsersRepository(context);
@@ -95,7 +95,7 @@ public class T_FindEmployees : LocalAuthDatabaseTest
     [Fact]
     public void FindEmployees_WithLimitOfTwo_ReturnsTwoRecords()
     {
-        using var context = new LocalAuthContextTest(ContextOptions);
+        using var context = new LocalAuthContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new UsersRepository(context);
@@ -110,7 +110,7 @@ public class T_FindEmployees : LocalAuthDatabaseTest
     [Fact]
     public void FindEmployees_WithOffsetOfTwo_ReturnsOneRecord()
     {
-        using var context = new LocalAuthContextTest(ContextOptions);
+        using var context = new LocalAuthContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new UsersRepository(context);
@@ -125,7 +125,7 @@ public class T_FindEmployees : LocalAuthDatabaseTest
     [Fact]
     public void FindEmployees_WithOffsetOfOne_ReturnsSecondAndThirdEmployee()
     {
-        using var context = new LocalAuthContextTest(ContextOptions);
+        using var context = new LocalAuthContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new UsersRepository(context);
@@ -142,7 +142,7 @@ public class T_FindEmployees : LocalAuthDatabaseTest
     [Fact]
     public void FindEmployees_WithOrderNameASC_ReturnsEmployeesOrderByNameASC()
     {
-        using var context = new LocalAuthContextTest(ContextOptions);
+        using var context = new LocalAuthContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new UsersRepository(context);
@@ -157,7 +157,7 @@ public class T_FindEmployees : LocalAuthDatabaseTest
     [Fact]
     public void FindEmployees_WithOrderNameDESC_ReturnsEmployeesOrderByNameDESC()
     {
-        using var context = new LocalAuthContextTest(ContextOptions);
+        using var context = new LocalAuthContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new UsersRepository(context);

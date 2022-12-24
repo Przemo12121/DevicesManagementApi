@@ -49,7 +49,7 @@ public class T_Update : LocalAuthDatabaseTest
     public void Update_Name_UpdatesName()
     {
         User entity;
-        using (var context = new LocalAuthContextTest(ContextOptions))
+        using (var context = new LocalAuthContextTest(Key))
         {
             EnsureClear(context);
             Seed(context);
@@ -63,7 +63,7 @@ public class T_Update : LocalAuthDatabaseTest
             }
         }
 
-        using (var context = new LocalAuthContextTest(ContextOptions))
+        using (var context = new LocalAuthContextTest(Key))
         {
             var entity_after = context.Users.Where(e => e.Id.Equals(entity.Id)).Single();
 
@@ -75,7 +75,7 @@ public class T_Update : LocalAuthDatabaseTest
     public void Update_Name_DoesNotUpdatesOtherAttributes()
     {
         User entity;
-        using (var context = new LocalAuthContextTest(ContextOptions))
+        using (var context = new LocalAuthContextTest(Key))
         {
             EnsureClear(context);
             Seed(context);
@@ -89,7 +89,7 @@ public class T_Update : LocalAuthDatabaseTest
             }
         }
 
-        using (var context = new LocalAuthContextTest(ContextOptions))
+        using (var context = new LocalAuthContextTest(Key))
         {
             var entity_after = context.Users.Where(e => e.Id.Equals(entity.Id)).Single();
 
@@ -109,7 +109,7 @@ public class T_Update : LocalAuthDatabaseTest
         User entity1;
         User entity2;
 
-        using (var context = new LocalAuthContextTest(ContextOptions))
+        using (var context = new LocalAuthContextTest(Key))
         {
             EnsureClear(context);
             Seed(context);
@@ -125,7 +125,7 @@ public class T_Update : LocalAuthDatabaseTest
             }
         }
 
-        using (var context = new LocalAuthContextTest(ContextOptions))
+        using (var context = new LocalAuthContextTest(Key))
         {
             var entity1_after = context.Users.Where(e => e.Id.Equals(entity1.Id)).Single();
             entity1_after.Should().BeEquivalentTo(entity1);

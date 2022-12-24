@@ -72,7 +72,7 @@ public T_FindById() : base("DevicesRepository.FindById") { }
     [Fact]
     public void FindByEmployeId_ExistingId_ReturnsDevicesWithThatId()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);
@@ -85,7 +85,7 @@ public T_FindById() : base("DevicesRepository.FindById") { }
     [Fact]
     public void FindByEmployeId_NonexistingId_ReturnsNull()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);

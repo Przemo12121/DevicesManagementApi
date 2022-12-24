@@ -78,7 +78,7 @@ public class T_GetCommands : DeviceMenagementDatabaseTest
     [Fact]
     public void GetCommands_WithDeviceId_ReturnsCommandsBelongingToThatDevice()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);
@@ -92,7 +92,7 @@ public class T_GetCommands : DeviceMenagementDatabaseTest
     [Fact]
     public void GetCommands_WithLimitOfOne_ReturnsOneRecord()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);
@@ -107,7 +107,7 @@ public class T_GetCommands : DeviceMenagementDatabaseTest
     [Fact]
     public void GetCommands_WithOffsetOfOne_ReturnsOneRecord()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);
@@ -122,7 +122,7 @@ public class T_GetCommands : DeviceMenagementDatabaseTest
     [Fact]
     public void GetCommands_WithOffsetOfOne_ReturnsSecondCommand()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);
@@ -137,7 +137,7 @@ public class T_GetCommands : DeviceMenagementDatabaseTest
     [Fact]
     public void GetCommands_WithOrderNameASC_ReturnsCommandsOrderByNameASC()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);
@@ -151,7 +151,7 @@ public class T_GetCommands : DeviceMenagementDatabaseTest
     [Fact]
     public void GetCommands_WithOrderNameDESC_ReturnsCommandsOrderByNameDESC()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);

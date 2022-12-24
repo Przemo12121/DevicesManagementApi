@@ -49,7 +49,7 @@ public class T_Update : DeviceMenagementDatabaseTest
     public void Update_Name_UpdatesName()
     {
         Device entity;
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             EnsureClear(context);
             Seed(context);
@@ -63,7 +63,7 @@ public class T_Update : DeviceMenagementDatabaseTest
             }
         }
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             var entity_after = context.Devices.Where(e => e.Id.Equals(entity.Id)).Single();
 
@@ -75,7 +75,7 @@ public class T_Update : DeviceMenagementDatabaseTest
     public void Update_Name_DoesNotUpdatesOtherAttributes()
     {
         Device entity;
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             EnsureClear(context);
             Seed(context);
@@ -89,7 +89,7 @@ public class T_Update : DeviceMenagementDatabaseTest
             }
         }
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             var entity_after = context.Devices.Where(e => e.Id.Equals(entity.Id)).Single();
 
@@ -106,7 +106,7 @@ public class T_Update : DeviceMenagementDatabaseTest
         Device entity1;
         Device entity2;
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             EnsureClear(context);
             Seed(context);
@@ -122,7 +122,7 @@ public class T_Update : DeviceMenagementDatabaseTest
             }
         }
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             var entity1_after = context.Devices.Where(e => e.Id.Equals(entity1.Id)).Single();
             entity1_after.Should().BeEquivalentTo(entity1);

@@ -56,7 +56,7 @@ public class T_AddCommandHistory : DeviceMenagementDatabaseTest
     {
         CommandHistory entity;
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             EnsureClear(context);
             Seed(context);
@@ -73,7 +73,7 @@ public class T_AddCommandHistory : DeviceMenagementDatabaseTest
             }
         }
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             context.DevicesCommandHistory.Should().Contain(entity);
         }
@@ -84,7 +84,7 @@ public class T_AddCommandHistory : DeviceMenagementDatabaseTest
     {
         CommandHistory entity;
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             EnsureClear(context);
             Seed(context);
@@ -101,7 +101,7 @@ public class T_AddCommandHistory : DeviceMenagementDatabaseTest
             }
         }
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             context.DevicesCommandHistory.Should().HaveCount(4);
         }
@@ -112,7 +112,7 @@ public class T_AddCommandHistory : DeviceMenagementDatabaseTest
     {
         CommandHistory entity;
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             EnsureClear(context);
             Seed(context);
@@ -129,7 +129,7 @@ public class T_AddCommandHistory : DeviceMenagementDatabaseTest
             }
         }
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             var testCommandsCommandHistories = context.Commands
                 .Where(c => c.Id.Equals(testCommand.Id))

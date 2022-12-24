@@ -105,7 +105,7 @@ public class T_GetCommandsHistory : DeviceMenagementDatabaseTest
     [Fact]
     public void GetCommandsHistory_WithDeviceId_ReturnsCommandsHistoryBelongingToThatDevice()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);
@@ -119,7 +119,7 @@ public class T_GetCommandsHistory : DeviceMenagementDatabaseTest
     [Fact]
     public void GetCommandsHistory_WithLimitOfTwo_ReturnsTwoRecords()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);
@@ -134,7 +134,7 @@ public class T_GetCommandsHistory : DeviceMenagementDatabaseTest
     [Fact]
     public void GetCommandsHistory_WithOffsetOfTwo_ReturnsOneRecord()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);
@@ -149,7 +149,7 @@ public class T_GetCommandsHistory : DeviceMenagementDatabaseTest
     [Fact]
     public void GetCommandsHistory_WithOffsetOfTwo_ReturnsThirdCommandHistory()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);
@@ -164,7 +164,7 @@ public class T_GetCommandsHistory : DeviceMenagementDatabaseTest
     [Fact]
     public void GetCommandsHistory_WithOrderCreatedDateASC_ReturnsCommandsOrderByCreatedDateASC()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);
@@ -179,7 +179,7 @@ public class T_GetCommandsHistory : DeviceMenagementDatabaseTest
     [Fact]
     public void GetCommandsHistory_WithOrderCreatedDateDESC_ReturnsCommandsOrderByCreatedDateDESC()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);

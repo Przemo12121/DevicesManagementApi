@@ -59,7 +59,7 @@ public class T_FindAll : DeviceMenagementDatabaseTest
     [Fact]
     public void FindAll_ReturnsThreeRecords()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);
@@ -72,7 +72,7 @@ public class T_FindAll : DeviceMenagementDatabaseTest
     [Fact]
     public void FindAll_WithLimitOfTwo_ReturnsTwoRecords()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);
@@ -87,7 +87,7 @@ public class T_FindAll : DeviceMenagementDatabaseTest
     [Fact]
     public void FindAll_WithOffsetOfTwo_ReturnsOneRecord()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);
@@ -102,7 +102,7 @@ public class T_FindAll : DeviceMenagementDatabaseTest
     [Fact]
     public void FindAll_WithOffsetOfTwo_ReturnsThirdAndFourthEmployee()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);
@@ -119,7 +119,7 @@ public class T_FindAll : DeviceMenagementDatabaseTest
     [Fact]
     public void FindAll_WithOrderNameASC_ReturnsEmployeesOrderByNameASC()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);
@@ -135,7 +135,7 @@ public class T_FindAll : DeviceMenagementDatabaseTest
     [Fact]
     public void FindAll_WithOrderNameDESC_ReturnsEmployeesOrderByNameDESC()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);

@@ -41,7 +41,7 @@ public class T_Update : DeviceMenagementDatabaseTest
     public void Update_Description_UpdatesDescription()
     {
         Command entity;
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             EnsureClear(context);
             Seed(context);
@@ -55,7 +55,7 @@ public class T_Update : DeviceMenagementDatabaseTest
             }
         }
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             var entity_after = context.Commands.Where(e => e.Id.Equals(entity.Id)).Single();
 
@@ -67,7 +67,7 @@ public class T_Update : DeviceMenagementDatabaseTest
     public void Update_Description_DoesNotUpdatesOtherAttributes()
     {
         Command entity;
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             EnsureClear(context);
             Seed(context);
@@ -81,7 +81,7 @@ public class T_Update : DeviceMenagementDatabaseTest
             }
         }
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             var entity_after = context.Commands.Where(e => e.Id.Equals(entity.Id)).Single();
 
@@ -99,7 +99,7 @@ public class T_Update : DeviceMenagementDatabaseTest
         Command entity1;
         Command entity2;
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             EnsureClear(context);
             Seed(context);
@@ -115,7 +115,7 @@ public class T_Update : DeviceMenagementDatabaseTest
             }
         }
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             var entity1_after = context.Commands.Where(e => e.Id.Equals(entity1.Id)).Single();
             entity1_after.Should().BeEquivalentTo(entity1);

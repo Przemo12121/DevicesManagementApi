@@ -74,7 +74,7 @@ public class T_GetMessages : DeviceMenagementDatabaseTest
     [Fact]
     public void GetMessages_WithDeviceId_ReturnsMessagesBelongingToThatDevice()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);
@@ -88,7 +88,7 @@ public class T_GetMessages : DeviceMenagementDatabaseTest
     [Fact]
     public void GetMessages_WithLimitOfOne_ReturnsOneRecord()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);
@@ -103,7 +103,7 @@ public class T_GetMessages : DeviceMenagementDatabaseTest
     [Fact]
     public void GetMessages_WithOffsetOfOne_ReturnsOneRecord()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);
@@ -118,7 +118,7 @@ public class T_GetMessages : DeviceMenagementDatabaseTest
     [Fact]
     public void GetMessages_WithOffsetOfOne_ReturnsSecondMessage()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);
@@ -133,7 +133,7 @@ public class T_GetMessages : DeviceMenagementDatabaseTest
     [Fact]
     public void GetMessages_WithOrderCreatedDateASC_ReturnsMessagesOrderedByCreatedDateASC()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);
@@ -147,7 +147,7 @@ public class T_GetMessages : DeviceMenagementDatabaseTest
     [Fact]
     public void GetMessages_WithOrderCreatedDateDESC_ReturnsMessagesOrderedByCreatedDateDESC()
     {
-        using var context = new DeviceManagementContextTest(ContextOptions);
+        using var context = new DeviceManagementContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new DevicesRepository(context);

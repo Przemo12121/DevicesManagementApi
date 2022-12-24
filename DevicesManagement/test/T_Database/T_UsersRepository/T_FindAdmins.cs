@@ -67,7 +67,7 @@ public class T_FindAdmins : LocalAuthDatabaseTest
     [Fact]
     public void FindAllAdmins_ReturnsThreeRecords()
     {
-        using var context = new LocalAuthContextTest(ContextOptions);
+        using var context = new LocalAuthContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new UsersRepository(context);
@@ -80,7 +80,7 @@ public class T_FindAdmins : LocalAuthDatabaseTest
     [Fact]
     public void FindAllAdmins_ReturnsOnlyAdminsRecords()
     {
-        using var context = new LocalAuthContextTest(ContextOptions);
+        using var context = new LocalAuthContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new UsersRepository(context);
@@ -95,7 +95,7 @@ public class T_FindAdmins : LocalAuthDatabaseTest
     [Fact]
     public void FindAllAdmins_WithLimitOfTwo_ReturnsTwoRecords()
     {
-        using var context = new LocalAuthContextTest(ContextOptions);
+        using var context = new LocalAuthContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new UsersRepository(context);
@@ -110,7 +110,7 @@ public class T_FindAdmins : LocalAuthDatabaseTest
     [Fact]
     public void FindAllAdmins_WithOffsetOfTwo_ReturnsOneRecord()
     {
-        using var context = new LocalAuthContextTest(ContextOptions);
+        using var context = new LocalAuthContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new UsersRepository(context);
@@ -125,7 +125,7 @@ public class T_FindAdmins : LocalAuthDatabaseTest
     [Fact]
     public void FindAllAdmins_WithOffsetOfOne_ReturnsSecondAndThirdAdmin()
     {
-        using var context = new LocalAuthContextTest(ContextOptions);
+        using var context = new LocalAuthContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new UsersRepository(context);
@@ -142,7 +142,7 @@ public class T_FindAdmins : LocalAuthDatabaseTest
     [Fact]
     public void FindAllAdmins_WithOrderNameASC_ReturnsAdminsOrderByNameASC()
     {
-        using var context = new LocalAuthContextTest(ContextOptions);
+        using var context = new LocalAuthContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new UsersRepository(context);
@@ -157,7 +157,7 @@ public class T_FindAdmins : LocalAuthDatabaseTest
     [Fact]
     public void FindAllAdmins_WithOrderNameDESC_ReturnsAdminsOrderByNameDESC()
     {
-        using var context = new LocalAuthContextTest(ContextOptions);
+        using var context = new LocalAuthContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new UsersRepository(context);

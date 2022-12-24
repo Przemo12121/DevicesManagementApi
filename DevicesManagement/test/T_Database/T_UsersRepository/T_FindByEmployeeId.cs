@@ -69,7 +69,7 @@ public class T_FindByEmployeId : LocalAuthDatabaseTest
     [Fact]
     public void FindByEmployeId_ExistingEid_ReturnsEmployeeWithThatEID()
     {
-        using var context = new LocalAuthContextTest(ContextOptions);
+        using var context = new LocalAuthContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new UsersRepository(context);
@@ -82,7 +82,7 @@ public class T_FindByEmployeId : LocalAuthDatabaseTest
     [Fact]
     public void FindByEmployeId_NonexistingEid_ReturnsNull()
     {
-        using var context = new LocalAuthContextTest(ContextOptions);
+        using var context = new LocalAuthContextTest(Key);
         EnsureClear(context);
         Seed(context);
         using var repo = new UsersRepository(context);

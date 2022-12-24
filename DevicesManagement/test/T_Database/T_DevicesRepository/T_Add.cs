@@ -39,7 +39,7 @@ public class T_Add : DeviceMenagementDatabaseTest
     {
         Device entity;
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             EnsureClear(context);
             Seed(context);
@@ -62,7 +62,7 @@ public class T_Add : DeviceMenagementDatabaseTest
             }
         }
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             context.Devices.Should().Contain(entity);
         }
@@ -73,7 +73,7 @@ public class T_Add : DeviceMenagementDatabaseTest
     {
         Device entity;
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             EnsureClear(context);
             Seed(context);
@@ -96,7 +96,7 @@ public class T_Add : DeviceMenagementDatabaseTest
             }
         }
 
-        using (var context = new DeviceManagementContextTest(ContextOptions))
+        using (var context = new DeviceManagementContextTest(Key))
         {
             context.Devices.Should().HaveCount(3);
         }

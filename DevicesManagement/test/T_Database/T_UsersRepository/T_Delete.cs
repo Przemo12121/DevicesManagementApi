@@ -47,7 +47,7 @@ public class T_Delete : LocalAuthDatabaseTest
     {
         User entity;
 
-        using (var context = new LocalAuthContextTest(ContextOptions))
+        using (var context = new LocalAuthContextTest(Key))
         {
             EnsureClear(context);
             Seed(context);
@@ -60,7 +60,7 @@ public class T_Delete : LocalAuthDatabaseTest
             }
         }
 
-        using (var context = new LocalAuthContextTest(ContextOptions))
+        using (var context = new LocalAuthContextTest(Key))
         {
             context.Users.Should().NotContain(entity);
         }
@@ -69,7 +69,7 @@ public class T_Delete : LocalAuthDatabaseTest
     [Fact]
     public void Delete_GivenEntity_DeletesEntityFromSet()
     {
-        using (var context = new LocalAuthContextTest(ContextOptions))
+        using (var context = new LocalAuthContextTest(Key))
         {
             EnsureClear(context);
             Seed(context);
@@ -82,7 +82,7 @@ public class T_Delete : LocalAuthDatabaseTest
             }
         }
 
-        using (var context = new LocalAuthContextTest(ContextOptions))
+        using (var context = new LocalAuthContextTest(Key))
         {
             context.Users.Should().HaveCount(2);
         }
@@ -95,7 +95,7 @@ public class T_Delete : LocalAuthDatabaseTest
         User entity1;
         User entity2;
 
-        using (var context = new LocalAuthContextTest(ContextOptions))
+        using (var context = new LocalAuthContextTest(Key))
         {
             EnsureClear(context);
             Seed(context);
@@ -110,7 +110,7 @@ public class T_Delete : LocalAuthDatabaseTest
             }
         }
 
-        using (var context = new LocalAuthContextTest(ContextOptions))
+        using (var context = new LocalAuthContextTest(Key))
         {
             var entity1_after = context.Users.Skip(0).First();
             entity1_after.Should().BeEquivalentTo(entity1);

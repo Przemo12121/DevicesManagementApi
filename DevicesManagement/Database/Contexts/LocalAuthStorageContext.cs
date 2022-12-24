@@ -5,9 +5,6 @@ namespace Database.Contexts;
 
 public class LocalAuthStorageContext : DbContext
 {
-    public LocalAuthStorageContext(DbContextOptions options) : base(options) { }
-    public LocalAuthStorageContext() : base() { }
-
     public DbSet<AccessLevel> AccessLevels { get; set; }
     public DbSet<User> Users { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

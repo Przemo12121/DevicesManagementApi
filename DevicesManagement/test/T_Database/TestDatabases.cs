@@ -5,27 +5,18 @@ namespace T_Database;
 
 public abstract class DatabaseTest<T> where T : DbContext
 {
-    protected DbContextOptions<T> ContextOptions { get; }
-    protected DatabaseTest(DbContextOptions<T> contextOptions)
+    protected string Key { get; }
+    protected DatabaseTest(string key)
     {
-        ContextOptions = contextOptions;
+        Key = key;
     }
-
 
     protected abstract void EnsureClear(T context);
 }
 
 public abstract class DeviceMenagementDatabaseTest : DatabaseTest<DeviceManagementContextTest>
 {
-    public DeviceMenagementDatabaseTest(string methodKey)
-        : base(
-            new DbContextOptionsBuilder<DeviceManagementContextTest>()
-                .UseInMemoryDatabase("T_DeviceMenagementDatabase." + methodKey)
-                .Options
-            )
-    {
-
-    }
+    public DeviceMenagementDatabaseTest(string key) : base("T_DeviceManagementDatabase." + key) { }
 
     protected override void EnsureClear(DeviceManagementContextTest context)
     {
@@ -38,15 +29,7 @@ public abstract class DeviceMenagementDatabaseTest : DatabaseTest<DeviceManageme
 
 public abstract class LocalAuthDatabaseTest : DatabaseTest<LocalAuthContextTest>
 {
-    public LocalAuthDatabaseTest(string methodKey)
-        : base(
-            new DbContextOptionsBuilder<LocalAuthContextTest>()
-                .UseInMemoryDatabase("T_LocalAuthStorageDatabase." + methodKey)
-                .Options
-            )
-    {
-
-    }
+    public LocalAuthDatabaseTest(string key) : base("T_LocalAuthDatabase." + key) { }
 
     protected override void EnsureClear(LocalAuthContextTest context)
     {

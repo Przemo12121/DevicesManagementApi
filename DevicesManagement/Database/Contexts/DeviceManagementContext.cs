@@ -5,9 +5,6 @@ namespace Database.Contexts;
 
 public class DeviceManagementContext : DbContext
 {
-    public DeviceManagementContext(DbContextOptions options) : base(options) { }
-    public DeviceManagementContext() : base() { }
-
     public DbSet<Command> Commands { get; set; }
     public DbSet<Device> Devices { get; set; } 
     public DbSet<CommandHistory> DevicesCommandHistory { get; set; }
