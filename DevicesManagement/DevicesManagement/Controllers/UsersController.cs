@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Database.Models.Interfaces;
+using DevicesManagement.DataTransferObjects;
 
 namespace DevicesManagement.Controllers;
 
@@ -8,31 +8,29 @@ namespace DevicesManagement.Controllers;
 [ApiController]
 public class UsersController : ControllerBase
 {
-    [HttpGet, Route("/employees")]
-    public List<IUser> GetEmployees(int? limit, int? offset, string? order)
+    [HttpGet, Route("employees")]
+    public List<IUser> GetEmployees([FromQuery] PaginationRequest request)
     {
         return new List<IUser>();
     }
 
-    [HttpPost, Route("/employees")]
-    public IUser RegisterEmployee(IUser user)
+    [HttpPost, Route("employees")]
+    public IUser RegisterEmployee([FromBody] CreateEmployeeRequest request)
     {
         // then send command to mocked device
         throw new NotImplementedException();
     }
 
-    [HttpPatch, Route("/employees/:userId")]
-    //!!! tutaj musze sie jeszcze pobawic w wysylanie i bindowanie requestow wiec beda parametry przerobione
-    public IUser EditEmployee(int userId, IUser user)
+    [HttpPatch, Route("employees/{id}")]
+    public IUser EditEmployee([FromRoute] Guid id, [FromBody] EditEmployeeRequest request)
     {
         // then send command to mocked device
         throw new NotImplementedException();
     }
 
-    [HttpDelete, Route("/employees/:userId")]
-    public string DeleteEmployee(int userId)
+    [HttpDelete, Route("employees/{id}")]
+    public string DeleteEmployee([FromRoute] Guid id)
     {
-        // then send command to mocked device
         throw new NotImplementedException();
     }
 }

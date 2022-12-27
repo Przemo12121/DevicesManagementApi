@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Database.Models.Interfaces;
+using DevicesManagement.DataTransferObjects;
 
 namespace DevicesManagement.Controllers;
 
@@ -8,25 +8,21 @@ namespace DevicesManagement.Controllers;
 [ApiController]
 public class CommandsController : ControllerBase
 {
-    [HttpPost, Route("/:commandId/run")]
-    public string RunCommand(int commandId)
+    [HttpPost, Route("{id}/run")]
+    public string RunCommand([FromRoute] Guid id)
     {
-        // then send command to mocked device
         return "Not yet implemented";
     }
 
-    [HttpPatch, Route("/:commandId")]
-    //!!! tutaj musze sie jeszcze pobawic w wysylanie i bindowanie requestow wiec beda parametry przerobione
-    public ICommand EditCommand(int commandId, ICommand command)
+    [HttpPatch, Route("{id}")]
+    public ICommand EditCommand([FromRoute] Guid id, [FromBody] EditCommandRequest request)
     {
-        // then send command to mocked device
         throw new NotImplementedException();
     }
 
-    [HttpDelete, Route("/:commandId")]
-    public string DeleteCommand(int commandId)
+    [HttpDelete, Route("{id}")]
+    public string DeleteCommand([FromRoute] Guid id)
     {
-        // then send command to mocked device
         return "Not yet implemented";
     }
 }
