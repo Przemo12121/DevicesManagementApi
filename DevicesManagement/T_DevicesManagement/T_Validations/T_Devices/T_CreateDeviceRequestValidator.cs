@@ -7,7 +7,7 @@ public class T_CreateDeviceRequestValidator
     // NAME
 
     [Fact]
-    public void Validate_NullName_ShouldNotPasss()
+    public void Validate_NullName_False()
     {
         CreateDeviceRequest request = new()
         {
@@ -21,7 +21,7 @@ public class T_CreateDeviceRequestValidator
     }
 
     [Fact]
-    public void Validate_OneLetterName_ShouldPasss()
+    public void Validate_OneLetterName_True()
     {
         CreateDeviceRequest request = new()
         {
@@ -35,7 +35,7 @@ public class T_CreateDeviceRequestValidator
     }
 
     [Fact]
-    public void Validate_AnyName_ShouldPasss()
+    public void Validate_AnyName_True()
     {
         CreateDeviceRequest request = new()
         {
@@ -49,7 +49,7 @@ public class T_CreateDeviceRequestValidator
     }
 
     [Fact]
-    public void Validate_AnyNameLongerThan256_ShouldNotPasss()
+    public void Validate_AnyNameLongerThan256_False()
     {
         CreateDeviceRequest request = new()
         {
@@ -65,7 +65,7 @@ public class T_CreateDeviceRequestValidator
     // ADDRESS
 
     [Fact]
-    public void Validate_NullAddress_ShouldNotPasss()
+    public void Validate_NullAddress_False()
     {
         CreateDeviceRequest request = new()
         {
@@ -79,12 +79,12 @@ public class T_CreateDeviceRequestValidator
     }
 
     [Fact]
-    public void Validate_PossibleIPv4WithPort_ShouldPasss()
+    public void Validate_PossibleIPv4WithPort_True()
     {
         CreateDeviceRequest request = new()
         {
             Name = "dummy name",
-            Address = "127.0.0.1:5000"
+            Address = "127.25.0.101:5000"
         };
 
         var result = _validator.Validate(request);
@@ -93,7 +93,7 @@ public class T_CreateDeviceRequestValidator
     }
 
     [Fact]
-    public void Validate_ImpossibleIPv4WithPort_ShouldPasss()
+    public void Validate_ImpossibleIPv4WithPort_True()
     {
         CreateDeviceRequest request = new()
         {
@@ -103,11 +103,11 @@ public class T_CreateDeviceRequestValidator
 
         var result = _validator.Validate(request);
 
-        result.IsValid.Should().BeTrue();
+        result.IsValid.Should().BeFalse();
     }
 
     [Fact]
-    public void Validate_PossibleIPv4WithoutPort_ShouldNotPasss()
+    public void Validate_PossibleIPv4WithoutPort_False()
     {
         CreateDeviceRequest request = new()
         {
@@ -121,7 +121,7 @@ public class T_CreateDeviceRequestValidator
     }
 
     [Fact]
-    public void Validate_NonIPv4FormatWithPort_ShouldNotPasss()
+    public void Validate_NonIPv4FormatWithPort_False()
     {
         CreateDeviceRequest request = new()
         {
@@ -135,7 +135,35 @@ public class T_CreateDeviceRequestValidator
     }
 
     [Fact]
-    public void Validate_PossibleIPv4WithPortAndBadCharacters_ShouldNotPasss()
+    public void Validate_BadlyWrittenIPv4FormatWithPort_False()
+    {
+        CreateDeviceRequest request = new()
+        {
+            Name = "dummy name",
+            Address = "127.0.05.1:5000"
+        };
+
+        var result = _validator.Validate(request);
+
+        result.IsValid.Should().BeFalse();
+    }
+
+    [Fact]
+    public void Validate_IPv4FormatWithPadlyWrittenPort_False()
+    {
+        CreateDeviceRequest request = new()
+        {
+            Name = "dummy name",
+            Address = "127.0.05.1:0500"
+        };
+
+        var result = _validator.Validate(request);
+
+        result.IsValid.Should().BeFalse();
+    }
+
+    [Fact]
+    public void Validate_PossibleIPv4WithPortAndBadCharacters_False()
     {
         CreateDeviceRequest request = new()
         {

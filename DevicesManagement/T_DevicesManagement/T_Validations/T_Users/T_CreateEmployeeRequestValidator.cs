@@ -7,7 +7,7 @@ public class T_CreateEmployeeRequestValidator
     // NAME
 
     [Fact]
-    public void Validate_NameAsNull_ShouldNotPass()
+    public void Validate_NameAsNull_False()
     {
         CreateEmployeeRequest request = new()
         {
@@ -22,7 +22,7 @@ public class T_CreateEmployeeRequestValidator
     }
 
     [Fact]
-    public void Validate_OneLetterName_ShouldPass()
+    public void Validate_OneLetterName_True()
     {
         CreateEmployeeRequest request = new()
         {
@@ -37,7 +37,7 @@ public class T_CreateEmployeeRequestValidator
     }
 
     [Fact]
-    public void Validate_AnyName_ShouldPass()
+    public void Validate_AnyName_True()
     {
         CreateEmployeeRequest request = new()
         {
@@ -52,7 +52,7 @@ public class T_CreateEmployeeRequestValidator
     }
 
     [Fact]
-    public void Validate_AnyNameLongerThan256_ShouldNotPass()
+    public void Validate_AnyNameLongerThan256_False()
     {
         CreateEmployeeRequest request = new()
         {
@@ -69,7 +69,7 @@ public class T_CreateEmployeeRequestValidator
     // PASSWORD
 
     [Fact]
-    public void Validate_PasswordAsNull_ShouldNotPass()
+    public void Validate_PasswordAsNull_False()
     {
         CreateEmployeeRequest request = new()
         {
@@ -84,7 +84,7 @@ public class T_CreateEmployeeRequestValidator
     }
 
     [Fact]
-    public void Validate_PasswordShorterThan8_ShouldNotPass()
+    public void Validate_PasswordShorterThan8_False()
     {
         CreateEmployeeRequest request = new()
         {
@@ -99,7 +99,7 @@ public class T_CreateEmployeeRequestValidator
     }
 
     [Fact]
-    public void Validate_PasswordLongerThan7WithDigitLowerCaseAndUpperCase_ShouldPass()
+    public void Validate_PasswordLongerThan7WithDigitLowerCaseAndUpperCase_True()
     {
         CreateEmployeeRequest request = new()
         {
@@ -114,7 +114,7 @@ public class T_CreateEmployeeRequestValidator
     }
 
     [Fact]
-    public void Validate_PasswordWithoutDigit_ShouldNotPass()
+    public void Validate_PasswordWithoutDigit_False()
     {
         CreateEmployeeRequest request = new()
         {
@@ -129,7 +129,7 @@ public class T_CreateEmployeeRequestValidator
     }
 
     [Fact]
-    public void Validate_PasswordWithoutLowerCase_ShouldNotPass()
+    public void Validate_PasswordWithoutLowerCase_False()
     {
         CreateEmployeeRequest request = new()
         {
@@ -144,7 +144,7 @@ public class T_CreateEmployeeRequestValidator
     }
 
     [Fact]
-    public void Validate_PasswordWithoutUpperCase_ShouldNotPass()
+    public void Validate_PasswordWithoutUpperCase_False()
     {
         CreateEmployeeRequest request = new()
         {
@@ -159,7 +159,7 @@ public class T_CreateEmployeeRequestValidator
     }
 
     [Fact]
-    public void Validate_PasswordWithAnySpecialCharacter_ShouldNotPass()
+    public void Validate_PasswordWithAnySpecialCharacter_False()
     {
         CreateEmployeeRequest request = new()
         {
@@ -174,7 +174,7 @@ public class T_CreateEmployeeRequestValidator
     }
 
     [Fact]
-    public void Validate_AnyPasswordLongerThan32_ShouldNotPass()
+    public void Validate_AnyPasswordLongerThan32_False()
     {
         CreateEmployeeRequest request = new()
         {
@@ -191,7 +191,7 @@ public class T_CreateEmployeeRequestValidator
     // EMPLOYEE ID
 
     [Fact]
-    public void Validate_EmployeeEidAsNull_ShouldNotPass()
+    public void Validate_EmployeeEidAsNull_False()
     {
         CreateEmployeeRequest request = new()
         {
@@ -206,7 +206,7 @@ public class T_CreateEmployeeRequestValidator
     }
 
     [Fact]
-    public void Validate_EmployeeEidStartingWithFourLowerLettersAndEightDigits_ShouldPass()
+    public void Validate_EmployeeEidStartingWithFourLowerLettersAndEightDigits_True()
     {
         CreateEmployeeRequest request = new()
         {
@@ -221,7 +221,7 @@ public class T_CreateEmployeeRequestValidator
     }
 
     [Fact]
-    public void Validate_EmployeeEidStartingWithFourLowerLettersAndEightDigitsAndAnyOtherCharacter_ShouldNotPass()
+    public void Validate_EmployeeEidStartingWithFourLowerLettersAndEightDigitsAndAnyOtherCharacter_False()
     {
         CreateEmployeeRequest request = new()
         {
@@ -236,7 +236,7 @@ public class T_CreateEmployeeRequestValidator
     }
 
     [Fact]
-    public void Validate_EmployeeEidStartingWithEightDigitsAndFourLowerLetters_ShouldNotPass()
+    public void Validate_EmployeeEidStartingWithEightDigitsAndFourLowerLetters_False()
     {
         CreateEmployeeRequest request = new()
         {
@@ -251,7 +251,7 @@ public class T_CreateEmployeeRequestValidator
     }
 
     [Fact]
-    public void Validate_EmployeeEidStartingWithThreeDigitsAndEightLetters_ShouldNotPass()
+    public void Validate_EmployeeEidStartingWithThreeDigitsAndEightLetters_False()
     {
         CreateEmployeeRequest request = new()
         {
@@ -266,7 +266,7 @@ public class T_CreateEmployeeRequestValidator
     }
 
     [Fact]
-    public void Validate_EmployeeEidStartingWithFiveDigitsAndEightLetters_ShouldNotPass()
+    public void Validate_EmployeeEidStartingWithFiveDigitsAndEightLetters_False()
     {
         CreateEmployeeRequest request = new()
         {
@@ -281,7 +281,7 @@ public class T_CreateEmployeeRequestValidator
     }
 
     [Fact]
-    public void Validate_EmployeeEidStartingWithFourDigitsAndSevenLetters_ShouldNotPass()
+    public void Validate_EmployeeEidStartingWithFourDigitsAndSevenLetters_False()
     {
         CreateEmployeeRequest request = new()
         {
@@ -296,7 +296,7 @@ public class T_CreateEmployeeRequestValidator
     }
 
     [Fact]
-    public void Validate_EmployeeEidStartingWithFourDigitsAndNineLetters_ShouldNotPass()
+    public void Validate_EmployeeEidStartingWithFourDigitsAndNineLetters_False()
     {
         CreateEmployeeRequest request = new()
         {

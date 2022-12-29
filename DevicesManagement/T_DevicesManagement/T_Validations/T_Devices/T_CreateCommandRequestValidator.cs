@@ -7,7 +7,7 @@ public class T_CreateCommandRequestValidator
     // NAME
 
     [Fact]
-    public void Validate_NullName_ShouldNotPasss()
+    public void Validate_NullName_False()
     {
         CreateCommandRequest request = new()
         {
@@ -22,7 +22,7 @@ public class T_CreateCommandRequestValidator
     }
 
     [Fact]
-    public void Validate_OneLetterName_ShouldPasss()
+    public void Validate_OneLetterName_True()
     {
         CreateCommandRequest request = new()
         {
@@ -37,7 +37,7 @@ public class T_CreateCommandRequestValidator
     }
 
     [Fact]
-    public void Validate_AnyName_ShouldPasss()
+    public void Validate_AnyName_True()
     {
         CreateCommandRequest request = new()
         {
@@ -52,7 +52,7 @@ public class T_CreateCommandRequestValidator
     }
 
     [Fact]
-    public void Validate_AnyNameLongerThan64_ShouldNotPasss()
+    public void Validate_AnyNameLongerThan64_False()
     {
         CreateCommandRequest request = new()
         {
@@ -69,7 +69,7 @@ public class T_CreateCommandRequestValidator
     // DESCRIPTION
 
     [Fact]
-    public void Validate_NullDescription_ShouldPasss()
+    public void Validate_NullDescription_True()
     {
         CreateCommandRequest request = new()
         {
@@ -84,7 +84,7 @@ public class T_CreateCommandRequestValidator
     }
 
     [Fact]
-    public void Validate_OneLetterDescription_ShouldPasss()
+    public void Validate_OneLetterDescription_True()
     {
         CreateCommandRequest request = new()
         {
@@ -99,7 +99,7 @@ public class T_CreateCommandRequestValidator
     }
 
     [Fact]
-    public void Validate_AnyDescription_ShouldPasss()
+    public void Validate_AnyDescription_True()
     {
         CreateCommandRequest request = new()
         {
@@ -114,7 +114,7 @@ public class T_CreateCommandRequestValidator
     }
 
     [Fact]
-    public void Validate_AnyDescriptionLongerThan4097_ShouldNotPasss()
+    public void Validate_AnyDescriptionLongerThan4097_False()
     {
         CreateCommandRequest request = new()
         {
@@ -132,7 +132,7 @@ public class T_CreateCommandRequestValidator
     // BODY
 
     [Fact]
-    public void Validate_NullBody_ShouldNotPasss()
+    public void Validate_NullBody_False()
     {
         CreateCommandRequest request = new()
         {
@@ -147,7 +147,7 @@ public class T_CreateCommandRequestValidator
     }
 
     [Fact]
-    public void Validate_OneLetterBody_ShouldPasss()
+    public void Validate_OneLetterBody_True()
     {
         CreateCommandRequest request = new()
         {
@@ -162,7 +162,7 @@ public class T_CreateCommandRequestValidator
     }
 
     [Fact]
-    public void Validate_AnyBody_ShouldPasss()
+    public void Validate_AnyBody_True()
     {
         CreateCommandRequest request = new()
         {
@@ -177,7 +177,7 @@ public class T_CreateCommandRequestValidator
     }
 
     [Fact]
-    public void Validate_AnyBodyLongerThan2049_ShouldNotPasss()
+    public void Validate_AnyBodyLongerThan2049_False()
     {
         CreateCommandRequest request = new()
         {

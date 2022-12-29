@@ -5,7 +5,7 @@ public class T_EditCommandRequestValidator
     private readonly EditCommandRequestValidator _validator = new();
 
     [Fact]
-    public void Validate_AllAttributesAsNull_ShouldPasss()
+    public void Validate_AllAttributesAsNull_True()
     {
         EditCommandRequest request = new() 
         {
@@ -22,7 +22,7 @@ public class T_EditCommandRequestValidator
     // NAME
 
     [Fact]
-    public void Validate_OneLetterName_ShouldPasss()
+    public void Validate_OneLetterName_True()
     {
         EditCommandRequest request = new()
         {
@@ -37,7 +37,7 @@ public class T_EditCommandRequestValidator
     }
 
     [Fact]
-    public void Validate_AnyName_ShouldPasss()
+    public void Validate_AnyName_True()
     {
         EditCommandRequest request = new()
         {
@@ -52,7 +52,7 @@ public class T_EditCommandRequestValidator
     }
 
     [Fact]
-    public void Validate_AnyNameLongerThan64_ShouldNotPasss()
+    public void Validate_AnyNameLongerThan64_False()
     {
         EditCommandRequest request = new()
         {
@@ -69,7 +69,7 @@ public class T_EditCommandRequestValidator
     // DESCRIPTION
 
     [Fact]
-    public void Validate_OneLetterDescription_ShouldPasss()
+    public void Validate_OneLetterDescription_True()
     {
         EditCommandRequest request = new()
         {
@@ -84,7 +84,7 @@ public class T_EditCommandRequestValidator
     }
 
     [Fact]
-    public void Validate_AnyDescription_ShouldPasss()
+    public void Validate_AnyDescription_True()
     {
         EditCommandRequest request = new()
         {
@@ -99,7 +99,7 @@ public class T_EditCommandRequestValidator
     }
 
     [Fact]
-    public void Validate_AnyDescriptionLongerThan4097_ShouldNotPasss()
+    public void Validate_AnyDescriptionLongerThan4097_False()
     {
         EditCommandRequest request = new()
         {
@@ -117,7 +117,7 @@ public class T_EditCommandRequestValidator
     // BODY
 
     [Fact]
-    public void Validate_OneLetterBody_ShouldPasss()
+    public void Validate_OneLetterBody_True()
     {
         EditCommandRequest request = new()
         {
@@ -132,7 +132,7 @@ public class T_EditCommandRequestValidator
     }
 
     [Fact]
-    public void Validate_AnyBody_ShouldPasss()
+    public void Validate_AnyBody_True()
     {
         EditCommandRequest request = new()
         {
@@ -147,7 +147,7 @@ public class T_EditCommandRequestValidator
     }
 
     [Fact]
-    public void Validate_AnyBodyLongerThan2049_ShouldNotPasss()
+    public void Validate_AnyBodyLongerThan2049_False()
     {
         EditCommandRequest request = new()
         {
