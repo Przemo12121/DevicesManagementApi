@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Database.Models.Interfaces;
+using DevicesManagement.DataTransferObjects;
 
 namespace DevicesManagement.Controllers;
 
@@ -8,44 +8,43 @@ namespace DevicesManagement.Controllers;
 [ApiController]
 public class DevicesController : ControllerBase
 {
-    [HttpGet, Route("/")]
-    public List<IUser> ListAllDevices(int? limit, int? offset, string? order)
+    [HttpGet, Route("")]
+    public List<IUser> ListAllDevices([FromQuery] PaginationRequest request)
     {
         // endpoint will be used to list brief information about all devices
         return new List<IUser>();
     }
 
-    [HttpGet, Route("/:employeeId")]
-    public List<IUser> ListUserDevices(int employeeId)
+    [HttpGet, Route("{employeeId}")]
+    public List<IUser> ListUserDevices([FromRoute] Guid employeeId)
     {
         // endpoint will be used to list brief information about requesting user's devices
         return new List<IUser>();
     }
 
-    [HttpGet, Route("/:deviceId/commands")]
-    public List<ICommand> ListDeviceCommands(int deviceId, int? limit, int? offset, string? order)
+    [HttpGet, Route("{id}/commands")]
+    public List<ICommand> ListDeviceCommands([FromRoute] Guid id, [FromBody] PaginationRequest request)
     {
         // return commands registered to device
         return new List<ICommand>();
     }
 
-    [HttpPost, Route("/")]
-    public IDevice RegisterDevice(IDevice device)
+    [HttpPost, Route("")]
+    public IDevice RegisterDevice([FromBody] CreateDeviceRequest request)
     {
         // adds new device
         throw new NotImplementedException();
     }
 
-    [HttpPost, Route("/:deviceId/commands")]
-    //!!! tutaj musze sie jeszcze pobawic w wysylanie i bindowanie requestow wiec beda parametry przerobione
-    public ICommand RegisterCommand(int deviceId, ICommand command)
+    [HttpPost, Route("{id}/commands")]
+    public ICommand RegisterCommand([FromRoute] Guid id, [FromBody] CreateCommandRequest request)
     {
         // then send create new command
         throw new NotImplementedException();
     }
 
-    [HttpDelete, Route("/:deviceId")]
-    public string DeleteDevice(int deviceId)
+    [HttpDelete, Route("{id}")]
+    public string DeleteDevice([FromRoute] Guid id)
     {
         // delete device
         return "Not yet implemented";
