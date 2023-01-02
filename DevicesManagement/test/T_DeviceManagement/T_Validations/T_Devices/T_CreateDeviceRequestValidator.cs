@@ -149,7 +149,7 @@ public class T_CreateDeviceRequestValidator
     }
 
     [Fact]
-    public void Validate_IPv4FormatWithPadlyWrittenPort_False()
+    public void Validate_IPv4FormatWithBadlyWrittenPort_False()
     {
         CreateDeviceRequest request = new()
         {
