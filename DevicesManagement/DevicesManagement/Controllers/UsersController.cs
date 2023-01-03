@@ -4,6 +4,7 @@ using DevicesManagement.DataTransferObjects;
 
 namespace DevicesManagement.Controllers;
 
+[Authentication.Jwt.JwtBearerFilter]
 [Route("api/[controller]")]
 [ApiController]
 public class UsersController : ControllerBase
