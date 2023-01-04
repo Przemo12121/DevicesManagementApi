@@ -1,17 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Database.Models.Interfaces;
 using DevicesManagement.DataTransferObjects;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace DevicesManagement.Controllers;
 
-[Authentication.Jwt.JwtBearerFilter]
 [Route("api/[controller]")]
+[Authorize]
 [ApiController]
 public class UsersController : ControllerBase
 {
     [HttpGet, Route("employees")]
     public List<IUser> GetEmployees([FromQuery] PaginationRequest request)
     {
+        var x = User; // user is retrieved with authorize, from jwt bearer authenticator
         return new List<IUser>();
     }
 

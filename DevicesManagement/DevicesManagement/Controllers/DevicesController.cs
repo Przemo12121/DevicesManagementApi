@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Database.Models.Interfaces;
 using DevicesManagement.DataTransferObjects;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DevicesManagement.Controllers;
 
 [Route("api/[controller]")]
+[Authorize]
 [ApiController]
 public class DevicesController : ControllerBase
 {
