@@ -11,7 +11,7 @@ public interface IUser : IUpdatableModel
 
     public string Name { get; set; }
 
-    public string Password { get; set; }
+    public string PasswordHashed { get; set; }
 
     public bool Enabled { get; set; }
 

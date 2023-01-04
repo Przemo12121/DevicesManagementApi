@@ -15,7 +15,7 @@ public class T_Add: LocalAuthDatabaseTest
             UpdatedDate = DateTime.Now,
             Id = Guid.NewGuid(),
             EmployeeId = "some id",
-            Password = "password",
+            PasswordHashed = "password",
             AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = Database.Models.Enums.AccessLevels.Admin }
         });
         context.Users.Add(new User
@@ -25,7 +25,7 @@ public class T_Add: LocalAuthDatabaseTest
             UpdatedDate = DateTime.Now,
             Id = Guid.NewGuid(),
             EmployeeId = "some id 2",
-            Password = "password",
+            PasswordHashed = "password",
             AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = Database.Models.Enums.AccessLevels.Admin }
         });
         context.SaveChanges();
@@ -52,7 +52,7 @@ public class T_Add: LocalAuthDatabaseTest
                     Id = Guid.NewGuid(),
                     EmployeeId = "eid 3",
                     AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = Database.Models.Enums.AccessLevels.Employee },
-                    Password = "password"
+                    PasswordHashed = "password"
                 };
 
                 repo.Add(entity);
@@ -85,7 +85,7 @@ public class T_Add: LocalAuthDatabaseTest
                     Id = Guid.NewGuid(),
                     EmployeeId = "eid 3",
                     AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = Database.Models.Enums.AccessLevels.Employee },
-                    Password = "password"
+                    PasswordHashed = "password"
                 };
 
                 repo.Add(entity);
