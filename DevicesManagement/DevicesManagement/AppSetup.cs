@@ -1,4 +1,7 @@
-﻿using Authentication.Jwt;
+﻿using Authentication;
+using Authentication.Jwt;
+using Database.Models;
+using Database.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -39,6 +42,13 @@ internal static class AppSetup
 
         builder.Services.AddSingleton<IJwtProvider, JwtBearerProvider>(
             service => new JwtBearerProvider(jwtOptions)
+        );
+        builder.Services.AddSingleton<IIdentityProvider<User>, UserIdentityProvider>(
+            service => new UserIdentityProvider(
+                new UsersRepository(
+                    new Database.Contexts.LocalAuthStorageContext()
+                )
+            )
         );
     }
 }

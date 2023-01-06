@@ -2,6 +2,7 @@
 using Database.Models.Interfaces;
 using DevicesManagement.DataTransferObjects;
 using Microsoft.AspNetCore.Authorization;
+using DevicesManagement.DataTransferObjects.Requests;
 
 namespace DevicesManagement.Controllers;
 
