@@ -1,41 +1,72 @@
-using Database.Models;
-using Database.Repositories.Interfaces;
-
 namespace T_Authentication.T_UserIdentityProvider;
 
-public class T_Identify
+public class T_CreateIdentity
 {
-    private UserIdentityProvider Provider { get; init; }
-    private User DummyUser { get; init; }
-    public T_Identify()
+    private AccessLevel DummyAccessLevel { get; init; } = new AccessLevel()
     {
-        DummyUser = new User()
-        {
-            CreatedDate = DateTime.UtcNow,
-            UpdatedDate = DateTime.UtcNow,
-            Enabled = true,
-            EmployeeId = "abcd12345678",
-            Name = "Dummy Name",
-            Id = new Guid(),
-            AccessLevel = new AccessLevel() { 
-                Value = AccessLevels.Admin, 
-                Description = "Dummy",
-                Id = new Guid()
-            }
-        };
+        Id = new Guid(),
+        Value = AccessLevels.Admin,
+        Description = "dummy description"
+    };
 
+    private UserIdentityProvider Provider { get; init; }
+    public T_CreateIdentity()
+    {
         var usersRepositoryMock = new Mock<IUsersRepository<User>>();
-        usersRepositoryMock.Setup(mock => mock.FindByEmployeeId("abcd12345678"))
-            .Returns(DummyUser);
-        usersRepositoryMock.Setup(mock => mock.FindByEmployeeId("xyzw12121212"))
-            .Returns(null);
-
         Provider = new UserIdentityProvider(usersRepositoryMock.Object);
     }
 
     [Fact]
-    public void Test1()
+    public void CreateIdentity_GivenData_ReturnsUserWithGivenEmployeeId()
     {
+        var user = Provider.CreateIdentity("abcd12345678", "dummyName", "dummyPASSWORD1", DummyAccessLevel);
 
+        user.EmployeeId.Should().Be("abcd12345678");
+    }
+
+    [Fact]
+    public void CreateIdentity_GivenData_ReturnsUserWithGivenName()
+    {
+        var user = Provider.CreateIdentity("abcd12345678", "dummyName", "dummyPASSWORD1", DummyAccessLevel);
+
+        user.Name.Should().Be("dummyName");
+    }
+
+    [Fact]
+    public void CreateIdentity_GivenData_ReturnsUserWithGivenAccessLevel()
+    {
+        var user = Provider.CreateIdentity("abcd12345678", "dummyName", "dummyPASSWORD1", DummyAccessLevel);
+
+        user.AccessLevel.Should().Be(DummyAccessLevel);
+    }
+
+    [Fact]
+    public void CreateIdentity_GivenData_ReturnsUserWithDifferentPasswordStringThanGiven()
+    {
+        var user = Provider.CreateIdentity("abcd12345678", "dummyName", "dummyPASSWORD1", DummyAccessLevel);
+
+        user.PasswordHashed.Should().NotBe("dummyPASSWORD1");
+    }
+
+    [Fact]
+    public void CreateIdentity_GivenData_ReturnsUserWithPasswordVerifiableByPasswordHasher()
+    {
+        var user = Provider.CreateIdentity("abcd12345678", "dummyName", "dummyPASSWORD1", DummyAccessLevel);
+
+        var result = new PasswordHasher<User>()
+            .VerifyHashedPassword(user, user.PasswordHashed, "dummyPASSWORD1");
+        
+        result.Should().Be(PasswordVerificationResult.Success);
+    }
+
+    [Fact]
+    public void CreateIdentity_GivenData_ReturnsUserWithPasswordNotVerifiableByPasswordHasherWithOtherPassword()
+    {
+        var user = Provider.CreateIdentity("abcd12345678", "dummyName", "dummyPASSWORD1", DummyAccessLevel);
+
+        var result = new PasswordHasher<User>()
+            .VerifyHashedPassword(user, user.PasswordHashed, "otherPASSWORD1");
+
+        result.Should().Be(PasswordVerificationResult.Failed);
     }
 }
