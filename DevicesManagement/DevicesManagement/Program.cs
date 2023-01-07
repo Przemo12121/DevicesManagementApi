@@ -9,6 +9,9 @@ builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
+// Database
+AppSetup.ConfigureDatabase(builder);
+
 // Authentication
 AppSetup.ConfigureAuthentication(builder);
 
@@ -22,3 +25,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+// Allow integration tests
+public partial class Program { }

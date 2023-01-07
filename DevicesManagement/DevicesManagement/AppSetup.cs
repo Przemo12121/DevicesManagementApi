@@ -1,5 +1,6 @@
 ﻿using Authentication;
 using Authentication.Jwt;
+using Database.Contexts;
 using Database.Models;
 using Database.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -9,6 +10,12 @@ using System.Text;
 
 internal static class AppSetup
 {
+    private static LocalAuthStorageContext LocalAuthStorageContext { get; set; } = new LocalAuthStorageContext();
+    public static void ConfigureDatabase(WebApplicationBuilder builder)
+    {
+        builder.Services.AddDbContext<LocalAuthStorageContext>();
+    }
+
     public static void ConfigureAuthentication(WebApplicationBuilder builder)
     {
         var jwtOptions = new JwtOptions()
@@ -45,9 +52,7 @@ internal static class AppSetup
         );
         builder.Services.AddSingleton<IIdentityProvider<User>, UserIdentityProvider>(
             service => new UserIdentityProvider(
-                new UsersRepository(
-                    new Database.Contexts.LocalAuthStorageContext()
-                )
+                new UsersRepository(LocalAuthStorageContext)
             )
         );
     }
