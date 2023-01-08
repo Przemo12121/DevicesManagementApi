@@ -1,4 +1,6 @@
-﻿namespace T_DevicesManagement.T_Validations.T_Devices;
+﻿using DevicesManagement.DataTransferObjects.Requests;
+
+namespace T_DevicesManagement.T_Validations.T_Devices;
 
 public class T_CreateDeviceRequestValidator
 {

@@ -1,4 +1,4 @@
-﻿using DevicesManagement.DataTransferObjects;
+﻿using DevicesManagement.DataTransferObjects.Requests;
 using FluentValidation;
 
 namespace DevicesManagement.Validations.Devices;

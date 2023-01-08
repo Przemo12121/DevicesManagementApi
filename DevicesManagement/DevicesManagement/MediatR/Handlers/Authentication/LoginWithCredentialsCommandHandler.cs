@@ -1,25 +1,25 @@
 ﻿using Authentication;
 using Authentication.Jwt;
 using Database.Models;
-using DevicesManagement.DataTransferObjects.Requests;
+using DevicesManagement.MediatR.Commands.Authentication;
 using MediatR;
 
 namespace DevicesManagement.Handlers.Authentication;
 
-public class LoginWithCredentialsHandler : IRequestHandler<LoginWithCredentialsRequest>
+public class LoginWithCredentialsCommandHandler : IRequestHandler<LoginWithCredentialsCommand>
 {
     private readonly IIdentityProvider<User> _identityProvider;
     private readonly IJwtProvider _jwtProvider;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public LoginWithCredentialsHandler(IHttpContextAccessor httpContextAccessor, IIdentityProvider<User> identityProvider, IJwtProvider jwtProvider)
+    public LoginWithCredentialsCommandHandler(IHttpContextAccessor httpContextAccessor, IIdentityProvider<User> identityProvider, IJwtProvider jwtProvider)
     {
         _httpContextAccessor = httpContextAccessor;
         _identityProvider = identityProvider;
         _jwtProvider = jwtProvider;
     }
 
-    public Task<Unit> Handle(LoginWithCredentialsRequest request, CancellationToken cancellationToken)
+    public Task<Unit> Handle(LoginWithCredentialsCommand request, CancellationToken cancellationToken)
     {
         var user = _identityProvider.Identify(request.Login, request.Password);
 

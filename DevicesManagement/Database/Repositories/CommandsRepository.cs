@@ -2,14 +2,13 @@
 using Database.Repositories.InnerDependencies;
 using Database.Repositories.Interfaces;
 using Database.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace Database.Repositories;
 
 public class CommandsRepository : DisposableRepository<DeviceManagementContext>, ICommandsRepository<Command, CommandHistory>
 {
-    public CommandsRepository(DeviceManagementContext context) : base(context)
-    {
-    }
+    public CommandsRepository(DeviceManagementContext context) : base(context) { }
 
     public void Delete(Command command)
     {
@@ -27,5 +26,15 @@ public class CommandsRepository : DisposableRepository<DeviceManagementContext>,
         _context.DevicesCommandHistory.Add(commandHistory);
         command.CommandHistories.Add(commandHistory);
         _context.SaveChanges();
+    }
+
+    public Command? FindByIdAndEmployeeId(Guid id, string employeeId)
+    {
+        return _context.Devices
+            .Where(device => device.EmployeeId.Equals(employeeId))
+            .Include(device => device.Commands)
+            .SelectMany(device => device.Commands)
+            .Where(command => command.Id.Equals(id))
+            .SingleOrDefault();
     }
 }

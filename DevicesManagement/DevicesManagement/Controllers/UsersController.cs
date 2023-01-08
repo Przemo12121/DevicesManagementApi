@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Database.Models.Interfaces;
-using DevicesManagement.DataTransferObjects;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Authentication.Jwt;
-using Database.Models;
-using Microsoft.IdentityModel.Tokens;
 using DevicesManagement.DataTransferObjects.Requests;
 
 namespace DevicesManagement.Controllers;

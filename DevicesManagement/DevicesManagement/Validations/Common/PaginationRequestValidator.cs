@@ -1,5 +1,4 @@
-﻿using DevicesManagement.DataTransferObjects;
-using DevicesManagement.DataTransferObjects.Requests;
+﻿using DevicesManagement.DataTransferObjects.Requests;
 using FluentValidation;
 using Microsoft.IdentityModel.Tokens;
 

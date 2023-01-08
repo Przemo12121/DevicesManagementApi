@@ -1,6 +1,6 @@
-﻿namespace DevicesManagement.DataTransferObjects;
+﻿namespace DevicesManagement.DataTransferObjects.Requests;
 
-public record CreateCommandRequest 
+public record CreateCommandRequest
 {
     public string Name { get; init; }
     public string Body { get; init; }
@@ -8,7 +8,7 @@ public record CreateCommandRequest
 };
 
 public record CreateDeviceRequest
-{ 
+{
     public string Name { get; init; }
     public string Address { get; init; }
 };
