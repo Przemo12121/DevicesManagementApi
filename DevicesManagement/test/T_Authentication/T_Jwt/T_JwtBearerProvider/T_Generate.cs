@@ -1,44 +1,11 @@
 ﻿
-using Database.Models.Interfaces;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 
 namespace T_Authentication.T_Jwt.T_JwtBearerProvider;
 
-public class T_Generate
+public partial class T_Generate
 {
-    private User DummyUser = new User()
-    {
-        CreatedDate = DateTime.UtcNow,
-        UpdatedDate = DateTime.UtcNow,
-        Enabled = true,
-        EmployeeId = "abcd12345678",
-        Name = "Dummy Name",
-        Id = new Guid(),
-        AccessLevel = new AccessLevel()
-        {
-            Value = AccessLevels.Admin,
-            Description = "Dummy",
-            Id = new Guid()
-        }
-    };
-
-    private JwtOptions Options { get; init; } = new JwtOptions()
-    {
-        Algorithm = SecurityAlgorithms.HmacSha256,
-        Audience = "dummy-audience",
-        Issuer = "dummy-issuer",
-        ExpirationMs = 50000000,
-        Secret = "abcd1234efgh5678"
-    };
-
-    private JwtBearerProvider Provider { get; init; }
-
-    public T_Generate()
-    {
-        Provider = new JwtBearerProvider(Options);
-    }
 
     [Fact]
     public void Generate_GivenUser_CreatesJwtWithSetIssuer()
@@ -80,5 +47,40 @@ public class T_Generate
             .Value
             .Should()
             .Be(DummyUser.AccessLevel.Value.ToString());
+    }
+}
+
+public partial class T_Generate
+{
+    private User DummyUser = new User()
+    {
+        CreatedDate = DateTime.UtcNow,
+        UpdatedDate = DateTime.UtcNow,
+        Enabled = true,
+        EmployeeId = "abcd12345678",
+        Name = "Dummy Name",
+        Id = new Guid(),
+        AccessLevel = new AccessLevel()
+        {
+            Value = AccessLevels.Admin,
+            Description = "Dummy",
+            Id = new Guid()
+        }
+    };
+
+    private JwtOptions Options { get; init; } = new JwtOptions()
+    {
+        Algorithm = SecurityAlgorithms.HmacSha256,
+        Audience = "dummy-audience",
+        Issuer = "dummy-issuer",
+        ExpirationMs = 50000000,
+        Secret = "abcd1234efgh5678"
+    };
+
+    private JwtBearerProvider Provider { get; init; }
+
+    public T_Generate()
+    {
+        Provider = new JwtBearerProvider(Options);
     }
 }
