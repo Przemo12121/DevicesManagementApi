@@ -1,42 +1,8 @@
 namespace T_Database.T_CommandsRepository;
 
-public class T_Delete : DeviceMenagementDatabaseTest
+public partial class T_Delete : DeviceMenagementDatabaseTest
 {
-    public T_Delete() : base("CommandsRepository.Delete") { }
-    
-    private void Seed(DeviceManagementContextTest context)
-    {
-        context.Commands.Add(new Command
-        {
-            Body = "ping .",
-            CreatedDate = DateTime.Now,
-            Name = "ping",
-            Description = "this command pings device",
-            UpdatedDate = DateTime.Now,
-            Id = Guid.NewGuid()
-        });
-        context.Commands.Add(new Command
-        {
-            Body = "on",
-            CreatedDate = DateTime.Now,
-            Name = "turn on",
-            Description = "this command turns on device",
-            UpdatedDate = DateTime.Now,
-            Id = Guid.NewGuid()
-        });
-        context.Commands.Add(new Command
-        {
-            Body = "off",
-            CreatedDate = DateTime.Now,
-            Name = "turn off",
-            Description = "this command turns off device",
-            UpdatedDate = DateTime.Now,
-            Id = Guid.NewGuid()
-        });
-        context.SaveChanges();
-    }
-
-    
+   
     [Fact]
     public void Delete_GivenEntity_DeletesThatEntity()
     {
@@ -114,4 +80,42 @@ public class T_Delete : DeviceMenagementDatabaseTest
             entity2_after.Should().BeEquivalentTo(entity2);
         }
     }
+}
+
+public partial class T_Delete
+{
+    public T_Delete() : base("CommandsRepository.Delete") { }
+
+    private void Seed(DeviceManagementContextTest context)
+    {
+        context.Commands.Add(new Command
+        {
+            Body = "ping .",
+            CreatedDate = DateTime.Now,
+            Name = "ping",
+            Description = "this command pings device",
+            UpdatedDate = DateTime.Now,
+            Id = Guid.NewGuid()
+        });
+        context.Commands.Add(new Command
+        {
+            Body = "on",
+            CreatedDate = DateTime.Now,
+            Name = "turn on",
+            Description = "this command turns on device",
+            UpdatedDate = DateTime.Now,
+            Id = Guid.NewGuid()
+        });
+        context.Commands.Add(new Command
+        {
+            Body = "off",
+            CreatedDate = DateTime.Now,
+            Name = "turn off",
+            Description = "this command turns off device",
+            UpdatedDate = DateTime.Now,
+            Id = Guid.NewGuid()
+        });
+        context.SaveChanges();
+    }
+
 }

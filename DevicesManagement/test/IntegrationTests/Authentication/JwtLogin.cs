@@ -4,7 +4,7 @@ using System.Security.Claims;
 
 namespace IntegrationTests.Authentication;
 
-public partial class JwtLogin : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<Setup>
+public partial class JwtLogin
 {
     [Fact]
     public async Task JwtLogin_NonExisitingEmployeeId_401()
@@ -140,7 +140,7 @@ public partial class JwtLogin : IClassFixture<WebApplicationFactory<Program>>, I
     }
 }
 
-public partial class JwtLogin
+public partial class JwtLogin : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<Setup>
 {
     private readonly WebApplicationFactory<Program> _factory;
     private readonly Setup _setupFixture;

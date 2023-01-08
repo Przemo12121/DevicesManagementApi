@@ -1,10 +1,43 @@
-using T_Database.SearchOptions.DeviceOptions;
-
 namespace T_Database.T_DevicesRepository;
 
-public class T_FindById : DeviceMenagementDatabaseTest
+public partial class T_FindById
 {
-    private readonly Device searchedDevice = new()
+    [Fact]
+    public void FindByEmployeId_ExistingId_ReturnsDevicesWithThatId()
+    {
+        var entity = Repository.FindById(Guid.Parse("12345678-abcd-1234-abcd-123456abcdef"));
+
+        entity.Should().BeEquivalentTo(SearchedDevice);
+    }
+
+    [Fact]
+    public void FindByEmployeId_NonexistingId_ReturnsNull()
+    {
+        var entity = Repository.FindById(Guid.Parse("abcd5678-abcd-1234-abcd-123456abcdef"));
+
+        entity.Should().Be(null);
+    }
+}
+
+public partial class T_FindById : IClassFixture<T_FindById_Setup>
+{
+    private readonly T_FindById_Setup _setupFixture;
+    Device SearchedDevice { get; init; }
+    private DevicesRepository Repository { get; init; }
+
+    public T_FindById(T_FindById_Setup setupFixture)
+    {
+        _setupFixture = setupFixture;
+        SearchedDevice = setupFixture.SearchedDevice;
+        Repository = new DevicesRepository(setupFixture.Context);
+    }
+}
+
+public class T_FindById_Setup : DeviceMenagementDatabaseTest
+{
+    public DeviceManagementContextTest Context { get; init; }
+
+    public Device SearchedDevice { get; } = new()
     {
         CreatedDate = DateTime.Now,
         Name = "dummy device 2",
@@ -16,7 +49,11 @@ public class T_FindById : DeviceMenagementDatabaseTest
         Messages = new List<Message>()
     };
 
-public T_FindById() : base("DevicesRepository.FindById") { }
+    public T_FindById_Setup() : base("DevicesRepository.FindById") 
+    {
+        Context = new DeviceManagementContextTest("DevicesRepository.FindById");
+        Seed(Context);
+    }
 
     private void Seed(DeviceManagementContextTest context)
     {
@@ -31,7 +68,7 @@ public T_FindById() : base("DevicesRepository.FindById") { }
             Commands = new List<Command>(),
             Messages = new List<Message>()
         });
-        context.Devices.Add(searchedDevice);
+        context.Devices.Add(SearchedDevice);
         context.Devices.Add(new Device
         {
             CreatedDate = DateTime.Now,
@@ -66,32 +103,5 @@ public T_FindById() : base("DevicesRepository.FindById") { }
             Messages = new List<Message>()
         });
         context.SaveChanges();
-    }
-
-
-    [Fact]
-    public void FindByEmployeId_ExistingId_ReturnsDevicesWithThatId()
-    {
-        using var context = new DeviceManagementContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new DevicesRepository(context);
-
-        var entity = repo.FindById(Guid.Parse("12345678-abcd-1234-abcd-123456abcdef"));
-
-        entity.Should().BeEquivalentTo(searchedDevice);
-    }
-
-    [Fact]
-    public void FindByEmployeId_NonexistingId_ReturnsNull()
-    {
-        using var context = new DeviceManagementContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new DevicesRepository(context);
-
-        var entity = repo.FindById(Guid.Parse("abcd5678-abcd-1234-abcd-123456abcdef"));
-
-        entity.Should().Be(null);
     }
 }

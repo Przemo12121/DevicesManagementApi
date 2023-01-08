@@ -2,7 +2,99 @@ using T_Database.SearchOptions.CommandHistoryOptions;
 
 namespace T_Database.T_DevicesRepository;
 
-public class T_GetCommandsHistory : DeviceMenagementDatabaseTest
+public partial class T_GetCommandsHistory : DeviceMenagementDatabaseTest
+{
+    [Fact]
+    public void GetCommandsHistory_WithDeviceId_ReturnsCommandsHistoryBelongingToThatDevice()
+    {
+        using var context = new DeviceManagementContextTest(Key);
+        EnsureClear(context);
+        Seed(context);
+        using var repo = new DevicesRepository(context);
+
+        var entities = repo.GetCommandHistories(searched.Id, new LimitableSearchOptions(100));
+
+        entities.Should().HaveCount(3);
+        entities.Should().BeEquivalentTo(searched.Commands.SelectMany(c => c.CommandHistories));
+    }
+
+    [Fact]
+    public void GetCommandsHistory_WithLimitOfTwo_ReturnsTwoRecords()
+    {
+        using var context = new DeviceManagementContextTest(Key);
+        EnsureClear(context);
+        Seed(context);
+        using var repo = new DevicesRepository(context);
+
+        int limit = 2;
+
+        var entities = repo.GetCommandHistories(searched.Id, new LimitableSearchOptions(limit));
+
+        entities.Should().HaveCount(limit);
+    }
+
+    [Fact]
+    public void GetCommandsHistory_WithOffsetOfTwo_ReturnsOneRecord()
+    {
+        using var context = new DeviceManagementContextTest(Key);
+        EnsureClear(context);
+        Seed(context);
+        using var repo = new DevicesRepository(context);
+
+        int offset = 2;
+
+        var entities = repo.GetCommandHistories(searched.Id, new OffsetableSearchOptions(offset));
+
+        entities.Should().HaveCount(1);
+    }
+
+    [Fact]
+    public void GetCommandsHistory_WithOffsetOfTwo_ReturnsThirdCommandHistory()
+    {
+        using var context = new DeviceManagementContextTest(Key);
+        EnsureClear(context);
+        Seed(context);
+        using var repo = new DevicesRepository(context);
+
+        int offset = 2;
+
+        var entities = repo.GetCommandHistories(searched.Id, new OffsetableSearchOptions(offset));
+
+        entities[0].Should().BeEquivalentTo(searched.Commands[0].CommandHistories[1]);
+    }
+
+    [Fact]
+    public void GetCommandsHistory_WithOrderCreatedDateASC_ReturnsCommandsOrderByCreatedDateASC()
+    {
+        using var context = new DeviceManagementContextTest(Key);
+        EnsureClear(context);
+        Seed(context);
+        using var repo = new DevicesRepository(context);
+
+        var entities = repo.GetCommandHistories(searched.Id, new OrderableByCreatedDateAscSearchOptions());
+
+        entities[0].Should().BeEquivalentTo(searched.Commands[0].CommandHistories[0]);
+        entities[1].Should().BeEquivalentTo(searched.Commands[1].CommandHistories[0]);
+        entities[2].Should().BeEquivalentTo(searched.Commands[0].CommandHistories[1]);
+    }
+
+    [Fact]
+    public void GetCommandsHistory_WithOrderCreatedDateDESC_ReturnsCommandsOrderByCreatedDateDESC()
+    {
+        using var context = new DeviceManagementContextTest(Key);
+        EnsureClear(context);
+        Seed(context);
+        using var repo = new DevicesRepository(context);
+
+        var entities = repo.GetCommandHistories(searched.Id, new OrderableByCreatedDateDescSearchOptions());
+
+        entities[0].Should().BeEquivalentTo(searched.Commands[0].CommandHistories[1]);
+        entities[1].Should().BeEquivalentTo(searched.Commands[1].CommandHistories[0]);
+        entities[2].Should().BeEquivalentTo(searched.Commands[0].CommandHistories[0]);
+    }
+}
+
+public partial class T_GetCommandsHistory
 {
     public T_GetCommandsHistory() : base("DevicesReopository.GetCommandsHistory") { }
 
@@ -99,95 +191,5 @@ public class T_GetCommandsHistory : DeviceMenagementDatabaseTest
         });
 
         context.SaveChanges();
-    }
-
-
-    [Fact]
-    public void GetCommandsHistory_WithDeviceId_ReturnsCommandsHistoryBelongingToThatDevice()
-    {
-        using var context = new DeviceManagementContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new DevicesRepository(context);
-
-        var entities = repo.GetCommandHistories(searched.Id, new LimitableSearchOptions(100));
-
-        entities.Should().HaveCount(3);
-        entities.Should().BeEquivalentTo(searched.Commands.SelectMany(c => c.CommandHistories));
-    }
-
-    [Fact]
-    public void GetCommandsHistory_WithLimitOfTwo_ReturnsTwoRecords()
-    {
-        using var context = new DeviceManagementContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new DevicesRepository(context);
-
-        int limit = 2;
-
-        var entities = repo.GetCommandHistories(searched.Id, new LimitableSearchOptions(limit));
-
-        entities.Should().HaveCount(limit);
-    }
-
-    [Fact]
-    public void GetCommandsHistory_WithOffsetOfTwo_ReturnsOneRecord()
-    {
-        using var context = new DeviceManagementContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new DevicesRepository(context);
-
-        int offset = 2;
-
-        var entities = repo.GetCommandHistories(searched.Id, new OffsetableSearchOptions(offset));
-
-        entities.Should().HaveCount(1);
-    }
-
-    [Fact]
-    public void GetCommandsHistory_WithOffsetOfTwo_ReturnsThirdCommandHistory()
-    {
-        using var context = new DeviceManagementContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new DevicesRepository(context);
-
-        int offset = 2;
-
-        var entities = repo.GetCommandHistories(searched.Id, new OffsetableSearchOptions(offset));
-
-        entities[0].Should().BeEquivalentTo(searched.Commands[0].CommandHistories[1]);
-    }
-
-    [Fact]
-    public void GetCommandsHistory_WithOrderCreatedDateASC_ReturnsCommandsOrderByCreatedDateASC()
-    {
-        using var context = new DeviceManagementContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new DevicesRepository(context);
-
-        var entities = repo.GetCommandHistories(searched.Id, new OrderableByCreatedDateAscSearchOptions());
-
-        entities[0].Should().BeEquivalentTo(searched.Commands[0].CommandHistories[0]);
-        entities[1].Should().BeEquivalentTo(searched.Commands[1].CommandHistories[0]);
-        entities[2].Should().BeEquivalentTo(searched.Commands[0].CommandHistories[1]);
-    }
-
-    [Fact]
-    public void GetCommandsHistory_WithOrderCreatedDateDESC_ReturnsCommandsOrderByCreatedDateDESC()
-    {
-        using var context = new DeviceManagementContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new DevicesRepository(context);
-
-        var entities = repo.GetCommandHistories(searched.Id, new OrderableByCreatedDateDescSearchOptions());
-
-        entities[0].Should().BeEquivalentTo(searched.Commands[0].CommandHistories[1]);
-        entities[1].Should().BeEquivalentTo(searched.Commands[1].CommandHistories[0]);
-        entities[2].Should().BeEquivalentTo(searched.Commands[0].CommandHistories[0]);
     }
 }

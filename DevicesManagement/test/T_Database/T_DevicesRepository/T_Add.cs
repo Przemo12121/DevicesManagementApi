@@ -2,38 +2,9 @@
 
 namespace T_Database.T_DevicesRepository;
 
-public class T_Add : DeviceMenagementDatabaseTest
+public partial class T_Add : DeviceMenagementDatabaseTest
 {
-    public T_Add() : base("DevicesRepository.Add") { }
-
-    private void Seed(DeviceManagementContextTest context)
-    {
-        context.Devices.Add(new Device
-        {
-            CreatedDate = DateTime.Now,
-            Name = "dummy device",
-            UpdatedDate = DateTime.Now,
-            Id = Guid.NewGuid(),
-            EmployeeId = "some employee id",
-            Address = "some address",
-            Commands = new List<Command>(),
-            Messages = new List<Message>()
-        }) ;
-        context.Devices.Add(new Device
-        {
-            CreatedDate = DateTime.Now,
-            Name = "dummy device 2",
-            UpdatedDate = DateTime.Now,
-            Id = Guid.NewGuid(),
-            EmployeeId = "some employee id 2",
-            Address = "some address 2",
-            Commands = new List<Command>(),
-            Messages = new List<Message>()
-        });
-        context.SaveChanges();
-    }
-
-
+   
     [Fact]
     public void Add_GivenEntity_AddsThatEntity()
     {
@@ -100,5 +71,37 @@ public class T_Add : DeviceMenagementDatabaseTest
         {
             context.Devices.Should().HaveCount(3);
         }
+    }
+}
+
+public partial class T_Add
+{
+    public T_Add() : base("DevicesRepository.Add") { }
+
+    private void Seed(DeviceManagementContextTest context)
+    {
+        context.Devices.Add(new Device
+        {
+            CreatedDate = DateTime.Now,
+            Name = "dummy device",
+            UpdatedDate = DateTime.Now,
+            Id = Guid.NewGuid(),
+            EmployeeId = "some employee id",
+            Address = "some address",
+            Commands = new List<Command>(),
+            Messages = new List<Message>()
+        });
+        context.Devices.Add(new Device
+        {
+            CreatedDate = DateTime.Now,
+            Name = "dummy device 2",
+            UpdatedDate = DateTime.Now,
+            Id = Guid.NewGuid(),
+            EmployeeId = "some employee id 2",
+            Address = "some address 2",
+            Commands = new List<Command>(),
+            Messages = new List<Message>()
+        });
+        context.SaveChanges();
     }
 }

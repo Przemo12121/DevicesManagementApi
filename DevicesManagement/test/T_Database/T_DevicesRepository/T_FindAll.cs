@@ -2,9 +2,90 @@ using T_Database.SearchOptions.DeviceOptions;
 
 namespace T_Database.T_DevicesRepository;
 
-public class T_FindAll : DeviceMenagementDatabaseTest
+public partial class T_FindAll
 {
-    public T_FindAll() : base("DevicesReopository.FindAll") { }
+    [Fact]
+    public void FindAll_ReturnsThreeRecords()
+    {
+        var entities = Repository.FindAll(new LimitableSearchOptions(100));
+
+        entities.Should().HaveCount(4);
+    }
+
+    [Fact]
+    public void FindAll_WithLimitOfTwo_ReturnsTwoRecords()
+    {
+        int limit = 2;
+        var entities = Repository.FindAll(new LimitableSearchOptions(limit));
+
+        entities.Should().HaveCount(limit);
+    }
+
+    [Fact]
+    public void FindAll_WithOffsetOfTwo_ReturnsOneRecord()
+    {
+        int offset = 2;
+        var entities = Repository.FindAll(new OffsetableSearchOptions(offset));
+
+        entities.Should().HaveCount(2);
+    }
+
+    [Fact]
+    public void FindAll_WithOffsetOfTwo_ReturnsThirdAndFourthEmployee()
+    {
+        int offset = 2;
+        var entities = Repository.FindAll(new OffsetableSearchOptions(offset));
+
+        entities.Should().AllSatisfy(
+            e => e.Name.Should().BeOneOf(new[] { "dummy device 3", "dummy device 4" })
+        );
+    }
+
+    [Fact]
+    public void FindAll_WithOrderNameASC_ReturnsEmployeesOrderByNameASC()
+    {
+        var entities = Repository.FindAll(new OrderableByNameAscSearchOptions());
+
+        entities[0].Name.Should().Be("dummy device");
+        entities[1].Name.Should().Be("dummy device 2");
+        entities[2].Name.Should().Be("dummy device 3");
+        entities[3].Name.Should().Be("dummy device 4");
+    }
+
+    [Fact]
+    public void FindAll_WithOrderNameDESC_ReturnsEmployeesOrderByNameDESC()
+    {
+        var entities = Repository.FindAll(new OrderableByNameDescSearchOptions());
+
+        entities[3].Name.Should().Be("dummy device");
+        entities[2].Name.Should().Be("dummy device 2");
+        entities[1].Name.Should().Be("dummy device 3");
+        entities[0].Name.Should().Be("dummy device 4");
+    }
+}
+
+public partial class T_FindAll : IClassFixture<T_FindAll_Setup>
+{
+    private DevicesRepository Repository { get; init; }
+    private readonly T_FindAll_Setup _setupFixture;
+    public T_FindAll(T_FindAll_Setup setupFixture) 
+    {
+        _setupFixture = setupFixture;
+        Repository = new DevicesRepository(_setupFixture.Context);
+    }
+}
+
+public class T_FindAll_Setup : DeviceMenagementDatabaseTest
+{
+    public DeviceManagementContextTest Context { get; init; }
+
+    public T_FindAll_Setup() : base("DevicesReopository.FindAll")
+    {
+        Context = new DeviceManagementContextTest("DevicesReopository.FindAll");
+        
+        EnsureClear(Context);
+        Seed(Context);
+    }
 
     private void Seed(DeviceManagementContextTest context)
     {
@@ -53,98 +134,5 @@ public class T_FindAll : DeviceMenagementDatabaseTest
             Messages = new List<Message>()
         });
         context.SaveChanges();
-    }
-
-
-    [Fact]
-    public void FindAll_ReturnsThreeRecords()
-    {
-        using var context = new DeviceManagementContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new DevicesRepository(context);
-
-        var entities = repo.FindAll(new LimitableSearchOptions(100));
-
-        entities.Should().HaveCount(4);
-    }
-
-    [Fact]
-    public void FindAll_WithLimitOfTwo_ReturnsTwoRecords()
-    {
-        using var context = new DeviceManagementContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new DevicesRepository(context);
-
-        int limit = 2;
-
-        var entities = repo.FindAll(new LimitableSearchOptions(limit));
-
-        entities.Should().HaveCount(limit);
-    }
-
-    [Fact]
-    public void FindAll_WithOffsetOfTwo_ReturnsOneRecord()
-    {
-        using var context = new DeviceManagementContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new DevicesRepository(context);
-
-        int offset = 2;
-
-        var entities = repo.FindAll(new OffsetableSearchOptions(offset));
-
-        entities.Should().HaveCount(2);
-    }
-
-    [Fact]
-    public void FindAll_WithOffsetOfTwo_ReturnsThirdAndFourthEmployee()
-    {
-        using var context = new DeviceManagementContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new DevicesRepository(context);
-
-        int offset = 2;
-
-        var entities = repo.FindAll(new OffsetableSearchOptions(offset));
-
-        entities.Should().AllSatisfy(
-            e => e.Name.Should().BeOneOf(new[] { "dummy device 3", "dummy device 4" })
-            );
-    }
-
-    [Fact]
-    public void FindAll_WithOrderNameASC_ReturnsEmployeesOrderByNameASC()
-    {
-        using var context = new DeviceManagementContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new DevicesRepository(context);
-
-        var entities = repo.FindAll(new OrderableByNameAscSearchOptions());
-
-        entities[0].Name.Should().Be("dummy device");
-        entities[1].Name.Should().Be("dummy device 2");
-        entities[2].Name.Should().Be("dummy device 3");
-        entities[3].Name.Should().Be("dummy device 4");
-    }
-
-    [Fact]
-    public void FindAll_WithOrderNameDESC_ReturnsEmployeesOrderByNameDESC()
-    {
-        using var context = new DeviceManagementContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new DevicesRepository(context);
-
-        var entities = repo.FindAll(new OrderableByNameDescSearchOptions());
-
-        entities[3].Name.Should().Be("dummy device");
-        entities[2].Name.Should().Be("dummy device 2");
-        entities[1].Name.Should().Be("dummy device 3");
-        entities[0].Name.Should().Be("dummy device 4");
     }
 }

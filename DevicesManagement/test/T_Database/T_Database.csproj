@@ -9,6 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="SearchOptions\NewFolder\**" />
+    <EmbeddedResource Remove="SearchOptions\NewFolder\**" />
+    <None Remove="SearchOptions\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="6.8.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2" />
@@ -25,10 +31,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Database\Database.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="SearchOptions\NewFolder\" />
   </ItemGroup>
 
 </Project>

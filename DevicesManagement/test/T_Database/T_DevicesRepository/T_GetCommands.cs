@@ -2,79 +2,8 @@ using T_Database.SearchOptions.CommandOptions;
 
 namespace T_Database.T_DevicesRepository;
 
-public class T_GetCommands : DeviceMenagementDatabaseTest
+public partial class T_GetCommands : DeviceMenagementDatabaseTest
 {
-    public T_GetCommands() : base("DevicesReopository.GetCommands") { }
-
-    Device searched = new()
-    {
-        CreatedDate = DateTime.Now.AddDays(-10),
-        Name = "dummy device",
-        UpdatedDate = DateTime.Now,
-        Id = Guid.NewGuid(),
-        EmployeeId = "some employee id",
-        Address = "some address",
-        Commands = new List<Command>(),
-        Messages = new List<Message>()
-    };
-
-    private void Seed(DeviceManagementContextTest context)
-    {
-        searched.Commands.Add(new Command()
-        {
-            Body = "command body",
-            CreatedDate = DateTime.Now.AddDays(-10),
-            UpdatedDate = DateTime.Now,
-            Id = Guid.NewGuid(),
-            Description = "dummy description",
-            Name = "a first command"
-        });
-        searched.Commands.Add(new Command()
-        {
-            Body = "command body",
-            CreatedDate = DateTime.Now,
-            UpdatedDate = DateTime.Now,
-            Id = Guid.NewGuid(),
-            Description = "dummy description",
-            Name = "z second command"
-        });
-
-        context.Devices.Add(searched);
-
-        var otherDevice = new Device()
-        {
-            CreatedDate = DateTime.Now.AddDays(-10),
-            Name = "dummy device 2",
-            UpdatedDate = DateTime.Now,
-            Id = Guid.NewGuid(),
-            EmployeeId = "some employee id",
-            Address = "some address 2",
-            Commands = new List<Command>(),
-            Messages = new List<Message>()
-        };
-        otherDevice.Commands.Add(new Command()
-        {
-            Body = "command body",
-            CreatedDate = DateTime.Now,
-            UpdatedDate = DateTime.Now,
-            Id = Guid.NewGuid(),
-            Description = "dummy description",
-            Name = "other command"
-        });
-        otherDevice.Commands.Add(new Command()
-        {
-            Body = "command body",
-            CreatedDate = DateTime.Now,
-            UpdatedDate = DateTime.Now,
-            Id = Guid.NewGuid(),
-            Description = "dummy description",
-            Name = "other command 2"
-        });
-
-        context.SaveChanges();
-    }
-
-
     [Fact]
     public void GetCommands_WithDeviceId_ReturnsCommandsBelongingToThatDevice()
     {
@@ -160,5 +89,78 @@ public class T_GetCommands : DeviceMenagementDatabaseTest
 
         entities[0].Name.Should().Be("z second command");
         entities[1].Name.Should().Be("a first command");
+    }
+}
+
+public partial class T_GetCommands
+{
+    public T_GetCommands() : base("DevicesReopository.GetCommands") { }
+
+    Device searched = new()
+    {
+        CreatedDate = DateTime.Now.AddDays(-10),
+        Name = "dummy device",
+        UpdatedDate = DateTime.Now,
+        Id = Guid.NewGuid(),
+        EmployeeId = "some employee id",
+        Address = "some address",
+        Commands = new List<Command>(),
+        Messages = new List<Message>()
+    };
+
+    private void Seed(DeviceManagementContextTest context)
+    {
+        searched.Commands.Add(new Command()
+        {
+            Body = "command body",
+            CreatedDate = DateTime.Now.AddDays(-10),
+            UpdatedDate = DateTime.Now,
+            Id = Guid.NewGuid(),
+            Description = "dummy description",
+            Name = "a first command"
+        });
+        searched.Commands.Add(new Command()
+        {
+            Body = "command body",
+            CreatedDate = DateTime.Now,
+            UpdatedDate = DateTime.Now,
+            Id = Guid.NewGuid(),
+            Description = "dummy description",
+            Name = "z second command"
+        });
+
+        context.Devices.Add(searched);
+
+        var otherDevice = new Device()
+        {
+            CreatedDate = DateTime.Now.AddDays(-10),
+            Name = "dummy device 2",
+            UpdatedDate = DateTime.Now,
+            Id = Guid.NewGuid(),
+            EmployeeId = "some employee id",
+            Address = "some address 2",
+            Commands = new List<Command>(),
+            Messages = new List<Message>()
+        };
+        otherDevice.Commands.Add(new Command()
+        {
+            Body = "command body",
+            CreatedDate = DateTime.Now,
+            UpdatedDate = DateTime.Now,
+            Id = Guid.NewGuid(),
+            Description = "dummy description",
+            Name = "other command"
+        });
+        otherDevice.Commands.Add(new Command()
+        {
+            Body = "command body",
+            CreatedDate = DateTime.Now,
+            UpdatedDate = DateTime.Now,
+            Id = Guid.NewGuid(),
+            Description = "dummy description",
+            Name = "other command 2"
+        });
+
+        context.SaveChanges();
     }
 }

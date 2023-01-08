@@ -1,56 +1,7 @@
 ﻿namespace T_Database.T_CommandsRepository;
 
-public class T_AddCommandHistory : DeviceMenagementDatabaseTest
+public partial class T_AddCommandHistory : DeviceMenagementDatabaseTest
 {
-    public T_AddCommandHistory() : base("CommandsRepository.AddCommandHistory") { }
-
-    private Command testCommand = new()
-    {
-        CreatedDate = DateTime.Now,
-        Name = "dummy command",
-        UpdatedDate = DateTime.Now,
-        Id = Guid.NewGuid(),
-        CommandHistories = new List<CommandHistory>(),
-        Body = "dummy command body",
-        Description = "dummy command description"
-    };
-
-    private void Seed(DeviceManagementContextTest context)
-    {
-        testCommand.CommandHistories.Add(new CommandHistory()
-        {
-            CreatedDate = DateTime.Now.AddDays(-10),
-            Id = Guid.NewGuid()
-        });
-        testCommand.CommandHistories.Add(new CommandHistory()
-        {
-            CreatedDate = DateTime.Now.AddDays(-10),
-            Id = Guid.NewGuid(),
-        });
-        context.Commands.Add(testCommand);
-
-
-        var otherCommand = new Command
-        {
-            CreatedDate = DateTime.Now,
-            Name = "dummy command 2",
-            UpdatedDate = DateTime.Now,
-            Id = Guid.NewGuid(),
-            CommandHistories = new List<CommandHistory>(),
-            Body = "dummy command body 2",
-            Description = "dummy command description 2"
-        };
-        otherCommand.CommandHistories.Add(new CommandHistory()
-        {
-            CreatedDate = DateTime.Now.AddDays(-10),
-            Id = Guid.NewGuid(),
-        });
-        context.Commands.Add(otherCommand);
-
-        context.SaveChanges();
-    }
-
-
     [Fact]
     public void AddCommand_GivenEntity_AddsThatEntity()
     {
@@ -139,5 +90,56 @@ public class T_AddCommandHistory : DeviceMenagementDatabaseTest
             testCommandsCommandHistories.Should().HaveCount(3);
             testCommandsCommandHistories.Should().Contain(entity);
         }
+    }
+}
+
+public partial class T_AddCommandHistory
+{
+    public T_AddCommandHistory() : base("CommandsRepository.AddCommandHistory") { }
+
+    private Command testCommand = new()
+    {
+        CreatedDate = DateTime.Now,
+        Name = "dummy command",
+        UpdatedDate = DateTime.Now,
+        Id = Guid.NewGuid(),
+        CommandHistories = new List<CommandHistory>(),
+        Body = "dummy command body",
+        Description = "dummy command description"
+    };
+
+    private void Seed(DeviceManagementContextTest context)
+    {
+        testCommand.CommandHistories.Add(new CommandHistory()
+        {
+            CreatedDate = DateTime.Now.AddDays(-10),
+            Id = Guid.NewGuid()
+        });
+        testCommand.CommandHistories.Add(new CommandHistory()
+        {
+            CreatedDate = DateTime.Now.AddDays(-10),
+            Id = Guid.NewGuid(),
+        });
+        context.Commands.Add(testCommand);
+
+
+        var otherCommand = new Command
+        {
+            CreatedDate = DateTime.Now,
+            Name = "dummy command 2",
+            UpdatedDate = DateTime.Now,
+            Id = Guid.NewGuid(),
+            CommandHistories = new List<CommandHistory>(),
+            Body = "dummy command body 2",
+            Description = "dummy command description 2"
+        };
+        otherCommand.CommandHistories.Add(new CommandHistory()
+        {
+            CreatedDate = DateTime.Now.AddDays(-10),
+            Id = Guid.NewGuid(),
+        });
+        context.Commands.Add(otherCommand);
+
+        context.SaveChanges();
     }
 }
