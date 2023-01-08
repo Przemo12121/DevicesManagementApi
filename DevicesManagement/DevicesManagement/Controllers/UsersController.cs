@@ -11,7 +11,7 @@ using DevicesManagement.DataTransferObjects.Requests;
 namespace DevicesManagement.Controllers;
 
 [Route("api/[controller]")]
-[Authorize]
+[Authorize(Roles = "Admin")]
 [ApiController]
 public class UsersController : ControllerBase
 {
