@@ -1,20 +1,15 @@
 ﻿using Database.Contexts;
 using Microsoft.AspNetCore.Identity;
-using Xunit.Abstractions;
-using Xunit.Sdk;
-
-//[assembly: Xunit.TestFramework("IntegrationTests.Authentication.Setup", "Authentication")]
 
 namespace IntegrationTests.Authentication;
 
-public class SetupFixture : XunitTestFramework, IDisposable
+public class Setup : IDisposable
 { 
-    private User DummyUser { get; init; }
-    private AccessLevel DummyAccessLevel { get; init; }
+    public User DummyUser { get; init; }
+    public AccessLevel DummyAccessLevel { get; init; }
     private LocalAuthStorageContext Context { get; init; }
 
-    public SetupFixture(IMessageSink messageSink)
-      : base(messageSink)
+    public Setup()
     {
         // Seed
         Context = new LocalAuthStorageContext();
@@ -40,11 +35,11 @@ public class SetupFixture : XunitTestFramework, IDisposable
         Context.SaveChanges();
     }
 
-    public new void Dispose()
+    public void Dispose()
     {
-        /*Context.Users.Remove(DummyUser);
+        Context.Users.Remove(DummyUser);
         Context.AccessLevels.Remove(DummyAccessLevel);
-        Context.SaveChanges();*/
+        Context.SaveChanges();
 
         GC.SuppressFinalize(this);
     }

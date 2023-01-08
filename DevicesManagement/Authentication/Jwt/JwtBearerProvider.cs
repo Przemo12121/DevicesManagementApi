@@ -15,11 +15,9 @@ public class JwtBearerProvider : IJwtProvider
     {
         _options = options;
         _signingCredentials = new SigningCredentials(
-            new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(_options.Secret)
-                        ),
+            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.Secret)),
             _options.Algorithm
-            );
+        );
     }
 
     public JwtSecurityToken Generate(User user)
