@@ -2,9 +2,95 @@ using T_Database.SearchOptions.UserOptions;
 
 namespace T_Database.T_UsersRepository;
 
-public class T_FindAdmins : LocalAuthDatabaseTest
+public partial class T_FindAdmins
 {
-    public T_FindAdmins() : base("FindAdmins") { }
+    [Fact]
+    public void FindAllAdmins_ReturnsThreeRecords()
+    {
+        var entities = Repository.FindAdmins(new LimitableSearchOptions(100));
+
+        entities.Should().HaveCount(3);
+    }
+
+    [Fact]
+    public void FindAllAdmins_ReturnsOnlyAdminsRecords()
+    {
+        var entities = Repository.FindAdmins(new LimitableSearchOptions(100));
+
+        entities.Should().AllSatisfy(
+            e => e.AccessLevel.Value.Should().Be(AccessLevels.Admin)
+        );
+    }
+
+    [Fact]
+    public void FindAllAdmins_WithLimitOfTwo_ReturnsTwoRecords()
+    {
+        int limit = 2;
+        var entities = Repository.FindAdmins(new LimitableSearchOptions(limit));
+
+        entities.Should().HaveCount(limit);
+    }
+
+    [Fact]
+    public void FindAllAdmins_WithOffsetOfTwo_ReturnsOneRecord()
+    {
+        int offset = 2;
+        var entities = Repository.FindAdmins(new OffsetableSearchOptions(offset));
+
+        entities.Should().HaveCount(1);
+    }
+
+    [Fact]
+    public void FindAllAdmins_WithOffsetOfOne_ReturnsSecondAndThirdAdmin()
+    {
+        int offset = 1;
+        var entities = Repository.FindAdmins(new OffsetableSearchOptions(offset));
+
+        entities.Should().AllSatisfy(
+            e => e.EmployeeId.Should().BeOneOf(new[] { "some id 4", "some id 5" })
+        );
+    }
+
+    [Fact]
+    public void FindAllAdmins_WithOrderNameASC_ReturnsAdminsOrderByNameASC()
+    {
+        var entities = Repository.FindAdmins(new OrderableByNameAscSearchOptions());
+            
+        entities[0].Name.Should().Be("dummy user");
+        entities[1].Name.Should().Be("dummy user 4");
+        entities[2].Name.Should().Be("dummy user 5");
+    }
+
+    [Fact]
+    public void FindAllAdmins_WithOrderNameDESC_ReturnsAdminsOrderByNameDESC()
+    {
+        var entities = Repository.FindAdmins(new OrderableByNameDescSearchOptions());
+
+        entities[0].Name.Should().Be("dummy user 5");
+        entities[1].Name.Should().Be("dummy user 4");
+        entities[2].Name.Should().Be("dummy user");
+    }
+}
+
+public partial class T_FindAdmins : IClassFixture<T_FindAdmins_Setup>
+{
+    private readonly T_FindAdmins_Setup _setupFixture;
+    UsersRepository Repository { get; init; }
+    public T_FindAdmins(T_FindAdmins_Setup setupFixutre) 
+    {
+        _setupFixture = setupFixutre;
+        Repository = new UsersRepository(setupFixutre.Context);
+    }
+}
+
+public class T_FindAdmins_Setup : LocalAuthDatabaseTest
+{
+    public LocalAuthContextTest Context { get; init; }
+    public T_FindAdmins_Setup() : base("FindAdmins") 
+    {
+        Context = new LocalAuthContextTest("FindAdmins");
+        Seed(Context);
+    }
 
     private void Seed(LocalAuthContextTest context)
     {
@@ -61,111 +147,5 @@ public class T_FindAdmins : LocalAuthDatabaseTest
             AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = AccessLevels.Admin }
         });
         context.SaveChanges();
-    }
-
-
-    [Fact]
-    public void FindAllAdmins_ReturnsThreeRecords()
-    {
-        using var context = new LocalAuthContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new UsersRepository(context);
-
-        var entities = repo.FindAdmins(new LimitableSearchOptions(100));
-
-        entities.Should().HaveCount(3);
-    }
-
-    [Fact]
-    public void FindAllAdmins_ReturnsOnlyAdminsRecords()
-    {
-        using var context = new LocalAuthContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new UsersRepository(context);
-
-        var entities = repo.FindAdmins(new LimitableSearchOptions(100));
-
-        entities.Should().AllSatisfy(
-            e => e.AccessLevel.Value.Should().Be(AccessLevels.Admin)
-            );
-    }
-
-    [Fact]
-    public void FindAllAdmins_WithLimitOfTwo_ReturnsTwoRecords()
-    {
-        using var context = new LocalAuthContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new UsersRepository(context);
-
-        int limit = 2;
-
-        var entities = repo.FindAdmins(new LimitableSearchOptions(limit));
-
-        entities.Should().HaveCount(limit);
-    }
-
-    [Fact]
-    public void FindAllAdmins_WithOffsetOfTwo_ReturnsOneRecord()
-    {
-        using var context = new LocalAuthContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new UsersRepository(context);
-
-        int offset = 2;
-
-        var entities = repo.FindAdmins(new OffsetableSearchOptions(offset));
-
-        entities.Should().HaveCount(1);
-    }
-
-    [Fact]
-    public void FindAllAdmins_WithOffsetOfOne_ReturnsSecondAndThirdAdmin()
-    {
-        using var context = new LocalAuthContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new UsersRepository(context);
-
-        int offset = 1;
-
-        var entities = repo.FindAdmins(new OffsetableSearchOptions(offset));
-
-        entities.Should().AllSatisfy(
-            e => e.EmployeeId.Should().BeOneOf(new[] { "some id 4", "some id 5" })
-            );
-    }
-
-    [Fact]
-    public void FindAllAdmins_WithOrderNameASC_ReturnsAdminsOrderByNameASC()
-    {
-        using var context = new LocalAuthContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new UsersRepository(context);
-
-        var entities = repo.FindAdmins(new OrderableByNameAscSearchOptions());
-
-        entities[0].Name.Should().Be("dummy user");
-        entities[1].Name.Should().Be("dummy user 4");
-        entities[2].Name.Should().Be("dummy user 5");
-    }
-
-    [Fact]
-    public void FindAllAdmins_WithOrderNameDESC_ReturnsAdminsOrderByNameDESC()
-    {
-        using var context = new LocalAuthContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new UsersRepository(context);
-
-        var entities = repo.FindAdmins(new OrderableByNameDescSearchOptions());
-
-        entities[0].Name.Should().Be("dummy user 5");
-        entities[1].Name.Should().Be("dummy user 4");
-        entities[2].Name.Should().Be("dummy user");
     }
 }

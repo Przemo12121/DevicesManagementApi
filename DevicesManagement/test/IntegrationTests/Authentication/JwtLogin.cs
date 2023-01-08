@@ -118,7 +118,7 @@ public partial class JwtLogin
 
         var uniqeName = jwt.Claims.Where(claim => claim.Type.Equals("unique_name")).First();
 
-        uniqeName.Value.Should().Be(_setupFixture.DummyUser.EmployeeId);
+        uniqeName.Value.Should().Be(DummyUser.EmployeeId);
     }
 
     [Fact]
@@ -136,7 +136,7 @@ public partial class JwtLogin
 
         var role = jwt.Claims.Where(claim => claim.Type.Equals("role")).First();
 
-        role.Value.Should().Be(_setupFixture.DummyUser.AccessLevel.Value.ToString());
+        role.Value.Should().Be(DummyUser.AccessLevel.Value.ToString());
     }
 }
 
@@ -146,6 +146,7 @@ public partial class JwtLogin : IClassFixture<WebApplicationFactory<Program>>, I
     private readonly Setup _setupFixture;
 
     private HttpClient HttpClient { get; init; }
+    private User DummyUser { get; init; }
 
     public JwtLogin(WebApplicationFactory<Program> factory, Setup setupFixture)
     {
@@ -153,6 +154,7 @@ public partial class JwtLogin : IClassFixture<WebApplicationFactory<Program>>, I
         _setupFixture = setupFixture;
 
         HttpClient = _factory.CreateClient();
+        DummyUser = setupFixture.DummyUser;
     }
 
     private string Route { get; } = "/api/authentication/jwt/login";

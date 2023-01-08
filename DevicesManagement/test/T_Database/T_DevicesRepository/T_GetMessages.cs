@@ -2,33 +2,22 @@ using T_Database.SearchOptions.MessageOptions;
 
 namespace T_Database.T_DevicesRepository;
 
-public partial class T_GetMessages : DeviceMenagementDatabaseTest
+public partial class T_GetMessages
 {
     [Fact]
     public void GetMessages_WithDeviceId_ReturnsMessagesBelongingToThatDevice()
     {
-        using var context = new DeviceManagementContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new DevicesRepository(context);
-
-        var entities = repo.GetMessages(searched.Id, new LimitableSearchOptions(100));
+        var entities = Repository.GetMessages(Searched.Id, new LimitableSearchOptions(100));
 
         entities.Should().HaveCount(2);
-        entities.Should().BeEquivalentTo(searched.Messages);
+        entities.Should().BeEquivalentTo(Searched.Messages);
     }
 
     [Fact]
     public void GetMessages_WithLimitOfOne_ReturnsOneRecord()
     {
-        using var context = new DeviceManagementContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new DevicesRepository(context);
-
         int limit = 1;
-
-        var entities = repo.GetMessages(searched.Id, new LimitableSearchOptions(limit));
+        var entities = Repository.GetMessages(Searched.Id, new LimitableSearchOptions(limit));
 
         entities.Should().HaveCount(limit);
     }
@@ -36,14 +25,8 @@ public partial class T_GetMessages : DeviceMenagementDatabaseTest
     [Fact]
     public void GetMessages_WithOffsetOfOne_ReturnsOneRecord()
     {
-        using var context = new DeviceManagementContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new DevicesRepository(context);
-
         int offset = 1;
-
-        var entities = repo.GetMessages(searched.Id, new OffsetableSearchOptions(offset));
+        var entities = Repository.GetMessages(Searched.Id, new OffsetableSearchOptions(offset));
 
         entities.Should().HaveCount(1);
     }
@@ -51,52 +34,50 @@ public partial class T_GetMessages : DeviceMenagementDatabaseTest
     [Fact]
     public void GetMessages_WithOffsetOfOne_ReturnsSecondMessage()
     {
-        using var context = new DeviceManagementContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new DevicesRepository(context);
-
         int offset = 1;
+        var entities = Repository.GetMessages(Searched.Id, new OffsetableSearchOptions(offset));
 
-        var entities = repo.GetMessages(searched.Id, new OffsetableSearchOptions(offset));
-
-        entities[0].Should().BeEquivalentTo(searched.Messages[1]);
+        entities[0].Should().BeEquivalentTo(Searched.Messages[1]);
     }
 
     [Fact]
     public void GetMessages_WithOrderCreatedDateASC_ReturnsMessagesOrderedByCreatedDateASC()
     {
-        using var context = new DeviceManagementContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new DevicesRepository(context);
+        var entities = Repository.GetMessages(Searched.Id, new OrderableByCreatedDateAscSearchOptions());
 
-        var entities = repo.GetMessages(searched.Id, new OrderableByCreatedDateAscSearchOptions());
-
-        entities[0].Should().Be(searched.Messages[0]);
-        entities[1].Should().Be(searched.Messages[1]);
+        entities[0].Should().Be(Searched.Messages[0]);
+        entities[1].Should().Be(Searched.Messages[1]);
     }
 
     [Fact]
     public void GetMessages_WithOrderCreatedDateDESC_ReturnsMessagesOrderedByCreatedDateDESC()
     {
-        using var context = new DeviceManagementContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new DevicesRepository(context);
+        var entities = Repository.GetMessages(Searched.Id, new OrderableByCreatedDateDescSearchOptions());
 
-        var entities = repo.GetMessages(searched.Id, new OrderableByCreatedDateDescSearchOptions());
-
-        entities[0].Should().Be(searched.Messages[1]);
-        entities[1].Should().Be(searched.Messages[0]);
+        entities[0].Should().Be(Searched.Messages[1]);
+        entities[1].Should().Be(Searched.Messages[0]);
     }
 }
 
-public partial class T_GetMessages
+public partial class T_GetMessages : IClassFixture<T_GetMessages_Setup>
 {
-    public T_GetMessages() : base("DevicesReopository.GetMessages") { }
+    private readonly T_GetMessages_Setup _setupFixture;
+    Device Searched { get; init; }
+    DevicesRepository Repository { get ; init; }
 
-    Device searched = new()
+    public T_GetMessages(T_GetMessages_Setup setupFixture) 
+    {
+        _setupFixture = setupFixture;
+        Repository = new DevicesRepository(setupFixture.Context);
+        Searched = setupFixture.Searched;
+    }
+}
+
+public class T_GetMessages_Setup : DeviceMenagementDatabaseTest
+{
+    public DeviceManagementContextTest Context { get; init; }
+
+    public Device Searched { get; } = new ()
     {
         CreatedDate = DateTime.Now.AddDays(-10),
         Name = "dummy device",
@@ -108,9 +89,15 @@ public partial class T_GetMessages
         Messages = new List<Message>()
     };
 
+    public T_GetMessages_Setup() : base("DevicesReopository.GetMessages") 
+    {
+        Context = new DeviceManagementContextTest("DevicesReopository.GetMessages");
+        Seed(Context);
+    }
+
     private void Seed(DeviceManagementContextTest context)
     {
-        searched.Messages.Add(new Message()
+        Searched.Messages.Add(new Message()
         {
             Id = Guid.NewGuid(),
             From = "dummy sourde",
@@ -118,7 +105,7 @@ public partial class T_GetMessages
             Content = "aa first message",
             CreatedDate = DateTime.Now.AddDays(-1),
         });
-        searched.Messages.Add(new Message()
+        Searched.Messages.Add(new Message()
         {
             Id = Guid.NewGuid(),
             From = "dummy sourde",
@@ -126,7 +113,7 @@ public partial class T_GetMessages
             Content = "zz second message",
             CreatedDate = DateTime.Now,
         });
-        context.Devices.Add(searched);
+        context.Devices.Add(Searched);
 
         var otherDevice = new Device()
         {

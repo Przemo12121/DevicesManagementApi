@@ -2,33 +2,22 @@ using T_Database.SearchOptions.CommandHistoryOptions;
 
 namespace T_Database.T_DevicesRepository;
 
-public partial class T_GetCommandsHistory : DeviceMenagementDatabaseTest
+public partial class T_GetCommandsHistory
 {
     [Fact]
     public void GetCommandsHistory_WithDeviceId_ReturnsCommandsHistoryBelongingToThatDevice()
     {
-        using var context = new DeviceManagementContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new DevicesRepository(context);
-
-        var entities = repo.GetCommandHistories(searched.Id, new LimitableSearchOptions(100));
+        var entities = Repository.GetCommandHistories(Searched.Id, new LimitableSearchOptions(100));
 
         entities.Should().HaveCount(3);
-        entities.Should().BeEquivalentTo(searched.Commands.SelectMany(c => c.CommandHistories));
+        entities.Should().BeEquivalentTo(Searched.Commands.SelectMany(c => c.CommandHistories));
     }
 
     [Fact]
     public void GetCommandsHistory_WithLimitOfTwo_ReturnsTwoRecords()
     {
-        using var context = new DeviceManagementContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new DevicesRepository(context);
-
         int limit = 2;
-
-        var entities = repo.GetCommandHistories(searched.Id, new LimitableSearchOptions(limit));
+        var entities = Repository.GetCommandHistories(Searched.Id, new LimitableSearchOptions(limit));
 
         entities.Should().HaveCount(limit);
     }
@@ -36,14 +25,8 @@ public partial class T_GetCommandsHistory : DeviceMenagementDatabaseTest
     [Fact]
     public void GetCommandsHistory_WithOffsetOfTwo_ReturnsOneRecord()
     {
-        using var context = new DeviceManagementContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new DevicesRepository(context);
-
         int offset = 2;
-
-        var entities = repo.GetCommandHistories(searched.Id, new OffsetableSearchOptions(offset));
+        var entities = Repository.GetCommandHistories(Searched.Id, new OffsetableSearchOptions(offset));
 
         entities.Should().HaveCount(1);
     }
@@ -51,54 +34,51 @@ public partial class T_GetCommandsHistory : DeviceMenagementDatabaseTest
     [Fact]
     public void GetCommandsHistory_WithOffsetOfTwo_ReturnsThirdCommandHistory()
     {
-        using var context = new DeviceManagementContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new DevicesRepository(context);
-
         int offset = 2;
+        var entities = Repository.GetCommandHistories(Searched.Id, new OffsetableSearchOptions(offset));
 
-        var entities = repo.GetCommandHistories(searched.Id, new OffsetableSearchOptions(offset));
-
-        entities[0].Should().BeEquivalentTo(searched.Commands[0].CommandHistories[1]);
+        entities[0].Should().BeEquivalentTo(Searched.Commands[0].CommandHistories[1]);
     }
 
     [Fact]
     public void GetCommandsHistory_WithOrderCreatedDateASC_ReturnsCommandsOrderByCreatedDateASC()
     {
-        using var context = new DeviceManagementContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new DevicesRepository(context);
+        var entities = Repository.GetCommandHistories(Searched.Id, new OrderableByCreatedDateAscSearchOptions());
 
-        var entities = repo.GetCommandHistories(searched.Id, new OrderableByCreatedDateAscSearchOptions());
-
-        entities[0].Should().BeEquivalentTo(searched.Commands[0].CommandHistories[0]);
-        entities[1].Should().BeEquivalentTo(searched.Commands[1].CommandHistories[0]);
-        entities[2].Should().BeEquivalentTo(searched.Commands[0].CommandHistories[1]);
+        entities[0].Should().BeEquivalentTo(Searched.Commands[0].CommandHistories[0]);
+        entities[1].Should().BeEquivalentTo(Searched.Commands[1].CommandHistories[0]);
+        entities[2].Should().BeEquivalentTo(Searched.Commands[0].CommandHistories[1]);
     }
 
     [Fact]
     public void GetCommandsHistory_WithOrderCreatedDateDESC_ReturnsCommandsOrderByCreatedDateDESC()
     {
-        using var context = new DeviceManagementContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new DevicesRepository(context);
+        var entities = Repository.GetCommandHistories(Searched.Id, new OrderableByCreatedDateDescSearchOptions());
 
-        var entities = repo.GetCommandHistories(searched.Id, new OrderableByCreatedDateDescSearchOptions());
-
-        entities[0].Should().BeEquivalentTo(searched.Commands[0].CommandHistories[1]);
-        entities[1].Should().BeEquivalentTo(searched.Commands[1].CommandHistories[0]);
-        entities[2].Should().BeEquivalentTo(searched.Commands[0].CommandHistories[0]);
+        entities[0].Should().BeEquivalentTo(Searched.Commands[0].CommandHistories[1]);
+        entities[1].Should().BeEquivalentTo(Searched.Commands[1].CommandHistories[0]);
+        entities[2].Should().BeEquivalentTo(Searched.Commands[0].CommandHistories[0]);
     }
 }
 
-public partial class T_GetCommandsHistory
+public partial class T_GetCommandsHistory : IClassFixture<T_GetCommandsHistory_Setup>
 {
-    public T_GetCommandsHistory() : base("DevicesReopository.GetCommandsHistory") { }
+    private readonly T_GetCommandsHistory_Setup _setupFixture;
+    Device Searched { get; init; }
+    DevicesRepository Repository { get; init; }
+    public T_GetCommandsHistory(T_GetCommandsHistory_Setup setupFixture) 
+    {
+        _setupFixture = setupFixture;
+        Repository = new DevicesRepository(setupFixture.Context);
+        Searched = setupFixture.Searched;
+    }
 
-    Device searched = new()
+}
+
+public class T_GetCommandsHistory_Setup : DeviceMenagementDatabaseTest
+{
+    public DeviceManagementContextTest Context { get; init; }
+    public Device Searched { get; } = new ()
     {
         CreatedDate = DateTime.Now.AddDays(-10),
         Name = "dummy device",
@@ -110,9 +90,15 @@ public partial class T_GetCommandsHistory
         Messages = new List<Message>()
     };
 
+    public T_GetCommandsHistory_Setup() : base("DevicesReopository.GetCommandsHistory") 
+    {
+        Context = new DeviceManagementContextTest("DevicesReopository.GetCommandsHistory");
+        Seed(Context);
+    }
+
     private void Seed(DeviceManagementContextTest context)
     {
-        searched.Commands.Add(new Command()
+        Searched.Commands.Add(new Command()
         {
             Body = "command body",
             CreatedDate = DateTime.Now.AddDays(-10),
@@ -122,7 +108,7 @@ public partial class T_GetCommandsHistory
             Name = "a first command",
             CommandHistories = new List<CommandHistory>()
         });
-        searched.Commands.Add(new Command()
+        Searched.Commands.Add(new Command()
         {
             Body = "command body",
             CreatedDate = DateTime.Now,
@@ -132,19 +118,19 @@ public partial class T_GetCommandsHistory
             Name = "z second command",
             CommandHistories = new List<CommandHistory>()
         });
-        searched.Commands[0].CommandHistories.Add(new CommandHistory()
+        Searched.Commands[0].CommandHistories.Add(new CommandHistory()
         {
             CreatedDate = DateTime.Now.AddDays(-3)
         });
-        searched.Commands[1].CommandHistories.Add(new CommandHistory()
+        Searched.Commands[1].CommandHistories.Add(new CommandHistory()
         {
             CreatedDate = DateTime.Now.AddDays(-2)
         });
-        searched.Commands[0].CommandHistories.Add(new CommandHistory()
+        Searched.Commands[0].CommandHistories.Add(new CommandHistory()
         {
             CreatedDate = DateTime.Now.AddDays(-1)
         });
-        context.Devices.Add(searched);
+        context.Devices.Add(Searched);
 
         var otherDevice = new Device()
         {

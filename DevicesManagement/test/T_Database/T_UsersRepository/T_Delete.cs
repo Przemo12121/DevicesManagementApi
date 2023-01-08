@@ -1,47 +1,7 @@
-using T_Database.SearchOptions.UserOptions;
-
 namespace T_Database.T_UsersRepository;
 
-public class T_Delete : LocalAuthDatabaseTest
+public partial class T_Delete : LocalAuthDatabaseTest
 {
-    public T_Delete() : base("Delete") { }
-    
-    private void Seed(LocalAuthContextTest context)
-    {
-        context.Users.Add(new User
-        {
-            CreatedDate = DateTime.Now,
-            Name = "dummy user",
-            UpdatedDate = DateTime.Now,
-            Id = Guid.NewGuid(),
-            EmployeeId = "some id",
-            PasswordHashed = "password",
-            AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = Database.Models.Enums.AccessLevels.Admin }
-        });
-        context.Users.Add(new User
-        {
-            CreatedDate = DateTime.Now,
-            Name = "dummy user 2",
-            UpdatedDate = DateTime.Now,
-            Id = Guid.NewGuid(),
-            EmployeeId = "some id 2",
-            PasswordHashed = "password",
-            AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = Database.Models.Enums.AccessLevels.Employee }
-        });
-        context.Users.Add(new User
-        {
-            CreatedDate = DateTime.Now,
-            Name = "dummy user 3",
-            UpdatedDate = DateTime.Now,
-            Id = Guid.NewGuid(),
-            EmployeeId = "some id 3",
-            PasswordHashed = "password",
-            AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = Database.Models.Enums.AccessLevels.Admin }
-        });
-        context.SaveChanges();
-    }
-
-    
     [Fact]
     public void Delete_GivenEntity_DeletesThatEntity()
     {
@@ -118,5 +78,45 @@ public class T_Delete : LocalAuthDatabaseTest
             var entity2_after = context.Users.Skip(1).First();
             entity2_after.Should().BeEquivalentTo(entity2);
         }
+    }
+}
+
+public partial class T_Delete
+{
+    public T_Delete() : base("Delete") { }
+
+    private void Seed(LocalAuthContextTest context)
+    {
+        context.Users.Add(new User
+        {
+            CreatedDate = DateTime.Now,
+            Name = "dummy user",
+            UpdatedDate = DateTime.Now,
+            Id = Guid.NewGuid(),
+            EmployeeId = "some id",
+            PasswordHashed = "password",
+            AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = Database.Models.Enums.AccessLevels.Admin }
+        });
+        context.Users.Add(new User
+        {
+            CreatedDate = DateTime.Now,
+            Name = "dummy user 2",
+            UpdatedDate = DateTime.Now,
+            Id = Guid.NewGuid(),
+            EmployeeId = "some id 2",
+            PasswordHashed = "password",
+            AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = Database.Models.Enums.AccessLevels.Employee }
+        });
+        context.Users.Add(new User
+        {
+            CreatedDate = DateTime.Now,
+            Name = "dummy user 3",
+            UpdatedDate = DateTime.Now,
+            Id = Guid.NewGuid(),
+            EmployeeId = "some id 3",
+            PasswordHashed = "password",
+            AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = Database.Models.Enums.AccessLevels.Admin }
+        });
+        context.SaveChanges();
     }
 }

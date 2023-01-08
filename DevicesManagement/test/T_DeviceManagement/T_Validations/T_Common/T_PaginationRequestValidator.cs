@@ -1,5 +1,4 @@
-﻿using DevicesManagement.DataTransferObjects.Requests;
-using DevicesManagement.Validations.Common;
+﻿using DevicesManagement.Validations.Common;
 
 namespace T_DevicesManagement.T_Validations.T_Common;
 

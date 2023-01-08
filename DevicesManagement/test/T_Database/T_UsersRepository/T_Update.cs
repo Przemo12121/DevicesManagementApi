@@ -1,50 +1,7 @@
-using T_Database.SearchOptions.UserOptions;
-
 namespace T_Database.T_UsersRepository;
 
-public class T_Update : LocalAuthDatabaseTest
+public partial class T_Update : LocalAuthDatabaseTest
 {
-    public T_Update() : base("Update") { }
-
-    private void Seed(LocalAuthContextTest context)
-    {
-        context.Users.Add(new User
-        {
-            CreatedDate = DateTime.Now,
-            Name = "dummy user",
-            UpdatedDate = DateTime.Now,
-            Id = Guid.NewGuid(),
-            EmployeeId = "some id",
-            PasswordHashed = "password",
-            Enabled = true,
-            AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = Database.Models.Enums.AccessLevels.Admin }
-        });
-        context.Users.Add(new User
-        {
-            CreatedDate = DateTime.Now,
-            Name = "dummy user 2",
-            UpdatedDate = DateTime.Now,
-            Id = Guid.NewGuid(),
-            EmployeeId = "some id 2",
-            PasswordHashed = "password",
-            Enabled = false,
-            AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = Database.Models.Enums.AccessLevels.Employee }
-        });
-        context.Users.Add(new User
-        {
-            CreatedDate = DateTime.Now,
-            Name = "dummy user 3",
-            UpdatedDate = DateTime.Now,
-            Id = Guid.NewGuid(),
-            EmployeeId = "some id 3",
-            PasswordHashed = "password",
-            Enabled = false,
-            AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = Database.Models.Enums.AccessLevels.Employee }
-        });
-        context.SaveChanges();
-    }
-
-
     [Fact]
     public void Update_Name_UpdatesName()
     {
@@ -133,5 +90,48 @@ public class T_Update : LocalAuthDatabaseTest
             var entity2_after = context.Users.Where(e => e.Id.Equals(entity2.Id)).Single();
             entity2_after.Should().BeEquivalentTo(entity2);
         }
+    }
+}
+
+public partial class T_Update
+{
+    public T_Update() : base("Update") { }
+
+    private void Seed(LocalAuthContextTest context)
+    {
+        context.Users.Add(new User
+        {
+            CreatedDate = DateTime.Now,
+            Name = "dummy user",
+            UpdatedDate = DateTime.Now,
+            Id = Guid.NewGuid(),
+            EmployeeId = "some id",
+            PasswordHashed = "password",
+            Enabled = true,
+            AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = Database.Models.Enums.AccessLevels.Admin }
+        });
+        context.Users.Add(new User
+        {
+            CreatedDate = DateTime.Now,
+            Name = "dummy user 2",
+            UpdatedDate = DateTime.Now,
+            Id = Guid.NewGuid(),
+            EmployeeId = "some id 2",
+            PasswordHashed = "password",
+            Enabled = false,
+            AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = Database.Models.Enums.AccessLevels.Employee }
+        });
+        context.Users.Add(new User
+        {
+            CreatedDate = DateTime.Now,
+            Name = "dummy user 3",
+            UpdatedDate = DateTime.Now,
+            Id = Guid.NewGuid(),
+            EmployeeId = "some id 3",
+            PasswordHashed = "password",
+            Enabled = false,
+            AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = Database.Models.Enums.AccessLevels.Employee }
+        });
+        context.SaveChanges();
     }
 }

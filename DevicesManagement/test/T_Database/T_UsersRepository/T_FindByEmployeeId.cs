@@ -1,10 +1,43 @@
-using T_Database.SearchOptions.UserOptions;
-
 namespace T_Database.T_UsersRepository;
 
-public class T_FindByEmployeId : LocalAuthDatabaseTest
+public partial class T_FindByEmployeId
 {
-    private readonly User searchedUser = new()
+    [Fact]
+    public void FindByEmployeId_ExistingEid_ReturnsEmployeeWithThatEID()
+    {
+        var entity = Repository.FindByEmployeeId("some id 3");
+
+        entity.Should().BeEquivalentTo(SearchedUser);
+    }
+
+    [Fact]
+    public void FindByEmployeId_NonexistingEid_ReturnsNull()
+    {
+        var entity = Repository.FindByEmployeeId("non existing eid");
+
+        entity.Should().Be(null);
+    }
+}
+
+public partial class T_FindByEmployeId : IClassFixture<T_FindByEmployeId_Setup>
+{
+    private readonly T_FindByEmployeId_Setup _setupFixture;
+    User SearchedUser { get; init; }
+    UsersRepository Repository { get; init; }
+
+    public T_FindByEmployeId(T_FindByEmployeId_Setup setupFixture) 
+    {
+        _setupFixture = setupFixture;
+
+        SearchedUser = setupFixture.SearchedUser;
+        Repository = new UsersRepository(setupFixture.Context);
+    }
+}
+
+public class T_FindByEmployeId_Setup : LocalAuthDatabaseTest
+{
+    public LocalAuthContextTest Context { get; init; }
+    public User SearchedUser { get; } = new ()
     {
         CreatedDate = DateTime.Now,
         Name = "dummy user 3",
@@ -15,7 +48,11 @@ public class T_FindByEmployeId : LocalAuthDatabaseTest
         AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = AccessLevels.Admin }
     };
 
-    public T_FindByEmployeId() : base("FindEmployeeId") { }
+    public T_FindByEmployeId_Setup() : base("FindEmployeeId") 
+    {
+        Context = new LocalAuthContextTest("FindEmployeeId");
+        Seed(Context);
+    }
 
     private void Seed(LocalAuthContextTest context)
     {
@@ -39,7 +76,7 @@ public class T_FindByEmployeId : LocalAuthDatabaseTest
             PasswordHashed = "password",
             AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = AccessLevels.Admin }
         });
-        context.Users.Add(searchedUser);
+        context.Users.Add(SearchedUser);
         context.SaveChanges();
         context.Users.Add(new User
         {
@@ -65,30 +102,4 @@ public class T_FindByEmployeId : LocalAuthDatabaseTest
         context.SaveChanges();
     }
 
-
-    [Fact]
-    public void FindByEmployeId_ExistingEid_ReturnsEmployeeWithThatEID()
-    {
-        using var context = new LocalAuthContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new UsersRepository(context);
-
-        var entity = repo.FindByEmployeeId("some id 3");
-
-        entity.Should().BeEquivalentTo(searchedUser);
-    }
-
-    [Fact]
-    public void FindByEmployeId_NonexistingEid_ReturnsNull()
-    {
-        using var context = new LocalAuthContextTest(Key);
-        EnsureClear(context);
-        Seed(context);
-        using var repo = new UsersRepository(context);
-
-        var entity = repo.FindByEmployeeId("non existing eid");
-
-        entity.Should().Be(null);
-    }
 }
