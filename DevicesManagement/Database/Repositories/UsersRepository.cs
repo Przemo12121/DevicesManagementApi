@@ -67,6 +67,7 @@ public class UsersRepository : DisposableRepository<LocalAuthStorageContext>, IU
     {
        return _context.Users
             .Where(user => user.EmployeeId.Equals(eid))
+            .Include(user => user.AccessLevel)
             .SingleOrDefault();
     }
 }

@@ -11,7 +11,7 @@ public class T_FindByEmployeId : LocalAuthDatabaseTest
         UpdatedDate = DateTime.Now,
         Id = Guid.NewGuid(),
         EmployeeId = "some id 3",
-        Password = "password",
+        PasswordHashed = "password",
         AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = AccessLevels.Admin }
     };
 
@@ -26,7 +26,7 @@ public class T_FindByEmployeId : LocalAuthDatabaseTest
             UpdatedDate = DateTime.Now,
             Id = Guid.NewGuid(),
             EmployeeId = "some id",
-            Password = "password",
+            PasswordHashed = "password",
             AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = AccessLevels.Employee }
         });
         context.Users.Add(new User
@@ -36,7 +36,7 @@ public class T_FindByEmployeId : LocalAuthDatabaseTest
             UpdatedDate = DateTime.Now,
             Id = Guid.NewGuid(),
             EmployeeId = "some id 2",
-            Password = "password",
+            PasswordHashed = "password",
             AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = AccessLevels.Admin }
         });
         context.Users.Add(searchedUser);
@@ -48,7 +48,7 @@ public class T_FindByEmployeId : LocalAuthDatabaseTest
             UpdatedDate = DateTime.Now,
             Id = Guid.NewGuid(),
             EmployeeId = "some id 4",
-            Password = "password",
+            PasswordHashed = "password",
             AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = AccessLevels.Employee }
         });
         context.SaveChanges();
@@ -59,7 +59,7 @@ public class T_FindByEmployeId : LocalAuthDatabaseTest
             UpdatedDate = DateTime.Now,
             Id = Guid.NewGuid(),
             EmployeeId = "some id 5",
-            Password = "password",
+            PasswordHashed = "password",
             AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = AccessLevels.Employee }
         });
         context.SaveChanges();

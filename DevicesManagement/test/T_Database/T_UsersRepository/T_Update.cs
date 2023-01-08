@@ -15,7 +15,7 @@ public class T_Update : LocalAuthDatabaseTest
             UpdatedDate = DateTime.Now,
             Id = Guid.NewGuid(),
             EmployeeId = "some id",
-            Password = "password",
+            PasswordHashed = "password",
             Enabled = true,
             AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = Database.Models.Enums.AccessLevels.Admin }
         });
@@ -26,7 +26,7 @@ public class T_Update : LocalAuthDatabaseTest
             UpdatedDate = DateTime.Now,
             Id = Guid.NewGuid(),
             EmployeeId = "some id 2",
-            Password = "password",
+            PasswordHashed = "password",
             Enabled = false,
             AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = Database.Models.Enums.AccessLevels.Employee }
         });
@@ -37,7 +37,7 @@ public class T_Update : LocalAuthDatabaseTest
             UpdatedDate = DateTime.Now,
             Id = Guid.NewGuid(),
             EmployeeId = "some id 3",
-            Password = "password",
+            PasswordHashed = "password",
             Enabled = false,
             AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = Database.Models.Enums.AccessLevels.Employee }
         });
