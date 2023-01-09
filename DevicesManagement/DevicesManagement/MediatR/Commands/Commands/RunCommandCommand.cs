@@ -3,7 +3,6 @@ using Database.Repositories;
 using DevicesManagement.MediatR.PipelineBehaviors.Authorization;
 using MediatR;
 using MediatR.Extensions.AttributedBehaviors;
-using Microsoft.AspNetCore.Mvc;
 
 namespace DevicesManagement.MediatR.Commands.Commands;
 

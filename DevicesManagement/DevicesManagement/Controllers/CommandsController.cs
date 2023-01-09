@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using DevicesManagement.DataTransferObjects.Requests;
 using MediatR;
 using DevicesManagement.MediatR.Commands.Commands;
-using DevicesManagement.DataTransferObjects.Responses;
 
 namespace DevicesManagement.Controllers;
 
