@@ -10,7 +10,7 @@ namespace DevicesManagement.MediatR.Commands.Commands;
     typeof(ResourceAuthorizationPipelineBehavior<Command, CommandsRepository, RunCommandCommand, string>),
     order: 1
 )]
-public class RunCommandCommand : IRequest<string>, IResourceAuthorizableCommand<Command>
+public record RunCommandCommand : IRequest<string>, IResourceAuthorizableCommand<Command>
 {
     public Guid ResourceId { get; init; }
     public Command Resource { get; set; }
