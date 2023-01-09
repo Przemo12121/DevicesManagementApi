@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Database.Repositories;
 
-public class DevicesRepository : DisposableRepository<DeviceManagementContext>, IDeviceRepository<Device, Command, CommandHistory, Message>
+public class DevicesRepository : DisposableRepository<DeviceManagementContext>, IDeviceRepository<Device, Command, CommandHistory, Message>, IResourceAuthorizableRepository<Device>
 {
     public DevicesRepository(DeviceManagementContext context) : base(context) { }
 
@@ -142,4 +142,9 @@ public class DevicesRepository : DisposableRepository<DeviceManagementContext>, 
                 .Take(options.Limit)
                 .ToList();
     }
+
+    public Device? FindByIdAndEmployeeId(Guid id, string employeeId)
+        => _context.Devices
+            .Where(device => device.Id.Equals(id) && device.EmployeeId.Equals(employeeId))
+            .SingleOrDefault();
 }

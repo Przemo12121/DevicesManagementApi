@@ -3,7 +3,7 @@ using Database.Models.Interfaces;
 
 namespace Database.Repositories.Interfaces;
 
-public interface ICommandsRepository<T, U> 
+public interface ICommandsRepository<T, U> : IResourceAuthorizableRepository<T>
     where T : ICommand
     where U : ICommandHistory
 {

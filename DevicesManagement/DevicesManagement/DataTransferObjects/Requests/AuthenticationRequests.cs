@@ -1,9 +1,6 @@
-﻿using MediatR;
-using System.IdentityModel.Tokens.Jwt;
+﻿namespace DevicesManagement.DataTransferObjects.Requests;
 
-namespace DevicesManagement.DataTransferObjects.Requests;
-
-public record LoginWithCredentialsRequest : IRequest
+public record LoginWithCredentialsRequest
 {
     public string Login { get; init; }
     public string Password { get; init; }

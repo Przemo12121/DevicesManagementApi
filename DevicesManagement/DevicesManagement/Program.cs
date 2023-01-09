@@ -1,13 +1,16 @@
 using MediatR;
+using MediatR.Extensions.AttributedBehaviors;
 using System.Reflection;
 
+var assembly = Assembly.GetExecutingAssembly();
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+builder.Services.AddMediatR(assembly);
+builder.Services.AddMediatRAttributedBehaviors(assembly);
 
 // Database
 AppSetup.ConfigureDatabase(builder);

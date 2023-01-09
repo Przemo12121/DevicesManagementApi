@@ -1,3 +1,5 @@
+using DevicesManagement.DataTransferObjects.Requests;
+
 namespace T_DevicesManagement.T_Validations.T_Commands;
 
 public class T_EditCommandRequestValidator

@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Database.Models.Interfaces;
-using DevicesManagement.DataTransferObjects;
 using Microsoft.AspNetCore.Authorization;
+using DevicesManagement.DataTransferObjects.Requests;
+using MediatR;
+using DevicesManagement.MediatR.Commands.Commands;
+using DevicesManagement.DataTransferObjects.Responses;
 
 namespace DevicesManagement.Controllers;
 
@@ -10,10 +13,22 @@ namespace DevicesManagement.Controllers;
 [ApiController]
 public class CommandsController : ControllerBase
 {
-    [HttpPost, Route("{id}/run")]
-    public string RunCommand([FromRoute] Guid id)
+    private readonly IMediator _mediator;
+    public CommandsController(IMediator mediator) 
     {
-        return "Not yet implemented";
+        _mediator = mediator;
+    }
+
+    [HttpPost, Route("{id}/run")]
+    public async Task<ActionResult<string>> RunCommand([FromRoute] Guid id)
+    {
+        var result = await _mediator.Send(new RunCommandCommand() { ResourceId = id });
+        //throw new NotImplementedException();
+        if (result == null)
+        {
+            return new EmptyResult();
+        }
+        return result;
     }
 
     [HttpPatch, Route("{id}")]

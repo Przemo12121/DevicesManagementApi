@@ -5,15 +5,19 @@ using Database.Models;
 using Database.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
 internal static class AppSetup
 {
     private static LocalAuthStorageContext LocalAuthStorageContext { get; set; } = new LocalAuthStorageContext();
+    private static DeviceManagementContext DeviceManagementContext { get; set; } = new DeviceManagementContext();
     public static void ConfigureDatabase(WebApplicationBuilder builder)
     {
         builder.Services.AddDbContext<LocalAuthStorageContext>();
+
+        builder.Services.AddSingleton<CommandsRepository>(
+            service => new CommandsRepository(DeviceManagementContext)
+        );
     }
 
     public static void ConfigureAuthentication(WebApplicationBuilder builder)
