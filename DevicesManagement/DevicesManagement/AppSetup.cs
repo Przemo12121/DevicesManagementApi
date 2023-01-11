@@ -3,6 +3,9 @@ using Authentication.Jwt;
 using Database.Contexts;
 using Database.Models;
 using Database.Repositories;
+using DevicesManagement.DataTransferObjects.Requests;
+using DevicesManagement.Validations.Commands;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -18,6 +21,11 @@ internal static class AppSetup
         builder.Services.AddSingleton<CommandsRepository>(
             service => new CommandsRepository(DeviceManagementContext)
         );
+    }
+    
+    public static void ConfigureValidators(WebApplicationBuilder builder)
+    {
+        builder.Services.AddSingleton<IValidator<EditCommandRequest>, EditCommandRequestValidator>();
     }
 
     public static void ConfigureAuthentication(WebApplicationBuilder builder)

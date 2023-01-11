@@ -18,6 +18,9 @@ AppSetup.ConfigureDatabase(builder);
 // Authentication
 AppSetup.ConfigureAuthentication(builder);
 
+// Request valdiators
+AppSetup.ConfigureValidators(builder);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
