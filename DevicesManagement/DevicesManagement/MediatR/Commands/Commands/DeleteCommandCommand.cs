@@ -7,10 +7,10 @@ using MediatR.Extensions.AttributedBehaviors;
 namespace DevicesManagement.MediatR.Commands.Commands;
 
 [MediatRBehavior(
-    typeof(ResourceAuthorizationPipelineBehavior<Command, CommandsRepository, RunCommandCommand, string>),
+    typeof(ResourceAuthorizationPipelineBehavior<Command, CommandsRepository, DeleteCommandCommand, string>),
     order: 1
 )]
-public record RunCommandCommand : IRequest<string>, IResourceAuthorizableCommand<Command>
+public class DeleteCommandCommand : IRequest<string>, IResourceAuthorizableCommand<Command>
 {
     public Guid ResourceId { get; init; }
     public Command Resource { get; set; }

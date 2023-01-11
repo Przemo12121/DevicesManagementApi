@@ -1,6 +1,6 @@
 ﻿namespace T_Database.T_DevicesRepository;
 
-public partial class T_AddCommandHistory : DeviceMenagementDatabaseTest
+public partial class T_AddCommand : DeviceMenagementDatabaseTest
 {
     [Fact]
     public void AddCommand_GivenEntity_AddsThatEntity()
@@ -105,9 +105,9 @@ public partial class T_AddCommandHistory : DeviceMenagementDatabaseTest
     }
 }
 
-public partial class T_AddCommandHistory
+public partial class T_AddCommand
 {
-    public T_AddCommandHistory() : base("DevicesRepository.AddCommand") { }
+    public T_AddCommand() : base("DevicesRepository.AddCommand") { }
 
     private Device testDevice = new()
     {

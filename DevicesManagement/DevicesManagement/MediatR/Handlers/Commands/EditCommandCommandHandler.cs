@@ -1,4 +1,4 @@
-﻿using DevicesManagement.DataTransferObjects.Responses.Commands;
+﻿using DevicesManagement.DataTransferObjects.Responses;
 using DevicesManagement.MediatR.Commands.Commands;
 using MediatR;
 
@@ -8,7 +8,6 @@ public class EditCommandCommandHandler : IRequestHandler<EditCommandCommand, Com
 {
     public Task<CommandDto> Handle(EditCommandCommand request, CancellationToken cancellationToken)
     {
-        Console.WriteLine("Handler");
         return Task.FromResult(new CommandDto());
     }
 }

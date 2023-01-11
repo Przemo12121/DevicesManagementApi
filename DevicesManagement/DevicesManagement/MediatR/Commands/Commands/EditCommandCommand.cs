@@ -1,12 +1,11 @@
 ﻿using Database.Models;
 using MediatR;
-using DevicesManagement.DataTransferObjects.Responses.Commands;
 using DevicesManagement.DataTransferObjects.Requests;
 using Database.Repositories;
-using DevicesManagement.MediatR.PipelineBehaviors.Authorization;
 using MediatR.Extensions.AttributedBehaviors;
-using DevicesManagement.MediatR.PipelineBehaviors.Validation;
 using DevicesManagement.Validations.Commands;
+using DevicesManagement.MediatR.PipelineBehaviors;
+using DevicesManagement.DataTransferObjects.Responses;
 
 namespace DevicesManagement.MediatR.Commands.Commands;
 

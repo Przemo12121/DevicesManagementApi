@@ -4,7 +4,10 @@ using Database.Contexts;
 using Database.Models;
 using Database.Repositories;
 using DevicesManagement.DataTransferObjects.Requests;
+using DevicesManagement.Exceptions;
+using DevicesManagement.MediatR.Commands.Users;
 using DevicesManagement.Validations.Commands;
+using DevicesManagement.Validations.Common;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -14,6 +17,7 @@ internal static class AppSetup
 {
     private static LocalAuthStorageContext LocalAuthStorageContext { get; set; } = new LocalAuthStorageContext();
     private static DeviceManagementContext DeviceManagementContext { get; set; } = new DeviceManagementContext();
+    
     public static void ConfigureDatabase(WebApplicationBuilder builder)
     {
         builder.Services.AddDbContext<LocalAuthStorageContext>();
@@ -26,6 +30,11 @@ internal static class AppSetup
     public static void ConfigureValidators(WebApplicationBuilder builder)
     {
         builder.Services.AddSingleton<IValidator<EditCommandRequest>, EditCommandRequestValidator>();
+    }
+
+    public static void ConfigureErrorRoutes(WebApplication app)
+    {
+        app.UseMiddleware<HttpExceptionHandler>();
     }
 
     public static void ConfigureAuthentication(WebApplicationBuilder builder)

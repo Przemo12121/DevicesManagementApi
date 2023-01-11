@@ -2,20 +2,29 @@
 using Database.Models.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using DevicesManagement.DataTransferObjects.Requests;
+using MediatR;
+using DevicesManagement.MediatR.Commands.Users;
+using DevicesManagement.DataTransferObjects.Responses;
 
 namespace DevicesManagement.Controllers;
 
 [Route("api/[controller]")]
-[Authorize(Roles = "Admin")]
+//[Authorize(Roles = "Admin")]
 [ApiController]
 public class UsersController : ControllerBase
 {
-    [HttpGet, Route("employees")]
-    public List<IUser> GetEmployees([FromQuery] PaginationRequest request)
+    private readonly IMediator _mediator;
+    public UsersController(IMediator mediator)
     {
-        //var x = User; // user is retrieved with authorize, from jwt bearer authenticator
+        _mediator = mediator;
+    }
 
-        return new List<IUser>();
+    [HttpGet, Route("employees")]
+    public async Task<ActionResult<List<UserDto>>> GetEmployees([FromQuery] PaginationRequest request)
+    {
+        var command = new GetEmployeesCommand() { Request = request };
+        var result = await _mediator.Send(command);
+        return result;
     }
 
     [HttpPost, Route("employees")]

@@ -21,10 +21,13 @@ AppSetup.ConfigureAuthentication(builder);
 // Request valdiators
 AppSetup.ConfigureValidators(builder);
 
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Error routes
+AppSetup.ConfigureErrorRoutes(app);
 
+// Configure the HTTP request pipeline.
 app.UseAuthentication();
 app.UseAuthorization();
 
