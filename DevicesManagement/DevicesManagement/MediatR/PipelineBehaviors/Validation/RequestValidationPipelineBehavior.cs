@@ -17,30 +17,26 @@ public class RequestValidationPipelineBehavior<T, TValidator, TRequest, TRespons
     {
         Validators = validators ?? throw new ArgumentNullException(nameof(validators));
     }
-    public RequestValidationPipelineBehavior(IValidator<T> validator)
-    {
-        if (validator == null) throw new ArgumentNullException(nameof(validator));
 
-        Validators = new List<IValidator<T>>();
-        Validators.Append(validator);
-    }
-
-    public Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
+        Console.WriteLine("Validation pipeline");
         var result = Validate(request.Request);
         if (!result.IsValid)
         {
             throw new BadRequestResponse(GroupErrorsByProperty(result.Errors));
         }
 
-        throw new NotImplementedException();
+        return await next();
     }
 
     protected ValidationResult Validate(T request)
     {
-        var errors = Validators.SelectMany(validator => validator.Validate(request).Errors)
-            .Where(errors => errors != null)
+        var errors = Validators.Select(validator => validator.Validate(request))
+            .Where(result => !result.IsValid)
+            .SelectMany(result => result.Errors)
             .ToList();
+        var x = Validators.First().Validate(request);
 
         return new ValidationResult(!errors.Any(), errors);
     }

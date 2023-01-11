@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using DevicesManagement.DataTransferObjects.Requests;
 using MediatR;
 using DevicesManagement.MediatR.Commands.Commands;
+using DevicesManagement.DataTransferObjects.Responses.Commands;
 
 namespace DevicesManagement.Controllers;
 
@@ -31,9 +32,19 @@ public class CommandsController : ControllerBase
     }
 
     [HttpPatch, Route("{id}")]
-    public ICommand EditCommand([FromRoute] Guid id, [FromBody] EditCommandRequest request)
+    public async Task<ActionResult<CommandDto>> EditCommand([FromRoute] Guid id, [FromBody] EditCommandRequest request)
     {
-        throw new NotImplementedException();
+        var result = await _mediator.Send(new EditCommandCommand()
+        {
+            ResourceId = id,
+            Request = request
+        });
+
+        if (result == null)
+        {
+            return new EmptyResult();
+        }
+        return result;
     }
 
     [HttpDelete, Route("{id}")]

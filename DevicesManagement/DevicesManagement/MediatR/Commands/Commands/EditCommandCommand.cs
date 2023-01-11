@@ -5,9 +5,15 @@ using DevicesManagement.DataTransferObjects.Requests;
 using Database.Repositories;
 using DevicesManagement.MediatR.PipelineBehaviors.Authorization;
 using MediatR.Extensions.AttributedBehaviors;
+using DevicesManagement.MediatR.PipelineBehaviors.Validation;
+using DevicesManagement.Validations.Commands;
 
 namespace DevicesManagement.MediatR.Commands.Commands;
 
+[MediatRBehavior(
+    typeof(RequestValidationPipelineBehavior<EditCommandRequest, EditCommandRequestValidator, EditCommandCommand, CommandDto>),
+    order: 1
+)]
 [MediatRBehavior(
     typeof(ResourceAuthorizationPipelineBehavior<Command, CommandsRepository, RunCommandCommand, string>),
     order: 2
