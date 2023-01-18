@@ -9,7 +9,7 @@ using DevicesManagement.DataTransferObjects.Responses;
 namespace DevicesManagement.Controllers;
 
 [Route("api/[controller]")]
-//[Authorize(Roles = "Admin")]
+[Authorize(Roles = "Admin")]
 [ApiController]
 public class UsersController : ControllerBase
 {
@@ -28,22 +28,26 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost, Route("employees")]
-    public IUser RegisterEmployee([FromBody] CreateEmployeeRequest request)
+    public async Task<ActionResult<UserDto>> RegisterEmployee([FromBody] RegisterEmployeeRequest request)
     {
-        // then send command to mocked device
-        throw new NotImplementedException();
+        var command = new RegisterEmployeeCommand() { Request = request };
+        var result = await _mediator.Send(command);
+        return result;
     }
 
     [HttpPatch, Route("employees/{id}")]
-    public IUser EditEmployee([FromRoute] Guid id, [FromBody] EditEmployeeRequest request)
+    public async Task<ActionResult<UserDto>> EditEmployee([FromRoute] Guid id, [FromBody] EditEmployeeRequest request)
     {
-        // then send command to mocked device
-        throw new NotImplementedException();
+        var command = new EditEmployeeCommand() { Id = id, Request = request };
+        var result = await _mediator.Send(command);
+        return result;
     }
 
     [HttpDelete, Route("employees/{id}")]
-    public string DeleteEmployee([FromRoute] Guid id)
+    public async Task<ActionResult<UserDto>> DeleteEmployee([FromRoute] Guid id)
     {
-        throw new NotImplementedException();
+        var command = new DeleteEmployeeCommand() { Id = id };
+        var result = await _mediator.Send(command);
+        return result;
     }
 }

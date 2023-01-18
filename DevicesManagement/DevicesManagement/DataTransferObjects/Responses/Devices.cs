@@ -1,5 +1,3 @@
 ﻿namespace DevicesManagement.DataTransferObjects.Responses;
 
-public class Devices
-{
-}
+public record DeviceDto();

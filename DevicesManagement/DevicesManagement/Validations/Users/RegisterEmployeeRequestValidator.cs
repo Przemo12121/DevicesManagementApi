@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace DevicesManagement.Validations.Users;
 
-public class CreateEmployeeRequestValidator : AbstractValidator<CreateEmployeeRequest>
+public class RegisterEmployeeRequestValidator : AbstractValidator<RegisterEmployeeRequest>
 {
-    public CreateEmployeeRequestValidator()
+    public RegisterEmployeeRequestValidator()
     {
         RuleFor(request => request.Name).NotNull().Length(1, 256);
         RuleFor(request => request.Password).NotNull().Matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{8,32}$");

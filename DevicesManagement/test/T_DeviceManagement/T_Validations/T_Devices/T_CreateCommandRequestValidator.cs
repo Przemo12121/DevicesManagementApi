@@ -4,14 +4,14 @@ namespace T_DevicesManagement.T_Validations.T_Devices;
 
 public class T_CreateCommandRequestValidator
 {
-    private readonly CreateCommandRequestValidator _validator = new();
+    private readonly RegisterCommandRequestValidator _validator = new();
 
     // NAME
 
     [Fact]
     public void Validate_NullName_False()
     {
-        CreateCommandRequest request = new()
+        RegisterCommandRequest request = new()
         {
             Name = null,
             Description = "dummy description",
@@ -26,7 +26,7 @@ public class T_CreateCommandRequestValidator
     [Fact]
     public void Validate_OneLetterName_True()
     {
-        CreateCommandRequest request = new()
+        RegisterCommandRequest request = new()
         {
             Name = "a",
             Description = "dummy description",
@@ -41,7 +41,7 @@ public class T_CreateCommandRequestValidator
     [Fact]
     public void Validate_AnyName_True()
     {
-        CreateCommandRequest request = new()
+        RegisterCommandRequest request = new()
         {
             Name = "any name",
             Description = "dummy description",
@@ -56,7 +56,7 @@ public class T_CreateCommandRequestValidator
     [Fact]
     public void Validate_AnyNameLongerThan64_False()
     {
-        CreateCommandRequest request = new()
+        RegisterCommandRequest request = new()
         {
             Name = Enumerable.Range(0, 65).Select(e => "a").Aggregate((a, b) => a + b),
             Description = "dummy description",
@@ -73,7 +73,7 @@ public class T_CreateCommandRequestValidator
     [Fact]
     public void Validate_NullDescription_True()
     {
-        CreateCommandRequest request = new()
+        RegisterCommandRequest request = new()
         {
             Name = "dummy name",
             Description = null,
@@ -88,7 +88,7 @@ public class T_CreateCommandRequestValidator
     [Fact]
     public void Validate_OneLetterDescription_True()
     {
-        CreateCommandRequest request = new()
+        RegisterCommandRequest request = new()
         {
             Name = "dummy name",
             Description = "a",
@@ -103,7 +103,7 @@ public class T_CreateCommandRequestValidator
     [Fact]
     public void Validate_AnyDescription_True()
     {
-        CreateCommandRequest request = new()
+        RegisterCommandRequest request = new()
         {
             Name = "dummy name",
             Description = "any description",
@@ -118,7 +118,7 @@ public class T_CreateCommandRequestValidator
     [Fact]
     public void Validate_AnyDescriptionLongerThan4097_False()
     {
-        CreateCommandRequest request = new()
+        RegisterCommandRequest request = new()
         {
             Name = "dummy name",
             Description = Enumerable.Range(0, 4097).Select(e => "a").Aggregate((a, b) => a + b),
@@ -136,7 +136,7 @@ public class T_CreateCommandRequestValidator
     [Fact]
     public void Validate_NullBody_False()
     {
-        CreateCommandRequest request = new()
+        RegisterCommandRequest request = new()
         {
             Name = "dummy name",
             Description = "dummy description",
@@ -151,7 +151,7 @@ public class T_CreateCommandRequestValidator
     [Fact]
     public void Validate_OneLetterBody_True()
     {
-        CreateCommandRequest request = new()
+        RegisterCommandRequest request = new()
         {
             Name = "dummy name",
             Description = "dummy description",
@@ -166,7 +166,7 @@ public class T_CreateCommandRequestValidator
     [Fact]
     public void Validate_AnyBody_True()
     {
-        CreateCommandRequest request = new()
+        RegisterCommandRequest request = new()
         {
             Name = "dummy name",
             Description = "dummy description",
@@ -181,7 +181,7 @@ public class T_CreateCommandRequestValidator
     [Fact]
     public void Validate_AnyBodyLongerThan2049_False()
     {
-        CreateCommandRequest request = new()
+        RegisterCommandRequest request = new()
         {
             Name = "dummy name",
             Description = "dummy description",

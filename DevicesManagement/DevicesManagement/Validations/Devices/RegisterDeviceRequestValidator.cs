@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace DevicesManagement.Validations.Devices;
 
-public class CreateDeviceRequestValidator : AbstractValidator<CreateDeviceRequest>
+public class RegisterDeviceRequestValidator : AbstractValidator<RegisterDeviceRequest>
 {
-    public CreateDeviceRequestValidator()
+    public RegisterDeviceRequestValidator()
     {
         RuleFor(request => request.Name).NotNull().Length(1, 256);
         RuleFor(request => request.Address).NotNull().Matches("^(0|[1-9][0-9]{0,2})(\\.(0|[1-9][0-9]{0,2})){3}:(0|[1-9][0-9]*)$").Must(BeIPv4);

@@ -7,7 +7,7 @@ namespace DevicesManagement.MediatR.PipelineBehaviors.Paginations;
 
 public class GetEmployeesValidationPipelineBehavior : RequestValidationPipelineBehavior<PaginationRequest, PaginationRequestValidator, GetEmployeesCommand, List<UserDto>>
 {
-    protected static List<PaginationRequestValidator> _validators = new(new[] { new PaginationRequestValidator(16, new[] { "name", "abc" }) });
+    protected static List<PaginationRequestValidator> _validators = new(new[] { new PaginationRequestValidator(16, new[] { "name", "eid" }) });
 
     public GetEmployeesValidationPipelineBehavior() : base(_validators) { }
 }

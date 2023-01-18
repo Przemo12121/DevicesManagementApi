@@ -1,3 +1,4 @@
+using DevicesManagement.Validations.Common;
 using MediatR;
 using MediatR.Extensions.AttributedBehaviors;
 using System.Reflection;
@@ -21,6 +22,7 @@ AppSetup.ConfigureAuthentication(builder);
 // Request valdiators
 AppSetup.ConfigureValidators(builder);
 
+var x = new PaginationRequestValidator(10, new[] { "abc", "xyz" });
 
 var app = builder.Build();
 
