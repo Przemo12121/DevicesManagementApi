@@ -1,5 +1,4 @@
-﻿
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 
 namespace T_Authentication.T_Jwt.T_JwtBearerProvider;

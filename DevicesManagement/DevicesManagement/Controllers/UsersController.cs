@@ -46,7 +46,7 @@ public class UsersController : ControllerBase
     [HttpDelete, Route("employees/{id}")]
     public async Task<ActionResult<UserDto>> DeleteEmployee([FromRoute] Guid id)
     {
-        var command = new DeleteEmployeeCommand() { Id = id };
+        var command = new DeleteEmployeeCommand() { ResourceId = id };
         var result = await _mediator.Send(command);
         return result;
     }

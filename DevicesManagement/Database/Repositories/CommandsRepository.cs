@@ -37,4 +37,11 @@ public class CommandsRepository : DisposableRepository<DeviceManagementContext>,
             .Where(command => command.Id.Equals(id))
             .SingleOrDefault();
     }
+
+    public Command? FindById(Guid id)
+    {
+        return _context.Commands
+            .Where(command => command.Id.Equals(id))
+            .SingleOrDefault();
+    }
 }

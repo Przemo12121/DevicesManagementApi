@@ -10,5 +10,3 @@ public class ForbiddenException : Exception, IHttpException
         await context.Response.WriteAsJsonAsync(new ReasonableException(StringMessages.HttpErrors.UNAUTHORIZED_TO_RESOURCE));
     }
 }
-
-public record ReasonableException(string Reason);

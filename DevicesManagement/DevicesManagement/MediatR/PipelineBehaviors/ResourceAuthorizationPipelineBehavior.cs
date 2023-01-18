@@ -1,8 +1,10 @@
 ﻿using Database.Models.Base;
+using Database.Models.Enums;
 using Database.Repositories.Interfaces;
 using DevicesManagement.Exceptions;
 using DevicesManagement.MediatR.Commands;
 using MediatR;
+using System.Security.Claims;
 
 namespace DevicesManagement.MediatR.PipelineBehaviors;
 
@@ -23,19 +25,29 @@ public class ResourceAuthorizationPipelineBehavior<TResource, TResourceRepositor
     protected ResourceAuthorizationResult Authorize(Guid resourceId, string employeeId)
     {
         var resource = Repository.FindByIdAndEmployeeId(resourceId, employeeId);
+        return new ResourceAuthorizationResult(resource != null, resource);
+    }
 
+    protected ResourceAuthorizationResult Authorize(Guid resourceId)
+    {
+        var resource = Repository.FindById(resourceId);
         return new ResourceAuthorizationResult(resource != null, resource);
     }
 
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-        // TODO admin overtakes ?
         var ownerId = _httpContentAccessor.HttpContext?.User.Identity?.Name ?? throw new Exception("Employee Id not present.");
-        var result = Authorize(request.ResourceId, ownerId);
+        var role = _httpContentAccessor.HttpContext?.User.Claims.Where(claim => claim.Type.Equals(ClaimTypes.Role)).SingleOrDefault() ?? throw new Exception("Role not present.");
+
+        // admin does not need to be owner of the resoruce
+        bool isAdmin = role.Value.Equals(AccessLevels.Admin);
+        var result = isAdmin
+            ? Authorize(request.ResourceId)
+            : Authorize(request.ResourceId, ownerId);
 
         if (!result.IsAuhorized)
         {
-            throw new ForbiddenException();
+            throw isAdmin ? new NotFoundException() : new ForbiddenException();
         }
 
         return await next();
