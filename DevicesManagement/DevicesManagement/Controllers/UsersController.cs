@@ -5,6 +5,7 @@ using DevicesManagement.DataTransferObjects.Requests;
 using MediatR;
 using DevicesManagement.MediatR.Commands.Users;
 using DevicesManagement.DataTransferObjects.Responses;
+using DevicesManagement.MediatR.Commands.Devices;
 
 namespace DevicesManagement.Controllers;
 
@@ -47,6 +48,15 @@ public class UsersController : ControllerBase
     public async Task<ActionResult<UserDto>> DeleteEmployee([FromRoute] Guid id)
     {
         var command = new DeleteEmployeeCommand() { ResourceId = id };
+        var result = await _mediator.Send(command);
+        return result;
+    }
+
+    [Authorize]
+    [HttpGet, Route("{employeeId}/devices")]
+    public async Task<ActionResult<List<DeviceDto>>> ListUserDevices([FromRoute] Guid employeeId, [FromBody] PaginationRequest request)
+    {
+        var command = new ListUserDevicesCommand() { ResourceId = employeeId, Request = request };
         var result = await _mediator.Send(command);
         return result;
     }

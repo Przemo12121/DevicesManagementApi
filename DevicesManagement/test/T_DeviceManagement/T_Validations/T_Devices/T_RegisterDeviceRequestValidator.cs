@@ -2,7 +2,7 @@
 
 namespace T_DevicesManagement.T_Validations.T_Devices;
 
-public class T_CreateDeviceRequestValidator
+public class T_RegisterDeviceRequestValidator
 {
     private readonly RegisterDeviceRequestValidator _validator = new();
 

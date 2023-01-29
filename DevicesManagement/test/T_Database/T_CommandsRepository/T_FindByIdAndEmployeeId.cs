@@ -5,7 +5,7 @@ public partial class T_FindByIdEmployeId
     [Fact]
     public void FindByIdAndEmployeId_CorrectIds_ReturnsCammand()
     {
-        var entity = Repository.FindByIdAndEmployeeId(Guid.Parse("abcd1234-abcd-1234-abcd-123456abcdef"), "abcd12345678");
+        var entity = Repository.FindByIdAndOwnerId(Guid.Parse("abcd1234-abcd-1234-abcd-123456abcdef"), "abcd12345678");
 
         entity.Should().BeEquivalentTo(SearchedCommand);
     }
@@ -13,7 +13,7 @@ public partial class T_FindByIdEmployeId
     [Fact]
     public void FindByIdAndEmployeId_WrongEmployeeId_ReturnsNull()
     {
-        var entity = Repository.FindByIdAndEmployeeId(Guid.Parse("abcd1234-abcd-1234-abcd-123456abcdef"), "badx12345678");
+        var entity = Repository.FindByIdAndOwnerId(Guid.Parse("abcd1234-abcd-1234-abcd-123456abcdef"), "badx12345678");
 
         entity.Should().BeNull();
     }
@@ -21,7 +21,7 @@ public partial class T_FindByIdEmployeId
     [Fact]
     public void FindByIdAndEmployeId_WrongId_ReturnsNull()
     {
-        var entity = Repository.FindByIdAndEmployeeId(Guid.Parse("12345678-1234-1234-1234-123456123456"), "abcd12345678");
+        var entity = Repository.FindByIdAndOwnerId(Guid.Parse("12345678-1234-1234-1234-123456123456"), "abcd12345678");
 
         entity.Should().BeNull();
     }

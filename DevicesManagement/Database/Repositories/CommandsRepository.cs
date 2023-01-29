@@ -28,7 +28,7 @@ public class CommandsRepository : DisposableRepository<DeviceManagementContext>,
         _context.SaveChanges();
     }
 
-    public Command? FindByIdAndEmployeeId(Guid id, string employeeId)
+    public Command? FindByIdAndOwnerId(Guid id, string employeeId)
     {
         return _context.Devices
             .Where(device => device.EmployeeId.Equals(employeeId))

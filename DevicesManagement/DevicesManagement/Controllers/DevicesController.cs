@@ -28,16 +28,6 @@ public class DevicesController : ControllerBase
     }
 
     [Authorize]
-    [HttpGet, Route("{employeeId}")]
-    public async Task<ActionResult<List<DeviceDto>>> ListUserDevices([FromRoute] Guid employeeId, [FromBody] PaginationRequest request)
-    {
-        // TODO move to users controller?
-        var command = new ListUserDevicesCommand() {  Id = employeeId, Request = request };
-        var result = await _mediator.Send(command);
-        return result;
-    }
-
-    [Authorize]
     [HttpGet, Route("{id}/commands")]
     public async Task<ActionResult<List<CommandDto>>> ListDeviceCommands([FromRoute] Guid id, [FromBody] PaginationRequest request)
     {
@@ -51,6 +41,15 @@ public class DevicesController : ControllerBase
     public async Task<ActionResult<DeviceDto>> RegisterDevice([FromBody] RegisterDeviceRequest request)
     {
         var command = new RegisterDeviceCommand() { Request = request };
+        var result = await _mediator.Send(command);
+        return result;
+    }
+
+    [Authorize]
+    [HttpPatch, Route("{id}")]
+    public async Task<ActionResult<DeviceDto>> UpdateDevice([FromRoute] Guid id, [FromBody] UpdateDeviceRequest request)
+    {
+        var command = new UpdateDeviceCommand() { Request = request, ResourceId = id };
         var result = await _mediator.Send(command);
         return result;
     }

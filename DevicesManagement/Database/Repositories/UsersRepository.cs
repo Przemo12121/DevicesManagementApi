@@ -71,7 +71,8 @@ public class UsersRepository : DisposableRepository<LocalAuthStorageContext>, IU
             .SingleOrDefault();
     }
 
-    public User? FindByIdAndEmployeeId(Guid id, string employeeId) => FindById(id);
+    public User? FindByIdAndOwnerId(Guid id, string ownerId) 
+        => id.Equals(ownerId) ? FindById(id) : null;
 
     public User? FindById(Guid id)
     {
