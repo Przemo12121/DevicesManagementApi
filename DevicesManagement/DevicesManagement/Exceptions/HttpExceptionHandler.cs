@@ -23,7 +23,7 @@ public class HttpExceptionHandler
                     await httpException.Execute(context);
                     break;
                 default:
-                    await new InternalServerException().Execute(context);
+                    await new InternalServerHttpException().Execute(context);
                     break;
             }
         }

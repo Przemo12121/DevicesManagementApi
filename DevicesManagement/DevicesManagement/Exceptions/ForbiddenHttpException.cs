@@ -2,7 +2,7 @@
 
 namespace DevicesManagement.Exceptions;
 
-public class ForbiddenException : Exception, IHttpException
+public class ForbiddenHttpException : Exception, IHttpException
 {
     public async Task Execute(HttpContext context)
     {

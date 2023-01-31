@@ -19,12 +19,10 @@ public class RequestValidationPipelineBehavior<T, TValidator, TRequest, TRespons
 
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-        var x = Validators.FirstOrDefault();
-
         var result = Validate(request.Request);
         if (!result.IsValid)
         {
-            throw new BadRequestException(GroupErrorsByProperty(result.Errors));
+            throw new BadRequestHttpException(GroupErrorsByProperty(result.Errors));
         }
 
         return await next();

@@ -2,7 +2,7 @@
 
 namespace DevicesManagement.Exceptions
 {
-    public class NotFoundException : Exception, IHttpException
+    public class NotFoundHttpException : Exception, IHttpException
     {
         public async Task Execute(HttpContext context)
         {

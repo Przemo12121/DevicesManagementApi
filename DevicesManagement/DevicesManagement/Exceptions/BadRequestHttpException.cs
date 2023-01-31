@@ -2,10 +2,10 @@
 
 namespace DevicesManagement.Exceptions;
 
-public class BadRequestException : Exception, IHttpException
+public class BadRequestHttpException : Exception, IHttpException
 {
     public IEnumerable<PropertyWithErrors> Failures { get; init; }
-    public BadRequestException(IEnumerable<PropertyWithErrors> failures)
+    public BadRequestHttpException(IEnumerable<PropertyWithErrors> failures)
     {
         Failures = failures;
     }

@@ -1,0 +1,76 @@
+﻿namespace T_DeviceManagement.T_MediatR.T_PipelineBehaviors;
+
+public partial class T_RequestValidationPieplineBehavior
+{
+
+    [Fact]
+    public async void Handle_SuccessfulValidation_NotThrowsException()
+    {
+        var alwaysPassingValidator = new Mock<IValidator<DummyRequest>>();
+        alwaysPassingValidator.Setup(validator => validator.Validate(It.IsAny<DummyRequest>()))
+            .Returns(SuccessResult);
+
+        var pipeline = new RequestValidationPipelineBehavior<DummyRequest, IValidator<DummyRequest>, DummyValidableRequestCommand, string>(
+            new List<IValidator<DummyRequest>>() { alwaysPassingValidator.Object }
+        );
+
+        await pipeline.Invoking(pipe => pipe.Handle(new DummyValidableRequestCommand(), DummyDelegateMethod, DummyCancellationToken))
+            .Should()
+            .NotThrowAsync();
+    }
+
+    [Fact]
+    public async void Handle_SuccessfulValidation_ReturnsDelegateResult()
+    {
+        var alwaysPassingValidator = new Mock<IValidator<DummyRequest>>();
+        alwaysPassingValidator.Setup(validator => validator.Validate(It.IsAny<DummyRequest>()))
+            .Returns(SuccessResult);
+
+        var pipeline = new RequestValidationPipelineBehavior<DummyRequest, IValidator<DummyRequest>, DummyValidableRequestCommand, string>(
+            new List<IValidator<DummyRequest>>() { alwaysPassingValidator.Object }
+        );
+
+        var result = await pipeline.Handle(new DummyValidableRequestCommand(), DummyDelegateMethod, DummyCancellationToken);
+
+        result.Should().Be("dummy");
+    }
+
+    [Fact]
+    public async void Handle_UnsuccessfulValidation_ThrowsBadRequestException()
+    {
+        var alwaysFailingValidator = new Mock<IValidator<DummyRequest>>();
+        alwaysFailingValidator.Setup(validator => validator.Validate(It.IsAny<DummyRequest>()))
+            .Returns(UnsuccessfulResult);
+
+        var pipeline = new RequestValidationPipelineBehavior<DummyRequest, IValidator<DummyRequest>, DummyValidableRequestCommand, string>(
+            new List<IValidator<DummyRequest>>() { alwaysFailingValidator.Object }
+        );
+
+        await pipeline.Invoking(pipe => pipe.Handle(new DummyValidableRequestCommand(), DummyDelegateMethod, DummyCancellationToken))
+            .Should()
+            .ThrowAsync<BadRequestHttpException>();
+    }
+}
+
+public partial class T_RequestValidationPieplineBehavior
+{
+    static Task<string> DummyDelegateMethod() => Task.FromResult("dummy");
+    CancellationToken DummyCancellationToken { get; } = new();
+
+    ValidationResult SuccessResult { get; } = new()
+    {
+        Errors = new ()
+    };
+
+    ValidationResult UnsuccessfulResult { get; } = new()
+    {
+        Errors = new()
+        {
+            new ValidationFailure()
+            {
+                ErrorMessage = "Dummy error message",
+                PropertyName = "DummyProperty"
+            }
+        }
+    };
+}

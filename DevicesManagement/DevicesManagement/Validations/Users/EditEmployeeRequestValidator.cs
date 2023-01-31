@@ -7,8 +7,13 @@ public class EditEmployeeRequestValidator : AbstractValidator<EditEmployeeReques
 {
     public EditEmployeeRequestValidator()
     {
-        RuleFor(request => request.Name).Length(1, 256);
-        RuleFor(request => request.Password).Matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{8,32}$");
-        RuleFor(request => request.EmployeeEid).Matches("^[a-z]{4}[0-9]{8}$");
+        RuleFor(request => request.Name)
+            .Length(1, 256);
+
+        RuleFor(request => request.Password)
+            .Matches(UsersValidationUtils.PASSWORD_REGEX);
+
+        RuleFor(request => request.EmployeeEid)
+            .Matches(UsersValidationUtils.EMPLOYEE_ID_REGEX);
     }
 }

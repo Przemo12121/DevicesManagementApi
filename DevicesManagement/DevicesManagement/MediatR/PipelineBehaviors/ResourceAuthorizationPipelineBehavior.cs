@@ -37,13 +37,13 @@ public class ResourceAuthorizationPipelineBehavior<TResource, TResourceRepositor
             .SingleOrDefault() ?? throw new Exception("Role not present.");
 
         // admin does not need to be owner of the resoruce
-        bool isAdmin = role.Value.Equals(AccessLevels.Admin);
+        bool isAdmin = role.Value.Equals(AccessLevels.Admin.ToString());
         var resource = isAdmin
             ? Repository.FindById(request.ResourceId)
             : Repository.FindByIdAndOwnerId(request.ResourceId, ownerId);
 
         if (resource is null)
-            throw isAdmin ? new NotFoundException() : new ForbiddenException();
+            throw isAdmin ? new NotFoundHttpException() : new ForbiddenHttpException();
 
         request.Resource = resource;
     }

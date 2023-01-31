@@ -7,8 +7,16 @@ public class RegisterEmployeeRequestValidator : AbstractValidator<RegisterEmploy
 {
     public RegisterEmployeeRequestValidator()
     {
-        RuleFor(request => request.Name).NotNull().Length(1, 256);
-        RuleFor(request => request.Password).NotNull().Matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{8,32}$");
-        RuleFor(request => request.EmployeeEid).NotNull().Matches("^[a-z]{4}[0-9]{8}$");
+        RuleFor(request => request.Name)
+            .NotNull()
+            .Length(1, 256);
+
+        RuleFor(request => request.Password)
+            .NotNull()
+            .Matches(UsersValidationUtils.PASSWORD_REGEX);
+
+        RuleFor(request => request.EmployeeEid)
+            .NotNull()
+            .Matches(UsersValidationUtils.EMPLOYEE_ID_REGEX);
     }
 }

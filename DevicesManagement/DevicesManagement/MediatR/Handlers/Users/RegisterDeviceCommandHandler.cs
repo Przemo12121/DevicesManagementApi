@@ -1,8 +1,8 @@
 ﻿using DevicesManagement.DataTransferObjects.Responses;
-using DevicesManagement.MediatR.Commands.Devices;
+using DevicesManagement.MediatR.Commands.Users;
 using MediatR;
 
-namespace DevicesManagement.MediatR.Handlers.Devices;
+namespace DevicesManagement.MediatR.Handlers.Users;
 
 public class RegisterDeviceCommandHandler : IRequestHandler<RegisterDeviceCommand, DeviceDto>
 {

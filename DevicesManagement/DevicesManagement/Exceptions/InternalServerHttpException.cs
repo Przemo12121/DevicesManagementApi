@@ -2,7 +2,7 @@
 
 namespace DevicesManagement.Exceptions;
 
-public class InternalServerException : Exception, IHttpException
+public class InternalServerHttpException : Exception, IHttpException
 {
     public async Task Execute(HttpContext context)
     {

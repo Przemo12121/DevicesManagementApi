@@ -10,8 +10,13 @@ public class PaginationRequestValidator : AbstractValidator<PaginationRequest>
     {
         var alternativeOrderKesy = orderKeys.Aggregate((a, b) => a + '|' + b);
 
-        RuleFor(request => request.Offset).GreaterThan(-1);
-        RuleFor(request => request.Limit).GreaterThan(0).LessThanOrEqualTo(maxLimit);
+        RuleFor(request => request.Offset)
+            .GreaterThan(-1);
+
+        RuleFor(request => request.Limit)
+            .GreaterThan(0)
+            .LessThanOrEqualTo(maxLimit);
+
         RuleFor(request => request.Order.IsNullOrEmpty() 
             ? request.Order 
             : request.Order!.ToLower()

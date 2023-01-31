@@ -52,6 +52,16 @@ public class UsersController : ControllerBase
         return result;
     }
 
+
+    [Authorize]
+    [HttpPost, Route("")]
+    public async Task<ActionResult<DeviceDto>> RegisterDevice([FromBody] RegisterDeviceRequest request)
+    {
+        var command = new RegisterDeviceCommand() { Request = request };
+        var result = await _mediator.Send(command);
+        return result;
+    }
+
     [Authorize]
     [HttpGet, Route("{employeeId}/devices")]
     public async Task<ActionResult<List<DeviceDto>>> ListUserDevices([FromRoute] Guid employeeId, [FromBody] PaginationRequest request)

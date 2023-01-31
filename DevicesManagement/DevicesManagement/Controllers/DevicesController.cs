@@ -37,15 +37,6 @@ public class DevicesController : ControllerBase
     }
 
     [Authorize]
-    [HttpPost, Route("")]
-    public async Task<ActionResult<DeviceDto>> RegisterDevice([FromBody] RegisterDeviceRequest request)
-    {
-        var command = new RegisterDeviceCommand() { Request = request };
-        var result = await _mediator.Send(command);
-        return result;
-    }
-
-    [Authorize]
     [HttpPatch, Route("{id}")]
     public async Task<ActionResult<DeviceDto>> UpdateDevice([FromRoute] Guid id, [FromBody] UpdateDeviceRequest request)
     {
