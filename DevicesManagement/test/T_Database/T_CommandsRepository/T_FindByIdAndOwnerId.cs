@@ -1,9 +1,9 @@
 ﻿namespace T_Database.T_CommandsRepository;
 
-public partial class T_FindByIdEmployeId
+public partial class T_FindByIdAndOwnerId
 {
     [Fact]
-    public void FindByIdAndEmployeId_CorrectIds_ReturnsCammand()
+    public void FindByIdAndAndOwnerId_CorrectIds_ReturnsCammand()
     {
         var entity = Repository.FindByIdAndOwnerId(Guid.Parse("abcd1234-abcd-1234-abcd-123456abcdef"), "abcd12345678");
 
@@ -11,7 +11,7 @@ public partial class T_FindByIdEmployeId
     }
 
     [Fact]
-    public void FindByIdAndEmployeId_WrongEmployeeId_ReturnsNull()
+    public void FindByIdAndAndOwnerId_WrongEmployeeId_ReturnsNull()
     {
         var entity = Repository.FindByIdAndOwnerId(Guid.Parse("abcd1234-abcd-1234-abcd-123456abcdef"), "badx12345678");
 
@@ -19,7 +19,7 @@ public partial class T_FindByIdEmployeId
     }
 
     [Fact]
-    public void FindByIdAndEmployeId_WrongId_ReturnsNull()
+    public void FindByIdAndAndOwnerId_WrongId_ReturnsNull()
     {
         var entity = Repository.FindByIdAndOwnerId(Guid.Parse("12345678-1234-1234-1234-123456123456"), "abcd12345678");
 
@@ -27,14 +27,14 @@ public partial class T_FindByIdEmployeId
     }
 }
 
-public partial class T_FindByIdEmployeId : IClassFixture<T_FindByIdEmployeId_Setup>
+public partial class T_FindByIdAndOwnerId : IClassFixture<T_FindByIdAndOwnerId_Setup>
 {
-    private readonly T_FindByIdEmployeId_Setup _setupFixture;
+    private readonly T_FindByIdAndOwnerId_Setup _setupFixture;
     CommandsRepository Repository { get; init; }
     public Command SearchedCommand { get; init; }
 
 
-    public T_FindByIdEmployeId(T_FindByIdEmployeId_Setup setupFixture)
+    public T_FindByIdAndOwnerId(T_FindByIdAndOwnerId_Setup setupFixture)
     {
         _setupFixture = setupFixture;
         SearchedCommand = setupFixture.SearchedCommand;
@@ -42,7 +42,7 @@ public partial class T_FindByIdEmployeId : IClassFixture<T_FindByIdEmployeId_Set
     }
 }
 
-public class T_FindByIdEmployeId_Setup : DeviceMenagementDatabaseTest
+public class T_FindByIdAndOwnerId_Setup : DeviceMenagementDatabaseTest
 {
     public DeviceManagementContextTest Context { get; init; }
     public Command SearchedCommand { get; } = new Command()
@@ -56,7 +56,7 @@ public class T_FindByIdEmployeId_Setup : DeviceMenagementDatabaseTest
         Description = "dummy description"
     };
 
-    public T_FindByIdEmployeId_Setup() : base("CommandsRepository.FindByIdEmployeeId")
+    public T_FindByIdAndOwnerId_Setup() : base("CommandsRepository.FindByIdEmployeeId")
     {
         Context = new DeviceManagementContextTest("CommandsRepository.FindByIdEmployeeId");
         Seed(Context);

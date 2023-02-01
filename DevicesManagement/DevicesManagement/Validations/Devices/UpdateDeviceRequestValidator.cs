@@ -9,19 +9,13 @@ public class UpdateDeviceRequestValidator : AbstractValidator<UpdateDeviceReques
     public UpdateDeviceRequestValidator()
     {
         RuleFor(request => request)
-            .Must(NotBeEmpty);
+            .Must(ValidationUtils.Common.IsNotEmpty);
         
         RuleFor(request => request.Name)
             .Length(1, 256);
         
-        RuleFor(request => request.Address)
-            .Matches(IPv4ValidationUtils.REGEX_PATTERN)
-            .Must(BeIPv4);
+        RuleFor(request => request.Address!)
+            .Must(ValidationUtils.IPv4.IsValid)
+            .When(request => request.Address is not null);
     }
-
-    protected bool NotBeEmpty(UpdateDeviceRequest request)
-        => !request.Address.IsNullOrEmpty() || !request.Name.IsNullOrEmpty();
-
-    protected bool BeIPv4(string? address)
-        => address is null || IPv4ValidationUtils.IsValid(address);
 }

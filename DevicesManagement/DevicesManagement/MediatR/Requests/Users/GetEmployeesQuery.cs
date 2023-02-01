@@ -9,7 +9,7 @@ namespace DevicesManagement.MediatR.Commands.Users;
 [MediatRBehavior(
     typeof(GetEmployeesValidationPipelineBehavior), order: 1
 )]
-public class GetEmployeesCommand : IRequest<List<UserDto>>, IRequestContainerCommand<PaginationRequest>
+public class GetEmployeesQuery : IRequest<List<UserDto>>, IRequestContainerCommand<PaginationRequest>
 {
     public PaginationRequest Request { get; init; }
 }

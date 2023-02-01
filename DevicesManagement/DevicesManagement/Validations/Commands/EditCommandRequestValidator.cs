@@ -7,6 +7,8 @@ public class EditCommandRequestValidator : AbstractValidator<EditCommandRequest>
 {
     public EditCommandRequestValidator()
     {
+        RuleFor(request => request).Must(ValidationUtils.Common.IsNotEmpty);
+
         RuleFor(request => request.Name)
             .Length(1, 64);
 

@@ -7,7 +7,7 @@ public class T_EditEmployeeRequestValidator
     private readonly EditEmployeeRequestValidator _validator = new();
 
     [Fact]
-    public void Validate_AllAttributesAsNull_True()
+    public void Validate_AllAttributesAsNull_False()
     {
         EditEmployeeRequest request = new()
         {
@@ -18,7 +18,7 @@ public class T_EditEmployeeRequestValidator
 
         var result = _validator.Validate(request);
 
-        result.IsValid.Should().BeTrue();
+        result.IsValid.Should().BeFalse();
     }
 
     // NAME

@@ -17,9 +17,8 @@ public class PaginationRequestValidator : AbstractValidator<PaginationRequest>
             .GreaterThan(0)
             .LessThanOrEqualTo(maxLimit);
 
-        RuleFor(request => request.Order.IsNullOrEmpty() 
-            ? request.Order 
-            : request.Order!.ToLower()
-        ).Matches($"({alternativeOrderKesy}):(asc|desc)");
+        RuleFor(request => request.Order!.ToLower())
+            .Matches($"({alternativeOrderKesy}):(asc|desc)")
+            .When(request => request.Order is not null);
     }
 }

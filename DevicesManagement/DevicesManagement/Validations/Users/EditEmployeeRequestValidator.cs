@@ -7,13 +7,16 @@ public class EditEmployeeRequestValidator : AbstractValidator<EditEmployeeReques
 {
     public EditEmployeeRequestValidator()
     {
+        RuleFor(request => request)
+            .Must(ValidationUtils.Common.IsNotEmpty);
+
         RuleFor(request => request.Name)
             .Length(1, 256);
 
         RuleFor(request => request.Password)
-            .Matches(UsersValidationUtils.PASSWORD_REGEX);
+            .Matches(ValidationUtils.Users.PASSWORD_REGEX);
 
         RuleFor(request => request.EmployeeEid)
-            .Matches(UsersValidationUtils.EMPLOYEE_ID_REGEX);
+            .Matches(ValidationUtils.Users.EMPLOYEE_ID_REGEX);
     }
 }

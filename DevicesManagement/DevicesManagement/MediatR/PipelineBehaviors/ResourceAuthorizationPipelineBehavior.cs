@@ -48,4 +48,3 @@ public class ResourceAuthorizationPipelineBehavior<TResource, TResourceRepositor
         request.Resource = resource;
     }
 }
-

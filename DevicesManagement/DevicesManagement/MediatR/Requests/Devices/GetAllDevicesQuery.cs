@@ -10,7 +10,7 @@ namespace DevicesManagement.MediatR.Commands.Devices;
     typeof(ListAllDevicesValidationPipelineBehavior),
     order: 1
 )]
-public class ListAllDevicesCommand : IRequest<List<DeviceDto>>, IRequestContainerCommand<PaginationRequest>
+public class GetAllDevicesQuery : IRequest<List<DeviceDto>>, IRequestContainerCommand<PaginationRequest>
 {
     public PaginationRequest Request { get; init; }
 }

@@ -5,7 +5,7 @@ using DevicesManagement.Validations.Common;
 
 namespace DevicesManagement.MediatR.PipelineBehaviors.Paginations;
 
-public class ListUserDevicesValidationPipelineBehavior : RequestValidationPipelineBehavior<PaginationRequest, PaginationRequestValidator, GetEmployeesCommand, List<UserDto>>
+public class ListUserDevicesValidationPipelineBehavior : RequestValidationPipelineBehavior<PaginationRequest, PaginationRequestValidator, GetEmployeesQuery, List<UserDto>>
 {
     protected static List<PaginationRequestValidator> _validators = new(new[] { new PaginationRequestValidator(32, new[] { "name", "address" }) });
 

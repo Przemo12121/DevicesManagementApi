@@ -13,10 +13,10 @@ public class RegisterEmployeeRequestValidator : AbstractValidator<RegisterEmploy
 
         RuleFor(request => request.Password)
             .NotNull()
-            .Matches(UsersValidationUtils.PASSWORD_REGEX);
+            .Matches(ValidationUtils.Users.PASSWORD_REGEX);
 
         RuleFor(request => request.EmployeeEid)
             .NotNull()
-            .Matches(UsersValidationUtils.EMPLOYEE_ID_REGEX);
+            .Matches(ValidationUtils.Users.EMPLOYEE_ID_REGEX);
     }
 }

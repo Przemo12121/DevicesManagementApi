@@ -4,9 +4,9 @@ using MediatR;
 
 namespace DevicesManagement.MediatR.Handlers.Devices;
 
-public class ListAllDevicesCommandHandler : IRequestHandler<ListAllDevicesCommand, List<DeviceDto>>
+public class ListAllDevicesCommandHandler : IRequestHandler<GetAllDevicesQuery, List<DeviceDto>>
 {
-    public Task<List<DeviceDto>> Handle(ListAllDevicesCommand request, CancellationToken cancellationToken)
+    public Task<List<DeviceDto>> Handle(GetAllDevicesQuery request, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

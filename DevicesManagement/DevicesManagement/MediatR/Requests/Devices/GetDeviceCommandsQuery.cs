@@ -7,19 +7,19 @@ using DevicesManagement.MediatR.PipelineBehaviors.Paginations;
 using MediatR;
 using MediatR.Extensions.AttributedBehaviors;
 
-namespace DevicesManagement.MediatR.Commands.Users;
+namespace DevicesManagement.MediatR.Commands.Devices;
 
 [MediatRBehavior(
-    typeof(ResourceAuthorizationPipelineBehavior<User, UsersRepository, ListUserDevicesCommand, List<DeviceDto>>),
+    typeof(ResourceAuthorizationPipelineBehavior<Device, DevicesRepository,GetDeviceCommandsQuery, List<CommandDto>>),
     order: 1
 )]
 [MediatRBehavior(
-    typeof(ListUserDevicesValidationPipelineBehavior),
+    typeof(ListDeviceCommandValidationPipelineBehavior),
     order: 2
 )]
-public class ListUserDevicesCommand : IRequest<List<DeviceDto>>, IRequestContainerCommand<PaginationRequest>, IResourceAuthorizableCommand<User>
+public class GetDeviceCommandsQuery : IRequest<List<CommandDto>>, IRequestContainerCommand<PaginationRequest>, IResourceAuthorizableCommand<Device>
 {
     public PaginationRequest Request { get; init; }
     public Guid ResourceId { get; init; }
-    public User Resource { get; set; }
+    public Device Resource { get; set; }
 }

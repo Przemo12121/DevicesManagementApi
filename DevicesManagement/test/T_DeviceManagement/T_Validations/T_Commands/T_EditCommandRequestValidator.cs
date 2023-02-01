@@ -7,7 +7,7 @@ public class T_EditCommandRequestValidator
     private readonly EditCommandRequestValidator _validator = new();
 
     [Fact]
-    public void Validate_AllAttributesAsNull_True()
+    public void Validate_AllAttributesAsNull_False()
     {
         EditCommandRequest request = new() 
         {
@@ -18,11 +18,10 @@ public class T_EditCommandRequestValidator
         
         var result = _validator.Validate(request);
 
-        result.IsValid.Should().BeTrue();
+        result.IsValid.Should().BeFalse();
     }
 
-    // NAME
-
+    #region .Name
     [Fact]
     public void Validate_OneLetterName_True()
     {
@@ -67,9 +66,9 @@ public class T_EditCommandRequestValidator
 
         result.IsValid.Should().BeFalse();
     }
+    #endregion
 
-    // DESCRIPTION
-
+    #region .Description
     [Fact]
     public void Validate_OneLetterDescription_True()
     {
@@ -114,10 +113,9 @@ public class T_EditCommandRequestValidator
 
         result.IsValid.Should().BeFalse();
     }
+    #endregion
 
-
-    // BODY
-
+    #region .Body
     [Fact]
     public void Validate_OneLetterBody_True()
     {
@@ -162,4 +160,5 @@ public class T_EditCommandRequestValidator
 
         result.IsValid.Should().BeFalse();
     }
+    #endregion
 }

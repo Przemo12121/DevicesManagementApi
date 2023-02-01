@@ -22,7 +22,7 @@ public class DevicesController : ControllerBase
     [HttpGet, Route("")]
     public async Task<ActionResult<List<DeviceDto>>> ListAllDevices([FromQuery] PaginationRequest request)
     {
-        var command = new ListAllDevicesCommand() { Request = request };
+        var command = new GetAllDevicesQuery() { Request = request };
         var result = await _mediator.Send(command);
         return result;
     }
@@ -31,7 +31,7 @@ public class DevicesController : ControllerBase
     [HttpGet, Route("{id}/commands")]
     public async Task<ActionResult<List<CommandDto>>> ListDeviceCommands([FromRoute] Guid id, [FromBody] PaginationRequest request)
     {
-        var command = new ListDeviceCommandsCommand() { Request = request, ResourceId = id };
+        var command = new GetDeviceCommandsQuery() { Request = request, ResourceId = id };
         var result = await _mediator.Send(command);
         return result;
     }

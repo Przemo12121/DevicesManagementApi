@@ -23,7 +23,7 @@ public class UsersController : ControllerBase
     [HttpGet, Route("employees")]
     public async Task<ActionResult<List<UserDto>>> GetEmployees([FromQuery] PaginationRequest request)
     {
-        var command = new GetEmployeesCommand() { Request = request };
+        var command = new GetEmployeesQuery() { Request = request };
         var result = await _mediator.Send(command);
         return result;
     }
@@ -66,7 +66,7 @@ public class UsersController : ControllerBase
     [HttpGet, Route("{employeeId}/devices")]
     public async Task<ActionResult<List<DeviceDto>>> ListUserDevices([FromRoute] Guid employeeId, [FromBody] PaginationRequest request)
     {
-        var command = new ListUserDevicesCommand() { ResourceId = employeeId, Request = request };
+        var command = new GetUserDevicesQuery() { ResourceId = employeeId, Request = request };
         var result = await _mediator.Send(command);
         return result;
     }
