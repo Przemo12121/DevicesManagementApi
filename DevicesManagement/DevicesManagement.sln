@@ -5,8 +5,6 @@ VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevicesManagement", "DevicesManagement\DevicesManagement.csproj", "{C3A4DAAA-EE9A-48A7-807D-9FDE1B8AB0D1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authorization", "Authorization\Authorization.csproj", "{E4E2B85B-F6B2-40D8-AF4E-B799D3A2469D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Database", "Database\Database.csproj", "{D88258AB-4811-4823-92D0-81FD9F26E8EA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Communication", "Communication\Communication.csproj", "{66966D32-7A66-4B19-9A87-4A6EE859E60C}"
@@ -21,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication", "Authentic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "T_Authentication", "test\T_Authentication\T_Authentication.csproj", "{15D7C2F0-A7A0-4774-AAD2-1E15C81366C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "test\IntegrationTests\IntegrationTests.csproj", "{40E72057-B04A-478F-9CDF-FEE144EAC35D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTests", "test\IntegrationTests\IntegrationTests.csproj", "{40E72057-B04A-478F-9CDF-FEE144EAC35D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +31,6 @@ Global
 		{C3A4DAAA-EE9A-48A7-807D-9FDE1B8AB0D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3A4DAAA-EE9A-48A7-807D-9FDE1B8AB0D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3A4DAAA-EE9A-48A7-807D-9FDE1B8AB0D1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E4E2B85B-F6B2-40D8-AF4E-B799D3A2469D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E4E2B85B-F6B2-40D8-AF4E-B799D3A2469D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E4E2B85B-F6B2-40D8-AF4E-B799D3A2469D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E4E2B85B-F6B2-40D8-AF4E-B799D3A2469D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D88258AB-4811-4823-92D0-81FD9F26E8EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D88258AB-4811-4823-92D0-81FD9F26E8EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D88258AB-4811-4823-92D0-81FD9F26E8EA}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -2,6 +2,10 @@
 using Database.Models.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using DevicesManagement.DataTransferObjects.Requests;
+using MediatR;
+using DevicesManagement.MediatR.Commands.Users;
+using DevicesManagement.DataTransferObjects.Responses;
+using DevicesManagement.MediatR.Commands.Devices;
 
 namespace DevicesManagement.Controllers;
 
@@ -10,31 +14,60 @@ namespace DevicesManagement.Controllers;
 [ApiController]
 public class UsersController : ControllerBase
 {
-    [HttpGet, Route("employees")]
-    public List<IUser> GetEmployees([FromQuery] PaginationRequest request)
+    private readonly IMediator _mediator;
+    public UsersController(IMediator mediator)
     {
-        //var x = User; // user is retrieved with authorize, from jwt bearer authenticator
+        _mediator = mediator;
+    }
 
-        return new List<IUser>();
+    [HttpGet, Route("employees")]
+    public async Task<ActionResult<List<UserDto>>> GetEmployees([FromQuery] PaginationRequest request)
+    {
+        var command = new GetEmployeesQuery() { Request = request };
+        var result = await _mediator.Send(command);
+        return result;
     }
 
     [HttpPost, Route("employees")]
-    public IUser RegisterEmployee([FromBody] CreateEmployeeRequest request)
+    public async Task<ActionResult<UserDto>> RegisterEmployee([FromBody] RegisterEmployeeRequest request)
     {
-        // then send command to mocked device
-        throw new NotImplementedException();
+        var command = new RegisterEmployeeCommand() { Request = request };
+        var result = await _mediator.Send(command);
+        return result;
     }
 
     [HttpPatch, Route("employees/{id}")]
-    public IUser EditEmployee([FromRoute] Guid id, [FromBody] EditEmployeeRequest request)
+    public async Task<ActionResult<UserDto>> EditEmployee([FromRoute] Guid id, [FromBody] EditEmployeeRequest request)
     {
-        // then send command to mocked device
-        throw new NotImplementedException();
+        var command = new EditEmployeeCommand() { Id = id, Request = request };
+        var result = await _mediator.Send(command);
+        return result;
     }
 
     [HttpDelete, Route("employees/{id}")]
-    public string DeleteEmployee([FromRoute] Guid id)
+    public async Task<ActionResult<UserDto>> DeleteEmployee([FromRoute] Guid id)
     {
-        throw new NotImplementedException();
+        var command = new DeleteEmployeeCommand() { ResourceId = id };
+        var result = await _mediator.Send(command);
+        return result;
+    }
+
+
+    [Authorize]
+    [HttpPost, Route("")]
+    public async Task<ActionResult<DeviceDto>> RegisterDevice([FromBody] RegisterDeviceRequest request)
+    {
+        var command = new RegisterDeviceCommand() { Request = request };
+        var result = await _mediator.Send(command);
+        return result;
+    }
+
+    [Authorize]
+    [HttpGet, Route("{employeeId}/devices")]
+    public async Task<ActionResult<List<DeviceDto>>> ListUserDevices([FromRoute] Guid employeeId, [FromBody] PaginationRequest request)
+    {
+        var command = new GetUserDevicesQuery() { ResourceId = employeeId, Request = request };
+        var result = await _mediator.Send(command);
+        return result;
     }
 }

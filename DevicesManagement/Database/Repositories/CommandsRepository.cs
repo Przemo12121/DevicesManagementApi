@@ -28,12 +28,19 @@ public class CommandsRepository : DisposableRepository<DeviceManagementContext>,
         _context.SaveChanges();
     }
 
-    public Command? FindByIdAndEmployeeId(Guid id, string employeeId)
+    public Command? FindByIdAndOwnerId(Guid id, string employeeId)
     {
         return _context.Devices
             .Where(device => device.EmployeeId.Equals(employeeId))
             .Include(device => device.Commands)
             .SelectMany(device => device.Commands)
+            .Where(command => command.Id.Equals(id))
+            .SingleOrDefault();
+    }
+
+    public Command? FindById(Guid id)
+    {
+        return _context.Commands
             .Where(command => command.Id.Equals(id))
             .SingleOrDefault();
     }

@@ -1,6 +1,4 @@
-﻿using MediatR;
-
-namespace DevicesManagement.DataTransferObjects.Requests;
+﻿namespace DevicesManagement.DataTransferObjects.Requests;
 
 public record EditEmployeeRequest
 {
@@ -9,7 +7,7 @@ public record EditEmployeeRequest
     public string? Password { get; init; }
 };
 
-public record CreateEmployeeRequest
+public record RegisterEmployeeRequest
 {
     public string Name { get; init; }
     public string EmployeeEid { get; init; }

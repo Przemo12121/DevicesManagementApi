@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Database.Repositories;
 
-public class UsersRepository : DisposableRepository<LocalAuthStorageContext>, IUsersRepository<User>, IDisposable
+public class UsersRepository : DisposableRepository<LocalAuthStorageContext>, IUsersRepository<User>, IResourceAuthorizableRepository<User>, IDisposable
 {
     public UsersRepository(LocalAuthStorageContext context) : base(context) { }
 
@@ -68,6 +68,16 @@ public class UsersRepository : DisposableRepository<LocalAuthStorageContext>, IU
        return _context.Users
             .Where(user => user.EmployeeId.Equals(eid))
             .Include(user => user.AccessLevel)
+            .SingleOrDefault();
+    }
+
+    public User? FindByIdAndOwnerId(Guid id, string ownerId) 
+        => id.Equals(ownerId) ? FindById(id) : null;
+
+    public User? FindById(Guid id)
+    {
+        return _context.Users
+            .Where(user => user.Id.Equals(id))
             .SingleOrDefault();
     }
 }

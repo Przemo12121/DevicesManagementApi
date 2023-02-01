@@ -1,3 +1,4 @@
+using DevicesManagement.Validations.Common;
 using MediatR;
 using MediatR.Extensions.AttributedBehaviors;
 using System.Reflection;
@@ -21,10 +22,14 @@ AppSetup.ConfigureAuthentication(builder);
 // Request valdiators
 AppSetup.ConfigureValidators(builder);
 
+var x = new PaginationRequestValidator(10, new[] { "abc", "xyz" });
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Error routes
+AppSetup.ConfigureErrorRoutes(app);
 
+// Configure the HTTP request pipeline.
 app.UseAuthentication();
 app.UseAuthorization();
 

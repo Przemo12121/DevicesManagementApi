@@ -1,7 +1,4 @@
-﻿using MediatR;
-using MediatR.Extensions.AttributedBehaviors;
-
-namespace DevicesManagement.DataTransferObjects.Requests;
+﻿namespace DevicesManagement.DataTransferObjects.Requests;
 
 public record EditCommandRequest
 {

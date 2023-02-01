@@ -15,7 +15,7 @@ public class T_PaginationRequestValidator
             Order = "name:asc"
         };
 
-        var result = new PaginationRequestValidator(10, "name").Validate(request);
+        var result = new PaginationRequestValidator(10, new[] { "name" }).Validate(request);
 
         result.IsValid.Should().BeFalse();
     }
@@ -30,7 +30,7 @@ public class T_PaginationRequestValidator
             Order = "name:asc"
         };
 
-        var result = new PaginationRequestValidator(10, "name").Validate(request);
+        var result = new PaginationRequestValidator(10, new[] { "name" }).Validate(request);
 
         result.IsValid.Should().BeFalse();
     }
@@ -45,7 +45,7 @@ public class T_PaginationRequestValidator
             Order = "name:asc"
         };
 
-        var result = new PaginationRequestValidator(10, "name").Validate(request);
+        var result = new PaginationRequestValidator(10, new[] { "name" }).Validate(request);
 
         result.IsValid.Should().BeFalse();
     }
@@ -60,7 +60,7 @@ public class T_PaginationRequestValidator
             Order = "name:asc"
         };
 
-        var result = new PaginationRequestValidator(10, "name").Validate(request);
+        var result = new PaginationRequestValidator(10, new[] { "name" }).Validate(request);
 
         result.IsValid.Should().BeTrue();
     }
@@ -75,7 +75,7 @@ public class T_PaginationRequestValidator
             Order = "name:asc"
         };
 
-        var result = new PaginationRequestValidator(10, "name").Validate(request);
+        var result = new PaginationRequestValidator(10, new[] { "name" }).Validate(request);
 
         result.IsValid.Should().BeTrue();
     }
@@ -90,7 +90,7 @@ public class T_PaginationRequestValidator
             Order = "name:asc"
         };
 
-        var result = new PaginationRequestValidator(10, "name").Validate(request);
+        var result = new PaginationRequestValidator(10, new[] { "name" }).Validate(request);
 
         result.IsValid.Should().BeTrue();
     }
@@ -105,7 +105,7 @@ public class T_PaginationRequestValidator
             Order = "name:asc"
         };
 
-        var result = new PaginationRequestValidator(10, "name").Validate(request);
+        var result = new PaginationRequestValidator(10, new[] { "name" }).Validate(request);
 
         result.IsValid.Should().BeTrue();
     }
@@ -120,7 +120,7 @@ public class T_PaginationRequestValidator
             Order = "name:asc"
         };
 
-        var result = new PaginationRequestValidator(10, "name").Validate(request);
+        var result = new PaginationRequestValidator(10, new[] { "name" }).Validate(request);
 
         result.IsValid.Should().BeTrue();
     }
@@ -135,7 +135,7 @@ public class T_PaginationRequestValidator
             Order = "name:asc"
         };
 
-        var result = new PaginationRequestValidator(10, "name").Validate(request);
+        var result = new PaginationRequestValidator(10, new[] { "name" }).Validate(request);
 
         result.IsValid.Should().BeTrue();
     }
@@ -150,7 +150,7 @@ public class T_PaginationRequestValidator
             Order = "name:desc"
         };
 
-        var result = new PaginationRequestValidator(10, "name").Validate(request);
+        var result = new PaginationRequestValidator(10, new[] { "name" }).Validate(request);
 
         result.IsValid.Should().BeTrue();
     }
@@ -165,7 +165,7 @@ public class T_PaginationRequestValidator
             Order = "nAMe:DEsc"
         };
 
-        var result = new PaginationRequestValidator(10, "name").Validate(request);
+        var result = new PaginationRequestValidator(10, new[] { "name" }).Validate(request);
 
         result.IsValid.Should().BeTrue();
     }
@@ -180,7 +180,7 @@ public class T_PaginationRequestValidator
             Order = "name:"
         };
 
-        var result = new PaginationRequestValidator(10, "name").Validate(request);
+        var result = new PaginationRequestValidator(10, new[] { "name" }).Validate(request);
 
         result.IsValid.Should().BeFalse();
     }
@@ -195,7 +195,7 @@ public class T_PaginationRequestValidator
             Order = "namedesc"
         };
 
-        var result = new PaginationRequestValidator(10, "name").Validate(request);
+        var result = new PaginationRequestValidator(10, new[] { "name" }).Validate(request);
 
         result.IsValid.Should().BeFalse();
     }
@@ -210,7 +210,7 @@ public class T_PaginationRequestValidator
             Order = "name desc"
         };
 
-        var result = new PaginationRequestValidator(10, "name").Validate(request);
+        var result = new PaginationRequestValidator(10, new[] { "name" }).Validate(request);
 
         result.IsValid.Should().BeFalse();
     }
@@ -225,7 +225,7 @@ public class T_PaginationRequestValidator
             Order = "desc:name"
         };
 
-        var result = new PaginationRequestValidator(10, "name").Validate(request);
+        var result = new PaginationRequestValidator(10, new[] { "name" }).Validate(request);
 
         result.IsValid.Should().BeFalse();
     }
@@ -240,7 +240,7 @@ public class T_PaginationRequestValidator
             Order = ":name"
         };
 
-        var result = new PaginationRequestValidator(10, "name").Validate(request);
+        var result = new PaginationRequestValidator(10, new[] { "name" }).Validate(request);
 
         result.IsValid.Should().BeFalse();
     }
@@ -255,7 +255,37 @@ public class T_PaginationRequestValidator
             Order = null
         };
 
-        var result = new PaginationRequestValidator(10, "name").Validate(request);
+        var result = new PaginationRequestValidator(10, new[] { "name" }).Validate(request);
+
+        result.IsValid.Should().BeTrue();
+    }
+
+    [Fact]
+    public void Validate_OrderOneOfListed_True()
+    {
+        PaginationRequest request = new()
+        {
+            Offset = 5,
+            Limit = 5,
+            Order = "name:asc"
+        };
+
+        var result = new PaginationRequestValidator(10, new[] { "name", "other" }).Validate(request);
+
+        result.IsValid.Should().BeTrue();
+    }
+
+    [Fact]
+    public void Validate_OrderTwoOfListed_False()
+    {
+        PaginationRequest request = new()
+        {
+            Offset = 5,
+            Limit = 5,
+            Order = "name:asc,other:desc"
+        };
+
+        var result = new PaginationRequestValidator(10, new[] { "name", "other" }).Validate(request);
 
         result.IsValid.Should().BeTrue();
     }

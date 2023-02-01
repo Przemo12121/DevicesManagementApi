@@ -2,53 +2,64 @@
 using Database.Models.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using DevicesManagement.DataTransferObjects.Requests;
+using DevicesManagement.MediatR.Commands.Devices;
+using MediatR;
+using DevicesManagement.DataTransferObjects.Responses;
 
 namespace DevicesManagement.Controllers;
 
 [Route("api/[controller]")]
-[Authorize]
 [ApiController]
 public class DevicesController : ControllerBase
 {
+    private readonly IMediator _mediator;
+    public DevicesController(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
+
+    [Authorize(Roles = "Admin")]
     [HttpGet, Route("")]
-    public List<IUser> ListAllDevices([FromQuery] PaginationRequest request)
+    public async Task<ActionResult<List<DeviceDto>>> ListAllDevices([FromQuery] PaginationRequest request)
     {
-        // endpoint will be used to list brief information about all devices
-        return new List<IUser>();
+        var command = new GetAllDevicesQuery() { Request = request };
+        var result = await _mediator.Send(command);
+        return result;
     }
 
-    [HttpGet, Route("{employeeId}")]
-    public List<IUser> ListUserDevices([FromRoute] Guid employeeId)
-    {
-        // endpoint will be used to list brief information about requesting user's devices
-        return new List<IUser>();
-    }
-
+    [Authorize]
     [HttpGet, Route("{id}/commands")]
-    public List<ICommand> ListDeviceCommands([FromRoute] Guid id, [FromBody] PaginationRequest request)
+    public async Task<ActionResult<List<CommandDto>>> ListDeviceCommands([FromRoute] Guid id, [FromBody] PaginationRequest request)
     {
-        // return commands registered to device
-        return new List<ICommand>();
+        var command = new GetDeviceCommandsQuery() { Request = request, ResourceId = id };
+        var result = await _mediator.Send(command);
+        return result;
     }
 
-    [HttpPost, Route("")]
-    public IDevice RegisterDevice([FromBody] CreateDeviceRequest request)
+    [Authorize]
+    [HttpPatch, Route("{id}")]
+    public async Task<ActionResult<DeviceDto>> UpdateDevice([FromRoute] Guid id, [FromBody] UpdateDeviceRequest request)
     {
-        // adds new device
-        throw new NotImplementedException();
+        var command = new UpdateDeviceCommand() { Request = request, ResourceId = id };
+        var result = await _mediator.Send(command);
+        return result;
     }
 
+    [Authorize]
     [HttpPost, Route("{id}/commands")]
-    public ICommand RegisterCommand([FromRoute] Guid id, [FromBody] CreateCommandRequest request)
+    public async Task<ActionResult<CommandDto>> RegisterCommand([FromRoute] Guid id, [FromBody] RegisterCommandRequest request)
     {
-        // then send create new command
-        throw new NotImplementedException();
+        var command = new RegisterCommandCommand() { Request = request };
+        var result = await _mediator.Send(command);
+        return result;
     }
 
+    [Authorize]
     [HttpDelete, Route("{id}")]
-    public string DeleteDevice([FromRoute] Guid id)
+    public async Task<ActionResult<DeviceDto>> DeleteDevice([FromRoute] Guid id)
     {
-        // delete device
-        return "Not yet implemented";
+        var command = new DeleteDeviceCommand() { ResourceId = id };
+        var result = await _mediator.Send(command);
+        return result;
     }
 }
