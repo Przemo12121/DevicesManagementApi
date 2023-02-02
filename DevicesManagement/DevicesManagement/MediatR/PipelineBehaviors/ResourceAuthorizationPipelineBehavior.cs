@@ -25,7 +25,7 @@ public class ResourceAuthorizationPipelineBehavior<TResource, TResourceRepositor
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
         Authorize(request);
-        
+
         return await next();
     }
 

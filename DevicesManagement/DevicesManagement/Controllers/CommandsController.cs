@@ -5,6 +5,7 @@ using DevicesManagement.DataTransferObjects.Requests;
 using MediatR;
 using DevicesManagement.MediatR.Commands.Commands;
 using DevicesManagement.DataTransferObjects.Responses;
+using Mapster;
 
 namespace DevicesManagement.Controllers;
 
@@ -28,11 +29,11 @@ public class CommandsController : ControllerBase
     }
 
     [HttpPatch, Route("{id}")]
-    public async Task<ActionResult<CommandDto>> EditCommand([FromRoute] Guid id, [FromBody] EditCommandRequest request)
+    public async Task<CommandDto> EditCommand([FromRoute] Guid id, [FromBody] EditCommandRequest request)
     {
         var command = new EditCommandCommand() { ResourceId = id, Request = request };
         var result = await _mediator.Send(command);
-        return result;
+        return result.Adapt<CommandDto>();
     }
 
     [HttpDelete, Route("{id}")]

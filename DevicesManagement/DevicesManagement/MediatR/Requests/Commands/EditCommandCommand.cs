@@ -10,14 +10,14 @@ using DevicesManagement.DataTransferObjects.Responses;
 namespace DevicesManagement.MediatR.Commands.Commands;
 
 [MediatRBehavior(
-    typeof(RequestValidationPipelineBehavior<EditCommandRequest, EditCommandRequestValidator, EditCommandCommand, CommandDto>),
+    typeof(RequestValidationPipelineBehavior<EditCommandRequest, EditCommandRequestValidator, EditCommandCommand, Command>),
     order: 1
 )]
 [MediatRBehavior(
-    typeof(ResourceAuthorizationPipelineBehavior<Command, CommandsRepository, RunCommandCommand, string>),
+    typeof(ResourceAuthorizationPipelineBehavior<Command, CommandsRepository, EditCommandCommand, Command>),
     order: 2
 )]
-public record EditCommandCommand : IRequest<CommandDto>, IResourceAuthorizableCommand<Command>, IRequestContainerCommand<EditCommandRequest>
+public record EditCommandCommand : IRequest<Command>, IResourceAuthorizableCommand<Command>, IRequestContainerCommand<EditCommandRequest>
 {
     public Guid ResourceId { get; init; }
     public Command Resource { get; set; }
