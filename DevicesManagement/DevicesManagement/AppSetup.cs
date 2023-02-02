@@ -8,6 +8,8 @@ using DevicesManagement.Exceptions;
 using DevicesManagement.MediatR.Commands.Users;
 using DevicesManagement.Validations.Commands;
 using DevicesManagement.Validations.Common;
+using DevicesManagement.Validations.Devices;
+using DevicesManagement.Validations.Users;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -25,11 +27,20 @@ internal static class AppSetup
         builder.Services.AddSingleton<CommandsRepository>(
             service => new CommandsRepository(DeviceManagementContext)
         );
+        builder.Services.AddSingleton<DevicesRepository>(
+            service => new DevicesRepository(DeviceManagementContext)
+        );
+        builder.Services.AddSingleton<UsersRepository>(
+            service => new UsersRepository(LocalAuthStorageContext)
+        );
     }
     
     public static void ConfigureValidators(WebApplicationBuilder builder)
     {
         builder.Services.AddSingleton<IValidator<EditCommandRequest>, EditCommandRequestValidator>();
+        builder.Services.AddSingleton<IValidator<RegisterDeviceRequest>, RegisterDeviceRequestValidator>();
+        builder.Services.AddSingleton<IValidator<UpdateDeviceRequest>, UpdateDeviceRequestValidator>();
+        builder.Services.AddSingleton<IValidator<EditEmployeeRequest>, EditEmployeeRequestValidator>();
     }
 
     public static void ConfigureErrorRoutes(WebApplication app)
