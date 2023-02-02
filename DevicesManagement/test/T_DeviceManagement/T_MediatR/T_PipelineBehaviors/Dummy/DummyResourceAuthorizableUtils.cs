@@ -1,7 +1,5 @@
-﻿ using Database.Models.Base;
+﻿using Database.Models.Base;
 using DevicesManagement.MediatR.Commands;
-using Microsoft.AspNetCore.Http.Features;
-using System.Security.Cryptography.Xml;
 using System.Security.Principal;
 
 namespace T_DeviceManagement.T_MediatR.T_PipelineBehaviors.Dummy;
