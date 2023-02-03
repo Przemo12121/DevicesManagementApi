@@ -17,6 +17,7 @@ public partial class T_Update : DeviceMenagementDatabaseTest
 
                 entity.Description = "New Description";
                 repo.Update(entity);
+                repo.SaveChanges();
             }
         }
 
@@ -43,6 +44,7 @@ public partial class T_Update : DeviceMenagementDatabaseTest
 
                 entity.Description = "New Description";
                 repo.Update(entity);
+                repo.SaveChanges();
             }
         }
 
@@ -77,6 +79,7 @@ public partial class T_Update : DeviceMenagementDatabaseTest
 
                 entityUpdated.Description = "New Description";
                 repo.Update(entityUpdated);
+                repo.SaveChanges();
             }
         }
 

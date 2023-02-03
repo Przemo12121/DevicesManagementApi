@@ -1,11 +1,14 @@
-﻿using Database.Models;
-using Database.Repositories;
+﻿using Database.Repositories;
+using DevicesManagement.DataTransferObjects.Responses;
 using DevicesManagement.MediatR.Commands.Commands;
+using DevicesManagement.ModelsHandlers.ExtensionMethods;
+using Mapster;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DevicesManagement.MediatR.Handlers.Commands;
 
-public class EditCommandCommandHandler : IRequestHandler<EditCommandCommand, Command>
+public class EditCommandCommandHandler : IRequestHandler<EditCommandCommand, IActionResult>
 {
     private readonly CommandsRepository _commandsRepository;
     public EditCommandCommandHandler(CommandsRepository commandsRepository)
@@ -13,17 +16,14 @@ public class EditCommandCommandHandler : IRequestHandler<EditCommandCommand, Com
         _commandsRepository = commandsRepository;
     } 
 
-    public Task<Command> Handle(EditCommandCommand request, CancellationToken cancellationToken)
+    public Task<IActionResult> Handle(EditCommandCommand request, CancellationToken cancellationToken)
     {
-        if (request.Request.Description is not null)
-            request.Resource.Description = request.Request.Description;
-        if (request.Request.Name is not null)
-            request.Resource.Name = request.Request.Name;
-        if (request.Request.Body is not null)
-            request.Resource.Body = request.Request.Body;
+        request.Resource.UpdateWith(request.Request);
 
         _commandsRepository.Update(request.Resource);
+        _commandsRepository.SaveChanges();
 
-        return Task.FromResult(request.Resource);
+        var result = new OkObjectResult(request.Resource.Adapt<CommandDto>());
+        return Task.FromResult((IActionResult)result);
     }
 }

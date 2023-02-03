@@ -15,3 +15,4 @@ global using Database.Models.Enums;
 global using Database.Repositories.Interfaces;
 global using Microsoft.AspNetCore.Http;
 global using System.Security.Claims;
+global using Microsoft.AspNetCore.Mvc;

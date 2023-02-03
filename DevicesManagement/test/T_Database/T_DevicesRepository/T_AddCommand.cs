@@ -25,6 +25,7 @@ public partial class T_AddCommand : DeviceMenagementDatabaseTest
                 };
 
                 repo.AddCommand(testDevice, entity);
+                repo.SaveChanges();
             }
         }
 
@@ -57,6 +58,7 @@ public partial class T_AddCommand : DeviceMenagementDatabaseTest
                 };
 
                 repo.AddCommand(testDevice, entity);
+                repo.SaveChanges();
             }
         }
 
@@ -89,6 +91,7 @@ public partial class T_AddCommand : DeviceMenagementDatabaseTest
                 };
 
                 repo.AddCommand(testDevice, entity);
+                repo.SaveChanges();
             }
         }
 

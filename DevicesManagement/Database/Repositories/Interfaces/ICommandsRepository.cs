@@ -1,5 +1,5 @@
-﻿
-using Database.Models.Interfaces;
+﻿using Database.Models.Interfaces;
+using Database.Repositories.InnerDependencies;
 
 namespace Database.Repositories.Interfaces;
 

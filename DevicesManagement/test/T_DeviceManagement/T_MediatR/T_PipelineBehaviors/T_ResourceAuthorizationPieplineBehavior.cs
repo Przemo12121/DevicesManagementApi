@@ -1,4 +1,7 @@
-﻿namespace T_DeviceManagement.T_MediatR.T_PipelineBehaviors;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.IO.Pipelines;
+
+namespace T_DeviceManagement.T_MediatR.T_PipelineBehaviors;
 
 public partial class T_ResourceAuthorizationPieplineBehavior
 {
@@ -9,8 +12,7 @@ public partial class T_ResourceAuthorizationPieplineBehavior
         var pipeline = new ResourceAuthorizationPipelineBehavior<
             DummyResource, 
             IResourceAuthorizableRepository<DummyResource>,
-            DummyAuthorizableRequestCommand, 
-            string
+            DummyAuthorizableRequestCommand
         >(MockedRepository, MockedAdminHttpContext);
 
         var command = new DummyAuthorizableRequestCommand()
@@ -29,8 +31,7 @@ public partial class T_ResourceAuthorizationPieplineBehavior
         var pipeline = new ResourceAuthorizationPipelineBehavior<
             DummyResource,
             IResourceAuthorizableRepository<DummyResource>,
-            DummyAuthorizableRequestCommand,
-            string
+            DummyAuthorizableRequestCommand
         >(MockedRepository, MockedAdminHttpContext);
 
         var command = new DummyAuthorizableRequestCommand()
@@ -49,8 +50,7 @@ public partial class T_ResourceAuthorizationPieplineBehavior
         var pipeline = new ResourceAuthorizationPipelineBehavior<
             DummyResource,
             IResourceAuthorizableRepository<DummyResource>,
-            DummyAuthorizableRequestCommand,
-            string
+            DummyAuthorizableRequestCommand
         >(MockedRepository, MockedAdminHttpContext);
 
         var command = new DummyAuthorizableRequestCommand()
@@ -60,17 +60,19 @@ public partial class T_ResourceAuthorizationPieplineBehavior
 
         var result = await pipeline.Handle(command, DummyDelegateMethod, DummyCancellationToken);
 
-        result.Should().Be("dummy");
+        result.As<OkObjectResult>()
+            .Value
+            .Should()
+            .Be("dummy");
     }
 
     [Fact]
-    public async void Handle_AdminRequestingNonexistingResource_ThrowsNotFoundHttpException()
+    public async void Handle_AdminRequestingNonexistingResource_NotThrowsException()
     {
         var pipeline = new ResourceAuthorizationPipelineBehavior<
             DummyResource,
             IResourceAuthorizableRepository<DummyResource>,
-            DummyAuthorizableRequestCommand,
-            string
+            DummyAuthorizableRequestCommand
         >(MockedRepository, MockedAdminHttpContext);
 
         var command = new DummyAuthorizableRequestCommand()
@@ -80,7 +82,29 @@ public partial class T_ResourceAuthorizationPieplineBehavior
 
         await pipeline.Invoking(pipe => pipe.Handle(command, DummyDelegateMethod, DummyCancellationToken))
             .Should()
-            .ThrowAsync<NotFoundHttpException>();
+            .NotThrowAsync<Exception>();
+    }
+
+    [Fact]
+    public async void Handle_AdminRequestingNonexistingResource_ReturnsNotFoundException()
+    {
+        var pipeline = new ResourceAuthorizationPipelineBehavior<
+            DummyResource,
+            IResourceAuthorizableRepository<DummyResource>,
+            DummyAuthorizableRequestCommand
+        >(MockedRepository, MockedAdminHttpContext);
+
+        var command = new DummyAuthorizableRequestCommand()
+        {
+            ResourceId = Guid.NewGuid()
+        };
+
+        var result = await pipeline.Handle(command, DummyDelegateMethod, DummyCancellationToken);
+
+        result.As<NotFoundObjectResult>()
+            .StatusCode
+            .Should()
+            .Be(StatusCodes.Status404NotFound);
     }
 
     [Fact]
@@ -89,8 +113,7 @@ public partial class T_ResourceAuthorizationPieplineBehavior
         var pipeline = new ResourceAuthorizationPipelineBehavior<
             DummyResource,
             IResourceAuthorizableRepository<DummyResource>,
-            DummyAuthorizableRequestCommand,
-            string
+            DummyAuthorizableRequestCommand
         >(MockedRepository, MockedOwnerHttpContext);
 
         var command = new DummyAuthorizableRequestCommand()
@@ -109,8 +132,7 @@ public partial class T_ResourceAuthorizationPieplineBehavior
         var pipeline = new ResourceAuthorizationPipelineBehavior<
             DummyResource,
             IResourceAuthorizableRepository<DummyResource>,
-            DummyAuthorizableRequestCommand,
-            string
+            DummyAuthorizableRequestCommand
         >(MockedRepository, MockedOwnerHttpContext);
 
         var command = new DummyAuthorizableRequestCommand()
@@ -129,8 +151,7 @@ public partial class T_ResourceAuthorizationPieplineBehavior
         var pipeline = new ResourceAuthorizationPipelineBehavior<
             DummyResource,
             IResourceAuthorizableRepository<DummyResource>,
-            DummyAuthorizableRequestCommand,
-            string
+            DummyAuthorizableRequestCommand
         >(MockedRepository, MockedOwnerHttpContext);
 
         var command = new DummyAuthorizableRequestCommand()
@@ -140,17 +161,19 @@ public partial class T_ResourceAuthorizationPieplineBehavior
 
         var result = await pipeline.Handle(command, DummyDelegateMethod, DummyCancellationToken);
 
-        result.Should().Be("dummy");
+        result.As<OkObjectResult>()
+            .Value
+            .Should()
+            .Be("dummy");
     }
 
     [Fact]
-    public async void Handle_OwnerRequestingNotHisResource_ThrowsForbiddenHttpException()
+    public async void Handle_OwnerRequestingNotHisResource_NotThrowsException()
     {
         var pipeline = new ResourceAuthorizationPipelineBehavior<
             DummyResource,
             IResourceAuthorizableRepository<DummyResource>,
-            DummyAuthorizableRequestCommand,
-            string
+            DummyAuthorizableRequestCommand
         >(MockedRepository, MockedOwnerHttpContext);
 
         var command = new DummyAuthorizableRequestCommand()
@@ -160,17 +183,38 @@ public partial class T_ResourceAuthorizationPieplineBehavior
 
         await pipeline.Invoking(pipe => pipe.Handle(command, DummyDelegateMethod, DummyCancellationToken))
             .Should()
-            .ThrowAsync<ForbiddenHttpException>();
+            .NotThrowAsync<Exception>();
     }
 
     [Fact]
-    public async void Handle_OwnerRequestingNonExistingResource_ThrowsForbiddenHttpException()
+    public async void Handle_OwnerRequestingNotHisResource_ReturnsNotFoundResult()
     {
         var pipeline = new ResourceAuthorizationPipelineBehavior<
             DummyResource,
             IResourceAuthorizableRepository<DummyResource>,
-            DummyAuthorizableRequestCommand,
-            string
+            DummyAuthorizableRequestCommand
+        >(MockedRepository, MockedOwnerHttpContext);
+
+        var command = new DummyAuthorizableRequestCommand()
+        {
+            ResourceId = NonownerResource.Id
+        };
+
+        var result = await pipeline.Handle(command, DummyDelegateMethod, DummyCancellationToken);
+
+        result.As<NotFoundObjectResult>()
+            .StatusCode
+            .Should()
+            .Be(StatusCodes.Status404NotFound);
+    }
+
+    [Fact]
+    public async void Handle_OwnerRequestingNonExistingResource_ReturnsNotFoundResult()
+    {
+        var pipeline = new ResourceAuthorizationPipelineBehavior<
+            DummyResource,
+            IResourceAuthorizableRepository<DummyResource>,
+            DummyAuthorizableRequestCommand
         >(MockedRepository, MockedOwnerHttpContext);
 
         var command = new DummyAuthorizableRequestCommand()
@@ -178,16 +222,19 @@ public partial class T_ResourceAuthorizationPieplineBehavior
             ResourceId = Guid.NewGuid()
         };
 
-        await pipeline.Invoking(pipe => pipe.Handle(command, DummyDelegateMethod, DummyCancellationToken))
+        var result = await pipeline.Handle(command, DummyDelegateMethod, DummyCancellationToken);
+
+        result.As<NotFoundObjectResult>()
+            .StatusCode
             .Should()
-            .ThrowAsync<ForbiddenHttpException>();
+            .Be(StatusCodes.Status404NotFound);
     }
 }
 
 public partial class T_ResourceAuthorizationPieplineBehavior
 {
     #region dummy .Handle() requirements
-    static Task<string> DummyDelegateMethod() => Task.FromResult("dummy");
+    static Task<IActionResult> DummyDelegateMethod() => Task.FromResult((IActionResult)new OkObjectResult("dummy"));
     CancellationToken DummyCancellationToken { get; } = new();
     #endregion
 

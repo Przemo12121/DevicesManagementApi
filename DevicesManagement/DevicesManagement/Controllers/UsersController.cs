@@ -21,7 +21,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet, Route("employees")]
-    public async Task<ActionResult<List<UserDto>>> GetEmployees([FromQuery] PaginationRequest request)
+    public async Task<IActionResult> GetEmployees([FromQuery] PaginationRequest request)
     {
         var command = new GetEmployeesQuery() { Request = request };
         var result = await _mediator.Send(command);
@@ -29,7 +29,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost, Route("employees")]
-    public async Task<ActionResult<UserDto>> RegisterEmployee([FromBody] RegisterEmployeeRequest request)
+    public async Task<IActionResult> RegisterEmployee([FromBody] RegisterEmployeeRequest request)
     {
         var command = new RegisterEmployeeCommand() { Request = request };
         var result = await _mediator.Send(command);
@@ -37,7 +37,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPatch, Route("employees/{id}")]
-    public async Task<ActionResult<UserDto>> EditEmployee([FromRoute] Guid id, [FromBody] EditEmployeeRequest request)
+    public async Task<IActionResult> EditEmployee([FromRoute] Guid id, [FromBody] EditEmployeeRequest request)
     {
         var command = new EditEmployeeCommand() { Id = id, Request = request };
         var result = await _mediator.Send(command);
@@ -45,7 +45,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpDelete, Route("employees/{id}")]
-    public async Task<ActionResult<UserDto>> DeleteEmployee([FromRoute] Guid id)
+    public async Task<IActionResult> DeleteEmployee([FromRoute] Guid id)
     {
         var command = new DeleteEmployeeCommand() { ResourceId = id };
         var result = await _mediator.Send(command);
@@ -55,7 +55,7 @@ public class UsersController : ControllerBase
 
     [Authorize]
     [HttpPost, Route("")]
-    public async Task<ActionResult<DeviceDto>> RegisterDevice([FromBody] RegisterDeviceRequest request)
+    public async Task<IActionResult> RegisterDevice([FromBody] RegisterDeviceRequest request)
     {
         var command = new RegisterDeviceCommand() { Request = request };
         var result = await _mediator.Send(command);
@@ -64,7 +64,7 @@ public class UsersController : ControllerBase
 
     [Authorize]
     [HttpGet, Route("{employeeId}/devices")]
-    public async Task<ActionResult<List<DeviceDto>>> ListUserDevices([FromRoute] Guid employeeId, [FromBody] PaginationRequest request)
+    public async Task<IActionResult> ListUserDevices([FromRoute] Guid employeeId, [FromBody] PaginationRequest request)
     {
         var command = new GetUserDevicesQuery() { ResourceId = employeeId, Request = request };
         var result = await _mediator.Send(command);

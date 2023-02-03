@@ -17,6 +17,7 @@ public partial class T_Update : LocalAuthDatabaseTest
 
                 entity.Name = "New Name";
                 repo.Update(entity);
+                repo.SaveChanges();
             }
         }
 
@@ -43,6 +44,7 @@ public partial class T_Update : LocalAuthDatabaseTest
 
                 entity.Name = "New Name";
                 repo.Update(entity);
+                repo.SaveChanges();
             }
         }
 
@@ -79,6 +81,7 @@ public partial class T_Update : LocalAuthDatabaseTest
 
                 entityUpdated.Name = "New Name";
                 repo.Update(entityUpdated);
+                repo.SaveChanges();
             }
         }
 

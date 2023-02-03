@@ -18,6 +18,7 @@ public partial class T_Delete : DeviceMenagementDatabaseTest
                 entity = context.Commands.Skip(1).First();
 
                 repo.Delete(entity);
+                repo.SaveChanges();
             }
         }
 
@@ -40,6 +41,7 @@ public partial class T_Delete : DeviceMenagementDatabaseTest
                 var entity = context.Commands.Skip(1).First();
 
                 repo.Delete(entity);
+                repo.SaveChanges();
             }
         }
 
@@ -68,6 +70,7 @@ public partial class T_Delete : DeviceMenagementDatabaseTest
                 entity2 = context.Commands.Skip(2).First();
 
                 repo.Delete(deleted);
+                repo.SaveChanges();
             }
         }
 

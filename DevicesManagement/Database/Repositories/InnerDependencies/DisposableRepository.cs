@@ -26,4 +26,7 @@ public abstract class DisposableRepository<T> : IDisposable where T : DbContext
         Dispose(true);
         GC.SuppressFinalize(this);
     }
+
+    public void SaveChanges()
+        => _context.SaveChanges();
 }

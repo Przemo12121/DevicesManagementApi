@@ -1,12 +1,13 @@
 ﻿using DevicesManagement.DataTransferObjects.Responses;
 using DevicesManagement.MediatR.Commands.Users;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DevicesManagement.MediatR.Handlers.Users;
 
-public class GetEmployeesCommandHandler : IRequestHandler<GetEmployeesQuery, List<UserDto>>
+public class GetEmployeesCommandHandler : IRequestHandler<GetEmployeesQuery, IActionResult>
 {
-    public Task<List<UserDto>> Handle(GetEmployeesQuery request, CancellationToken cancellationToken)
+    public Task<IActionResult> Handle(GetEmployeesQuery request, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

@@ -13,21 +13,12 @@ public class UsersRepository : DisposableRepository<LocalAuthStorageContext>, IU
     public UsersRepository(LocalAuthStorageContext context) : base(context) { }
 
     public void Add(User entity)
-    {
-        _context.Users.Add(entity);
-        _context.SaveChanges();
-    }
+        => _context.Users.Add(entity);
 
     public void Delete(User entity)
-    {
-        _context.Users.Remove(entity);
-        _context.SaveChanges();
-    }
+        => _context.Users.Remove(entity);
     public void Update(User entity)
-    {
-        _context.Users.Update(entity);
-        _context.SaveChanges();
-    }
+        => _context.Users.Update(entity);
 
     public List<User> FindAdmins<TOrderKey>(ISearchOptions<User, TOrderKey> options)
     {

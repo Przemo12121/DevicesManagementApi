@@ -6,6 +6,8 @@ using Database.Repositories;
 using DevicesManagement.DataTransferObjects.Requests;
 using DevicesManagement.Exceptions;
 using DevicesManagement.MediatR.Commands.Users;
+using DevicesManagement.ModelsHandlers;
+using DevicesManagement.ModelsHandlers.Factories;
 using DevicesManagement.Validations.Commands;
 using DevicesManagement.Validations.Common;
 using DevicesManagement.Validations.Devices;
@@ -19,7 +21,7 @@ internal static class AppSetup
 {
     private static LocalAuthStorageContext LocalAuthStorageContext { get; set; } = new LocalAuthStorageContext();
     private static DeviceManagementContext DeviceManagementContext { get; set; } = new DeviceManagementContext();
-    
+
     public static void ConfigureDatabase(WebApplicationBuilder builder)
     {
         builder.Services.AddDbContext<LocalAuthStorageContext>();
@@ -33,6 +35,11 @@ internal static class AppSetup
         builder.Services.AddSingleton<UsersRepository>(
             service => new UsersRepository(LocalAuthStorageContext)
         );
+    }
+
+    public static void ConfigureModelsHandlers(WebApplicationBuilder builder)
+    {
+        builder.Services.AddSingleton<ICommandsFactory<Command>, CommandsFactory>();
     }
     
     public static void ConfigureValidators(WebApplicationBuilder builder)

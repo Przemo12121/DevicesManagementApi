@@ -4,14 +4,15 @@ using Database.Repositories.Interfaces;
 using DevicesManagement.Exceptions;
 using DevicesManagement.MediatR.Commands;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace DevicesManagement.MediatR.PipelineBehaviors;
 
-public class ResourceAuthorizationPipelineBehavior<TResource, TResourceRepository, TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+public class ResourceAuthorizationPipelineBehavior<TResource, TResourceRepository, TRequest> : IPipelineBehavior<TRequest, IActionResult>
     where TResource : IDatabaseModel
     where TResourceRepository : IResourceAuthorizableRepository<TResource>
-    where TRequest : IRequest<TResponse>, IResourceAuthorizableCommand<TResource>
+    where TRequest : IRequest<IActionResult>, IResourceAuthorizableCommand<TResource>
 {
     protected readonly IHttpContextAccessor _httpContentAccessor;
     protected TResourceRepository Repository { get; init; }
@@ -22,14 +23,16 @@ public class ResourceAuthorizationPipelineBehavior<TResource, TResourceRepositor
         _httpContentAccessor = httpContentAccessor;
     }
 
-    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+    public async Task<IActionResult> Handle(TRequest request, RequestHandlerDelegate<IActionResult> next, CancellationToken cancellationToken)
     {
-        Authorize(request);
+        var (isAuthorized, error) = Authorize(request);
+        if (!isAuthorized)
+            return error!;
 
         return await next();
     }
 
-    protected void Authorize(TRequest request)
+    protected (bool, IActionResult?) Authorize(TRequest request)
     {
         var ownerId = _httpContentAccessor.HttpContext?.User.Identity?.Name ?? throw new Exception("Employee Id not present.");
         var role = _httpContentAccessor.HttpContext?.User.Claims
@@ -42,9 +45,12 @@ public class ResourceAuthorizationPipelineBehavior<TResource, TResourceRepositor
             ? Repository.FindById(request.ResourceId)
             : Repository.FindByIdAndOwnerId(request.ResourceId, ownerId);
 
-        if (resource is null)
-            throw isAdmin ? new NotFoundHttpException() : new ForbiddenHttpException();
+        var error = resource is null
+            ? new NotFoundObjectResult(StringMessages.HttpErrors.RESOURCE_NOT_FOUND)
+            : null;
 
-        request.Resource = resource;
+        request.Resource = resource!;
+
+        return (resource is not null, error);
     }
 }

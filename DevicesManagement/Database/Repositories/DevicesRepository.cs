@@ -14,35 +14,25 @@ public class DevicesRepository : DisposableRepository<DeviceManagementContext>, 
     public DevicesRepository(DeviceManagementContext context) : base(context) { }
 
     public void Add(Device entity)
-    {
-        _context.Devices.Add(entity);
-        _context.SaveChanges();
-    }
+        => _context.Devices.Add(entity);
 
     public void Update(Device entity)
-    {
-        _context.Devices.Update(entity);
-        _context.SaveChanges();
-    }
+        => _context.Devices.Update(entity);
 
     public void Delete(Device entity)
-    {
-        _context.Devices.Remove(entity);
-        _context.SaveChanges();
-    }
+        => _context.Devices.Remove(entity);
 
     public void AddCommand(Device device, Command command)
     {
         _context.Commands.Add(command);
-        device.Commands.Add(command);
-        _context.SaveChanges();
+        device.Commands ??= new();
+        device.Commands?.Add(command);
     }
 
     public void AddMessage(Device device, Message message)
     {
         _context.DevicesMessageHistory.Add(message);
         device.Messages.Add(message);
-        _context.SaveChanges();
     }
 
     public List<Device> FindAll<TOrderKey>(ISearchOptions<Device, TOrderKey> options)

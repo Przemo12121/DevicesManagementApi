@@ -6,18 +6,19 @@ using MediatR.Extensions.AttributedBehaviors;
 using DevicesManagement.Validations.Commands;
 using DevicesManagement.MediatR.PipelineBehaviors;
 using DevicesManagement.DataTransferObjects.Responses;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DevicesManagement.MediatR.Commands.Commands;
 
 [MediatRBehavior(
-    typeof(RequestValidationPipelineBehavior<EditCommandRequest, EditCommandRequestValidator, EditCommandCommand, Command>),
+    typeof(RequestValidationPipelineBehavior<EditCommandRequest, EditCommandRequestValidator, EditCommandCommand>),
     order: 1
 )]
 [MediatRBehavior(
-    typeof(ResourceAuthorizationPipelineBehavior<Command, CommandsRepository, EditCommandCommand, Command>),
+    typeof(ResourceAuthorizationPipelineBehavior<Command, CommandsRepository, EditCommandCommand>),
     order: 2
 )]
-public record EditCommandCommand : IRequest<Command>, IResourceAuthorizableCommand<Command>, IRequestContainerCommand<EditCommandRequest>
+public record EditCommandCommand : IRequest<IActionResult>, IResourceAuthorizableCommand<Command>, IRequestContainerCommand<EditCommandRequest>
 {
     public Guid ResourceId { get; init; }
     public Command Resource { get; set; }

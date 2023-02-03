@@ -11,21 +11,15 @@ public class CommandsRepository : DisposableRepository<DeviceManagementContext>,
     public CommandsRepository(DeviceManagementContext context) : base(context) { }
 
     public void Delete(Command command)
-    {
-        _context.Commands.Remove(command);
-        _context.SaveChanges();
-    }
+        => _context.Commands.Remove(command);
 
     public void Update(Command entity)
-    {
-        _context.Commands.Update(entity);
-        _context.SaveChanges();
-    }
+        => _context.Commands.Update(entity);
+
     public void AddCommandHistory(Command command, CommandHistory commandHistory)
     {
         _context.DevicesCommandHistory.Add(commandHistory);
         command.CommandHistories.Add(commandHistory);
-        _context.SaveChanges();
     }
 
     public Command? FindByIdAndOwnerId(Guid id, string employeeId)
