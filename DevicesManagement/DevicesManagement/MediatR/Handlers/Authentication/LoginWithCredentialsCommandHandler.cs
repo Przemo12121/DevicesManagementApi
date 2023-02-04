@@ -1,4 +1,5 @@
-﻿using Authentication;
+﻿
+using Authentication;
 using Authentication.Jwt;
 using Database.Models;
 using DevicesManagement.MediatR.Commands.Authentication;

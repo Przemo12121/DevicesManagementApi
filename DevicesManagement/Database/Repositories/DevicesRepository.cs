@@ -32,6 +32,7 @@ public class DevicesRepository : DisposableRepository<DeviceManagementContext>, 
     public void AddMessage(Device device, Message message)
     {
         _context.DevicesMessageHistory.Add(message);
+        device.Messages ??= new();
         device.Messages.Add(message);
     }
 

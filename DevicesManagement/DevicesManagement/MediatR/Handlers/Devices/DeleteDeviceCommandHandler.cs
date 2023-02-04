@@ -17,6 +17,8 @@ public class DeleteDeviceCommandHandler : IRequestHandler<DeleteDeviceCommand, I
     public Task<IActionResult> Handle(DeleteDeviceCommand request, CancellationToken cancellationToken)
     {
         _deviceRepository.Delete(request.Resource!);
-        return Task.FromResult((IActionResult)new OkResult());
+        _deviceRepository.SaveChanges();
+
+        return Task.FromResult<IActionResult>(new OkResult());
     }
 }

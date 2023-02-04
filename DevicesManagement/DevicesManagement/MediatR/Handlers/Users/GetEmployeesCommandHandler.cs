@@ -1,5 +1,9 @@
-﻿using DevicesManagement.DataTransferObjects.Responses;
+﻿using Database.Models;
+using Database.Repositories;
+using DevicesManagement.DataTransferObjects.Responses;
 using DevicesManagement.MediatR.Commands.Users;
+using DevicesManagement.ModelsHandlers.Factories.SearchOptions;
+using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,8 +11,22 @@ namespace DevicesManagement.MediatR.Handlers.Users;
 
 public class GetEmployeesCommandHandler : IRequestHandler<GetEmployeesQuery, IActionResult>
 {
+    private readonly UsersRepository _usersRepository;
+    private readonly ISearchOptionsFactory<User, string> _searchOptionsFactory;
+
+    public GetEmployeesCommandHandler(UsersRepository usersRepository, ISearchOptionsFactory<User, string> searchOptionsFactory)
+    {
+        _usersRepository = usersRepository;
+        _searchOptionsFactory = searchOptionsFactory;
+    }
+
     public Task<IActionResult> Handle(GetEmployeesQuery request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var options = _searchOptionsFactory.From(request.Request);
+
+        var employees = _usersRepository.FindEmployees(options);
+
+        var result = new OkObjectResult(employees.Adapt<List<UserDto>>());
+        return Task.FromResult<IActionResult>(result);
     }
 }

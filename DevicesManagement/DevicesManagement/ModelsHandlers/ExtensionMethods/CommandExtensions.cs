@@ -13,5 +13,7 @@ public static class CommandExtensions
             command.Name = request.Name;
         if (request.Body is not null)
             command.Body = request.Body;
+
+        command.UpdatedDate = DateTime.UtcNow;
     }
 }

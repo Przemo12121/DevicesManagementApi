@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace DevicesManagement.Validations.Users;
 
-public class EditEmployeeRequestValidator : AbstractValidator<EditEmployeeRequest>
+public class UpdateEmployeeRequestValidator : AbstractValidator<UpdateEmployeeRequest>
 {
-    public EditEmployeeRequestValidator()
+    public UpdateEmployeeRequestValidator()
     {
         RuleFor(request => request)
             .Must(ValidationUtils.Common.IsNotEmpty);
@@ -16,7 +16,7 @@ public class EditEmployeeRequestValidator : AbstractValidator<EditEmployeeReques
         RuleFor(request => request.Password)
             .Matches(ValidationUtils.Users.PASSWORD_REGEX);
 
-        RuleFor(request => request.EmployeeEid)
+        RuleFor(request => request.EmployeeId)
             .Matches(ValidationUtils.Users.EMPLOYEE_ID_REGEX);
     }
 }

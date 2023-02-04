@@ -8,6 +8,8 @@ public class RunCommandCommandandler : IRequestHandler<RunCommandCommand, IActio
 {
     public Task<IActionResult> Handle(RunCommandCommand request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        // TODO impl faking devices
+        var result = new OkObjectResult(StringMessages.Successes.COMMAND_RUN);
+        return Task.FromResult<IActionResult>(result);
     }
 }

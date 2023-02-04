@@ -24,6 +24,6 @@ public class EditCommandCommandHandler : IRequestHandler<EditCommandCommand, IAc
         _commandsRepository.SaveChanges();
 
         var result = new OkObjectResult(request.Resource.Adapt<CommandDto>());
-        return Task.FromResult((IActionResult)result);
+        return Task.FromResult<IActionResult>(result);
     }
 }

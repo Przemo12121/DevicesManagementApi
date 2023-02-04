@@ -6,8 +6,8 @@ using Database.Repositories;
 using DevicesManagement.DataTransferObjects.Requests;
 using DevicesManagement.Exceptions;
 using DevicesManagement.MediatR.Commands.Users;
-using DevicesManagement.ModelsHandlers;
 using DevicesManagement.ModelsHandlers.Factories;
+using DevicesManagement.ModelsHandlers.Factories.SearchOptions;
 using DevicesManagement.Validations.Commands;
 using DevicesManagement.Validations.Common;
 using DevicesManagement.Validations.Devices;
@@ -35,11 +35,18 @@ internal static class AppSetup
         builder.Services.AddSingleton<UsersRepository>(
             service => new UsersRepository(LocalAuthStorageContext)
         );
+        builder.Services.AddSingleton<AccessLevelsRepository>(
+            service => new AccessLevelsRepository(LocalAuthStorageContext)
+        );
     }
 
     public static void ConfigureModelsHandlers(WebApplicationBuilder builder)
     {
         builder.Services.AddSingleton<ICommandsFactory<Command>, CommandsFactory>();
+        builder.Services.AddSingleton<IDeviceFactory<Device>, DevicesFactory>();
+        builder.Services.AddSingleton<ISearchOptionsFactory<Device, string>, DevicesSearchOptionsFactory>();
+        builder.Services.AddSingleton<ISearchOptionsFactory<User, string>, UsersSearchOptionsFactory>();
+        builder.Services.AddSingleton<ISearchOptionsFactory<Command, string>, CommandsSearchOptionsFactory>();
     }
     
     public static void ConfigureValidators(WebApplicationBuilder builder)
@@ -47,7 +54,7 @@ internal static class AppSetup
         builder.Services.AddSingleton<IValidator<EditCommandRequest>, EditCommandRequestValidator>();
         builder.Services.AddSingleton<IValidator<RegisterDeviceRequest>, RegisterDeviceRequestValidator>();
         builder.Services.AddSingleton<IValidator<UpdateDeviceRequest>, UpdateDeviceRequestValidator>();
-        builder.Services.AddSingleton<IValidator<EditEmployeeRequest>, EditEmployeeRequestValidator>();
+        builder.Services.AddSingleton<IValidator<UpdateEmployeeRequest>, UpdateEmployeeRequestValidator>();
     }
 
     public static void ConfigureErrorRoutes(WebApplication app)

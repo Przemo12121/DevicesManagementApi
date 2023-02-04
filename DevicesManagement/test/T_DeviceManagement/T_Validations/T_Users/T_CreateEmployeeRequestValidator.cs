@@ -15,7 +15,7 @@ public class T_CreateEmployeeRequestValidator
         {
             Name = null,
             Password = "dummyPassword123",
-            EmployeeEid = "abcd12345678"
+            EmployeeId = "abcd12345678"
         };
 
         var result = _validator.Validate(request);
@@ -30,7 +30,7 @@ public class T_CreateEmployeeRequestValidator
         {
             Name = "a",
             Password = "dummyPassword123",
-            EmployeeEid = "abcd12345678"
+            EmployeeId = "abcd12345678"
         };
 
         var result = _validator.Validate(request);
@@ -45,7 +45,7 @@ public class T_CreateEmployeeRequestValidator
         {
             Name = "any name",
             Password = "dummyPassword123",
-            EmployeeEid = "abcd12345678"
+            EmployeeId = "abcd12345678"
         };
 
         var result = _validator.Validate(request);
@@ -60,7 +60,7 @@ public class T_CreateEmployeeRequestValidator
         {
             Name = Enumerable.Range(0, 257).Select(e => "a").Aggregate((a, b) => a + b),
             Password = "dummyPassword123",
-            EmployeeEid = "abcd12345678"
+            EmployeeId = "abcd12345678"
         };
 
         var result = _validator.Validate(request);
@@ -77,7 +77,7 @@ public class T_CreateEmployeeRequestValidator
         {
             Name = "dummy name",
             Password = null,
-            EmployeeEid = "abcd12345678"
+            EmployeeId = "abcd12345678"
         };
 
         var result = _validator.Validate(request);
@@ -92,7 +92,7 @@ public class T_CreateEmployeeRequestValidator
         {
             Name = "dummy name",
             Password = "1234567",
-            EmployeeEid = "abcd12345678"
+            EmployeeId = "abcd12345678"
         };
 
         var result = _validator.Validate(request);
@@ -107,7 +107,7 @@ public class T_CreateEmployeeRequestValidator
         {
             Name = "any name",
             Password = "dummyPassword123",
-            EmployeeEid = "abcd12345678"
+            EmployeeId = "abcd12345678"
         };
 
         var result = _validator.Validate(request);
@@ -122,7 +122,7 @@ public class T_CreateEmployeeRequestValidator
         {
             Name = "any name",
             Password = "dummyPassword",
-            EmployeeEid = "abcd12345678"
+            EmployeeId = "abcd12345678"
         };
 
         var result = _validator.Validate(request);
@@ -137,7 +137,7 @@ public class T_CreateEmployeeRequestValidator
         {
             Name = "any name",
             Password = "DUMMYPASSWORD123",
-            EmployeeEid = "abcd12345678"
+            EmployeeId = "abcd12345678"
         };
 
         var result = _validator.Validate(request);
@@ -152,7 +152,7 @@ public class T_CreateEmployeeRequestValidator
         {
             Name = "any name",
             Password = "dummypassword123",
-            EmployeeEid = "abcd12345678"
+            EmployeeId = "abcd12345678"
         };
 
         var result = _validator.Validate(request);
@@ -167,7 +167,7 @@ public class T_CreateEmployeeRequestValidator
         {
             Name = "any name",
             Password = "dummy Password123",
-            EmployeeEid = "abcd12345678"
+            EmployeeId = "abcd12345678"
         };
 
         var result = _validator.Validate(request);
@@ -182,7 +182,7 @@ public class T_CreateEmployeeRequestValidator
         {
             Name = "dummy name",
             Password = "dP1" + Enumerable.Range(0, 30).Select(e => "a").Aggregate((a, b) => a + b),
-            EmployeeEid = "abcd12345678"
+            EmployeeId = "abcd12345678"
         };
 
         var result = _validator.Validate(request);
@@ -199,7 +199,7 @@ public class T_CreateEmployeeRequestValidator
         {
             Name = null,
             Password = "dummyPassword123",
-            EmployeeEid = null
+            EmployeeId = null
         };
 
         var result = _validator.Validate(request);
@@ -214,7 +214,7 @@ public class T_CreateEmployeeRequestValidator
         {
             Name = "dummy name",
             Password = "dummyPassword123",
-            EmployeeEid = "abcd12345678"
+            EmployeeId = "abcd12345678"
         };
 
         var result = _validator.Validate(request);
@@ -229,7 +229,7 @@ public class T_CreateEmployeeRequestValidator
         {
             Name = "dummy name",
             Password = "dummyPassword123",
-            EmployeeEid = "abcd 12345678"
+            EmployeeId = "abcd 12345678"
         };
 
         var result = _validator.Validate(request);
@@ -244,7 +244,7 @@ public class T_CreateEmployeeRequestValidator
         {
             Name = "dummy name",
             Password = "dummyPassword123",
-            EmployeeEid = "12345678abcd"
+            EmployeeId = "12345678abcd"
         };
 
         var result = _validator.Validate(request);
@@ -259,7 +259,7 @@ public class T_CreateEmployeeRequestValidator
         {
             Name = "dummy name",
             Password = "dummyPassword123",
-            EmployeeEid = "abc12345678"
+            EmployeeId = "abc12345678"
         };
 
         var result = _validator.Validate(request);
@@ -274,7 +274,7 @@ public class T_CreateEmployeeRequestValidator
         {
             Name = "dummy name",
             Password = "dummyPassword123",
-            EmployeeEid = "abcd312345678"
+            EmployeeId = "abcd312345678"
         };
 
         var result = _validator.Validate(request);
@@ -289,7 +289,7 @@ public class T_CreateEmployeeRequestValidator
         {
             Name = "dummy name",
             Password = "dummyPassword123",
-            EmployeeEid = "abcd1234567"
+            EmployeeId = "abcd1234567"
         };
 
         var result = _validator.Validate(request);
@@ -304,7 +304,7 @@ public class T_CreateEmployeeRequestValidator
         {
             Name = "dummy name",
             Password = "dummyPassword123",
-            EmployeeEid = "abcd123456789"
+            EmployeeId = "abcd123456789"
         };
 
         var result = _validator.Validate(request);

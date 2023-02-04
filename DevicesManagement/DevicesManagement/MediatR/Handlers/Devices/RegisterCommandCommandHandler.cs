@@ -2,7 +2,7 @@
 using Database.Repositories;
 using DevicesManagement.DataTransferObjects.Responses;
 using DevicesManagement.MediatR.Commands.Devices;
-using DevicesManagement.ModelsHandlers;
+using DevicesManagement.ModelsHandlers.Factories;
 using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +13,7 @@ public class RegisterCommandCommandHandler : IRequestHandler<RegisterCommandComm
 {
     private readonly DevicesRepository _devicesRepository;
     private readonly ICommandsFactory<Command> _commandsFactory;
+
     public RegisterCommandCommandHandler(DevicesRepository devicesRepository, ICommandsFactory<Command> commandsFactory)
     {
         _devicesRepository = devicesRepository;
@@ -27,6 +28,6 @@ public class RegisterCommandCommandHandler : IRequestHandler<RegisterCommandComm
         _devicesRepository.SaveChanges();
 
         var result = new OkObjectResult(newCommand.Adapt<CommandDto>());
-        return Task.FromResult((IActionResult)result);
+        return Task.FromResult<IActionResult>(result);
     }
 }

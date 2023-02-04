@@ -1,7 +1,7 @@
 ﻿using Database.Models.Interfaces;
 using DevicesManagement.DataTransferObjects.Requests;
 
-namespace DevicesManagement.ModelsHandlers;
+namespace DevicesManagement.ModelsHandlers.Factories;
 
 public interface ICommandsFactory<T> where T : ICommand
 {

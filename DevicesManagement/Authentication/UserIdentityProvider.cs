@@ -16,10 +16,10 @@ public class UserIdentityProvider : IIdentityProvider<User>
     public User? Identify(string keyName, string password)
     {
         var user = _usersRepository.FindByEmployeeId(keyName);
-        if (user == null) return null;
+        if (user is null) return null;
 
         var result = PasswordHasher.VerifyHashedPassword(user, user.PasswordHashed, password);
-        if (result == PasswordVerificationResult.Success) return user;
+        if (result.Equals(PasswordVerificationResult.Success)) return user;
 
         return null;
     }
@@ -28,7 +28,7 @@ public class UserIdentityProvider : IIdentityProvider<User>
     {
         var identity = new User
         {
-            Id = new Guid(),
+            Id = Guid.NewGuid(),
             CreatedDate = DateTime.UtcNow,
             AccessLevel = accessLevel,
             EmployeeId = keyName,
@@ -37,10 +37,12 @@ public class UserIdentityProvider : IIdentityProvider<User>
             Enabled = true
         };
 
-        identity.PasswordHashed = PasswordHasher.HashPassword(identity, password);
+        identity.PasswordHashed = HashPassword(identity, password);
 
         return identity;
     }
 
-    public void SaveIdentity(User user) => _usersRepository.Add(user);
+
+    public string HashPassword(User identity, string password)
+        => PasswordHasher.HashPassword(identity, password);
 }
