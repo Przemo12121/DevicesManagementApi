@@ -1,13 +1,24 @@
-﻿using DevicesManagement.DataTransferObjects.Responses;
+﻿using Database.Repositories;
 using DevicesManagement.MediatR.Commands.Devices;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DevicesManagement.MediatR.Handlers.Devices;
 
-public class DeleteDeviceCommandHandler : IRequestHandler<DeleteDeviceCommand, DeviceDto>
+public class DeleteDeviceCommandHandler : IRequestHandler<DeleteDeviceCommand, IActionResult>
 {
-    public Task<DeviceDto> Handle(DeleteDeviceCommand request, CancellationToken cancellationToken)
+    private readonly DevicesRepository _deviceRepository;
+
+    public DeleteDeviceCommandHandler(DevicesRepository devicesRepository)
     {
-        throw new NotImplementedException();
+        _deviceRepository = devicesRepository;
+    }
+
+    public Task<IActionResult> Handle(DeleteDeviceCommand request, CancellationToken cancellationToken)
+    {
+        _deviceRepository.Delete(request.Resource!);
+        _deviceRepository.SaveChanges();
+
+        return Task.FromResult<IActionResult>(new OkResult());
     }
 }

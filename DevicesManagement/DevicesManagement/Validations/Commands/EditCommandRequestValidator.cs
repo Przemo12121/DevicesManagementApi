@@ -16,6 +16,6 @@ public class EditCommandRequestValidator : AbstractValidator<EditCommandRequest>
             .Length(1, 2048);
 
         RuleFor(request => request.Description)
-            .Length(1, 4096);
+            .MaximumLength(4096);
     }
 }

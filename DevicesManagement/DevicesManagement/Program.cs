@@ -21,6 +21,9 @@ AppSetup.ConfigureAuthentication(builder);
 // Request valdiators
 AppSetup.ConfigureValidators(builder);
 
+// Models handlers
+AppSetup.ConfigureModelsHandlers(builder);
+
 var app = builder.Build();
 
 // Error routes

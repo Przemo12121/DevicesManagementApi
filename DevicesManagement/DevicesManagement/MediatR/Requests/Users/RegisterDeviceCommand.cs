@@ -1,23 +1,23 @@
 ﻿using Database.Models;
 using Database.Repositories;
 using DevicesManagement.DataTransferObjects.Requests;
-using DevicesManagement.DataTransferObjects.Responses;
 using DevicesManagement.MediatR.PipelineBehaviors;
 using DevicesManagement.Validations.Users;
 using MediatR;
 using MediatR.Extensions.AttributedBehaviors;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DevicesManagement.MediatR.Commands.Users;
 
 [MediatRBehavior(
-    typeof(ResourceAuthorizationPipelineBehavior<User, UsersRepository, RegisterDeviceCommand, DeviceDto>),
+    typeof(ResourceAuthorizationPipelineBehavior<User, UsersRepository, RegisterDeviceCommand>),
     order: 1
 )]
 [MediatRBehavior(
-    typeof(RequestValidationPipelineBehavior<RegisterDeviceRequest, RegisterDeviceRequestValidator, RegisterDeviceCommand, DeviceDto>),
+    typeof(RequestValidationPipelineBehavior<RegisterDeviceRequest, RegisterDeviceRequestValidator, RegisterDeviceCommand>),
     order: 2
 )]
-public class RegisterDeviceCommand : IRequest<DeviceDto>, IRequestContainerCommand<RegisterDeviceRequest>, IResourceAuthorizableCommand<User>
+public class RegisterDeviceCommand : IRequest<IActionResult>, IRequestContainerCommand<RegisterDeviceRequest>, IResourceAuthorizableCommand<User>
 {
     public RegisterDeviceRequest Request { get; init; }
     public Guid ResourceId { get; init; }

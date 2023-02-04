@@ -1,5 +1,6 @@
 ﻿using Database.Models.Base;
 using DevicesManagement.MediatR.Commands;
+using Microsoft.AspNetCore.Mvc;
 using System.Security.Principal;
 
 namespace T_DeviceManagement.T_MediatR.T_PipelineBehaviors.Dummy;
@@ -8,7 +9,7 @@ public class DummyResource : DatabaseModel
 {
 }
 
-public record DummyAuthorizableRequestCommand : IRequest<string>, IResourceAuthorizableCommand<DummyResource>
+public record DummyAuthorizableRequestCommand : IRequest<IActionResult>, IResourceAuthorizableCommand<DummyResource>
 {
     public Guid ResourceId { get; init; }
     public DummyResource Resource { get; set; }

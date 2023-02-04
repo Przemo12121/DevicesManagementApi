@@ -21,6 +21,7 @@ public partial class T_AddCommandHistory : DeviceMenagementDatabaseTest
                 };
 
                 repo.AddCommandHistory(testCommand, entity);
+                repo.SaveChanges();
             }
         }
 
@@ -49,6 +50,7 @@ public partial class T_AddCommandHistory : DeviceMenagementDatabaseTest
                 };
 
                 repo.AddCommandHistory(testCommand, entity);
+                repo.SaveChanges();
             }
         }
 
@@ -77,6 +79,7 @@ public partial class T_AddCommandHistory : DeviceMenagementDatabaseTest
                 };
 
                 repo.AddCommandHistory(testCommand, entity);
+                repo.SaveChanges();
             }
         }
 

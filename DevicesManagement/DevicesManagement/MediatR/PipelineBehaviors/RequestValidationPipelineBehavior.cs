@@ -3,12 +3,13 @@ using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 using DevicesManagement.Exceptions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DevicesManagement.MediatR.PipelineBehaviors;
 
-public class RequestValidationPipelineBehavior<T, TValidator, TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+public class RequestValidationPipelineBehavior<T, TValidator, TRequest> : IPipelineBehavior<TRequest, IActionResult>
     where TValidator : IValidator<T>
-    where TRequest : IRequest<TResponse>, IRequestContainerCommand<T>
+    where TRequest : IRequest<IActionResult>, IRequestContainerCommand<T>
 {
     protected IEnumerable<IValidator<T>> Validators { get; init; }
 
@@ -17,12 +18,12 @@ public class RequestValidationPipelineBehavior<T, TValidator, TRequest, TRespons
         Validators = validators ?? throw new ArgumentNullException(nameof(validators));
     }
 
-    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+    public async Task<IActionResult> Handle(TRequest request, RequestHandlerDelegate<IActionResult> next, CancellationToken cancellationToken)
     {
         var result = Validate(request.Request);
         if (!result.IsValid)
         {
-            throw new BadRequestHttpException(GroupErrorsByProperty(result.Errors));
+            return new BadRequestObjectResult(GroupErrorsByProperty(result.Errors));
         }
 
         return await next();

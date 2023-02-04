@@ -20,7 +20,7 @@ public class DevicesController : ControllerBase
 
     [Authorize(Roles = "Admin")]
     [HttpGet, Route("")]
-    public async Task<ActionResult<List<DeviceDto>>> ListAllDevices([FromQuery] PaginationRequest request)
+    public async Task<IActionResult> ListAllDevices([FromQuery] PaginationRequest request)
     {
         var command = new GetAllDevicesQuery() { Request = request };
         var result = await _mediator.Send(command);
@@ -29,7 +29,7 @@ public class DevicesController : ControllerBase
 
     [Authorize]
     [HttpGet, Route("{id}/commands")]
-    public async Task<ActionResult<List<CommandDto>>> ListDeviceCommands([FromRoute] Guid id, [FromBody] PaginationRequest request)
+    public async Task<IActionResult> ListDeviceCommands([FromRoute] Guid id, [FromBody] PaginationRequest request)
     {
         var command = new GetDeviceCommandsQuery() { Request = request, ResourceId = id };
         var result = await _mediator.Send(command);
@@ -38,7 +38,7 @@ public class DevicesController : ControllerBase
 
     [Authorize]
     [HttpPatch, Route("{id}")]
-    public async Task<ActionResult<DeviceDto>> UpdateDevice([FromRoute] Guid id, [FromBody] UpdateDeviceRequest request)
+    public async Task<IActionResult> UpdateDevice([FromRoute] Guid id, [FromBody] UpdateDeviceRequest request)
     {
         var command = new UpdateDeviceCommand() { Request = request, ResourceId = id };
         var result = await _mediator.Send(command);
@@ -47,16 +47,16 @@ public class DevicesController : ControllerBase
 
     [Authorize]
     [HttpPost, Route("{id}/commands")]
-    public async Task<ActionResult<CommandDto>> RegisterCommand([FromRoute] Guid id, [FromBody] RegisterCommandRequest request)
+    public async Task<IActionResult> RegisterCommand([FromRoute] Guid id, [FromBody] RegisterCommandRequest request)
     {
-        var command = new RegisterCommandCommand() { Request = request };
+        var command = new RegisterCommandCommand() { Request = request, ResourceId = id };
         var result = await _mediator.Send(command);
         return result;
     }
 
     [Authorize]
     [HttpDelete, Route("{id}")]
-    public async Task<ActionResult<DeviceDto>> DeleteDevice([FromRoute] Guid id)
+    public async Task<IActionResult> DeleteDevice([FromRoute] Guid id)
     {
         var command = new DeleteDeviceCommand() { ResourceId = id };
         var result = await _mediator.Send(command);

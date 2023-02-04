@@ -1,14 +1,15 @@
-﻿using DevicesManagement.DataTransferObjects.Responses;
-using DevicesManagement.MediatR.Commands.Commands;
+﻿using DevicesManagement.MediatR.Commands.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevicesManagement.Handlers.Commands;
 
-public class RunCommandCommandandler : IRequestHandler<RunCommandCommand, string>
+public class RunCommandCommandandler : IRequestHandler<RunCommandCommand, IActionResult>
 {
-    public Task<string> Handle(RunCommandCommand request, CancellationToken cancellationToken)
+    public Task<IActionResult> Handle(RunCommandCommand request, CancellationToken cancellationToken)
     {
-        return Task.FromResult("");
+        // TODO impl faking devices
+        var result = new OkObjectResult(StringMessages.Successes.COMMAND_RUN);
+        return Task.FromResult<IActionResult>(result);
     }
 }

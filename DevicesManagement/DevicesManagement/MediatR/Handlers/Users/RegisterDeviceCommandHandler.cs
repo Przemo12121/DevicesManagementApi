@@ -1,13 +1,33 @@
-﻿using DevicesManagement.DataTransferObjects.Responses;
+﻿using Database.Repositories;
+using DevicesManagement.DataTransferObjects.Responses;
 using DevicesManagement.MediatR.Commands.Users;
+using DevicesManagement.ModelsHandlers.Factories;
+using Mapster;
 using MediatR;
+using Database.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DevicesManagement.MediatR.Handlers.Users;
 
-public class RegisterDeviceCommandHandler : IRequestHandler<RegisterDeviceCommand, DeviceDto>
+public class RegisterDeviceCommandHandler : IRequestHandler<RegisterDeviceCommand, IActionResult>
 {
-    public Task<DeviceDto> Handle(RegisterDeviceCommand request, CancellationToken cancellationToken)
+    private readonly DevicesRepository _devicesRepository;
+    private readonly IDeviceFactory<Device> _deviceFactory;
+
+    public RegisterDeviceCommandHandler(IDeviceFactory<Device> deviceFactory, DevicesRepository devicesRepository)
     {
-        throw new NotImplementedException();
+        _deviceFactory = deviceFactory;
+        _devicesRepository = devicesRepository;
+    }
+
+    public Task<IActionResult> Handle(RegisterDeviceCommand request, CancellationToken cancellationToken)
+    {
+        var newDevice = _deviceFactory.From(request.Request, request.Resource.EmployeeId);
+
+        _devicesRepository.Add(newDevice);
+        _devicesRepository.SaveChanges();
+
+        var result = new OkObjectResult(newDevice.Adapt<DeviceDto>());
+        return Task.FromResult<IActionResult>(result);
     }
 }

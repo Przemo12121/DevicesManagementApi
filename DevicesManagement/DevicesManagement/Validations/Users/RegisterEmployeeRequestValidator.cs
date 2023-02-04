@@ -15,7 +15,7 @@ public class RegisterEmployeeRequestValidator : AbstractValidator<RegisterEmploy
             .NotNull()
             .Matches(ValidationUtils.Users.PASSWORD_REGEX);
 
-        RuleFor(request => request.EmployeeEid)
+        RuleFor(request => request.EmployeeId)
             .NotNull()
             .Matches(ValidationUtils.Users.EMPLOYEE_ID_REGEX);
     }
