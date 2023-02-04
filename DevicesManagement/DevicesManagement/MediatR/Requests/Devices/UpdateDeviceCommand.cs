@@ -1,5 +1,5 @@
 ﻿using Database.Models;
-using Database.Repositories;
+using Database.Repositories.Interfaces;
 using DevicesManagement.DataTransferObjects.Requests;
 using DevicesManagement.MediatR.PipelineBehaviors;
 using DevicesManagement.Validations.Devices;
@@ -10,14 +10,15 @@ using Microsoft.AspNetCore.Mvc;
 namespace DevicesManagement.MediatR.Commands.Devices;
 
 [MediatRBehavior(
-    typeof(ResourceAuthorizationPipelineBehavior<Device, DevicesRepository, UpdateDeviceCommand>),
+    typeof(ResourceAuthorizationPipelineBehavior<Device, UpdateDeviceCommand>),
     order: 1
 )]
 [MediatRBehavior(
-    typeof(RequestValidationPipelineBehavior<UpdateDeviceRequest, UpdateDeviceRequestValidator, UpdateDeviceCommand>),
+    typeof(RequestValidationPipelineBehavior<UpdateDeviceRequest, UpdateDeviceCommand>),
     order: 2
 )]
-public class UpdateDeviceCommand : IRequest<IActionResult>, IRequestContainerCommand<UpdateDeviceRequest>, IResourceAuthorizableCommand<Device>
+public class UpdateDeviceCommand 
+    : IRequest<IActionResult>, IRequestContainerCommand<UpdateDeviceRequest>, IResourceAuthorizableCommand<Device>
 {
     public Guid ResourceId { get; init; }
     public Device Resource { get; set; }

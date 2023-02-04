@@ -1,15 +1,12 @@
 ﻿using Database.Repositories.InnerDependencies;
 using Database.Contexts;
-using Database.Repositories.Builders;
 using Database.Models;
-using Database.Models.Interfaces;
 using Database.Repositories.Interfaces;
 using Database.Models.Enums;
-using System.Linq;
 
 namespace Database.Repositories;
 
-public class DevicesRepository : DisposableRepository<DeviceManagementContext>, IDeviceRepository<Device, Command, CommandHistory, Message>, IResourceAuthorizableRepository<Device>
+public class DevicesRepository : DisposableRepository<DeviceManagementContext>, IDevicesRepository, IResourceAuthorizableRepository<Device>
 {
     public DevicesRepository(DeviceManagementContext context) : base(context) { }
 

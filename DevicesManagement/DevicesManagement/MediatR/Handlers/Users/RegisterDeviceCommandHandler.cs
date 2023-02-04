@@ -1,4 +1,4 @@
-﻿using Database.Repositories;
+﻿using Database.Repositories.Interfaces;
 using DevicesManagement.DataTransferObjects.Responses;
 using DevicesManagement.MediatR.Commands.Users;
 using DevicesManagement.ModelsHandlers.Factories;
@@ -11,10 +11,10 @@ namespace DevicesManagement.MediatR.Handlers.Users;
 
 public class RegisterDeviceCommandHandler : IRequestHandler<RegisterDeviceCommand, IActionResult>
 {
-    private readonly DevicesRepository _devicesRepository;
+    private readonly IDevicesRepository _devicesRepository;
     private readonly IDeviceFactory<Device> _deviceFactory;
 
-    public RegisterDeviceCommandHandler(IDeviceFactory<Device> deviceFactory, DevicesRepository devicesRepository)
+    public RegisterDeviceCommandHandler(IDeviceFactory<Device> deviceFactory, IDevicesRepository devicesRepository)
     {
         _deviceFactory = deviceFactory;
         _devicesRepository = devicesRepository;

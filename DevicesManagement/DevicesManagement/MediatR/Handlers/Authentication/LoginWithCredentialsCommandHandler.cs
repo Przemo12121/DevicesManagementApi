@@ -1,41 +1,28 @@
-﻿
-using Authentication;
+﻿using Authentication;
 using Authentication.Jwt;
 using Database.Models;
 using DevicesManagement.MediatR.Commands.Authentication;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DevicesManagement.Handlers.Authentication;
 
-public class LoginWithCredentialsCommandHandler : IRequestHandler<LoginWithCredentialsCommand>
+public class LoginWithCredentialsCommandHandler : IRequestHandler<LoginWithCredentialsCommand, IActionResult>
 {
-    private readonly IIdentityProvider<User> _identityProvider;
     private readonly IJwtProvider _jwtProvider;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public LoginWithCredentialsCommandHandler(IHttpContextAccessor httpContextAccessor, IIdentityProvider<User> identityProvider, IJwtProvider jwtProvider)
+    public LoginWithCredentialsCommandHandler(IHttpContextAccessor httpContextAccessor, IJwtProvider jwtProvider)
     {
         _httpContextAccessor = httpContextAccessor;
-        _identityProvider = identityProvider;
         _jwtProvider = jwtProvider;
     }
 
-    public Task<Unit> Handle(LoginWithCredentialsCommand request, CancellationToken cancellationToken)
+    public Task<IActionResult> Handle(LoginWithCredentialsCommand request, CancellationToken cancellationToken)
     {
-        var user = _identityProvider.Identify(request.Login, request.Password);
+        var jwt = _jwtProvider.Generate(request.Identity);
+        _httpContextAccessor.HttpContext!.Response.Headers.Authorization = jwt.RawData;
 
-        if (user == null)
-        {
-            _httpContextAccessor.HttpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
-            _httpContextAccessor.HttpContext.Response.Headers.WWWAuthenticate = "Invalid credentials";
-        }
-        else
-        {
-            var jwt = _jwtProvider.Generate(user);
-            _httpContextAccessor.HttpContext.Response.StatusCode = StatusCodes.Status200OK;
-            _httpContextAccessor.HttpContext.Response.Headers.Authorization = jwt.RawData;
-        }
-
-        return Task.FromResult(new Unit());
+        return Task.FromResult<IActionResult>(new OkResult());
     }
 }

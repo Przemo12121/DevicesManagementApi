@@ -1,5 +1,4 @@
 ﻿using Database.Models;
-using Database.Repositories;
 using DevicesManagement.DataTransferObjects.Requests;
 using DevicesManagement.MediatR.PipelineBehaviors;
 using DevicesManagement.Validations.Devices;
@@ -10,14 +9,15 @@ using Microsoft.AspNetCore.Mvc;
 namespace DevicesManagement.MediatR.Commands.Devices;
 
 [MediatRBehavior(
-    typeof(ResourceAuthorizationPipelineBehavior<Device, DevicesRepository, RegisterCommandCommand>),
+    typeof(ResourceAuthorizationPipelineBehavior<Device, RegisterCommandCommand>),
     order: 1
 )]
 [MediatRBehavior(
-    typeof(RequestValidationPipelineBehavior<RegisterCommandRequest, RegisterCommandRequestValidator, RegisterCommandCommand>),
+    typeof(RequestValidationPipelineBehavior<RegisterCommandRequest, RegisterCommandCommand>),
     order: 2
 )]
-public class RegisterCommandCommand : IRequest<IActionResult>, IRequestContainerCommand<RegisterCommandRequest>, IResourceAuthorizableCommand<Device>
+public class RegisterCommandCommand 
+    : IRequest<IActionResult>, IRequestContainerCommand<RegisterCommandRequest>, IResourceAuthorizableCommand<Device>
 {
 
     public RegisterCommandRequest Request { get; init; }

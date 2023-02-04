@@ -9,7 +9,6 @@ global using Moq;
 global using FluentValidation.Results;
 global using MediatR;
 global using T_DeviceManagement.T_MediatR.T_PipelineBehaviors.Dummy;
-global using DevicesManagement.Exceptions;
 global using Database.Models;
 global using Database.Models.Enums;
 global using Database.Repositories.Interfaces;

@@ -9,6 +9,7 @@ public static class StringMessages
 
     public static class HttpErrors
     {
+        public static readonly string INVALID_CREDENTIALS = "Invalid credentials.";
         public static readonly string INTERNAL = "Unexpected internal error occured.";
         public static readonly string ACTION_FAILED = "Action failed.";
         public static readonly string RESOURCE_NOT_FOUND = "Resource not found";

@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Database.Repositories;
 
-public class CommandsRepository : DisposableRepository<DeviceManagementContext>, ICommandsRepository<Command, CommandHistory>
+public class CommandRepository : DisposableRepository<DeviceManagementContext>, ICommandsRepository
 {
-    public CommandsRepository(DeviceManagementContext context) : base(context) { }
+    public CommandRepository(DeviceManagementContext context) : base(context) { }
 
     public void Delete(Command command)
         => _context.Commands.Remove(command);

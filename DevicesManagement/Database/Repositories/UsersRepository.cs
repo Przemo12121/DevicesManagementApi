@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Database.Repositories;
 
-public class UsersRepository : DisposableRepository<LocalAuthStorageContext>, IUsersRepository<User>, IResourceAuthorizableRepository<User>, IDisposable
+public class UsersRepository : DisposableRepository<LocalAuthStorageContext>, IUsersRepository, IResourceAuthorizableRepository<User>, IDisposable
 {
     public UsersRepository(LocalAuthStorageContext context) : base(context) { }
 

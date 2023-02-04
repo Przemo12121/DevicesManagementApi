@@ -1,4 +1,4 @@
-﻿using Database.Repositories;
+﻿using Database.Repositories.Interfaces;
 using DevicesManagement.DataTransferObjects.Responses;
 using DevicesManagement.MediatR.Commands.Devices;
 using DevicesManagement.ModelsHandlers.ExtensionMethods;
@@ -10,9 +10,9 @@ namespace DevicesManagement.MediatR.Handlers.Devices;
 
 public class UpdateDeviceCommandHandler : IRequestHandler<UpdateDeviceCommand, IActionResult>
 {
-    private readonly DevicesRepository _devicesRepository;
+    private readonly IDevicesRepository _devicesRepository;
 
-    public UpdateDeviceCommandHandler(DevicesRepository devicesRepository)
+    public UpdateDeviceCommandHandler(IDevicesRepository devicesRepository)
     {
         _devicesRepository = devicesRepository;
     }

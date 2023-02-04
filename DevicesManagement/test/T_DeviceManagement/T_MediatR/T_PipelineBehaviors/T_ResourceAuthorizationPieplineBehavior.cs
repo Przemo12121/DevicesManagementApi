@@ -11,7 +11,6 @@ public partial class T_ResourceAuthorizationPieplineBehavior
     {
         var pipeline = new ResourceAuthorizationPipelineBehavior<
             DummyResource, 
-            IResourceAuthorizableRepository<DummyResource>,
             DummyAuthorizableRequestCommand
         >(MockedRepository, MockedAdminHttpContext);
 
@@ -30,7 +29,6 @@ public partial class T_ResourceAuthorizationPieplineBehavior
     {
         var pipeline = new ResourceAuthorizationPipelineBehavior<
             DummyResource,
-            IResourceAuthorizableRepository<DummyResource>,
             DummyAuthorizableRequestCommand
         >(MockedRepository, MockedAdminHttpContext);
 
@@ -49,7 +47,6 @@ public partial class T_ResourceAuthorizationPieplineBehavior
     {
         var pipeline = new ResourceAuthorizationPipelineBehavior<
             DummyResource,
-            IResourceAuthorizableRepository<DummyResource>,
             DummyAuthorizableRequestCommand
         >(MockedRepository, MockedAdminHttpContext);
 
@@ -71,7 +68,6 @@ public partial class T_ResourceAuthorizationPieplineBehavior
     {
         var pipeline = new ResourceAuthorizationPipelineBehavior<
             DummyResource,
-            IResourceAuthorizableRepository<DummyResource>,
             DummyAuthorizableRequestCommand
         >(MockedRepository, MockedAdminHttpContext);
 
@@ -90,7 +86,6 @@ public partial class T_ResourceAuthorizationPieplineBehavior
     {
         var pipeline = new ResourceAuthorizationPipelineBehavior<
             DummyResource,
-            IResourceAuthorizableRepository<DummyResource>,
             DummyAuthorizableRequestCommand
         >(MockedRepository, MockedAdminHttpContext);
 
@@ -112,7 +107,6 @@ public partial class T_ResourceAuthorizationPieplineBehavior
     {
         var pipeline = new ResourceAuthorizationPipelineBehavior<
             DummyResource,
-            IResourceAuthorizableRepository<DummyResource>,
             DummyAuthorizableRequestCommand
         >(MockedRepository, MockedOwnerHttpContext);
 
@@ -131,7 +125,6 @@ public partial class T_ResourceAuthorizationPieplineBehavior
     {
         var pipeline = new ResourceAuthorizationPipelineBehavior<
             DummyResource,
-            IResourceAuthorizableRepository<DummyResource>,
             DummyAuthorizableRequestCommand
         >(MockedRepository, MockedOwnerHttpContext);
 
@@ -150,7 +143,6 @@ public partial class T_ResourceAuthorizationPieplineBehavior
     {
         var pipeline = new ResourceAuthorizationPipelineBehavior<
             DummyResource,
-            IResourceAuthorizableRepository<DummyResource>,
             DummyAuthorizableRequestCommand
         >(MockedRepository, MockedOwnerHttpContext);
 
@@ -172,7 +164,6 @@ public partial class T_ResourceAuthorizationPieplineBehavior
     {
         var pipeline = new ResourceAuthorizationPipelineBehavior<
             DummyResource,
-            IResourceAuthorizableRepository<DummyResource>,
             DummyAuthorizableRequestCommand
         >(MockedRepository, MockedOwnerHttpContext);
 
@@ -191,7 +182,6 @@ public partial class T_ResourceAuthorizationPieplineBehavior
     {
         var pipeline = new ResourceAuthorizationPipelineBehavior<
             DummyResource,
-            IResourceAuthorizableRepository<DummyResource>,
             DummyAuthorizableRequestCommand
         >(MockedRepository, MockedOwnerHttpContext);
 
@@ -213,7 +203,6 @@ public partial class T_ResourceAuthorizationPieplineBehavior
     {
         var pipeline = new ResourceAuthorizationPipelineBehavior<
             DummyResource,
-            IResourceAuthorizableRepository<DummyResource>,
             DummyAuthorizableRequestCommand
         >(MockedRepository, MockedOwnerHttpContext);
 

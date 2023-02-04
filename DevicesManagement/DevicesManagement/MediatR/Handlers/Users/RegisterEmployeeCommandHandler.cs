@@ -1,6 +1,6 @@
 ﻿using Authentication;
 using Database.Models;
-using Database.Repositories;
+using Database.Repositories.Interfaces;
 using DevicesManagement.DataTransferObjects.Responses;
 using DevicesManagement.MediatR.Commands.Users;
 using Mapster;
@@ -12,9 +12,9 @@ namespace DevicesManagement.MediatR.Handlers.Users;
 public class RegisterEmployeeCommandHandler : IRequestHandler<RegisterEmployeeCommand, IActionResult>
 {
     private readonly IIdentityProvider<User> _identityProvider;
-    private readonly UsersRepository _usersRepository;
+    private readonly IUsersRepository _usersRepository;
 
-    public RegisterEmployeeCommandHandler(IIdentityProvider<User> identityProvider, UsersRepository usersRepository)
+    public RegisterEmployeeCommandHandler(IIdentityProvider<User> identityProvider, IUsersRepository usersRepository)
     {
         _identityProvider = identityProvider;
         _usersRepository = usersRepository;

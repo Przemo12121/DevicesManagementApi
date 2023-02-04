@@ -30,7 +30,7 @@ public partial class T_FindByIdAndOwnerId
 public partial class T_FindByIdAndOwnerId : IClassFixture<T_FindByIdAndOwnerId_Setup>
 {
     private readonly T_FindByIdAndOwnerId_Setup _setupFixture;
-    CommandsRepository Repository { get; init; }
+    CommandRepository Repository { get; init; }
     public Command SearchedCommand { get; init; }
 
 
@@ -38,7 +38,7 @@ public partial class T_FindByIdAndOwnerId : IClassFixture<T_FindByIdAndOwnerId_S
     {
         _setupFixture = setupFixture;
         SearchedCommand = setupFixture.SearchedCommand;
-        Repository = new CommandsRepository(setupFixture.Context);
+        Repository = new CommandRepository(setupFixture.Context);
     }
 }
 

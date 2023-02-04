@@ -1,5 +1,5 @@
 ﻿using Database.Models;
-using Database.Repositories;
+using Database.Repositories.Interfaces;
 using DevicesManagement.DataTransferObjects.Responses;
 using DevicesManagement.MediatR.Commands.Users;
 using DevicesManagement.ModelsHandlers.Factories.SearchOptions;
@@ -11,10 +11,10 @@ namespace DevicesManagement.MediatR.Handlers.Users;
 
 public class ListUserDevicesCommandHandler : IRequestHandler<GetUserDevicesQuery, IActionResult>
 {
-    private readonly DevicesRepository _devicesRepository;
+    private readonly IDevicesRepository _devicesRepository;
     private readonly ISearchOptionsFactory<Device, string> _searchOptionsFactory;
 
-    public ListUserDevicesCommandHandler(DevicesRepository devicesRepository, ISearchOptionsFactory<Device, string> searchOptionsFactory)
+    public ListUserDevicesCommandHandler(IDevicesRepository devicesRepository, ISearchOptionsFactory<Device, string> searchOptionsFactory)
     {
         _devicesRepository = devicesRepository;
         _searchOptionsFactory = searchOptionsFactory;

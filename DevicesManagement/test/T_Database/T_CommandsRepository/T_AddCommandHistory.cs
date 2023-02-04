@@ -12,7 +12,7 @@ public partial class T_AddCommandHistory : DeviceMenagementDatabaseTest
             EnsureClear(context);
             Seed(context);
 
-            using (var repo = new CommandsRepository(context))
+            using (var repo = new CommandRepository(context))
             {
                 entity = new CommandHistory
                 {
@@ -41,7 +41,7 @@ public partial class T_AddCommandHistory : DeviceMenagementDatabaseTest
             EnsureClear(context);
             Seed(context);
 
-            using (var repo = new CommandsRepository(context))
+            using (var repo = new CommandRepository(context))
             {
                 entity = new CommandHistory
                 {
@@ -70,7 +70,7 @@ public partial class T_AddCommandHistory : DeviceMenagementDatabaseTest
             EnsureClear(context);
             Seed(context);
 
-            using (var repo = new CommandsRepository(context))
+            using (var repo = new CommandRepository(context))
             {
                 entity = new CommandHistory
                 {

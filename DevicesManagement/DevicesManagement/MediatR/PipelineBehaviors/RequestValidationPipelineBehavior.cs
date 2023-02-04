@@ -2,13 +2,11 @@
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
-using DevicesManagement.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevicesManagement.MediatR.PipelineBehaviors;
 
-public class RequestValidationPipelineBehavior<T, TValidator, TRequest> : IPipelineBehavior<TRequest, IActionResult>
-    where TValidator : IValidator<T>
+public class RequestValidationPipelineBehavior<T, TRequest> : IPipelineBehavior<TRequest, IActionResult>
     where TRequest : IRequest<IActionResult>, IRequestContainerCommand<T>
 {
     protected IEnumerable<IValidator<T>> Validators { get; init; }
@@ -41,11 +39,11 @@ public class RequestValidationPipelineBehavior<T, TValidator, TRequest> : IPipel
 
     protected record ValidationResult(bool IsValid, IEnumerable<ValidationFailure> Errors);
 
-    protected IEnumerable<PropertyWithErrors> GroupErrorsByProperty(IEnumerable<ValidationFailure> errors)
+    protected IEnumerable<KeyValuePair<string, string[]>> GroupErrorsByProperty(IEnumerable<ValidationFailure> errors)
         => errors.GroupBy(x => x.PropertyName)
-                .Select(grouped => new PropertyWithErrors(
+                .Select(grouped => KeyValuePair.Create(
                     grouped.First().PropertyName,
-                    grouped.Select(x => x.ErrorMessage)
+                    grouped.Select(x => x.ErrorMessage).ToArray()
                 )
             );
 }
