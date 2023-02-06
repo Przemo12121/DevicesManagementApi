@@ -10,7 +10,7 @@ public partial class T_RequestValidationPieplineBehavior
         alwaysPassingValidator.Setup(validator => validator.Validate(It.IsAny<DummyRequest>()))
             .Returns(SuccessResult);
 
-        var pipeline = new RequestValidationPipelineBehavior<DummyRequest, IValidator<DummyRequest>, DummyValidableRequestCommand>(
+        var pipeline = new RequestValidationPipelineBehavior<DummyRequest, DummyValidableRequestCommand>(
             new List<IValidator<DummyRequest>>() { alwaysPassingValidator.Object }
         );
 
@@ -26,7 +26,7 @@ public partial class T_RequestValidationPieplineBehavior
         alwaysPassingValidator.Setup(validator => validator.Validate(It.IsAny<DummyRequest>()))
             .Returns(SuccessResult);
 
-        var pipeline = new RequestValidationPipelineBehavior<DummyRequest, IValidator<DummyRequest>, DummyValidableRequestCommand>(
+        var pipeline = new RequestValidationPipelineBehavior<DummyRequest, DummyValidableRequestCommand>(
             new List<IValidator<DummyRequest>>() { alwaysPassingValidator.Object }
         );
 
@@ -45,7 +45,7 @@ public partial class T_RequestValidationPieplineBehavior
         alwaysFailingValidator.Setup(validator => validator.Validate(It.IsAny<DummyRequest>()))
             .Returns(UnsuccessfulResult);
 
-        var pipeline = new RequestValidationPipelineBehavior<DummyRequest, IValidator<DummyRequest>, DummyValidableRequestCommand>(
+        var pipeline = new RequestValidationPipelineBehavior<DummyRequest, DummyValidableRequestCommand>(
             new List<IValidator<DummyRequest>>() { alwaysFailingValidator.Object }
         );
 
@@ -61,7 +61,7 @@ public partial class T_RequestValidationPieplineBehavior
         alwaysFailingValidator.Setup(validator => validator.Validate(It.IsAny<DummyRequest>()))
             .Returns(UnsuccessfulResult);
 
-        var pipeline = new RequestValidationPipelineBehavior<DummyRequest, IValidator<DummyRequest>, DummyValidableRequestCommand>(
+        var pipeline = new RequestValidationPipelineBehavior<DummyRequest, DummyValidableRequestCommand>(
             new List<IValidator<DummyRequest>>() { alwaysFailingValidator.Object }
         );
 
@@ -82,7 +82,7 @@ public partial class T_RequestValidationPieplineBehavior
         alwaysSuccessfulValidator.Setup(validator => validator.Validate(It.IsAny<DummyRequest>()))
             .Returns(SuccessResult);
 
-        var pipeline = new RequestValidationPipelineBehavior<DummyRequest, IValidator<DummyRequest>, DummyValidableRequestCommand>(
+        var pipeline = new RequestValidationPipelineBehavior<DummyRequest, DummyValidableRequestCommand>(
             new List<IValidator<DummyRequest>>() { alwaysSuccessfulValidator.Object, alwaysFailingValidator.Object }
         );
 

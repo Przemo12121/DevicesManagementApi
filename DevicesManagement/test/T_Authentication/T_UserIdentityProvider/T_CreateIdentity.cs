@@ -69,7 +69,7 @@ public partial class T_CreateIdentity
     private UserIdentityProvider Provider { get; init; }
     public T_CreateIdentity()
     {
-        var usersRepositoryMock = new Mock<IUsersRepository<User>>();
+        var usersRepositoryMock = new Mock<IUsersRepository>();
         Provider = new UserIdentityProvider(usersRepositoryMock.Object);
     }
 }

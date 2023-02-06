@@ -1,15 +1,14 @@
-﻿using Database.Models.Interfaces;
-using Database.Repositories.Builders;
+﻿using Database.Models;
 
 namespace Database.Repositories.Interfaces;
 
-public interface IUsersRepository<T> : IDisposable where T : IUser
+public interface IUsersRepository : IDisposable, ITransactionableRepository, IResourceAuthorizableRepository<User>
 {
-    void Add(T user);
-    void Delete(T user);
-    void Update(T user);
+    void Add(User user);
+    void Delete(User user);
+    void Update(User user);
 
-    T? FindByEmployeeId(string eid);
-    List<T> FindEmployees<TOrderKey>(ISearchOptions<T, TOrderKey> options);
-    List<T> FindAdmins<TOrderKey>(ISearchOptions<T, TOrderKey> options);
+    User? FindByEmployeeId(string eid);
+    List<User> FindEmployees<TOrderKey>(ISearchOptions<User, TOrderKey> options);
+    List<User> FindAdmins<TOrderKey>(ISearchOptions<User, TOrderKey> options);
 }

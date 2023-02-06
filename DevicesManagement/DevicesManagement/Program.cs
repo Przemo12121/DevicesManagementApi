@@ -12,22 +12,17 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddMediatR(assembly);
 builder.Services.AddMediatRAttributedBehaviors(assembly);
 
-// Database
-AppSetup.ConfigureDatabase(builder);
-
-// Authentication
-AppSetup.ConfigureAuthentication(builder);
-
-// Request valdiators
-AppSetup.ConfigureValidators(builder);
-
-// Models handlers
-AppSetup.ConfigureModelsHandlers(builder);
+#region Custom configurations
+builder.ConfigureRepositories();   // Database   
+builder.ConfigureAuthentication(); // Authentication
+builder.ConfigureValidators();     // Request valdiators
+builder.ConfigureModelsHandlers(); // Models handlers
+#endregion
 
 var app = builder.Build();
 
 // Error routes
-AppSetup.ConfigureErrorRoutes(app);
+app.ConfigureErrorRoutes();
 
 // Configure the HTTP request pipeline.
 app.UseAuthentication();

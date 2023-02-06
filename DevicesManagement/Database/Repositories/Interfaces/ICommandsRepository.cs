@@ -1,13 +1,9 @@
-﻿using Database.Models.Interfaces;
-using Database.Repositories.InnerDependencies;
-
+﻿using Database.Models;
 namespace Database.Repositories.Interfaces;
 
-public interface ICommandsRepository<T, U> : IResourceAuthorizableRepository<T>
-    where T : ICommand
-    where U : ICommandHistory
+public interface ICommandsRepository : IResourceAuthorizableRepository<Command>, ITransactionableRepository
 {
-    void Update(T entity);
-    void Delete(T entity);
-    void AddCommandHistory(T command, U commandHistory);
+    void Update(Command entity);
+    void Delete(Command entity);
+    void AddCommandHistory(Command command, CommandHistory commandHistory);
 }

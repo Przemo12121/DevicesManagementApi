@@ -2,10 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using DevicesManagement.DataTransferObjects.Requests;
-using System.Net.Http.Headers;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Server.HttpSys;
 using DevicesManagement.MediatR.Commands.Authentication;
 
 namespace DevicesManagement.Controllers;
@@ -23,9 +19,10 @@ public class AuthenticationController : Controller
 
     [HttpPost, Route("jwt/login")]
     [AllowAnonymous]
-    public async void GrantJwt([FromBody] LoginWithCredentialsRequest request)
+    public async Task<IActionResult> GrantJwt([FromBody] LoginWithCredentialsRequest request)
     {
-        var command = LoginWithCredentialsCommand.FromRequest(request);
-        await _mediator.Send(command);
+        var command = new LoginWithCredentialsCommand() { Request = request };
+        var result = await _mediator.Send(command);
+        return result;
     }
 }

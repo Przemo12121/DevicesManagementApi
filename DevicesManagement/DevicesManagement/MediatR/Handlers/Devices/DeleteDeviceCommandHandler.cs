@@ -1,4 +1,4 @@
-﻿using Database.Repositories;
+﻿using Database.Repositories.Interfaces;
 using DevicesManagement.MediatR.Commands.Devices;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -7,9 +7,9 @@ namespace DevicesManagement.MediatR.Handlers.Devices;
 
 public class DeleteDeviceCommandHandler : IRequestHandler<DeleteDeviceCommand, IActionResult>
 {
-    private readonly DevicesRepository _deviceRepository;
+    private readonly IDevicesRepository _deviceRepository;
 
-    public DeleteDeviceCommandHandler(DevicesRepository devicesRepository)
+    public DeleteDeviceCommandHandler(IDevicesRepository devicesRepository)
     {
         _deviceRepository = devicesRepository;
     }

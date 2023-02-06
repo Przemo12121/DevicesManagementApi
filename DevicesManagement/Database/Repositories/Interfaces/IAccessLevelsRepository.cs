@@ -1,10 +1,9 @@
-﻿using Database.Models.Enums;
-using Database.Models.Interfaces;
+﻿using Database.Models;
+using Database.Models.Enums;
 
 namespace Database.Repositories.Interfaces;
 
-public interface IAccessLevelsRepository<T>
-    where T : IAccessLevel
+public interface IAccessLevelsRepository
 {
-    public T? FindByValue(AccessLevels value);
+    public AccessLevel? FindByValue(AccessLevels value);
 }

@@ -8,15 +8,14 @@ using System.Security.Claims;
 
 namespace DevicesManagement.MediatR.PipelineBehaviors;
 
-public class ResourceAuthorizationPipelineBehavior<TResource, TResourceRepository, TRequest> : IPipelineBehavior<TRequest, IActionResult>
+public class ResourceAuthorizationPipelineBehavior<TResource, TRequest> : IPipelineBehavior<TRequest, IActionResult>
     where TResource : IDatabaseModel
-    where TResourceRepository : IResourceAuthorizableRepository<TResource>
     where TRequest : IRequest<IActionResult>, IResourceAuthorizableCommand<TResource>
 {
     protected readonly IHttpContextAccessor _httpContentAccessor;
-    protected TResourceRepository Repository { get; init; }
+    protected IResourceAuthorizableRepository<TResource> Repository { get; init; }
 
-    public ResourceAuthorizationPipelineBehavior(TResourceRepository repository, IHttpContextAccessor httpContentAccessor)
+    public ResourceAuthorizationPipelineBehavior(IResourceAuthorizableRepository<TResource> repository, IHttpContextAccessor httpContentAccessor)
     {
         Repository = repository;
         _httpContentAccessor = httpContentAccessor;

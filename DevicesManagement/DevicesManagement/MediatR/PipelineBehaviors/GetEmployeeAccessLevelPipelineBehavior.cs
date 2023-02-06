@@ -1,9 +1,8 @@
-﻿using Database.Models.Interfaces;
-using Database.Repositories;
-using DevicesManagement.MediatR.Requests;
+﻿using DevicesManagement.MediatR.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Database.Models.Enums;
+using Database.Repositories.Interfaces;
 
 namespace DevicesManagement.MediatR.PipelineBehaviors;
 
@@ -11,9 +10,9 @@ public class GetEmployeeAccessLevelPipelineBehavior<TRequest> : IPipelineBehavio
     where TRequest : IRequest<IActionResult>, IAccessLevelContainer
 {
 
-    private readonly AccessLevelsRepository _accessLevelsRepository;
+    private readonly IAccessLevelsRepository _accessLevelsRepository;
 
-    public GetEmployeeAccessLevelPipelineBehavior(AccessLevelsRepository accessLevelsRepository)
+    public GetEmployeeAccessLevelPipelineBehavior(IAccessLevelsRepository accessLevelsRepository)
     {
         _accessLevelsRepository = accessLevelsRepository;
     }

@@ -51,7 +51,7 @@ public partial class T_Identify
         };
         DummyUser.PasswordHashed = new PasswordHasher<User>().HashPassword(DummyUser, "dummyPASSWORD1");
 
-        var usersRepositoryMock = new Mock<IUsersRepository<User>>();
+        var usersRepositoryMock = new Mock<IUsersRepository>();
 
         usersRepositoryMock.Setup(mock => mock.FindByEmployeeId("abcd12345678"))
             .Returns(DummyUser);

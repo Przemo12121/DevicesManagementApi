@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DevicesManagement.MediatR.Commands.Users;
 
 [MediatRBehavior(
-    typeof(RequestValidationPipelineBehavior<RegisterEmployeeRequest, RegisterEmployeeRequestValidator, RegisterEmployeeCommand>),
+    typeof(RequestValidationPipelineBehavior<RegisterEmployeeRequest, RegisterEmployeeCommand>),
     order: 1
 )]
 [MediatRBehavior(
@@ -22,7 +22,8 @@ namespace DevicesManagement.MediatR.Commands.Users;
     typeof(EmployeeIdUniquenessPipelineBehavior<RegisterEmployeeRequest, RegisterEmployeeCommand>),
     order: 3
 )]
-public class RegisterEmployeeCommand : IRequest<IActionResult>, IRequestContainerCommand<RegisterEmployeeRequest>, IAccessLevelContainer
+public class RegisterEmployeeCommand 
+    : IRequest<IActionResult>, IRequestContainerCommand<RegisterEmployeeRequest>, IAccessLevelContainer
 {
     public RegisterEmployeeRequest Request { get; init; }
 

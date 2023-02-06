@@ -1,4 +1,4 @@
-﻿using Database.Repositories;
+﻿using Database.Repositories.Interfaces;
 using DevicesManagement.DataTransferObjects.Responses;
 using DevicesManagement.MediatR.Commands.Commands;
 using DevicesManagement.ModelsHandlers.ExtensionMethods;
@@ -10,8 +10,8 @@ namespace DevicesManagement.MediatR.Handlers.Commands;
 
 public class EditCommandCommandHandler : IRequestHandler<EditCommandCommand, IActionResult>
 {
-    private readonly CommandsRepository _commandsRepository;
-    public EditCommandCommandHandler(CommandsRepository commandsRepository)
+    private readonly ICommandsRepository _commandsRepository;
+    public EditCommandCommandHandler(ICommandsRepository commandsRepository)
     {
         _commandsRepository = commandsRepository;
     } 

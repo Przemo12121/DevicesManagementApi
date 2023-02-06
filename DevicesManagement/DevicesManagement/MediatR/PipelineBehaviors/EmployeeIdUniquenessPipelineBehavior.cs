@@ -1,4 +1,4 @@
-﻿using Database.Repositories;
+﻿using Database.Repositories.Interfaces;
 using DevicesManagement.DataTransferObjects.Requests;
 using DevicesManagement.MediatR.Commands;
 using MediatR;
@@ -10,9 +10,9 @@ public class EmployeeIdUniquenessPipelineBehavior<T, TRequest> : IPipelineBehavi
     where T : IEmployeeIdContainer
     where TRequest : IRequest<IActionResult>, IRequestContainerCommand<T>
 {
-    private readonly UsersRepository _usersRepository;
+    private readonly IUsersRepository _usersRepository;
 
-    public EmployeeIdUniquenessPipelineBehavior(UsersRepository usersRepository)
+    public EmployeeIdUniquenessPipelineBehavior(IUsersRepository usersRepository)
     {
         _usersRepository = usersRepository;
     }

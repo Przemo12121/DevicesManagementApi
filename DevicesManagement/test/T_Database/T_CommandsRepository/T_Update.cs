@@ -11,7 +11,7 @@ public partial class T_Update : DeviceMenagementDatabaseTest
             EnsureClear(context);
             Seed(context);
 
-            using (var repo = new CommandsRepository(context))
+            using (var repo = new CommandRepository(context))
             {
                 entity = context.Commands.Skip(1).First();
 
@@ -38,7 +38,7 @@ public partial class T_Update : DeviceMenagementDatabaseTest
             EnsureClear(context);
             Seed(context);
 
-            using (var repo = new CommandsRepository(context))
+            using (var repo = new CommandRepository(context))
             {
                 entity = context.Commands.Skip(1).First();
 
@@ -71,7 +71,7 @@ public partial class T_Update : DeviceMenagementDatabaseTest
             EnsureClear(context);
             Seed(context);
 
-            using (var repo = new CommandsRepository(context))
+            using (var repo = new CommandRepository(context))
             {
                 entity1 = context.Commands.Skip(0).First();
                 entityUpdated = context.Commands.Skip(1).First();

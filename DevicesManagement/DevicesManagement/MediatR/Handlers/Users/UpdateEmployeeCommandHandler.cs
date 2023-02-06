@@ -1,6 +1,6 @@
 ﻿using Authentication;
 using Database.Models;
-using Database.Repositories;
+using Database.Repositories.Interfaces;
 using DevicesManagement.DataTransferObjects.Responses;
 using DevicesManagement.MediatR.Commands.Users;
 using DevicesManagement.ModelsHandlers.ExtensionMethods;
@@ -12,10 +12,10 @@ namespace DevicesManagement.MediatR.Handlers.Users;
 
 public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeCommand, IActionResult>
 {
-    private readonly UsersRepository _usersRepository;
+    private readonly IUsersRepository _usersRepository;
     private readonly IIdentityProvider<User> _identityProvider;
 
-    public UpdateEmployeeCommandHandler(UsersRepository usersRepository, IIdentityProvider<User> identityProvider)
+    public UpdateEmployeeCommandHandler(IUsersRepository usersRepository, IIdentityProvider<User> identityProvider)
     {
         _usersRepository = usersRepository;
         _identityProvider = identityProvider;

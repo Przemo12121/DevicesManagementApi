@@ -1,4 +1,4 @@
-﻿using Database.Repositories;
+﻿using Database.Repositories.Interfaces;
 using DevicesManagement.MediatR.Commands.Users;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -7,9 +7,9 @@ namespace DevicesManagement.MediatR.Handlers.Users;
 
 public class DeleteEmployeeCommandHandler : IRequestHandler<DeleteEmployeeCommand, IActionResult>
 {
-    private readonly UsersRepository _usersRepository;
+    private readonly IUsersRepository _usersRepository;
 
-    public DeleteEmployeeCommandHandler(UsersRepository usersRepository)
+    public DeleteEmployeeCommandHandler(IUsersRepository usersRepository)
     {
         _usersRepository = usersRepository;
     }
