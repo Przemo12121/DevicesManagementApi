@@ -11,3 +11,4 @@ global using Database.Contexts;
 global using Database.Models.Base;
 global using Microsoft.Extensions.DependencyInjection;
 global using System.Net.Http.Headers;
+global using Microsoft.AspNetCore.Identity;

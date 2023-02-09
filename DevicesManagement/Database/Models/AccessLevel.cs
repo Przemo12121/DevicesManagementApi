@@ -8,4 +8,6 @@ public sealed class AccessLevel : DatabaseModel, IAccessLevel
 {
     public string? Description { get; set; }
     public AccessLevels Value { get ; set ; }
+
+    public List<User> Users { get; set; }
 }

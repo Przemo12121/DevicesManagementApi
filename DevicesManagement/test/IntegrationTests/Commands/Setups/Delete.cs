@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace IntegrationTests.Commands;
+﻿namespace IntegrationTests.Commands;
 
 public partial class Delete : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<DeleteSetup>, IDisposable
 {

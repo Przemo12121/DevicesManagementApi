@@ -37,9 +37,9 @@ public class UsersController : ControllerBase
     }
 
     [HttpPatch, Route("employees/{id}")]
-    public async Task<IActionResult> EditEmployee([FromRoute] Guid id, [FromBody] UpdateEmployeeRequest request)
+    public async Task<IActionResult> UpdateEmployee([FromRoute] Guid id, [FromBody] UpdateEmployeeRequest request)
     {
-        var command = new UpdateEmployeeCommand() { Id = id, Request = request };
+        var command = new UpdateEmployeeCommand() { ResourceId = id, Request = request };
         var result = await _mediator.Send(command);
         return result;
     }

@@ -1,19 +1,18 @@
-﻿namespace IntegrationTests.Commands;
+﻿namespace IntegrationTests.Devices;
 
-public partial class Update : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<UpdateSetup>, IDisposable
+public partial class Delete : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<DeleteSetup>, IDisposable
 {
     private readonly WebApplicationFactory<Program> _factory;
-    private readonly UpdateSetup _setupFixture;
+    private readonly DeleteSetup _setupFixture;
 
     HttpClient HttpClient { get; init; }
     User DummyUser { get; init; }
     string DummyUserJwt { get; init; }
 
-    Command DummyCommand { get; init; }
-    Command OtherCommand { get; init; }
+    Device OtherDevice { get; init; }
     Device DummyDevice { get; init; }
 
-    public Update(WebApplicationFactory<Program> factory, UpdateSetup setupFixture)
+    public Delete(WebApplicationFactory<Program> factory, DeleteSetup setupFixture)
     {
         _factory = factory;
         _setupFixture = setupFixture;
@@ -22,31 +21,23 @@ public partial class Update : IClassFixture<WebApplicationFactory<Program>>, ICl
         DummyUser = setupFixture.DummyUser;
         DummyUserJwt = factory.Services.GetRequiredService<IJwtProvider>().Generate(DummyUser).RawData;
 
-        DummyCommand = new()
-        {
-            Body = "dummy body",
-            CommandHistories = new(),
-            Id = Guid.NewGuid(),
-            Name = "dummy command",
-            CreatedDate = DateTime.UtcNow.AddDays(-10),
-            UpdatedDate = DateTime.UtcNow.AddDays(-10),
-            Description = "dummy description"
-        };
-        OtherCommand = new()
-        {
-            Body = "other body",
-            CommandHistories = new(),
-            Id = Guid.NewGuid(),
-            Name = "other command",
-            CreatedDate = DateTime.UtcNow,
-            UpdatedDate = DateTime.UtcNow,
-            Description = "other description"
-        };
         DummyDevice = new()
         {
             Id = Guid.NewGuid(),
             Address = "127.0.0.1:1010",
-            Commands = new() { DummyCommand, OtherCommand },
+            Commands = new(),
+            EmployeeId = DummyUser.EmployeeId,
+            Messages = new(),
+            Name = "dummy device",
+            CreatedDate = DateTime.UtcNow,
+            UpdatedDate = DateTime.UtcNow
+        };
+
+        OtherDevice = new()
+        {
+            Id = Guid.NewGuid(),
+            Address = "127.0.0.1:3010",
+            Commands = new(),
             EmployeeId = DummyUser.EmployeeId,
             Messages = new(),
             Name = "dummy device",
@@ -55,22 +46,18 @@ public partial class Update : IClassFixture<WebApplicationFactory<Program>>, ICl
         };
 
         using var context = new DevicesManagementContext();
-        context.Commands.AddRange(DummyDevice.Commands);
-        context.Devices.Add(DummyDevice);
+        context.Devices.AddRange(new[] { DummyDevice, OtherDevice });
         context.SaveChanges();
 
     }
 
-    private string Route(IDatabaseModel entity) => $"/api/commands/{entity.Id}";
+    private string Route(IDatabaseModel entity) => $"/api/devices/{entity.Id}";
 
     public void Dispose()
     {
         using var context = new DevicesManagementContext();
-        context.Commands.RemoveRange(
-            context.Commands.Where(c => DummyDevice.Commands.Contains(c)).ToArray()
-        );
         context.Devices.RemoveRange(
-            context.Devices.Where(d => d.Equals(DummyDevice))
+            context.Devices.Where(d => new[] { DummyDevice, OtherDevice }.Contains(d))
         );
         context.SaveChanges();
 
@@ -78,12 +65,12 @@ public partial class Update : IClassFixture<WebApplicationFactory<Program>>, ICl
     }
 }
 
-public class UpdateSetup : IDisposable
+public class DeleteSetup : IDisposable
 {
     public User DummyUser { get; init; }
     public AccessLevel DummyAccessLevel { get; init; }
 
-    public UpdateSetup()
+    public DeleteSetup()
     {
         // Seed
         DummyAccessLevel = new AccessLevel()
@@ -97,7 +84,7 @@ public class UpdateSetup : IDisposable
             Name = "Dummy user",
             CreatedDate = DateTime.UtcNow,
             UpdatedDate = DateTime.UtcNow,
-            EmployeeId = "xyzw87654322",
+            EmployeeId = "zwxy23654322",
             Enabled = true,
             Id = Guid.NewGuid(),
             AccessLevel = DummyAccessLevel

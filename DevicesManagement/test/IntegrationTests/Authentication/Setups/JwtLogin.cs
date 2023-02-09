@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace IntegrationTests.Authentication;
+﻿namespace IntegrationTests.Authentication;
 
 public partial class JwtLogin : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<JwtLoginSetup>
 {
