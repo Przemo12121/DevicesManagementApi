@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Database.Models.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using DevicesManagement.DataTransferObjects.Requests;
 using DevicesManagement.MediatR.Commands.Devices;
 using MediatR;
-using DevicesManagement.DataTransferObjects.Responses;
+using DevicesManagement.MediatR.Requests.Commands;
 
 namespace DevicesManagement.Controllers;
 

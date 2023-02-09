@@ -6,9 +6,9 @@ using Database.Models.Enums;
 
 namespace Database.Repositories;
 
-public class DevicesRepository : DisposableRepository<DeviceManagementContext>, IDevicesRepository, IResourceAuthorizableRepository<Device>
+public class DevicesRepository : DisposableRepository<DevicesManagementContext>, IDevicesRepository, IResourceAuthorizableRepository<Device>
 {
-    public DevicesRepository(DeviceManagementContext context) : base(context) { }
+    public DevicesRepository(DevicesManagementContext context) : base(context) { }
 
     public void Add(Device entity)
         => _context.Devices.Add(entity);

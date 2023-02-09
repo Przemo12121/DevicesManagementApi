@@ -5,7 +5,7 @@ namespace DevicesManagement.ModelsHandlers.ExtensionMethods;
 
 public static class CommandExtensions
 {
-    public static void UpdateWith(this Command command, EditCommandRequest request)
+    public static void UpdateWith(this Command command, UpdateCommandRequest request)
     {
         if (request.Description is not null)
             command.Description = request.Description;

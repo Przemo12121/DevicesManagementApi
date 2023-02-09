@@ -1,7 +1,3 @@
-using System.Net.Http.Json;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-
 namespace IntegrationTests.Authentication;
 
 public partial class JwtLogin
@@ -138,42 +134,4 @@ public partial class JwtLogin
 
         role.Value.Should().Be(DummyUser.AccessLevel.Value.ToString());
     }
-}
-
-public partial class JwtLogin : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<Setup>
-{
-    private readonly WebApplicationFactory<Program> _factory;
-    private readonly Setup _setupFixture;
-
-    private HttpClient HttpClient { get; init; }
-    private User DummyUser { get; init; }
-
-    public JwtLogin(WebApplicationFactory<Program> factory, Setup setupFixture)
-    {
-        _factory = factory;
-        _setupFixture = setupFixture;
-
-        HttpClient = _factory.CreateClient();
-        DummyUser = setupFixture.DummyUser;
-    }
-
-    private string Route { get; } = "/api/authentication/jwt/login";
-
-    private LoginWithCredentialsRequest ValidRequest { get; } = new()
-    {
-        Login = "xyzw87654321",
-        Password = "dummyPWD123"
-    };
-
-    private LoginWithCredentialsRequest WrongLoginRequest { get; } = new()
-    {
-        Login = "badw87654321",
-        Password = "dummyPWD123"
-    };
-
-    private LoginWithCredentialsRequest WrongPasswordRequest { get; } = new()
-    {
-        Login = "xyzw87654321",
-        Password = "badPWD123"
-    };
 }

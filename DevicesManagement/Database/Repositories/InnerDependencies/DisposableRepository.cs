@@ -28,5 +28,7 @@ public abstract class DisposableRepository<T> : IDisposable where T : DbContext
     }
 
     public void SaveChanges()
-        => _context.SaveChanges();
+    {
+        _context.SaveChanges();
+    }
 }

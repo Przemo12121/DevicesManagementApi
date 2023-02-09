@@ -3,17 +3,20 @@ using System;
 using Database.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Database.Migrations
+namespace Database.Migrations.DevicesManagement
 {
-    [DbContext(typeof(DeviceManagementContext))]
-    partial class DeviceManagementContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(DevicesManagementContext))]
+    [Migration("20230209181612_Init_db")]
+    partial class Initdb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

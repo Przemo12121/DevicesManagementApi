@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Database.Models.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using DevicesManagement.DataTransferObjects.Requests;
 using MediatR;
-using DevicesManagement.MediatR.Commands.Commands;
-using DevicesManagement.DataTransferObjects.Responses;
-using Mapster;
+using DevicesManagement.MediatR.Requests.Commands;
 
 namespace DevicesManagement.Controllers;
 
@@ -29,9 +26,9 @@ public class CommandsController : ControllerBase
     }
 
     [HttpPatch, Route("{id}")]
-    public async Task<IActionResult> EditCommand([FromRoute] Guid id, [FromBody] EditCommandRequest request)
+    public async Task<IActionResult> EditCommand([FromRoute] Guid id, [FromBody] UpdateCommandRequest request)
     {
-        var command = new EditCommandCommand() { ResourceId = id, Request = request };
+        var command = new UpdateCommandCommand() { ResourceId = id, Request = request };
         var result = await _mediator.Send(command);
         return result;
     }
@@ -39,7 +36,7 @@ public class CommandsController : ControllerBase
     [HttpDelete, Route("{id}")]
     public async Task<IActionResult> DeleteCommand([FromRoute] Guid id)
     {
-        var command = new RunCommandCommand() { ResourceId = id };
+        var command = new DeleteCommandCommand() { ResourceId = id };
         var result = await _mediator.Send(command);
         return result;
     }

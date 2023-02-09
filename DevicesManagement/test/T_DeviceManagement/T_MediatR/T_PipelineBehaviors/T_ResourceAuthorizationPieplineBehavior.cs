@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.IO.Pipelines;
-
-namespace T_DeviceManagement.T_MediatR.T_PipelineBehaviors;
+﻿namespace T_DeviceManagement.T_MediatR.T_PipelineBehaviors;
 
 public partial class T_ResourceAuthorizationPieplineBehavior
 {

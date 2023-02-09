@@ -9,7 +9,7 @@ public class T_EditCommandRequestValidator
     [Fact]
     public void Validate_AllAttributesAsNull_False()
     {
-        EditCommandRequest request = new() 
+        UpdateCommandRequest request = new() 
         {
             Name = null,
             Description = null,
@@ -25,7 +25,7 @@ public class T_EditCommandRequestValidator
     [Fact]
     public void Validate_OneLetterName_True()
     {
-        EditCommandRequest request = new()
+        UpdateCommandRequest request = new()
         {
             Name = "a",
             Description = null,
@@ -40,7 +40,7 @@ public class T_EditCommandRequestValidator
     [Fact]
     public void Validate_AnyName_True()
     {
-        EditCommandRequest request = new()
+        UpdateCommandRequest request = new()
         {
             Name = "any name",
             Description = null,
@@ -55,7 +55,7 @@ public class T_EditCommandRequestValidator
     [Fact]
     public void Validate_AnyNameLongerThan64_False()
     {
-        EditCommandRequest request = new()
+        UpdateCommandRequest request = new()
         {
             Name = Enumerable.Range(0, 65).Select(e => "a").Aggregate((a, b) => a + b),
             Description = null,
@@ -72,7 +72,7 @@ public class T_EditCommandRequestValidator
     [Fact]
     public void Validate_OneLetterDescription_True()
     {
-        EditCommandRequest request = new()
+        UpdateCommandRequest request = new()
         {
             Name = null,
             Description = "a",
@@ -87,7 +87,7 @@ public class T_EditCommandRequestValidator
     [Fact]
     public void Validate_AnyDescription_True()
     {
-        EditCommandRequest request = new()
+        UpdateCommandRequest request = new()
         {
             Name = null,
             Description = "any description",
@@ -102,7 +102,7 @@ public class T_EditCommandRequestValidator
     [Fact]
     public void Validate_AnyDescriptionLongerThan4097_False()
     {
-        EditCommandRequest request = new()
+        UpdateCommandRequest request = new()
         {
             Name = null,
             Description = Enumerable.Range(0, 4097).Select(e => "a").Aggregate((a, b) => a + b),
@@ -119,7 +119,7 @@ public class T_EditCommandRequestValidator
     [Fact]
     public void Validate_OneLetterBody_True()
     {
-        EditCommandRequest request = new()
+        UpdateCommandRequest request = new()
         {
             Name = null,
             Description = null,
@@ -134,7 +134,7 @@ public class T_EditCommandRequestValidator
     [Fact]
     public void Validate_AnyBody_True()
     {
-        EditCommandRequest request = new()
+        UpdateCommandRequest request = new()
         {
             Name = null,
             Description = null,
@@ -149,7 +149,7 @@ public class T_EditCommandRequestValidator
     [Fact]
     public void Validate_AnyBodyLongerThan2049_False()
     {
-        EditCommandRequest request = new()
+        UpdateCommandRequest request = new()
         {
             Name = null,
             Description = null,

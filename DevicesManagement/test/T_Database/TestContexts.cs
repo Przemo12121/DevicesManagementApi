@@ -8,7 +8,7 @@ using Database.Contexts;
 
 namespace T_Database;
 
-public class DeviceManagementContextTest : DeviceManagementContext
+public class DeviceManagementContextTest : DevicesManagementContext
 {
     private string Key { get; }
     public DeviceManagementContextTest(string key) 

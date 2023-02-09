@@ -1,15 +1,52 @@
-﻿using Database.Contexts;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace IntegrationTests.Authentication;
 
-public class Setup : IDisposable
+public partial class JwtLogin : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<JwtLoginSetup>
+{
+    private readonly WebApplicationFactory<Program> _factory;
+    private readonly JwtLoginSetup _setupFixture;
+
+    private HttpClient HttpClient { get; init; }
+    private User DummyUser { get; init; }
+
+    public JwtLogin(WebApplicationFactory<Program> factory, JwtLoginSetup setupFixture)
+    {
+        _factory = factory;
+        _setupFixture = setupFixture;
+
+        HttpClient = _factory.CreateClient();
+        DummyUser = setupFixture.DummyUser;
+    }
+
+    private string Route { get; } = "/api/authentication/jwt/login";
+
+    private LoginWithCredentialsRequest ValidRequest { get; } = new()
+    {
+        Login = "xyzw87654321",
+        Password = "dummyPWD123"
+    };
+
+    private LoginWithCredentialsRequest WrongLoginRequest { get; } = new()
+    {
+        Login = "badw87654321",
+        Password = "dummyPWD123"
+    };
+
+    private LoginWithCredentialsRequest WrongPasswordRequest { get; } = new()
+    {
+        Login = "xyzw87654321",
+        Password = "badPWD123"
+    };
+}
+
+public class JwtLoginSetup : IDisposable
 { 
     public User DummyUser { get; init; }
     public AccessLevel DummyAccessLevel { get; init; }
     private LocalAuthStorageContext Context { get; init; }
 
-    public Setup()
+    public JwtLoginSetup()
     {
         // Seed
         Context = new LocalAuthStorageContext();
