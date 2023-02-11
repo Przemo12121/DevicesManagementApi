@@ -2,7 +2,7 @@ using DevicesManagement.DataTransferObjects.Requests;
 
 namespace T_DevicesManagement.T_Validations.T_Users;
 
-public class T_EditEmployeeRequestValidator
+public class T_UpdateEmployeeRequestValidator
 {
     private readonly UpdateEmployeeRequestValidator _validator = new();
 

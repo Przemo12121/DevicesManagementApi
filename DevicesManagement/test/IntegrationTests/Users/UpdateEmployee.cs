@@ -1,9 +1,9 @@
 ﻿namespace IntegrationTests.Users;
 
-public partial class Update
+public partial class UpdateEmployee
 {
     [Fact]
-    public async void Update_ValidRequest_ResponsesWith200()
+    public async void YpdateEmployeeValidRequest_ResponsesWith200()
     {
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", RequestingUserJwt);
         UpdateEmployeeRequest request = new() 
@@ -18,7 +18,7 @@ public partial class Update
     }
 
     [Fact]
-    public async void Update_ValidRequest_UpdatesRequestedAttributes()
+    public async void YpdateEmployeeValidRequest_UpdatesRequestedAttributes()
     {
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", RequestingUserJwt);
         UpdateEmployeeRequest request = new()
@@ -35,7 +35,7 @@ public partial class Update
     }
 
     [Fact]
-    public async void Update_ValidRequest_DoesNotUpdatesoTHERRequestedAttributes()
+    public async void YpdateEmployeeValidRequest_DoesNotUpdatesoTHERRequestedAttributes()
     {
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", RequestingUserJwt);
         UpdateEmployeeRequest request = new()
@@ -52,7 +52,7 @@ public partial class Update
     }
 
     [Fact]
-    public async void Update_ValidRequest_UpdatesUpdatedDateTimestampRequestedAttributes()
+    public async void YpdateEmployeeValidRequest_UpdatesUpdatedDateTimestampRequestedAttributes()
     {
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", RequestingUserJwt);
         UpdateEmployeeRequest request = new()
@@ -71,7 +71,7 @@ public partial class Update
     }
 
     [Fact]
-    public async void Update_ValidRequest_DoesNotUpdateOtherUserRequestedAttributes()
+    public async void YpdateEmployeeValidRequest_DoesNotUpdateOtherUserRequestedAttributes()
     {
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", RequestingUserJwt);
         UpdateEmployeeRequest request = new()
@@ -88,7 +88,7 @@ public partial class Update
     }
 
     [Fact]
-    public async void Update_RequestWithoutToken_ResponsesWith401()
+    public async void YpdateEmployeeRequestWithoutToken_ResponsesWith401()
     {
         UpdateEmployeeRequest request = new()
         {
@@ -102,7 +102,7 @@ public partial class Update
     }
 
     [Fact]
-    public async void Update_RequestWithoutToken_DoesNotUpdateUser()
+    public async void YpdateEmployeeRequestWithoutToken_DoesNotUpdateUser()
     {
         UpdateEmployeeRequest request = new()
         {
@@ -118,7 +118,7 @@ public partial class Update
     }
 
     [Fact]
-    public async void Update_NonExistingEntity_ResponsesWith404()
+    public async void YpdateEmployeeNonExistingEntity_ResponsesWith404()
     {
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", RequestingUserJwt);
         UpdateEmployeeRequest request = new()
@@ -133,7 +133,7 @@ public partial class Update
     }
 
     [Fact]
-    public async void Update_BadRequest_ResponsesWith400()
+    public async void YpdateEmployeeBadRequest_ResponsesWith400()
     {
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", RequestingUserJwt);
         UpdateEmployeeRequest request = new()
@@ -148,7 +148,7 @@ public partial class Update
     }
 
     [Fact]
-    public async void Update_BadRequest_DoesNotUpdateUser()
+    public async void YpdateEmployeeBadRequest_DoesNotUpdateUser()
     {
         UpdateEmployeeRequest request = new()
         {

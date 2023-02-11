@@ -1,9 +1,9 @@
 ﻿namespace IntegrationTests.Users;
 
-public partial class Delete
+public partial class DeleteEmployee
 {
     [Fact]
-    public async void Delete_ValidRequest_ResponsesWith200()
+    public async void DeleteEmployee_ValidRequest_ResponsesWith200()
     {
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", DummyUserJwt);
 
@@ -13,7 +13,7 @@ public partial class Delete
     }
 
     [Fact]
-    public async void Delete_ValidRequest_RemovesRequestedUserFromDatabase()
+    public async void DeleteEmployee_ValidRequest_RemovesRequestedUserFromDatabase()
     {
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", DummyUserJwt);
 
@@ -24,7 +24,7 @@ public partial class Delete
     }
 
     [Fact]
-    public async void Delete_ValidRequest_DoesNotRemovesOtherUserFromDatabase()
+    public async void DeleteEmployee_ValidRequest_DoesNotRemovesOtherUserFromDatabase()
     {
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", DummyUserJwt);
 
@@ -35,7 +35,7 @@ public partial class Delete
     }
 
     [Fact]
-    public async void Delete_RequestWithoutToken_ResponsesWith401()
+    public async void DeleteEmployee_RequestWithoutToken_ResponsesWith401()
     {
         var response = await HttpClient.DeleteAsync(Route(DummyUser));
 
@@ -43,7 +43,7 @@ public partial class Delete
     }
 
     [Fact]
-    public async void Delete_RequestWithoutToken_DoesNotRemoveUser()
+    public async void DeleteEmployee_RequestWithoutToken_DoesNotRemoveUser()
     {
         var response = await HttpClient.DeleteAsync(Route(DummyUser));
 
@@ -52,7 +52,7 @@ public partial class Delete
     }
 
     [Fact]
-    public async void Delete_NonExistingEntity_ResponsesWith404()
+    public async void DeleteEmployee_NonExistingEntity_ResponsesWith404()
     {
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", DummyUserJwt);
 

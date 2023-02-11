@@ -56,6 +56,7 @@ internal static class WebApplicationBuilderExtensions
         builder.Services.AddSingleton<IValidator<RegisterDeviceRequest>, RegisterDeviceRequestValidator>();
         builder.Services.AddSingleton<IValidator<UpdateDeviceRequest>, UpdateDeviceRequestValidator>();
         builder.Services.AddSingleton<IValidator<UpdateEmployeeRequest>, UpdateEmployeeRequestValidator>();
+        builder.Services.AddSingleton<IValidator<RegisterEmployeeRequest>, RegisterEmployeeRequestValidator>();
     }
 
     public static void ConfigureErrorRoutes(this WebApplication app)

@@ -1,33 +1,33 @@
 ﻿namespace IntegrationTests.Users;
 
-public partial class Delete : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<DeleteSetup>, IDisposable
+public partial class UpdateEmployee : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<DeleteEmployeeSetup>, IDisposable
 {
     private readonly WebApplicationFactory<Program> _factory;
-    private readonly DeleteSetup _setupFixture;
+    private readonly DeleteEmployeeSetup _setupFixture;
 
     HttpClient HttpClient { get; init; }
     User RequestingUser { get; init; }
-    string DummyUserJwt { get; init; }
+    string RequestingUserJwt { get; init; }
 
     User OtherUser { get; init; }
     User DummyUser { get; init; }
 
-    public Delete(WebApplicationFactory<Program> factory, DeleteSetup setupFixture)
+    public UpdateEmployee(WebApplicationFactory<Program> factory, DeleteEmployeeSetup setupFixture)
     {
         _factory = factory;
         _setupFixture = setupFixture;
 
         HttpClient = _factory.CreateClient();
         RequestingUser = setupFixture.RequestingUser;
-        DummyUserJwt = factory.Services.GetRequiredService<IJwtProvider>().Generate(RequestingUser).RawData;
+        RequestingUserJwt = factory.Services.GetRequiredService<IJwtProvider>().Generate(RequestingUser).RawData;
 
         DummyUser = new()
         {
             Id = Guid.NewGuid(),
-            EmployeeId = "xyxy56565656",
+            EmployeeId = "abab12121212",
             Name = "dummy user",
-            CreatedDate = DateTime.UtcNow,
-            UpdatedDate = DateTime.UtcNow,
+            CreatedDate = DateTime.UtcNow.AddDays(-10),
+            UpdatedDate = DateTime.UtcNow.AddDays(-10),
             AccessLevelId = _setupFixture.DummyAccessLevel.Id,
             PasswordHashed = "not important"
         };
@@ -35,7 +35,7 @@ public partial class Delete : IClassFixture<WebApplicationFactory<Program>>, ICl
         OtherUser = new()
         {
             Id = Guid.NewGuid(),
-            EmployeeId = "stst78787878",
+            EmployeeId = "cdcd23232323",
             Name = "other user",
             CreatedDate = DateTime.UtcNow,
             UpdatedDate = DateTime.UtcNow,
@@ -62,42 +62,42 @@ public partial class Delete : IClassFixture<WebApplicationFactory<Program>>, ICl
     }
 }
 
-public class DeleteSetup : IDisposable
+public class UpdateEmployeeSetup : IDisposable
 {
-    public User RequestingUser { get; init; }
+    public User DummyUser { get; init; }
     public AccessLevel DummyAccessLevel { get; init; }
 
-    public DeleteSetup()
+    public UpdateEmployeeSetup()
     {
         // Seed
         DummyAccessLevel = new AccessLevel()
         {
-            Value = Database.Models.Enums.AccessLevels.Admin,
+            Value = Database.Models.Enums.AccessLevels.Employee,
             Id = Guid.NewGuid(),
             Description = "dummy"
         };
-        RequestingUser = new User()
+        DummyUser = new User()
         {
-            Name = "ummy user",
+            Name = "Dummy user",
             CreatedDate = DateTime.UtcNow,
             UpdatedDate = DateTime.UtcNow,
-            EmployeeId = "zwxy23555822",
+            EmployeeId = "zwxy23654322",
             Enabled = true,
             Id = Guid.NewGuid(),
-            AccessLevel = DummyAccessLevel
+            AccessLevel = DummyAccessLevel,
         };
-        RequestingUser.PasswordHashed = new PasswordHasher<User>().HashPassword(RequestingUser, "dummyPWD123");
+        DummyUser.PasswordHashed = new PasswordHasher<User>().HashPassword(DummyUser, "dummyPWD123");
 
         using var context = new LocalAuthStorageContext();
         context.AccessLevels.Add(DummyAccessLevel);
-        context.Users.Add(RequestingUser);
+        context.Users.Add(DummyUser);
         context.SaveChanges();
     }
 
     public void Dispose()
     {
         using var context = new LocalAuthStorageContext();
-        context.Users.Remove(RequestingUser);
+        context.Users.Remove(DummyUser);
         context.AccessLevels.Remove(DummyAccessLevel);
         context.SaveChanges();
 

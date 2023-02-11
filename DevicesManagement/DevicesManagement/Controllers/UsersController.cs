@@ -54,8 +54,8 @@ public class UsersController : ControllerBase
 
 
     [Authorize]
-    [HttpPost, Route("")]
-    public async Task<IActionResult> RegisterDevice([FromBody] RegisterDeviceRequest request)
+    [HttpPost, Route("employees/{id}/devices")]
+    public async Task<IActionResult> RegisterEmployeeDevice([FromBody] RegisterDeviceRequest request)
     {
         var command = new RegisterDeviceCommand() { Request = request };
         var result = await _mediator.Send(command);
@@ -63,10 +63,10 @@ public class UsersController : ControllerBase
     }
 
     [Authorize]
-    [HttpGet, Route("{employeeId}/devices")]
-    public async Task<IActionResult> ListUserDevices([FromRoute] Guid employeeId, [FromBody] PaginationRequest request)
+    [HttpGet, Route("{id}/devices")]
+    public async Task<IActionResult> ListUserDevices([FromRoute] Guid id, [FromBody] PaginationRequest request)
     {
-        var command = new GetUserDevicesQuery() { ResourceId = employeeId, Request = request };
+        var command = new GetUserDevicesQuery() { ResourceId = id, Request = request };
         var result = await _mediator.Send(command);
         return result;
     }
