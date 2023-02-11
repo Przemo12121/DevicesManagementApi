@@ -10,5 +10,8 @@ public sealed class User : UpdatableModel, IUser
 
     public string PasswordHashed { get; set; }
     public bool Enabled { get; set; }
+
+    public Guid AccessLevelId { get; set; }
+
     public AccessLevel AccessLevel { get; set; }
 }

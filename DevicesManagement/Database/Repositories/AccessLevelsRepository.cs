@@ -15,6 +15,6 @@ public class AccessLevelsRepository : DisposableRepository<LocalAuthStorageConte
 
     public AccessLevel? FindByValue(AccessLevels value)
         => _context.AccessLevels
-            .Where(leve => leve.Value.Equals(value))
+            .Where(level => level.Value.Equals(value))
             .SingleOrDefault();
 }

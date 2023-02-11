@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace DevicesManagement.Validations.Commands;
 
-public class EditCommandRequestValidator : AbstractValidator<EditCommandRequest>
+public class EditCommandRequestValidator : AbstractValidator<UpdateCommandRequest>
 {
     public EditCommandRequestValidator()
     {

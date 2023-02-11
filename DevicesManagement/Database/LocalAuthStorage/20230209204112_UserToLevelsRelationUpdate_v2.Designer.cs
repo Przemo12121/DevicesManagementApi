@@ -3,17 +3,20 @@ using System;
 using Database.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Database.Migrations.LocalAuthStorage
+namespace Database.LocalAuthStorage
 {
     [DbContext(typeof(LocalAuthStorageContext))]
-    partial class LocalAuthStorageContextModelSnapshot : ModelSnapshot
+    [Migration("20230209204112_UserToLevelsRelationUpdate_v2")]
+    partial class UserToLevelsRelationUpdatev2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

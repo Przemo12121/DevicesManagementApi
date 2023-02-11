@@ -3,7 +3,6 @@ using Database.Models.Interfaces;
 using DevicesManagement.DataTransferObjects.Requests;
 using DevicesManagement.MediatR.PipelineBehaviors;
 using DevicesManagement.MediatR.Requests;
-using DevicesManagement.Validations.Users;
 using MediatR;
 using MediatR.Extensions.AttributedBehaviors;
 using Microsoft.AspNetCore.Mvc;

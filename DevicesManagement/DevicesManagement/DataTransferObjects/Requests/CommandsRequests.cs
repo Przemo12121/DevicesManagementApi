@@ -1,6 +1,6 @@
 ﻿namespace DevicesManagement.DataTransferObjects.Requests;
 
-public record EditCommandRequest
+public record UpdateCommandRequest
 {
     public string? Name { get; init; }
     public string? Body { get; init; }

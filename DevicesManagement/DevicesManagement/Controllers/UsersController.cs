@@ -37,9 +37,9 @@ public class UsersController : ControllerBase
     }
 
     [HttpPatch, Route("employees/{id}")]
-    public async Task<IActionResult> EditEmployee([FromRoute] Guid id, [FromBody] UpdateEmployeeRequest request)
+    public async Task<IActionResult> UpdateEmployee([FromRoute] Guid id, [FromBody] UpdateEmployeeRequest request)
     {
-        var command = new UpdateEmployeeCommand() { Id = id, Request = request };
+        var command = new UpdateEmployeeCommand() { ResourceId = id, Request = request };
         var result = await _mediator.Send(command);
         return result;
     }
@@ -54,19 +54,19 @@ public class UsersController : ControllerBase
 
 
     [Authorize]
-    [HttpPost, Route("")]
-    public async Task<IActionResult> RegisterDevice([FromBody] RegisterDeviceRequest request)
+    [HttpPost, Route("employees/{id}/devices")]
+    public async Task<IActionResult> RegisterEmployeeDevice([FromRoute] Guid id, [FromBody] RegisterDeviceRequest request)
     {
-        var command = new RegisterDeviceCommand() { Request = request };
+        var command = new RegisterDeviceCommand() { Request = request, ResourceId = id };
         var result = await _mediator.Send(command);
         return result;
     }
 
     [Authorize]
-    [HttpGet, Route("{employeeId}/devices")]
-    public async Task<IActionResult> ListUserDevices([FromRoute] Guid employeeId, [FromBody] PaginationRequest request)
+    [HttpGet, Route("{id}/devices")]
+    public async Task<IActionResult> ListUserDevices([FromRoute] Guid id, [FromBody] PaginationRequest request)
     {
-        var command = new GetUserDevicesQuery() { ResourceId = employeeId, Request = request };
+        var command = new GetUserDevicesQuery() { ResourceId = id, Request = request };
         var result = await _mediator.Send(command);
         return result;
     }

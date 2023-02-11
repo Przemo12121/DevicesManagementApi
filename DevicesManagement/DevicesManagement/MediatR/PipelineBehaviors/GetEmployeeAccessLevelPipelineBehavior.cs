@@ -19,6 +19,8 @@ public class GetEmployeeAccessLevelPipelineBehavior<TRequest> : IPipelineBehavio
 
     public async Task<IActionResult> Handle(TRequest request, RequestHandlerDelegate<IActionResult> next, CancellationToken cancellationToken)
     {
+       // var x = _accessLevelsRepository.FindByValue(AccessLevels.Employee);
+
         request.AccessLevel = _accessLevelsRepository.FindByValue(AccessLevels.Employee) 
             ?? throw new Exception(StringMessages.InternalErrors.EMPLOYEE_ACCESS_LEVEL_NOT_FOUND);
 

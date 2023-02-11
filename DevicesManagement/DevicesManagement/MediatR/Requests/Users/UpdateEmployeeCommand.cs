@@ -1,7 +1,6 @@
 ﻿using Database.Models;
 using DevicesManagement.DataTransferObjects.Requests;
 using DevicesManagement.MediatR.PipelineBehaviors;
-using DevicesManagement.Validations.Users;
 using MediatR;
 using MediatR.Extensions.AttributedBehaviors;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +22,6 @@ namespace DevicesManagement.MediatR.Commands.Users;
 public class UpdateEmployeeCommand 
     : IRequest<IActionResult>, IRequestContainerCommand<UpdateEmployeeRequest>, IResourceAuthorizableCommand<User>
 {
-    public Guid Id { get; init; }
     public UpdateEmployeeRequest Request { get; init; }
     public Guid ResourceId { get; init; }
     public User Resource { get; set; }

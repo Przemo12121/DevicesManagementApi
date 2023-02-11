@@ -17,29 +17,22 @@ using System.Text;
 
 internal static class WebApplicationBuilderExtensions
 {
-    private static LocalAuthStorageContext LocalAuthStorageContext { get; set; } = new LocalAuthStorageContext();
-    private static DeviceManagementContext DeviceManagementContext { get; set; } = new DeviceManagementContext();
-
     public static void ConfigureRepositories(this WebApplicationBuilder builder)
     {
         builder.Services.AddDbContext<LocalAuthStorageContext>();
-
-        var commandsRepository = new CommandRepository(DeviceManagementContext);
-        var devicesRepository = new DevicesRepository(DeviceManagementContext);
-        var usersRepository = new UsersRepository(LocalAuthStorageContext);
-        var accessLevelsRepository = new AccessLevelsRepository(LocalAuthStorageContext);
+        builder.Services.AddDbContext<DevicesManagementContext>();
 
         #region General repositories
-        builder.Services.AddSingleton<ICommandsRepository, CommandRepository>(service => commandsRepository);
-        builder.Services.AddSingleton<IDevicesRepository, DevicesRepository>(service => devicesRepository);
-        builder.Services.AddSingleton<IUsersRepository, UsersRepository>(service => usersRepository);
-        builder.Services.AddSingleton<IAccessLevelsRepository, AccessLevelsRepository>(service => accessLevelsRepository);
+        builder.Services.AddScoped<ICommandsRepository, CommandRepository>();
+        builder.Services.AddScoped<IDevicesRepository, DevicesRepository>();
+        builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+        builder.Services.AddScoped<IAccessLevelsRepository, AccessLevelsRepository>();
         #endregion
 
         #region IAuthorizable<T> repositories
-        builder.Services.AddSingleton<IResourceAuthorizableRepository<Command>, CommandRepository>(service => commandsRepository);
-        builder.Services.AddSingleton<IResourceAuthorizableRepository<User>, UsersRepository>(service => usersRepository);
-        builder.Services.AddSingleton<IResourceAuthorizableRepository<Device>, DevicesRepository>(service => devicesRepository);
+        builder.Services.AddScoped<IResourceAuthorizableRepository<Command>, CommandRepository>();
+        builder.Services.AddScoped<IResourceAuthorizableRepository<User>, UsersRepository>();
+        builder.Services.AddScoped<IResourceAuthorizableRepository<Device>, DevicesRepository>();
         #endregion
     }
 
@@ -59,10 +52,11 @@ internal static class WebApplicationBuilderExtensions
 
     public static void ConfigureValidators(this WebApplicationBuilder builder)
     {
-        builder.Services.AddSingleton<IValidator<EditCommandRequest>, EditCommandRequestValidator>();
+        builder.Services.AddSingleton<IValidator<UpdateCommandRequest>, EditCommandRequestValidator>();
         builder.Services.AddSingleton<IValidator<RegisterDeviceRequest>, RegisterDeviceRequestValidator>();
         builder.Services.AddSingleton<IValidator<UpdateDeviceRequest>, UpdateDeviceRequestValidator>();
         builder.Services.AddSingleton<IValidator<UpdateEmployeeRequest>, UpdateEmployeeRequestValidator>();
+        builder.Services.AddSingleton<IValidator<RegisterEmployeeRequest>, RegisterEmployeeRequestValidator>();
     }
 
     public static void ConfigureErrorRoutes(this WebApplication app)
@@ -97,17 +91,13 @@ internal static class WebApplicationBuilderExtensions
                     ValidIssuer = jwtOptions.Issuer,
                     IssuerSigningKey = new SymmetricSecurityKey(
                         Encoding.UTF8.GetBytes(jwtOptions.Secret)
-                        ),
+                    ),
                 };
             });
 
         builder.Services.AddSingleton<IJwtProvider, JwtBearerProvider>(
             service => new JwtBearerProvider(jwtOptions)
         );
-        builder.Services.AddSingleton<IIdentityProvider<User>, UserIdentityProvider>(
-            service => new UserIdentityProvider(
-                new UsersRepository(LocalAuthStorageContext)
-            )
-        );
+        builder.Services.AddScoped<IIdentityProvider<User>, UserIdentityProvider>();
     }
 }

@@ -1,4 +1,4 @@
-﻿using DevicesManagement.MediatR.Commands.Commands;
+﻿using DevicesManagement.MediatR.Requests.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
