@@ -55,9 +55,9 @@ public class UsersController : ControllerBase
 
     [Authorize]
     [HttpPost, Route("employees/{id}/devices")]
-    public async Task<IActionResult> RegisterEmployeeDevice([FromBody] RegisterDeviceRequest request)
+    public async Task<IActionResult> RegisterEmployeeDevice([FromRoute] Guid id, [FromBody] RegisterDeviceRequest request)
     {
-        var command = new RegisterDeviceCommand() { Request = request };
+        var command = new RegisterDeviceCommand() { Request = request, ResourceId = id };
         var result = await _mediator.Send(command);
         return result;
     }

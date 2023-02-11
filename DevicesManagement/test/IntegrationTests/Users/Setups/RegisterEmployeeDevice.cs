@@ -9,11 +9,11 @@ public partial class RegisterEmployeeDevice : IClassFixture<WebApplicationFactor
     User RequestingUser { get; init; }
     string RequestingUserJwt { get; init; }
 
-    string Route(IDatabaseModel entity) => $"api/users/employees/${entity.Id}/devices";
+    string Route(IDatabaseModel entity) => $"api/users/employees/{entity.Id}/devices";
 
-    RegisterDeviceRequest DummyRequest { get; } = new()
+    static RegisterDeviceRequest DummyRequest { get; } = new()
     {
-        Name = "Dummy employee test register device",
+        Name = "Dummy test register device",
         Address = "127.0.0.1:5060"
     };
 

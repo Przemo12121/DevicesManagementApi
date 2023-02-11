@@ -108,7 +108,7 @@ public partial class RegisterEmployeeDevice
     }
 
     [Fact]
-    public async void RegisterEmployeeDevice_BadRequest_DoesNotCreateNewUser()
+    public async void RegisterEmployeeDevice_BadRequest_DoesNotCreateNewDevice()
     {
         int countBefore;
         using (var context = new DevicesManagementContext())
