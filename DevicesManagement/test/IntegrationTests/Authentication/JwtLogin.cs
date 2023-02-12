@@ -1,5 +1,6 @@
 namespace IntegrationTests.Authentication;
 
+[Collection("IntegrationTests")]
 public partial class JwtLogin
 {
     [Fact]
@@ -114,7 +115,7 @@ public partial class JwtLogin
 
         var uniqeName = jwt.Claims.Where(claim => claim.Type.Equals("unique_name")).First();
 
-        uniqeName.Value.Should().Be(DummyUser.EmployeeId);
+        uniqeName.Value.Should().Be(RequestingUser.EmployeeId);
     }
 
     [Fact]
@@ -132,6 +133,6 @@ public partial class JwtLogin
 
         var role = jwt.Claims.Where(claim => claim.Type.Equals("role")).First();
 
-        role.Value.Should().Be(DummyUser.AccessLevel.Value.ToString());
+        role.Value.Should().Be(RequestingUser.AccessLevel.Value.ToString());
     }
 }

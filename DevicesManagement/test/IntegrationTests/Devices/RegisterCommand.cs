@@ -2,6 +2,7 @@
 
 namespace IntegrationTests.Devices;
 
+[Collection("IntegrationTests")]
 public partial class RegisterCommand
 {
     [Fact]

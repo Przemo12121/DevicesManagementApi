@@ -1,9 +1,9 @@
 ﻿namespace IntegrationTests.Users;
 
-public partial class UpdateEmployee : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<DeleteEmployeeSetup>, IDisposable
+public partial class UpdateEmployee : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<BaseSetup>, IDisposable
 {
     private readonly WebApplicationFactory<Program> _factory;
-    private readonly DeleteEmployeeSetup _setupFixture;
+    private readonly BaseSetup _setupFixture;
 
     HttpClient HttpClient { get; init; }
     User RequestingUser { get; init; }
@@ -12,7 +12,7 @@ public partial class UpdateEmployee : IClassFixture<WebApplicationFactory<Progra
     User OtherUser { get; init; }
     User DummyUser { get; init; }
 
-    public UpdateEmployee(WebApplicationFactory<Program> factory, DeleteEmployeeSetup setupFixture)
+    public UpdateEmployee(WebApplicationFactory<Program> factory, BaseSetup setupFixture)
     {
         _factory = factory;
         _setupFixture = setupFixture;
@@ -28,7 +28,7 @@ public partial class UpdateEmployee : IClassFixture<WebApplicationFactory<Progra
             Name = "dummy user",
             CreatedDate = DateTime.UtcNow.AddDays(-10),
             UpdatedDate = DateTime.UtcNow.AddDays(-10),
-            AccessLevelId = _setupFixture.DummyAccessLevel.Id,
+            AccessLevelId = _setupFixture.EmployeeAccessLevel.Id,
             PasswordHashed = "not important"
         };
 
@@ -39,7 +39,7 @@ public partial class UpdateEmployee : IClassFixture<WebApplicationFactory<Progra
             Name = "other user",
             CreatedDate = DateTime.UtcNow,
             UpdatedDate = DateTime.UtcNow,
-            AccessLevelId = _setupFixture.DummyAccessLevel.Id,
+            AccessLevelId = _setupFixture.EmployeeAccessLevel.Id,
             PasswordHashed = "not important"
         };
 
@@ -56,49 +56,6 @@ public partial class UpdateEmployee : IClassFixture<WebApplicationFactory<Progra
         context.Users.RemoveRange(
             context.Users.Where(d => new[] { DummyUser, OtherUser }.Contains(d))
         );
-        context.SaveChanges();
-
-        GC.SuppressFinalize(this);
-    }
-}
-
-public class UpdateEmployeeSetup : IDisposable
-{
-    public User DummyUser { get; init; }
-    public AccessLevel DummyAccessLevel { get; init; }
-
-    public UpdateEmployeeSetup()
-    {
-        // Seed
-        DummyAccessLevel = new AccessLevel()
-        {
-            Value = Database.Models.Enums.AccessLevels.Employee,
-            Id = Guid.NewGuid(),
-            Description = "dummy"
-        };
-        DummyUser = new User()
-        {
-            Name = "Dummy user",
-            CreatedDate = DateTime.UtcNow,
-            UpdatedDate = DateTime.UtcNow,
-            EmployeeId = "zwxy23654322",
-            Enabled = true,
-            Id = Guid.NewGuid(),
-            AccessLevel = DummyAccessLevel,
-        };
-        DummyUser.PasswordHashed = new PasswordHasher<User>().HashPassword(DummyUser, "dummyPWD123");
-
-        using var context = new LocalAuthStorageContext();
-        context.AccessLevels.Add(DummyAccessLevel);
-        context.Users.Add(DummyUser);
-        context.SaveChanges();
-    }
-
-    public void Dispose()
-    {
-        using var context = new LocalAuthStorageContext();
-        context.Users.Remove(DummyUser);
-        context.AccessLevels.Remove(DummyAccessLevel);
         context.SaveChanges();
 
         GC.SuppressFinalize(this);

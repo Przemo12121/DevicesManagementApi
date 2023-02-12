@@ -1,5 +1,6 @@
 ﻿namespace IntegrationTests.Devices;
 
+[Collection("IntegrationTests")]
 public partial class Delete
 {
     [Fact]

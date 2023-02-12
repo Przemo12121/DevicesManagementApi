@@ -1,5 +1,6 @@
 ﻿namespace IntegrationTests.Users;
 
+[Collection("IntegrationTests")]
 public partial class UpdateEmployee
 {
     [Fact]
