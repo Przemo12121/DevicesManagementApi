@@ -1,4 +1,5 @@
-﻿using DevicesManagement.MediatR.Commands;
+﻿using DevicesManagement.Errors;
+using DevicesManagement.MediatR.Commands;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
@@ -21,7 +22,10 @@ public class RequestValidationPipelineBehavior<T, TRequest> : IPipelineBehavior<
         var result = Validate(request.Request);
         if (!result.IsValid)
         {
-            return new BadRequestObjectResult(GroupErrorsByProperty(result.Errors));
+            return ErrorResponses.Create(
+                System.Net.HttpStatusCode.BadRequest, 
+                GroupErrorsByProperty(result.Errors)
+            );
         }
 
         return await next();
@@ -39,11 +43,9 @@ public class RequestValidationPipelineBehavior<T, TRequest> : IPipelineBehavior<
 
     protected record ValidationResult(bool IsValid, IEnumerable<ValidationFailure> Errors);
 
-    protected IEnumerable<KeyValuePair<string, string[]>> GroupErrorsByProperty(IEnumerable<ValidationFailure> errors)
-        => errors.GroupBy(x => x.PropertyName)
-                .Select(grouped => KeyValuePair.Create(
-                    grouped.First().PropertyName,
-                    grouped.Select(x => x.ErrorMessage).ToArray()
-                )
+    protected IDictionary<string, string[]> GroupErrorsByProperty(IEnumerable<ValidationFailure> errors)
+        => errors.GroupBy(x => x.PropertyName).ToDictionary(
+                grouped => grouped.First().PropertyName,
+                grouped => grouped.Select(x => x.ErrorMessage).ToArray()
             );
 }

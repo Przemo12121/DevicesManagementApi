@@ -23,5 +23,6 @@ public static class StringMessages
         public static readonly string SUBJECT_NOT_FOUND = "Could not find subject.";
         public static readonly string ROLE_NOT_FOUND = "Could not find role.";
         public static readonly string INVALID_ORDER_KEY = "Invalid ordery key.";
+        public static readonly string BAD_TYPE = "Bad object type passed to method.";
     }
 }
