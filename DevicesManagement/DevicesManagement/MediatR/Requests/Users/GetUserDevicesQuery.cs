@@ -1,6 +1,4 @@
 ﻿using Database.Models;
-using Database.Repositories;
-using Database.Repositories.Interfaces;
 using DevicesManagement.DataTransferObjects.Requests;
 using DevicesManagement.MediatR.PipelineBehaviors;
 using DevicesManagement.MediatR.PipelineBehaviors.Paginations;

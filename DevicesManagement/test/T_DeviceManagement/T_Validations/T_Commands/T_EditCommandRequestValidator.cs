@@ -4,7 +4,7 @@ namespace T_DevicesManagement.T_Validations.T_Commands;
 
 public class T_EditCommandRequestValidator
 {
-    private readonly EditCommandRequestValidator _validator = new();
+    private readonly UpdateCommandRequestValidator _validator = new();
 
     [Fact]
     public void Validate_AllAttributesAsNull_False()

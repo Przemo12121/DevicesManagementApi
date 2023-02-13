@@ -4,7 +4,7 @@ namespace T_DevicesManagement.T_Validations.T_Devices;
 
 public class T_RegisterCommandRequestValidator
 {
-    private readonly RegisterCommandRequestValidator _validator = new();
+    private readonly RegisterDeviceCommandRequestValidator _validator = new();
 
     // NAME
 

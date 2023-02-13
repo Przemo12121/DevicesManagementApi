@@ -22,8 +22,7 @@ public class RequestValidationPipelineBehavior<T, TRequest> : IPipelineBehavior<
         var result = Validate(request.Request);
         if (!result.IsValid)
         {
-            return ErrorResponses.Create(
-                System.Net.HttpStatusCode.BadRequest, 
+            return ErrorResponses.CreatBadRequest(
                 GroupErrorsByProperty(result.Errors)
             );
         }

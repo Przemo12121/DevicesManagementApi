@@ -1,8 +1,5 @@
-using Database.Contexts;
-using Database.Models;
 using MediatR;
 using MediatR.Extensions.AttributedBehaviors;
-using Microsoft.AspNetCore.Identity;
 using System.Reflection;
 
 var assembly = Assembly.GetExecutingAssembly();

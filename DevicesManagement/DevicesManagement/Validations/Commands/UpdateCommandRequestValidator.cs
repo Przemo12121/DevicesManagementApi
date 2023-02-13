@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace DevicesManagement.Validations.Commands;
 
-public class EditCommandRequestValidator : AbstractValidator<UpdateCommandRequest>
+public class UpdateCommandRequestValidator : AbstractValidator<UpdateCommandRequest>
 {
-    public EditCommandRequestValidator()
+    public UpdateCommandRequestValidator()
     {
         RuleFor(request => request).Must(ValidationUtils.Common.IsNotEmpty);
 

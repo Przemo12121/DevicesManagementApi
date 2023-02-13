@@ -1,6 +1,7 @@
 ﻿using Database.Models.Base;
 using Database.Models.Enums;
 using Database.Repositories.Interfaces;
+using DevicesManagement.Errors;
 using DevicesManagement.MediatR.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -23,14 +24,22 @@ public class ResourceAuthorizationPipelineBehavior<TResource, TRequest> : IPipel
 
     public async Task<IActionResult> Handle(TRequest request, RequestHandlerDelegate<IActionResult> next, CancellationToken cancellationToken)
     {
-        var (isAuthorized, error) = Authorize(request);
+        var isAuthorized = Authorize(request);
         if (!isAuthorized)
-            return error!;
+        {
+            return ErrorResponses.CreateDetailed(
+                StatusCodes.Status404NotFound,
+                StringMessages.HttpErrors.Details.UNAUTHORIZED_TO_RESOURCE(
+                    typeof(TResource).Name, 
+                    request.ResourceId.ToString()
+                )
+            );
+        }
 
         return await next();
     }
 
-    protected (bool, IActionResult?) Authorize(TRequest request)
+    protected bool Authorize(TRequest request)
     {
         var ownerId = _httpContentAccessor.HttpContext?.User.Identity?.Name 
             ?? throw new Exception(StringMessages.InternalErrors.SUBJECT_NOT_FOUND);
@@ -45,12 +54,8 @@ public class ResourceAuthorizationPipelineBehavior<TResource, TRequest> : IPipel
             ? Repository.FindById(request.ResourceId)
             : Repository.FindByIdAndOwnerId(request.ResourceId, ownerId);
 
-        var error = resource is null
-            ? new NotFoundObjectResult(StringMessages.HttpErrors.RESOURCE_NOT_FOUND)
-            : null;
-
         request.Resource = resource!;
 
-        return (resource is not null, error);
+        return resource is not null;
     }
 }
