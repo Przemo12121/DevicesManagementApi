@@ -18,7 +18,7 @@ public class CommandsController : ControllerBase
     }
 
     [HttpPost, Route("{id}/run")]
-    public async Task<IActionResult> RunCommand([FromRoute] Guid id)
+    public async Task<IActionResult> Run([FromRoute] Guid id)
     {
         var command = new RunCommandCommand() { ResourceId = id };
         var result = await _mediator.Send(command);
@@ -26,7 +26,7 @@ public class CommandsController : ControllerBase
     }
 
     [HttpPatch, Route("{id}")]
-    public async Task<IActionResult> EditCommand([FromRoute] Guid id, [FromBody] UpdateCommandRequest request)
+    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateCommandRequest request)
     {
         var command = new UpdateCommandCommand() { ResourceId = id, Request = request };
         var result = await _mediator.Send(command);
@@ -34,7 +34,7 @@ public class CommandsController : ControllerBase
     }
 
     [HttpDelete, Route("{id}")]
-    public async Task<IActionResult> DeleteCommand([FromRoute] Guid id)
+    public async Task<IActionResult> Delete([FromRoute] Guid id)
     {
         var command = new DeleteCommandCommand() { ResourceId = id };
         var result = await _mediator.Send(command);

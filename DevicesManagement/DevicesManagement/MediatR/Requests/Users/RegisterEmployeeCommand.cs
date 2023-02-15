@@ -1,5 +1,4 @@
 ﻿using Database.Models;
-using Database.Models.Interfaces;
 using DevicesManagement.DataTransferObjects.Requests;
 using DevicesManagement.MediatR.PipelineBehaviors;
 using DevicesManagement.MediatR.Requests;
@@ -25,6 +24,5 @@ public class RegisterEmployeeCommand
     : IRequest<IActionResult>, IRequestContainerCommand<RegisterEmployeeRequest>, IAccessLevelContainer
 {
     public RegisterEmployeeRequest Request { get; init; }
-
     public AccessLevel AccessLevel { get; set; }
 }

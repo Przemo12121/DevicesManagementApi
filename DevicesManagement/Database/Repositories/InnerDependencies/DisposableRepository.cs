@@ -4,21 +4,21 @@ namespace Database.Repositories.InnerDependencies;
 
 public abstract class DisposableRepository<T> : IDisposable where T : DbContext
 {
-    private bool disposed = false;
+    private bool _disposed = false;
     protected T _context;
 
-    public DisposableRepository(T context) { this._context = context; }
+    public DisposableRepository(T context) 
+    {
+        _context = context; 
+    }
 
     protected virtual void Dispose(bool disposing)
     {
-        if (!this.disposed)
+        if (!_disposed && disposing)
         {
-            if (disposing)
-            {
-                _context.Dispose();
-            }
+            _context.Dispose();
         }
-        this.disposed = true;
+        _disposed = true;
     }
 
     public void Dispose()
@@ -27,8 +27,5 @@ public abstract class DisposableRepository<T> : IDisposable where T : DbContext
         GC.SuppressFinalize(this);
     }
 
-    public void SaveChanges()
-    {
-        _context.SaveChanges();
-    }
+    public void SaveChanges() => _context.SaveChanges();
 }

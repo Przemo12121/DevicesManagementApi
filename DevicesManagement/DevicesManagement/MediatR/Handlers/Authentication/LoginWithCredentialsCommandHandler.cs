@@ -1,6 +1,4 @@
-﻿using Authentication;
-using Authentication.Jwt;
-using Database.Models;
+﻿using Authentication.Jwt;
 using DevicesManagement.MediatR.Commands.Authentication;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

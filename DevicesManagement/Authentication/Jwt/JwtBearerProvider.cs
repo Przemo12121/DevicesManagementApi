@@ -10,7 +10,7 @@ public class JwtBearerProvider : IJwtProvider
 {
     private readonly JwtOptions _options;
     private readonly SigningCredentials _signingCredentials;
-    private JwtSecurityTokenHandler Handler { get; } = new JwtSecurityTokenHandler();
+    private JwtSecurityTokenHandler Handler { get; } = new();
     public JwtBearerProvider(JwtOptions options)
     {
         _options = options;
@@ -22,7 +22,7 @@ public class JwtBearerProvider : IJwtProvider
 
     public JwtSecurityToken Generate(User user)
     {
-        var descriptor = new SecurityTokenDescriptor()
+        SecurityTokenDescriptor descriptor = new()
         {
             Audience = _options.Audience,
             Issuer = _options.Issuer,

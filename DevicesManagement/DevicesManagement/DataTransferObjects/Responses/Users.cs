@@ -9,5 +9,5 @@ public sealed class UserDto
 
     public bool Enabled { get; set; }
 
-    // access level?
+    // TODO access level?
 }

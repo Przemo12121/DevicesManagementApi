@@ -1,5 +1,6 @@
 ﻿namespace IntegrationTests.Users;
 
+[Collection("IntegrationTests")]
 public partial class RegisterEmployee
 {
     [Fact]
@@ -32,6 +33,21 @@ public partial class RegisterEmployee
         }
     }
 
+    
+    [Fact]
+    public async void RegisterEmployee_ValidRequest_NewlyCreatedUserHasRequestedNameAndEmployeeEid()
+    {
+        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", RequestingUserJwt);
+
+        var response = await HttpClient.PostAsync(Route, JsonContent.Create(DummyRequest));
+
+        using var context = new LocalAuthStorageContext();
+        var newUser = context.Users
+            .Where(u => u.Name.Equals(DummyRequest.Name) && u.EmployeeId.Equals(DummyRequest.EmployeeId))
+            .FirstOrDefault();
+        newUser.Should().NotBeNull();
+    }
+
     [Fact]
     public async void RegisterEmployee_ValidRequest_NewlyCreatedUserHasEmployeeAccessLevel()
     {
@@ -41,38 +57,10 @@ public partial class RegisterEmployee
 
         using var context = new LocalAuthStorageContext();
         var newUser = context.Users
-            .Where(u => !u.Equals(ExistingEmployee) && !u.Equals(RequestingUser))
+            .Where(u => u.Name.Equals(DummyRequest.Name) && u.EmployeeId.Equals(DummyRequest.EmployeeId))
             .Include(u => u.AccessLevel)
             .First();
         newUser.AccessLevel.Value.Should().Be(Database.Models.Enums.AccessLevels.Employee);
-    }
-
-    [Fact]
-    public async void RegisterEmployee_ValidRequest_NewlyCreatedUserHasRequestedName()
-    {
-        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", RequestingUserJwt);
-
-        var response = await HttpClient.PostAsync(Route, JsonContent.Create(DummyRequest));
-
-        using var context = new LocalAuthStorageContext();
-        var newUser = context.Users
-            .Where(u => !u.Equals(ExistingEmployee) && !u.Equals(RequestingUser))
-            .First();
-        newUser.Name.Should().Be(DummyRequest.Name);
-    }
-
-    [Fact]
-    public async void RegisterEmployee_ValidRequest_NewlyCreatedUserHasRequestedEmployeeId()
-    {
-        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", RequestingUserJwt);
-
-        var response = await HttpClient.PostAsync(Route, JsonContent.Create(DummyRequest));
-
-        using var context = new LocalAuthStorageContext();
-        var newUser = context.Users
-            .Where(u => !u.Equals(ExistingEmployee) && !u.Equals(RequestingUser))
-            .First();
-        newUser.EmployeeId.Should().Be(DummyRequest.EmployeeId);
     }
 
     [Fact]
@@ -86,7 +74,7 @@ public partial class RegisterEmployee
 
         using var context = new LocalAuthStorageContext();
         var newUser = context.Users
-            .Where(u => !u.Equals(ExistingEmployee) && !u.Equals(RequestingUser))
+            .Where(u => u.Name.Equals(DummyRequest.Name) && u.EmployeeId.Equals(DummyRequest.EmployeeId))
             .First();
 
         var passwordHasherResult = passwordHasher.VerifyHashedPassword(newUser, newUser.PasswordHashed, DummyRequest.Password);

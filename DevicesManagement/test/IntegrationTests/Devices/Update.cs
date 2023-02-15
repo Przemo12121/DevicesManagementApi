@@ -1,5 +1,6 @@
 ﻿namespace IntegrationTests.Devices;
 
+[Collection("IntegrationTests")]
 public partial class Update
 {
     [Fact]
@@ -52,7 +53,7 @@ public partial class Update
 
         using var context = new DevicesManagementContext();
         var device = context.Devices.Where(c => c.Equals(DummyDevice)).First();
-        device.EmployeeId.Should().Be(DummyUser.EmployeeId);
+        device.EmployeeId.Should().Be(RequestingUser.EmployeeId);
     }
 
     [Fact]

@@ -5,8 +5,10 @@ using Database.Models;
 using Database.Repositories;
 using Database.Repositories.Interfaces;
 using DevicesManagement.DataTransferObjects.Requests;
+using DevicesManagement.MediatR.Commands.Users;
 using DevicesManagement.ModelsHandlers.Factories;
 using DevicesManagement.ModelsHandlers.Factories.SearchOptions;
+using DevicesManagement.Validations.Authentication;
 using DevicesManagement.Validations.Commands;
 using DevicesManagement.Validations.Devices;
 using DevicesManagement.Validations.Users;
@@ -41,9 +43,7 @@ internal static class WebApplicationBuilderExtensions
         #region Factories
         builder.Services.AddSingleton<ICommandsFactory<Command>, CommandsFactory>();
         builder.Services.AddSingleton<IDeviceFactory<Device>, DevicesFactory>();
-        #endregion
 
-        #region Update methods
         builder.Services.AddSingleton<ISearchOptionsFactory<Device, string>, DevicesSearchOptionsFactory>();
         builder.Services.AddSingleton<ISearchOptionsFactory<User, string>, UsersSearchOptionsFactory>();
         builder.Services.AddSingleton<ISearchOptionsFactory<Command, string>, CommandsSearchOptionsFactory>();
@@ -52,11 +52,21 @@ internal static class WebApplicationBuilderExtensions
 
     public static void ConfigureValidators(this WebApplicationBuilder builder)
     {
-        builder.Services.AddSingleton<IValidator<UpdateCommandRequest>, EditCommandRequestValidator>();
-        builder.Services.AddSingleton<IValidator<RegisterDeviceRequest>, RegisterDeviceRequestValidator>();
+        #region Authentication
+        builder.Services.AddSingleton<IValidator<LoginWithCredentialsRequest>, LoginWithCredentialsRequestValidator>();
+        #endregion
+        #region Commands
+        builder.Services.AddSingleton<IValidator<UpdateCommandRequest>, UpdateCommandRequestValidator>();
+        #endregion
+        #region Devices
         builder.Services.AddSingleton<IValidator<UpdateDeviceRequest>, UpdateDeviceRequestValidator>();
+        builder.Services.AddSingleton<IValidator<RegisterCommandRequest>, RegisterCommandRequestValidator>();
+        #endregion
+        #region Users
+        builder.Services.AddSingleton<IValidator<RegisterDeviceRequest>, RegisterDeviceRequestValidator>();
         builder.Services.AddSingleton<IValidator<UpdateEmployeeRequest>, UpdateEmployeeRequestValidator>();
         builder.Services.AddSingleton<IValidator<RegisterEmployeeRequest>, RegisterEmployeeRequestValidator>();
+        #endregion
     }
 
     public static void ConfigureErrorRoutes(this WebApplication app)
@@ -66,7 +76,7 @@ internal static class WebApplicationBuilderExtensions
 
     public static void ConfigureAuthentication(this WebApplicationBuilder builder)
     {
-        var jwtOptions = new JwtOptions()
+        JwtOptions jwtOptions = new()
         {
             Issuer = builder.Configuration.GetValue<string>("Jwt:Issuer"),
             Audience = builder.Configuration.GetValue<string>("Jwt:Audience"),

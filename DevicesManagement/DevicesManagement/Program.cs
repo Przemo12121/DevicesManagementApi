@@ -30,6 +30,27 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+/*using (var context = new LocalAuthStorageContext())
+{
+    AccessLevel a = new()
+    {
+        Value = Database.Models.Enums.AccessLevels.Admin,
+        Id = Guid.NewGuid()
+    };
+    User u = new()
+    {
+        EmployeeId = "aaaa12345678",
+        AccessLevelId = a.Id,
+        Name = "aaa",
+        Id = Guid.NewGuid(),
+    };
+    var pwd = new PasswordHasher<User>().HashPassword(u, "testPWD1");
+    u.PasswordHashed = pwd;
+    context.AccessLevels.Add(a);
+    context.Users.Add(u);
+    context.SaveChanges();
+}*/
+
 app.Run();
 
 // Allow integration tests

@@ -1,6 +1,4 @@
 ﻿using Database.Models;
-using Database.Repositories;
-using Database.Repositories.Interfaces;
 using DevicesManagement.DataTransferObjects.Requests;
 using DevicesManagement.MediatR.PipelineBehaviors;
 using DevicesManagement.MediatR.PipelineBehaviors.Paginations;
@@ -15,7 +13,7 @@ namespace DevicesManagement.MediatR.Commands.Users;
     order: 1
 )]
 [MediatRBehavior(
-    typeof(ListUserDevicesValidationPipelineBehavior),
+    typeof(GetUserDevicesValidationPipelineBehavior),
     order: 2
 )]
 public class GetUserDevicesQuery 

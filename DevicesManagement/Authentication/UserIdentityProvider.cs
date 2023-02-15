@@ -7,7 +7,7 @@ namespace Authentication;
 public class UserIdentityProvider : IIdentityProvider<User>
 {
     private readonly IUsersRepository _usersRepository;
-    private PasswordHasher<User> PasswordHasher { get; } = new PasswordHasher<User>();
+    private PasswordHasher<User> PasswordHasher { get; } = new();
     public UserIdentityProvider(IUsersRepository usersRepository)
     {
         _usersRepository = usersRepository;

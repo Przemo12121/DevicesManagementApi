@@ -1,5 +1,6 @@
 ﻿namespace IntegrationTests.Commands;
 
+[Collection("IntegrationTests")]
 public partial class Update
 {
     [Fact]

@@ -1,9 +1,9 @@
 ﻿namespace IntegrationTests.Users;
 
-public partial class RegisterEmployee : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<RegisterEmployeeSetup>, IDisposable
+public partial class RegisterEmployee : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<BaseSetup>, IDisposable
 {
     private readonly WebApplicationFactory<Program> _factory;
-    private readonly RegisterEmployeeSetup _setupFixture;
+    private readonly BaseSetup _setupFixture;
 
     HttpClient HttpClient { get; init; }
     User RequestingUser { get; init; }
@@ -20,7 +20,7 @@ public partial class RegisterEmployee : IClassFixture<WebApplicationFactory<Prog
 
     User ExistingEmployee { get; init; }
 
-    public RegisterEmployee(WebApplicationFactory<Program> factory, RegisterEmployeeSetup setupFixture)
+    public RegisterEmployee(WebApplicationFactory<Program> factory, BaseSetup setupFixture)
     {
         _factory = factory;
         _setupFixture = setupFixture;
@@ -53,57 +53,6 @@ public partial class RegisterEmployee : IClassFixture<WebApplicationFactory<Prog
             )
         );
         context.Users.Remove(ExistingEmployee);
-        context.SaveChanges();
-
-        GC.SuppressFinalize(this);
-    }
-}
-
-public class RegisterEmployeeSetup : IDisposable
-{
-    public User RequestingUser { get; init; }
-    public AccessLevel AdminAccessLevel { get; init; }
-    public AccessLevel EmployeeAdminLevel { get; init; }
-    public RegisterEmployeeSetup()
-    {
-        // Seed
-        AdminAccessLevel = new AccessLevel()
-        {
-            Value = Database.Models.Enums.AccessLevels.Admin,
-            Id = Guid.NewGuid(),
-            Description = "dummy"
-        };
-        EmployeeAdminLevel = new AccessLevel()
-        {
-            Value = Database.Models.Enums.AccessLevels.Employee,
-            Id = Guid.NewGuid(),
-            Description = "dummy employee level"
-        };
-        RequestingUser = new User()
-        {
-            Name = "Dummy user",
-            CreatedDate = DateTime.UtcNow,
-            UpdatedDate = DateTime.UtcNow,
-            EmployeeId = "zwxy23654322",
-            Enabled = true,
-            Id = Guid.NewGuid(),
-            AccessLevel = AdminAccessLevel,
-        };
-        RequestingUser.PasswordHashed = new PasswordHasher<User>().HashPassword(RequestingUser, "dummyPWD123");
-
-        using var context = new LocalAuthStorageContext();
-        context.AccessLevels.Add(AdminAccessLevel);
-        context.AccessLevels.Add(EmployeeAdminLevel);
-        context.Users.Add(RequestingUser);
-        context.SaveChanges();
-    }
-
-    public void Dispose()
-    {
-        using var context = new LocalAuthStorageContext();
-        context.Users.Remove(RequestingUser);
-        context.AccessLevels.Remove(AdminAccessLevel);
-        context.AccessLevels.Remove(EmployeeAdminLevel);
         context.SaveChanges();
 
         GC.SuppressFinalize(this);

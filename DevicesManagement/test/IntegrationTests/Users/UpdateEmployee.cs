@@ -1,5 +1,6 @@
 ﻿namespace IntegrationTests.Users;
 
+[Collection("IntegrationTests")]
 public partial class UpdateEmployee
 {
     [Fact]
@@ -11,7 +12,7 @@ public partial class UpdateEmployee
             Name = "New employee name"
         };
         var body = JsonContent.Create(request);
-        var x = Route(DummyUser);
+
         var response = await HttpClient.PatchAsync(Route(DummyUser), body);
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);

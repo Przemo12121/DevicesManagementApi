@@ -1,5 +1,6 @@
 ﻿using Database.Repositories.Interfaces;
 using DevicesManagement.DataTransferObjects.Requests;
+using DevicesManagement.Errors;
 using DevicesManagement.MediatR.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +25,12 @@ public class EmployeeIdUniquenessPipelineBehavior<T, TRequest> : IPipelineBehavi
             : null;
 
         if (existingEmployee is not null)
-            return new ConflictObjectResult(StringMessages.HttpErrors.EMPLOYEE_ID_TAKEN);
+        {
+            return ErrorResponses.CreateDetailed(
+                StatusCodes.Status409Conflict,
+                StringMessages.HttpErrors.Details.EMPLOYEE_ID_TAKEN
+            );
+        }
 
         return await next();
     }

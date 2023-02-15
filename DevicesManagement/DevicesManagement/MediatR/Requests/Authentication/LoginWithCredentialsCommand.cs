@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DevicesManagement.MediatR.Commands.Authentication;
 
-/*[MediatRBehavior(
-    typeof(RequestValidationPipelineBehavior<EditCommandRequest, EditCommandCommand>),
+[MediatRBehavior(
+    typeof(RequestValidationPipelineBehavior<LoginWithCredentialsRequest, LoginWithCredentialsCommand>),
     order: 1
-)]*/
+)]
 [MediatRBehavior(
     typeof(CredentialsVerificationPipelineBehavior),
     order: 2

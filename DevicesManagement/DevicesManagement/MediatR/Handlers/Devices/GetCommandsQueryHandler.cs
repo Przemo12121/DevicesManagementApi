@@ -9,24 +9,23 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DevicesManagement.MediatR.Handlers.Devices;
 
-public class ListAllDevicesCommandHandler : IRequestHandler<GetAllDevicesQuery, IActionResult>
+public class GetCommandsQueryHandler : IRequestHandler<GetCommandsQuery, IActionResult>
 {
     private readonly IDevicesRepository _devicesRepository;
-    private readonly ISearchOptionsFactory<Device, string> _searchOptionsFactory;
+    private readonly ISearchOptionsFactory<Command, string> _searchOptionsFactory;
 
-    public ListAllDevicesCommandHandler(IDevicesRepository devicesRepository, ISearchOptionsFactory<Device, string> searchOptionsFactory)
+    public GetCommandsQueryHandler(IDevicesRepository devicesRepository, ISearchOptionsFactory<Command, string> searchOptionsFactory)
     {
         _devicesRepository = devicesRepository;
         _searchOptionsFactory = searchOptionsFactory;
     }
-
-    public Task<IActionResult> Handle(GetAllDevicesQuery request, CancellationToken cancellationToken)
+    public Task<IActionResult> Handle(GetCommandsQuery request, CancellationToken cancellationToken)
     {
         var options = _searchOptionsFactory.From(request.Request);
 
-        var devices = _devicesRepository.FindAll(options);
+        var commands = _devicesRepository.GetCommands(request.Resource.Id, options);
 
-        var result = new OkObjectResult(devices.Adapt<List<DeviceDto>>());
+        var result = new OkObjectResult(commands.Adapt<List<CommandDto>>());
         return Task.FromResult<IActionResult>(result);
     }
 }

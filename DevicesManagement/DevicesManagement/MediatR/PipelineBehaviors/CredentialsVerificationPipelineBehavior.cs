@@ -3,6 +3,7 @@ using DevicesManagement.MediatR.Commands.Authentication;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Database.Models;
+using DevicesManagement.Errors;
 
 namespace DevicesManagement.MediatR.PipelineBehaviors;
 
@@ -22,8 +23,11 @@ public class CredentialsVerificationPipelineBehavior : IPipelineBehavior<LoginWi
         var user = _identityProvider.Identify(request.Request.Login, request.Request.Password);
         if (user is null)
         {
-            _httpContextAccessor.HttpContext!.Response.Headers.WWWAuthenticate = StringMessages.HttpErrors.INVALID_CREDENTIALS;
-            return new UnauthorizedResult();
+            _httpContextAccessor.HttpContext!.Response.Headers.WWWAuthenticate = StringMessages.HttpErrors.Details.INVALID_CREDENTIALS;
+            return ErrorResponses.CreateDetailed(
+                StatusCodes.Status401Unauthorized, 
+                StringMessages.HttpErrors.Details.INVALID_CREDENTIALS
+            );
         }
 
         request.Identity = user;
