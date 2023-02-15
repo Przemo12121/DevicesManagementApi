@@ -7,7 +7,7 @@ public partial class Delete : IClassFixture<WebApplicationFactory<Program>>, ICl
 
     HttpClient HttpClient { get; init; }
     User RequestingUser { get; init; }
-    string DummyUserJwt { get; init; }
+    string RequestingUserJwt { get; init; }
 
     Device OtherDevice { get; init; }
     Device DummyDevice { get; init; }
@@ -19,7 +19,7 @@ public partial class Delete : IClassFixture<WebApplicationFactory<Program>>, ICl
 
         HttpClient = _factory.CreateClient();
         RequestingUser = setupFixture.RequestingUser;
-        DummyUserJwt = factory.Services.GetRequiredService<IJwtProvider>().Generate(RequestingUser).RawData;
+        RequestingUserJwt = factory.Services.GetRequiredService<IJwtProvider>().Generate(RequestingUser).RawData;
 
         DummyDevice = new()
         {

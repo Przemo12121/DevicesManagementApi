@@ -13,7 +13,7 @@ namespace DevicesManagement.MediatR.Commands.Users;
     order: 1
 )]
 [MediatRBehavior(
-    typeof(ListUserDevicesValidationPipelineBehavior),
+    typeof(GetUserDevicesValidationPipelineBehavior),
     order: 2
 )]
 public class GetUserDevicesQuery 

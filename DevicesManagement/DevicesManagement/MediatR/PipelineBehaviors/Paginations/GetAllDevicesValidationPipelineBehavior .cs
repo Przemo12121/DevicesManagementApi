@@ -5,9 +5,9 @@ using FluentValidation;
 
 namespace DevicesManagement.MediatR.PipelineBehaviors.Paginations;
 
-public class ListAllDevicesValidationPipelineBehavior : RequestValidationPipelineBehavior<PaginationRequest, GetEmployeesQuery>
+public class GetAllDevicesValidationPipelineBehavior : RequestValidationPipelineBehavior<PaginationRequest, GetEmployeesQuery>
 {
     protected static List<IValidator<PaginationRequest>> _validators = new() { new PaginationRequestValidator(32, new[] { "name", "address", "eid" }) };
 
-    public ListAllDevicesValidationPipelineBehavior() : base(_validators) { }
+    public GetAllDevicesValidationPipelineBehavior() : base(_validators) { }
 }

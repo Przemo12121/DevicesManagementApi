@@ -60,7 +60,7 @@ internal static class WebApplicationBuilderExtensions
         #endregion
         #region Devices
         builder.Services.AddSingleton<IValidator<UpdateDeviceRequest>, UpdateDeviceRequestValidator>();
-        builder.Services.AddSingleton<IValidator<RegisterCommandRequest>, RegisterDeviceCommandRequestValidator>();
+        builder.Services.AddSingleton<IValidator<RegisterCommandRequest>, RegisterCommandRequestValidator>();
         #endregion
         #region Users
         builder.Services.AddSingleton<IValidator<RegisterDeviceRequest>, RegisterDeviceRequestValidator>();

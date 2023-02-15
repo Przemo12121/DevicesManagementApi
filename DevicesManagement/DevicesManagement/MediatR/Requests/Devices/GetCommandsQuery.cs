@@ -9,14 +9,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace DevicesManagement.MediatR.Commands.Devices;
 
 [MediatRBehavior(
-    typeof(ResourceAuthorizationPipelineBehavior<Device, GetDeviceCommandsQuery>),
+    typeof(ResourceAuthorizationPipelineBehavior<Device, GetCommandsQuery>),
     order: 1
 )]
 [MediatRBehavior(
-    typeof(ListDeviceCommandValidationPipelineBehavior),
+    typeof(GetCommandsValidationPipelineBehavior),
     order: 2
 )]
-public class GetDeviceCommandsQuery 
+public class GetCommandsQuery 
     : IRequest<IActionResult>, IRequestContainerCommand<PaginationRequest>, IResourceAuthorizableCommand<Device>
 {
     public PaginationRequest Request { get; init; }

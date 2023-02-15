@@ -9,12 +9,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DevicesManagement.MediatR.Handlers.Users;
 
-public class GetEmployeesCommandHandler : IRequestHandler<GetEmployeesQuery, IActionResult>
+public class GetEmployeesQueryHandler : IRequestHandler<GetEmployeesQuery, IActionResult>
 {
     private readonly IUsersRepository _usersRepository;
     private readonly ISearchOptionsFactory<User, string> _searchOptionsFactory;
 
-    public GetEmployeesCommandHandler(IUsersRepository usersRepository, ISearchOptionsFactory<User, string> searchOptionsFactory)
+    public GetEmployeesQueryHandler(IUsersRepository usersRepository, ISearchOptionsFactory<User, string> searchOptionsFactory)
     {
         _usersRepository = usersRepository;
         _searchOptionsFactory = searchOptionsFactory;

@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace DevicesManagement.Validations.Devices;
 
-public class RegisterDeviceCommandRequestValidator : AbstractValidator<RegisterCommandRequest>
+public class RegisterCommandRequestValidator : AbstractValidator<RegisterCommandRequest>
 {
-    public RegisterDeviceCommandRequestValidator()
+    public RegisterCommandRequestValidator()
     {
         RuleFor(request => request.Name)
             .NotNull()

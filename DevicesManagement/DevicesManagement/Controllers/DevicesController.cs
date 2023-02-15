@@ -19,7 +19,7 @@ public class DevicesController : ControllerBase
 
     [Authorize(Roles = "Admin")]
     [HttpGet, Route("")]
-    public async Task<IActionResult> ListAllDevices([FromQuery] PaginationRequest request)
+    public async Task<IActionResult> GetAll([FromQuery] PaginationRequest request)
     {
         var command = new GetAllDevicesQuery() { Request = request };
         var result = await _mediator.Send(command);
@@ -28,16 +28,16 @@ public class DevicesController : ControllerBase
 
     [Authorize]
     [HttpGet, Route("{id}/commands")]
-    public async Task<IActionResult> ListDeviceCommands([FromRoute] Guid id, [FromBody] PaginationRequest request)
+    public async Task<IActionResult> GetCommands([FromRoute] Guid id, [FromBody] PaginationRequest request)
     {
-        var command = new GetDeviceCommandsQuery() { Request = request, ResourceId = id };
+        var command = new GetCommandsQuery() { Request = request, ResourceId = id };
         var result = await _mediator.Send(command);
         return result;
     }
 
     [Authorize]
     [HttpPatch, Route("{id}")]
-    public async Task<IActionResult> UpdateDevice([FromRoute] Guid id, [FromBody] UpdateDeviceRequest request)
+    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateDeviceRequest request)
     {
         var command = new UpdateDeviceCommand() { Request = request, ResourceId = id };
         var result = await _mediator.Send(command);
@@ -55,7 +55,7 @@ public class DevicesController : ControllerBase
 
     [Authorize]
     [HttpDelete, Route("{id}")]
-    public async Task<IActionResult> DeleteDevice([FromRoute] Guid id)
+    public async Task<IActionResult> Delete([FromRoute] Guid id)
     {
         var command = new DeleteDeviceCommand() { ResourceId = id };
         var result = await _mediator.Send(command);

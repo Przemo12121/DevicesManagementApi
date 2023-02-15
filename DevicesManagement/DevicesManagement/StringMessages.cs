@@ -17,6 +17,7 @@ public static class StringMessages
             public static readonly string UNAUTHORIZED = "Resource not found";
             public static readonly string FORBIDDEN = "Access is forbidden";
             public static readonly string CONFLICT = "Conflciting state of the server";
+            public static readonly string BAD_REQUEST = "Request is invalid";
         }
 
         public static class Details

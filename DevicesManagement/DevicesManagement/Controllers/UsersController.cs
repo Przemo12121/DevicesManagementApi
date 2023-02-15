@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Database.Models.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using DevicesManagement.DataTransferObjects.Requests;
 using MediatR;
@@ -62,7 +61,7 @@ public class UsersController : ControllerBase
 
     [Authorize]
     [HttpGet, Route("{id}/devices")]
-    public async Task<IActionResult> ListUserDevices([FromRoute] Guid id, [FromBody] PaginationRequest request)
+    public async Task<IActionResult> GetDevices([FromRoute] Guid id, [FromBody] PaginationRequest request)
     {
         var command = new GetUserDevicesQuery() { ResourceId = id, Request = request };
         var result = await _mediator.Send(command);

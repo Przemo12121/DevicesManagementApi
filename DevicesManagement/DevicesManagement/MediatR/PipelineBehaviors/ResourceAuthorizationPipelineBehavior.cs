@@ -1,5 +1,6 @@
 ﻿using Database.Models.Base;
 using Database.Models.Enums;
+using Database.Repositories;
 using Database.Repositories.Interfaces;
 using DevicesManagement.Errors;
 using DevicesManagement.MediatR.Commands;
@@ -24,6 +25,7 @@ public class ResourceAuthorizationPipelineBehavior<TResource, TRequest> : IPipel
 
     public async Task<IActionResult> Handle(TRequest request, RequestHandlerDelegate<IActionResult> next, CancellationToken cancellationToken)
     {
+        var x = Repository is DevicesRepository;
         var isAuthorized = Authorize(request);
         if (!isAuthorized)
         {

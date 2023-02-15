@@ -15,15 +15,22 @@ public partial class JwtLogin : IClassFixture<WebApplicationFactory<Program>>, I
 
         HttpClient = _factory.CreateClient();
         RequestingUser = setupFixture.RequestingUser;
+
+        ValidRequest = new()
+        {
+            Login = "zwxy23654322",
+            Password = "dummyPWD123"
+        };
+        WrongPasswordRequest = new()
+        {
+            Login = "zwxy23654322",
+            Password = "badPWD123"
+        };
     }
 
     private string Route { get; } = "/api/authentication/jwt/login";
 
-    private LoginWithCredentialsRequest ValidRequest { get; } = new()
-    {
-        Login = "zwxy23654322",
-        Password = "dummyPWD123"
-    };
+    private LoginWithCredentialsRequest ValidRequest { get; init; }
 
     private LoginWithCredentialsRequest WrongLoginRequest { get; } = new()
     {
@@ -31,9 +38,5 @@ public partial class JwtLogin : IClassFixture<WebApplicationFactory<Program>>, I
         Password = "dummyPWD123"
     };
 
-    private LoginWithCredentialsRequest WrongPasswordRequest { get; } = new()
-    {
-        Login = "xyzw87654321",
-        Password = "badPWD123"
-    };
+    private LoginWithCredentialsRequest WrongPasswordRequest { get; init; }
 }

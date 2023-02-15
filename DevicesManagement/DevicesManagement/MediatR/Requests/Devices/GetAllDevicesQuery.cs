@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DevicesManagement.MediatR.Commands.Devices;
 
 [MediatRBehavior(
-    typeof(ListAllDevicesValidationPipelineBehavior),
+    typeof(GetAllDevicesValidationPipelineBehavior),
     order: 1
 )]
 public class GetAllDevicesQuery 

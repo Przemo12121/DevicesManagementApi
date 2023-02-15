@@ -6,7 +6,7 @@ public partial class Delete
     [Fact]
     public async void Delete_ValidRequest_ResponsesWith200()
     {
-        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", DummyUserJwt);
+        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", RequestingUserJwt);
 
         var response = await HttpClient.DeleteAsync(Route(DummyDevice));
 
@@ -16,7 +16,7 @@ public partial class Delete
     [Fact]
     public async void Delete_ValidRequest_RemovesRequestedDeviceFromDatabase()
     {
-        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", DummyUserJwt);
+        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", RequestingUserJwt);
 
         var response = await HttpClient.DeleteAsync(Route(DummyDevice));
 
@@ -27,7 +27,7 @@ public partial class Delete
     [Fact]
     public async void Delete_ValidRequest_DoesNotRemovesOtherDeviceFromDatabase()
     {
-        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", DummyUserJwt);
+        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", RequestingUserJwt);
 
         var response = await HttpClient.DeleteAsync(Route(DummyDevice));
 
@@ -55,7 +55,7 @@ public partial class Delete
     [Fact]
     public async void Delete_NonExistingEntity_ResponsesWith404()
     {
-        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", DummyUserJwt);
+        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", RequestingUserJwt);
 
         var response = await HttpClient.DeleteAsync(Route(new Device() { Id = Guid.NewGuid() }));
 
