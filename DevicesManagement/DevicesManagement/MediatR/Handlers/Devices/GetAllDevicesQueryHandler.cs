@@ -25,8 +25,11 @@ public class GetAllDevicesQueryHandler : IRequestHandler<GetAllDevicesQuery, IAc
         var options = _searchOptionsFactory.From(request.Request);
 
         var devices = _devicesRepository.FindAll(options);
+        var totalCount = _devicesRepository.Count();
 
-        var result = new OkObjectResult(devices.Adapt<List<DeviceDto>>());
+        var result = new OkObjectResult(
+            new PaginationResponseDto<DeviceDto>(totalCount, devices.Adapt<List<DeviceDto>>())
+        );
         return Task.FromResult<IActionResult>(result);
     }
 }

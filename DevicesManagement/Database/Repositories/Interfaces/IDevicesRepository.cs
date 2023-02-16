@@ -15,4 +15,6 @@ public interface IDevicesRepository : IDisposable, ITransactionableRepository, I
     void AddCommand(Device device, Command command);
     List<CommandHistory> GetCommandHistories<TOrderKey>(Guid deviceId, ISearchOptions<CommandHistory, TOrderKey> options);
     List<Message> GetMessages<TOrderKey>(Guid deviceId, ISearchOptions<Message, TOrderKey> options);
+    int Count(Func<Device, bool> predicate);
+    int Count();
 }

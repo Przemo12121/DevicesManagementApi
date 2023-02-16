@@ -25,8 +25,11 @@ public class GetEmployeesQueryHandler : IRequestHandler<GetEmployeesQuery, IActi
         var options = _searchOptionsFactory.From(request.Request);
 
         var employees = _usersRepository.FindEmployees(options);
+        var totalCount = _usersRepository.CountEmployees();
 
-        var result = new OkObjectResult(employees.Adapt<List<UserDto>>());
+        var result = new OkObjectResult(
+            new PaginationResponseDto<UserDto>(totalCount, employees.Adapt<List<UserDto>>())
+        );
         return Task.FromResult<IActionResult>(result);
     }
 }
