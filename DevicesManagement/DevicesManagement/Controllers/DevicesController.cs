@@ -28,7 +28,7 @@ public class DevicesController : ControllerBase
 
     [Authorize]
     [HttpGet, Route("{id}/commands")]
-    public async Task<IActionResult> GetCommands([FromRoute] Guid id, [FromBody] PaginationRequest request)
+    public async Task<IActionResult> GetCommands([FromRoute] Guid id, [FromQuery] PaginationRequest request)
     {
         var command = new GetCommandsQuery() { Request = request, ResourceId = id };
         var result = await _mediator.Send(command);

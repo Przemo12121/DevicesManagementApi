@@ -124,7 +124,6 @@ public class T_FindAdmins_Setup : LocalAuthDatabaseTest
             PasswordHashed = "password",
             AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = AccessLevels.Employee }
         });
-        context.SaveChanges();
         context.Users.Add(new User
         {
             CreatedDate = DateTime.Now,
@@ -135,7 +134,6 @@ public class T_FindAdmins_Setup : LocalAuthDatabaseTest
             PasswordHashed = "password",
             AccessLevel = new AccessLevel { Id = Guid.NewGuid(), Value = AccessLevels.Admin }
         });
-        context.SaveChanges();
         context.Users.Add(new User
         {
             CreatedDate = DateTime.Now,

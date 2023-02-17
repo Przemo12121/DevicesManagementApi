@@ -53,14 +53,14 @@ public class DevicesRepository : DisposableRepository<DevicesManagementContext>,
         return options.OrderDirection == OrderDirections.ASCENDING
             ? _context.Devices
                 .Where(device => device.EmployeeId.Equals(employeeId))
-                .Skip(options.Offset)
                 .OrderBy(options.Order)
+                .Skip(options.Offset)
                 .Take(options.Limit)
                 .ToList()
             : _context.Devices
                 .Where(device => device.EmployeeId.Equals(employeeId))
-                .Skip(options.Offset)
                 .OrderByDescending(options.Order)
+                .Skip(options.Offset)
                 .Take(options.Limit)
                 .ToList();
     }
@@ -135,4 +135,16 @@ public class DevicesRepository : DisposableRepository<DevicesManagementContext>,
         => _context.Devices
             .Where(device => device.Id.Equals(id) && device.EmployeeId.Equals(employeeId))
             .SingleOrDefault();
+
+    public int Count(Func<Device, bool> predicate)
+        => _context.Devices.Count(predicate);
+    public int Count()
+       => _context.Devices.Count();
+
+    public int CountCommands(Guid deviceId) 
+        => _context.Devices
+            .Where(device => device.Id.Equals(deviceId))
+            .Take(1)
+            .SelectMany(device => device.Commands)
+            .Count();
 }

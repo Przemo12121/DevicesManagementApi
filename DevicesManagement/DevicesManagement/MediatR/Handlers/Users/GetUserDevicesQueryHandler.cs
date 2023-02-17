@@ -24,8 +24,11 @@ public class GetUserDevicesQueryHandler : IRequestHandler<GetUserDevicesQuery, I
         var options = _searchOptionsFactory.From(request.Request);
 
         var devices = _devicesRepository.FindAllByEmployeeId(request.Resource.EmployeeId, options);
+        var totalCount = _devicesRepository.Count(device => device.EmployeeId.Equals(request.Resource.EmployeeId));
 
-        var result = new OkObjectResult(devices.Adapt<List<DeviceDto>>());
+        var result = new OkObjectResult(
+            new PaginationResponseDto<DeviceDto>(totalCount, devices.Adapt<List<DeviceDto>>())
+        );
         return Task.FromResult<IActionResult>(result);
     }
 }

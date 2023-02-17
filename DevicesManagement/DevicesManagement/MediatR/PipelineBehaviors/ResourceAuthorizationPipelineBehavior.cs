@@ -25,7 +25,6 @@ public class ResourceAuthorizationPipelineBehavior<TResource, TRequest> : IPipel
 
     public async Task<IActionResult> Handle(TRequest request, RequestHandlerDelegate<IActionResult> next, CancellationToken cancellationToken)
     {
-        var x = Repository is DevicesRepository;
         var isAuthorized = Authorize(request);
         if (!isAuthorized)
         {

@@ -11,4 +11,6 @@ public interface IUsersRepository : IDisposable, ITransactionableRepository, IRe
     User? FindByEmployeeId(string eid);
     List<User> FindEmployees<TOrderKey>(ISearchOptions<User, TOrderKey> options);
     List<User> FindAdmins<TOrderKey>(ISearchOptions<User, TOrderKey> options);
+
+    int CountEmployees();
 }

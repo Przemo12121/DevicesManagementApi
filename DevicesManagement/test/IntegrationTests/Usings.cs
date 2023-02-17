@@ -13,3 +13,4 @@ global using Microsoft.Extensions.DependencyInjection;
 global using System.Net.Http.Headers;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.EntityFrameworkCore;
+global using System.Web;

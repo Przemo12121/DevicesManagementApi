@@ -3,7 +3,6 @@ using Database.Contexts;
 using Database.Repositories.InnerDependencies;
 using Database.Repositories.Interfaces;
 using Database.Models.Enums;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 namespace Database.Repositories;
@@ -25,14 +24,14 @@ public class UsersRepository : DisposableRepository<LocalAuthStorageContext>, IU
         return options.OrderDirection == OrderDirections.ASCENDING
             ? _context.Users
                 .Where(user => user.AccessLevel.Value == AccessLevels.Admin)
-                .Skip(options.Offset)
                 .OrderBy(options.Order)
+                .Skip(options.Offset)
                 .Take(options.Limit)
                 .ToList()
             : _context.Users
                 .Where(user => user.AccessLevel.Value == AccessLevels.Admin)
-                .Skip(options.Offset)
                 .OrderByDescending(options.Order)
+                .Skip(options.Offset)
                 .Take(options.Limit)
                 .ToList();
     }
@@ -42,33 +41,32 @@ public class UsersRepository : DisposableRepository<LocalAuthStorageContext>, IU
         return options.OrderDirection == OrderDirections.ASCENDING
             ? _context.Users
                 .Where(user => user.AccessLevel.Value == AccessLevels.Employee)
-                .Skip(options.Offset)
                 .OrderBy(options.Order)
+                .Skip(options.Offset)
                 .Take(options.Limit)
                 .ToList()
             : _context.Users
                 .Where(user => user.AccessLevel.Value == AccessLevels.Employee)
-                .Skip(options.Offset)
                 .OrderByDescending(options.Order)
+                .Skip(options.Offset)
                 .Take(options.Limit)
                 .ToList();
     }
 
+    public int CountEmployees()
+        => _context.Users.Count(user => user.AccessLevel.Value == AccessLevels.Employee);
+
     public User? FindByEmployeeId(string eid)
-    {
-       return _context.Users
+     => _context.Users
             .Where(user => user.EmployeeId.Equals(eid))
             .Include(user => user.AccessLevel)
             .SingleOrDefault();
-    }
 
     public User? FindByIdAndOwnerId(Guid id, string ownerId) 
         => id.Equals(ownerId) ? FindById(id) : null;
 
     public User? FindById(Guid id)
-    {
-        return _context.Users
+       => _context.Users
             .Where(user => user.Id.Equals(id))
             .SingleOrDefault();
-    }
 }

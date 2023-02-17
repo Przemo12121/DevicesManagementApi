@@ -61,7 +61,7 @@ public class UsersController : ControllerBase
 
     [Authorize]
     [HttpGet, Route("{id}/devices")]
-    public async Task<IActionResult> GetDevices([FromRoute] Guid id, [FromBody] PaginationRequest request)
+    public async Task<IActionResult> GetDevices([FromRoute] Guid id, [FromQuery] PaginationRequest request)
     {
         var command = new GetUserDevicesQuery() { ResourceId = id, Request = request };
         var result = await _mediator.Send(command);
