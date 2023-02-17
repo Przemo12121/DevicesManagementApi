@@ -25,7 +25,7 @@ public static class StringMessages
             public static readonly string EMPLOYEE_ID_TAKEN = "Reqested employee id is already taken.";
             public static readonly string UNAUTHORIZED = "Unauthorized";
             public static readonly string INVALID_CREDENTIALS = "Invalid credentials.";
-            public static string UNAUTHORIZED_TO_RESOURCE(string type, string id) => $"Requested ${type} resource with id {id} does not exist, or access is restricted.";
+            public static string UNAUTHORIZED_TO_RESOURCE(string type, string id) => $"Requested {type} resource with id {id} does not exist, or access is restricted.";
             
         }
     }

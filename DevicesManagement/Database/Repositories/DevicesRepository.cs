@@ -140,4 +140,11 @@ public class DevicesRepository : DisposableRepository<DevicesManagementContext>,
         => _context.Devices.Count(predicate);
     public int Count()
        => _context.Devices.Count();
+
+    public int CountCommands(Guid deviceId) 
+        => _context.Devices
+            .Where(device => device.Id.Equals(deviceId))
+            .Take(1)
+            .SelectMany(device => device.Commands)
+            .Count();
 }

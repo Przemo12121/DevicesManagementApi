@@ -24,8 +24,11 @@ public class GetCommandsQueryHandler : IRequestHandler<GetCommandsQuery, IAction
         var options = _searchOptionsFactory.From(request.Request);
 
         var commands = _devicesRepository.GetCommands(request.Resource.Id, options);
+        var totalCount = _devicesRepository.CountCommands(request.Resource.Id);
 
-        var result = new OkObjectResult(commands.Adapt<List<CommandDto>>());
+        var result = new OkObjectResult(
+            new PaginationResponseDto<CommandDto>(totalCount, commands.Adapt<List<CommandDto>>())
+        );
         return Task.FromResult<IActionResult>(result);
     }
 }
