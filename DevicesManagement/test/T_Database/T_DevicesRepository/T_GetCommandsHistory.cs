@@ -5,45 +5,45 @@ namespace T_Database.T_DevicesRepository;
 public partial class T_GetCommandsHistory
 {
     [Fact]
-    public void GetCommandsHistory_WithDeviceId_ReturnsCommandsHistoryBelongingToThatDevice()
+    public async void GetCommandsHistory_WithDeviceId_ReturnsCommandsHistoryBelongingToThatDevice()
     {
-        var entities = Repository.GetCommandHistories(Searched.Id, new LimitableSearchOptions(100));
+        var entities = await Repository.GetCommandHistoriesAsync(Searched.Id, new LimitableSearchOptions(100));
 
         entities.Should().HaveCount(3);
         entities.Should().BeEquivalentTo(Searched.Commands.SelectMany(c => c.CommandHistories));
     }
 
     [Fact]
-    public void GetCommandsHistory_WithLimitOfTwo_ReturnsTwoRecords()
+    public async void GetCommandsHistory_WithLimitOfTwo_ReturnsTwoRecords()
     {
         int limit = 2;
-        var entities = Repository.GetCommandHistories(Searched.Id, new LimitableSearchOptions(limit));
+        var entities = await Repository.GetCommandHistoriesAsync(Searched.Id, new LimitableSearchOptions(limit));
 
         entities.Should().HaveCount(limit);
     }
 
     [Fact]
-    public void GetCommandsHistory_WithOffsetOfTwo_ReturnsOneRecord()
+    public async void GetCommandsHistory_WithOffsetOfTwo_ReturnsOneRecord()
     {
         int offset = 2;
-        var entities = Repository.GetCommandHistories(Searched.Id, new OffsetableSearchOptions(offset));
+        var entities = await Repository.GetCommandHistoriesAsync(Searched.Id, new OffsetableSearchOptions(offset));
 
         entities.Should().HaveCount(1);
     }
 
     [Fact]
-    public void GetCommandsHistory_WithOffsetOfTwo_ReturnsThirdCommandHistory()
+    public async void GetCommandsHistory_WithOffsetOfTwo_ReturnsThirdCommandHistory()
     {
         int offset = 2;
-        var entities = Repository.GetCommandHistories(Searched.Id, new OffsetableSearchOptions(offset));
+        var entities = await Repository.GetCommandHistoriesAsync(Searched.Id, new OffsetableSearchOptions(offset));
 
         entities[0].Should().BeEquivalentTo(Searched.Commands[0].CommandHistories[1]);
     }
 
     [Fact]
-    public void GetCommandsHistory_WithOrderCreatedDateASC_ReturnsCommandsOrderByCreatedDateASC()
+    public async void GetCommandsHistory_WithOrderCreatedDateASC_ReturnsCommandsOrderByCreatedDateASC()
     {
-        var entities = Repository.GetCommandHistories(Searched.Id, new OrderableByCreatedDateAscSearchOptions());
+        var entities = await Repository.GetCommandHistoriesAsync(Searched.Id, new OrderableByCreatedDateAscSearchOptions());
 
         entities[0].Should().BeEquivalentTo(Searched.Commands[0].CommandHistories[0]);
         entities[1].Should().BeEquivalentTo(Searched.Commands[1].CommandHistories[0]);
@@ -51,9 +51,9 @@ public partial class T_GetCommandsHistory
     }
 
     [Fact]
-    public void GetCommandsHistory_WithOrderCreatedDateDESC_ReturnsCommandsOrderByCreatedDateDESC()
+    public async void GetCommandsHistory_WithOrderCreatedDateDESC_ReturnsCommandsOrderByCreatedDateDESC()
     {
-        var entities = Repository.GetCommandHistories(Searched.Id, new OrderableByCreatedDateDescSearchOptions());
+        var entities = await Repository.GetCommandHistoriesAsync(Searched.Id, new OrderableByCreatedDateDescSearchOptions());
 
         entities[0].Should().BeEquivalentTo(Searched.Commands[0].CommandHistories[1]);
         entities[1].Should().BeEquivalentTo(Searched.Commands[1].CommandHistories[0]);

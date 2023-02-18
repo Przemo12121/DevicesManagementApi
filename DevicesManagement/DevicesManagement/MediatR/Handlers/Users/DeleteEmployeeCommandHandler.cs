@@ -14,11 +14,11 @@ public class DeleteEmployeeCommandHandler : IRequestHandler<DeleteEmployeeComman
         _usersRepository = usersRepository;
     }
 
-    public Task<IActionResult> Handle(DeleteEmployeeCommand request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Handle(DeleteEmployeeCommand request, CancellationToken cancellationToken)
     {
         _usersRepository.Delete(request.Resource);
-        _usersRepository.SaveChanges();
+        await _usersRepository.SaveAsync();
 
-        return Task.FromResult<IActionResult>(new OkResult());
+        return new OkResult();
     }
 }

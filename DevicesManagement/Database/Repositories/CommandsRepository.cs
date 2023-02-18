@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Database.Repositories;
 
-public class CommandRepository : DisposableRepository<DevicesManagementContext>, ICommandsRepository
+public class CommandsRepository : DisposableRepository<DevicesManagementContext>, ICommandsRepository
 {
-    public CommandRepository(DevicesManagementContext context) : base(context) { }
+    public CommandsRepository(DevicesManagementContext context) : base(context) { }
 
     public void Delete(Command command)
         => _context.Commands.Remove(command);
@@ -22,20 +22,17 @@ public class CommandRepository : DisposableRepository<DevicesManagementContext>,
         command.CommandHistories.Add(commandHistory);
     }
 
-    public Command? FindByIdAndOwnerId(Guid id, string employeeId)
-    {
-        return _context.Devices
+    public Task<Command?> FindByIdAndOwnerIdAsync(Guid id, string employeeId)
+        => _context.Devices
             .Where(device => device.EmployeeId.Equals(employeeId))
+            .Take(1)
             .Include(device => device.Commands)
             .SelectMany(device => device.Commands)
             .Where(command => command.Id.Equals(id))
-            .SingleOrDefault();
-    }
+            .FirstOrDefaultAsync();
 
-    public Command? FindById(Guid id)
-    {
-        return _context.Commands
+    public Task<Command?> FindByIdAsync(Guid id)
+        => _context.Commands
             .Where(command => command.Id.Equals(id))
-            .SingleOrDefault();
-    }
+            .FirstOrDefaultAsync();
 }

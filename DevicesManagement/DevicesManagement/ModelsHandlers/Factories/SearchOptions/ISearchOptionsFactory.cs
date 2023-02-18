@@ -1,6 +1,7 @@
 ﻿using Database.Models.Base;
 using Database.Repositories.Interfaces;
 using DevicesManagement.DataTransferObjects.Requests;
+using System.Linq;
 
 namespace DevicesManagement.ModelsHandlers.Factories.SearchOptions;
 

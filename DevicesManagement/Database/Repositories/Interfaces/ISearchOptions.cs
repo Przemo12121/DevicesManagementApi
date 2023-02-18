@@ -1,5 +1,6 @@
 ﻿using Database.Models.Base;
 using Database.Models.Enums;
+using System.Linq.Expressions;
 
 namespace Database.Repositories.Interfaces;
 
@@ -13,7 +14,7 @@ public interface ISearchOptions<T, TOrderKey> where T : IDatabaseModel
 
     public int Offset { get; }
 
-    public Func<T, TOrderKey> Order { get; }
+    public Expression<Func<T, TOrderKey>> Order { get; }
 
     public OrderDirections OrderDirection { get; }
 }

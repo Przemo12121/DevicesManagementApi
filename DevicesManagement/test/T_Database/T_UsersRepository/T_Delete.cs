@@ -17,7 +17,7 @@ public partial class T_Delete : LocalAuthDatabaseTest
                 entity = context.Users.Skip(1).First();
 
                 repo.Delete(entity);
-                repo.SaveChanges();
+                repo.SaveAsync();
             }
         }
 
@@ -40,7 +40,7 @@ public partial class T_Delete : LocalAuthDatabaseTest
                 var entity = context.Users.Skip(1).First();
 
                 repo.Delete(entity);
-                repo.SaveChanges();
+                repo.SaveAsync();
             }
         }
 
@@ -69,7 +69,7 @@ public partial class T_Delete : LocalAuthDatabaseTest
                 entity2 = context.Users.Skip(2).First();
 
                 repo.Delete(deleted);
-                repo.SaveChanges();
+                repo.SaveAsync();
             }
         }
 

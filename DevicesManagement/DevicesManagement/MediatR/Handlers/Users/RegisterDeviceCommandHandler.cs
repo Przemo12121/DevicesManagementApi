@@ -20,14 +20,13 @@ public class RegisterDeviceCommandHandler : IRequestHandler<RegisterDeviceComman
         _devicesRepository = devicesRepository;
     }
 
-    public Task<IActionResult> Handle(RegisterDeviceCommand request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Handle(RegisterDeviceCommand request, CancellationToken cancellationToken)
     {
         var newDevice = _deviceFactory.From(request.Request, request.Resource.EmployeeId);
 
         _devicesRepository.Add(newDevice);
-        _devicesRepository.SaveChanges();
+        await _devicesRepository.SaveAsync();
 
-        var result = new OkObjectResult(newDevice.Adapt<DeviceDto>());
-        return Task.FromResult<IActionResult>(result);
+        return new OkObjectResult(newDevice.Adapt<DeviceDto>());
     }
 }

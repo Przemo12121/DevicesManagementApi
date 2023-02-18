@@ -21,14 +21,13 @@ public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeComman
         _identityProvider = identityProvider;
     }
 
-    public Task<IActionResult> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
     {
         request.Resource.UpdateWith(request.Request, _identityProvider);
 
         _usersRepository.Update(request.Resource);
-        _usersRepository.SaveChanges();
+        await _usersRepository.SaveAsync();
 
-        var result = new OkObjectResult(request.Resource.Adapt<UserDto>());
-        return Task.FromResult<IActionResult>(result);
+        return new OkObjectResult(request.Resource.Adapt<UserDto>());
     }
 }

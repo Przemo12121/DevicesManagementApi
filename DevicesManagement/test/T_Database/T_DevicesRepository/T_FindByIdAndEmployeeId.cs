@@ -3,25 +3,25 @@
 public partial class T_FindByIdEmployeId
 {
     [Fact]
-    public void FindByIdAndEmployeId_CorrectIds_ReturnsDevice()
+    public async void FindByIdAndEmployeId_CorrectIds_ReturnsDevice()
     {
-        var entity = Repository.FindByIdAndOwnerId(Guid.Parse("abcd1234-abcd-1234-abcd-123456abcdef"), "abcd12345678");
+        var entity = await Repository.FindByIdAndOwnerIdAsync(Guid.Parse("abcd1234-abcd-1234-abcd-123456abcdef"), "abcd12345678");
 
         entity.Should().BeEquivalentTo(SearchedDevice);
     }
 
     [Fact]
-    public void FindByIdAndEmployeId_WrongEmployeeId_ReturnsNull()
+    public async void FindByIdAndEmployeId_WrongEmployeeId_ReturnsNull()
     {
-        var entity = Repository.FindByIdAndOwnerId(Guid.Parse("abcd1234-abcd-1234-abcd-123456abcdef"), "badx12345678");
+        var entity = await Repository.FindByIdAndOwnerIdAsync(Guid.Parse("abcd1234-abcd-1234-abcd-123456abcdef"), "badx12345678");
 
         entity.Should().BeNull();
     }
 
     [Fact]
-    public void FindByIdAndEmployeId_WrongId_ReturnsNull()
+    public async void FindByIdAndEmployeId_WrongId_ReturnsNull()
     {
-        var entity = Repository.FindByIdAndOwnerId(Guid.Parse("12345678-1234-1234-1234-123456123456"), "abcd12345678");
+        var entity = await Repository.FindByIdAndOwnerIdAsync(Guid.Parse("12345678-1234-1234-1234-123456123456"), "abcd12345678");
 
         entity.Should().BeNull();
     }

@@ -8,9 +8,9 @@ public interface IUsersRepository : IDisposable, ITransactionableRepository, IRe
     void Delete(User user);
     void Update(User user);
 
-    User? FindByEmployeeId(string eid);
-    List<User> FindEmployees<TOrderKey>(ISearchOptions<User, TOrderKey> options);
-    List<User> FindAdmins<TOrderKey>(ISearchOptions<User, TOrderKey> options);
+    Task<User?> FindByEmployeeIdAsync(string eid);
+    Task<List<User>> FindEmployeesAsync<TOrderKey>(ISearchOptions<User, TOrderKey> options);
+    Task<List<User>> FindAdminsAsync<TOrderKey>(ISearchOptions<User, TOrderKey> options);
 
-    int CountEmployees();
+    Task<int> CountEmployeesAsync();
 }

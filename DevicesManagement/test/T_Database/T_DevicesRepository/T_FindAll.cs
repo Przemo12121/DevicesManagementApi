@@ -5,36 +5,36 @@ namespace T_Database.T_DevicesRepository;
 public partial class T_FindAll
 {
     [Fact]
-    public void FindAll_ReturnsThreeRecords()
+    public async void FindAll_ReturnsThreeRecords()
     {
-        var entities = Repository.FindAll(new LimitableSearchOptions(100));
+        var entities = await Repository.FindAllAsync(new LimitableSearchOptions(100));
 
         entities.Should().HaveCount(4);
     }
 
     [Fact]
-    public void FindAll_WithLimitOfTwo_ReturnsTwoRecords()
+    public async void FindAll_WithLimitOfTwo_ReturnsTwoRecords()
     {
         int limit = 2;
-        var entities = Repository.FindAll(new LimitableSearchOptions(limit));
+        var entities = await Repository.FindAllAsync(new LimitableSearchOptions(limit));
 
         entities.Should().HaveCount(limit);
     }
 
     [Fact]
-    public void FindAll_WithOffsetOfTwo_ReturnsOneRecord()
+    public async void FindAll_WithOffsetOfTwo_ReturnsOneRecord()
     {
         int offset = 2;
-        var entities = Repository.FindAll(new OffsetableSearchOptions(offset));
+        var entities = await Repository.FindAllAsync(new OffsetableSearchOptions(offset));
 
         entities.Should().HaveCount(2);
     }
 
     [Fact]
-    public void FindAll_WithOffsetOfTwo_ReturnsThirdAndFourthEmployee()
+    public async void FindAll_WithOffsetOfTwo_ReturnsThirdAndFourthEmployee()
     {
         int offset = 2;
-        var entities = Repository.FindAll(new OffsetableSearchOptions(offset));
+        var entities = await Repository.FindAllAsync(new OffsetableSearchOptions(offset));
 
         entities.Should().AllSatisfy(
             e => e.Name.Should().BeOneOf(new[] { "dummy device 3", "dummy device 4" })
@@ -42,9 +42,9 @@ public partial class T_FindAll
     }
 
     [Fact]
-    public void FindAll_WithOrderNameASC_ReturnsEmployeesOrderByNameASC()
+    public async void FindAll_WithOrderNameASC_ReturnsEmployeesOrderByNameASC()
     {
-        var entities = Repository.FindAll(new OrderableByNameAscSearchOptions());
+        var entities = await Repository.FindAllAsync(new OrderableByNameAscSearchOptions());
 
         entities[0].Name.Should().Be("dummy device");
         entities[1].Name.Should().Be("dummy device 2");
@@ -53,9 +53,9 @@ public partial class T_FindAll
     }
 
     [Fact]
-    public void FindAll_WithOrderNameDESC_ReturnsEmployeesOrderByNameDESC()
+    public async void FindAll_WithOrderNameDESC_ReturnsEmployeesOrderByNameDESC()
     {
-        var entities = Repository.FindAll(new OrderableByNameDescSearchOptions());
+        var entities = await Repository.FindAllAsync(new OrderableByNameDescSearchOptions());
 
         entities[3].Name.Should().Be("dummy device");
         entities[2].Name.Should().Be("dummy device 2");

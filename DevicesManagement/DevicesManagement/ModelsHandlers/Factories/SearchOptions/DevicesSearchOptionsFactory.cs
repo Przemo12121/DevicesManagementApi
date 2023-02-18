@@ -2,6 +2,7 @@
 using Database.Models.Enums;
 using Database.Repositories.Interfaces;
 using DevicesManagement.DataTransferObjects.Requests;
+using System.Linq.Expressions;
 
 namespace DevicesManagement.ModelsHandlers.Factories.SearchOptions;
 
@@ -11,7 +12,7 @@ public class DevicesSearchOptionsFactory : ISearchOptionsFactory<Device, string>
     {
         var orderSplitted = (request.Order?.ToLower() ?? "name:asc").Split(":");
 
-        Func<Device, string> order = orderSplitted.First() switch
+        Expression<Func<Device, string>> order = orderSplitted.First() switch
         {
             "name" => (device) => device.Name,
             "eid" => (device) => device.EmployeeId,

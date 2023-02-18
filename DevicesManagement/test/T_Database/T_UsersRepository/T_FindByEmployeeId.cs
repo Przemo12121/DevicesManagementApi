@@ -3,17 +3,17 @@ namespace T_Database.T_UsersRepository;
 public partial class T_FindByEmployeId
 {
     [Fact]
-    public void FindByEmployeId_ExistingEid_ReturnsEmployeeWithThatEID()
+    public async void FindByEmployeId_ExistingEid_ReturnsEmployeeWithThatEID()
     {
-        var entity = Repository.FindByEmployeeId("some id 3");
+        var entity = await Repository.FindByEmployeeIdAsync("some id 3");
 
         entity.Should().BeEquivalentTo(SearchedUser);
     }
 
     [Fact]
-    public void FindByEmployeId_NonexistingEid_ReturnsNull()
+    public async void FindByEmployeId_NonexistingEid_ReturnsNull()
     {
-        var entity = Repository.FindByEmployeeId("non existing eid");
+        var entity = await Repository.FindByEmployeeIdAsync("non existing eid");
 
         entity.Should().Be(null);
     }

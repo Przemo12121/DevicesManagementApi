@@ -25,7 +25,7 @@ public class ResourceAuthorizationPipelineBehavior<TResource, TRequest> : IPipel
 
     public async Task<IActionResult> Handle(TRequest request, RequestHandlerDelegate<IActionResult> next, CancellationToken cancellationToken)
     {
-        var isAuthorized = Authorize(request);
+        var isAuthorized = await Authorize(request);
         if (!isAuthorized)
         {
             return ErrorResponses.CreateDetailed(
@@ -40,7 +40,7 @@ public class ResourceAuthorizationPipelineBehavior<TResource, TRequest> : IPipel
         return await next();
     }
 
-    protected bool Authorize(TRequest request)
+    protected async Task<bool> Authorize(TRequest request)
     {
         var ownerId = _httpContentAccessor.HttpContext?.User.Identity?.Name 
             ?? throw new Exception(StringMessages.InternalErrors.SUBJECT_NOT_FOUND);
@@ -52,11 +52,12 @@ public class ResourceAuthorizationPipelineBehavior<TResource, TRequest> : IPipel
         // admin does not need to be owner of the resoruce
         bool isAdmin = role.Value.Equals(AccessLevels.Admin.ToString());
         var resource = isAdmin
-            ? Repository.FindById(request.ResourceId)
-            : Repository.FindByIdAndOwnerId(request.ResourceId, ownerId);
+            ? Repository.FindByIdAsync(request.ResourceId)
+            : Repository.FindByIdAndOwnerIdAsync(request.ResourceId, ownerId);
 
-        request.Resource = resource!;
+        await resource;
+        request.Resource = resource.Result;
 
-        return resource is not null;
+        return resource.Result is not null;
     }
 }

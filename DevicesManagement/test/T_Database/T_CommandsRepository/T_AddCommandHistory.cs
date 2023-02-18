@@ -12,7 +12,7 @@ public partial class T_AddCommandHistory : DeviceMenagementDatabaseTest
             EnsureClear(context);
             Seed(context);
 
-            using (var repo = new CommandRepository(context))
+            using (var repo = new CommandsRepository(context))
             {
                 entity = new CommandHistory
                 {
@@ -21,7 +21,7 @@ public partial class T_AddCommandHistory : DeviceMenagementDatabaseTest
                 };
 
                 repo.AddCommandHistory(testCommand, entity);
-                repo.SaveChanges();
+                repo.SaveAsync();
             }
         }
 
@@ -41,7 +41,7 @@ public partial class T_AddCommandHistory : DeviceMenagementDatabaseTest
             EnsureClear(context);
             Seed(context);
 
-            using (var repo = new CommandRepository(context))
+            using (var repo = new CommandsRepository(context))
             {
                 entity = new CommandHistory
                 {
@@ -50,7 +50,7 @@ public partial class T_AddCommandHistory : DeviceMenagementDatabaseTest
                 };
 
                 repo.AddCommandHistory(testCommand, entity);
-                repo.SaveChanges();
+                repo.SaveAsync();
             }
         }
 
@@ -70,7 +70,7 @@ public partial class T_AddCommandHistory : DeviceMenagementDatabaseTest
             EnsureClear(context);
             Seed(context);
 
-            using (var repo = new CommandRepository(context))
+            using (var repo = new CommandsRepository(context))
             {
                 entity = new CommandHistory
                 {
@@ -79,7 +79,7 @@ public partial class T_AddCommandHistory : DeviceMenagementDatabaseTest
                 };
 
                 repo.AddCommandHistory(testCommand, entity);
-                repo.SaveChanges();
+                repo.SaveAsync();
             }
         }
 

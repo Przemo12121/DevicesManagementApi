@@ -258,19 +258,19 @@ public partial class T_ResourceAuthorizationPieplineBehavior
     {
         var repositoryMock = new Mock<IResourceAuthorizableRepository<DummyResource>>();
 
-        repositoryMock.Setup(repository => repository.FindById(It.IsAny<Guid>()))
-            .Returns((DummyResource) null);
-        repositoryMock.Setup(repository => repository.FindById(OwnerResource.Id))
-            .Returns(OwnerResource);
-        repositoryMock.Setup(repository => repository.FindById(NonownerResource.Id))
-            .Returns(NonownerResource);
+        repositoryMock.Setup(repository => repository.FindByIdAsync(It.IsAny<Guid>()))
+            .Returns(Task.FromResult<DummyResource?>(null));
+        repositoryMock.Setup(repository => repository.FindByIdAsync(OwnerResource.Id))
+            .Returns(Task.FromResult<DummyResource?>(OwnerResource));
+        repositoryMock.Setup(repository => repository.FindByIdAsync(NonownerResource.Id))
+            .Returns(Task.FromResult<DummyResource?>(NonownerResource));
 
-        repositoryMock.Setup(repository => repository.FindByIdAndOwnerId(It.IsAny<Guid>(), Owner.EmployeeId))
-            .Returns((DummyResource) null);
-        repositoryMock.Setup(repository => repository.FindByIdAndOwnerId(OwnerResource.Id, Owner.EmployeeId))
-            .Returns(OwnerResource);
-        repositoryMock.Setup(repository => repository.FindByIdAndOwnerId(NonownerResource.Id, Owner.EmployeeId))
-            .Returns((DummyResource) null);
+        repositoryMock.Setup(repository => repository.FindByIdAndOwnerIdAsync(It.IsAny<Guid>(), Owner.EmployeeId))
+            .Returns(Task.FromResult<DummyResource?>(null));
+        repositoryMock.Setup(repository => repository.FindByIdAndOwnerIdAsync(OwnerResource.Id, Owner.EmployeeId))
+            .Returns(Task.FromResult<DummyResource?>(OwnerResource));
+        repositoryMock.Setup(repository => repository.FindByIdAndOwnerIdAsync(NonownerResource.Id, Owner.EmployeeId))
+            .Returns(Task.FromResult<DummyResource?>(null));
 
         MockedRepository = repositoryMock.Object;
         MockedAdminHttpContext = DummyHttpContextAccessorFactory.Create(Admin.EmployeeId, Admin.AccessLevel.Value.ToString());

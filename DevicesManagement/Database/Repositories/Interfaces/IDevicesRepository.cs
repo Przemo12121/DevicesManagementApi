@@ -1,4 +1,5 @@
 ﻿using Database.Models;
+using System.Linq.Expressions;
 
 namespace Database.Repositories.Interfaces;
 
@@ -8,14 +9,14 @@ public interface IDevicesRepository : IDisposable, ITransactionableRepository, I
     void Update(Device entity);
     void Delete(Device entity);
     void AddMessage(Device device, Message message);
-    Device? FindById(Guid id);
-    List<Device> FindAll<TOrderKey>(ISearchOptions<Device, TOrderKey> options);
-    List<Device> FindAllByEmployeeId<TOrderKey>(string employeeId, ISearchOptions<Device, TOrderKey> options);
-    List<Command> GetCommands<TOrderKey>(Guid deviceId, ISearchOptions<Command, TOrderKey> options);
     void AddCommand(Device device, Command command);
-    List<CommandHistory> GetCommandHistories<TOrderKey>(Guid deviceId, ISearchOptions<CommandHistory, TOrderKey> options);
-    List<Message> GetMessages<TOrderKey>(Guid deviceId, ISearchOptions<Message, TOrderKey> options);
-    int Count(Func<Device, bool> predicate);
-    int Count();
-    int CountCommands(Guid deviceId);
+
+    Task<List<Device>> FindAllAsync<TOrderKey>(ISearchOptions<Device, TOrderKey> options);
+    Task<List<Device>> FindAllByEmployeeIdAsync<TOrderKey>(string employeeId, ISearchOptions<Device, TOrderKey> options);
+    Task<List<Command>> GetCommandsAsync<TOrderKey>(Guid deviceId, ISearchOptions<Command, TOrderKey> options);
+    Task<List<CommandHistory>> GetCommandHistoriesAsync<TOrderKey>(Guid deviceId, ISearchOptions<CommandHistory, TOrderKey> options);
+    Task<List<Message>> GetMessagesAsync<TOrderKey>(Guid deviceId, ISearchOptions<Message, TOrderKey> options);
+    Task<int> CountAsync(Expression<Func<Device, bool>> predicate);
+    Task<int> CountAsync();
+    Task<int> CountCommandsAsync(Guid deviceId);
 }

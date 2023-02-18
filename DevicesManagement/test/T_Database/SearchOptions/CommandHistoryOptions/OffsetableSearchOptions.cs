@@ -6,7 +6,7 @@ public class OffsetableSearchOptions : ISearchOptions<CommandHistory, DateTime>
 
     public int Limit { get; } = 100;
     public int Offset { get; }
-    public Func<CommandHistory, DateTime> Order { get; } = CommandHistory => CommandHistory.CreatedDate;
+    public Expression<Func<CommandHistory, DateTime>> Order { get; } = CommandHistory => CommandHistory.CreatedDate;
 
 
     public OrderDirections OrderDirection { get; } = OrderDirections.ASCENDING;

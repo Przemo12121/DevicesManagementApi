@@ -20,7 +20,7 @@ public class CredentialsVerificationPipelineBehavior : IPipelineBehavior<LoginWi
 
     public async Task<IActionResult> Handle(LoginWithCredentialsCommand request, RequestHandlerDelegate<IActionResult> next, CancellationToken cancellationToken)
     {
-        var user = _identityProvider.Identify(request.Request.Login, request.Request.Password);
+        var user = await _identityProvider.Identify(request.Request.Login, request.Request.Password);
         if (user is null)
         {
             _httpContextAccessor.HttpContext!.Response.Headers.WWWAuthenticate = StringMessages.HttpErrors.Details.INVALID_CREDENTIALS;

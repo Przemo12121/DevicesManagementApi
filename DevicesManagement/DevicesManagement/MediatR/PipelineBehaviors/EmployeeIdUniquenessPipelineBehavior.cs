@@ -1,4 +1,5 @@
-﻿using Database.Repositories.Interfaces;
+﻿using Database.Models;
+using Database.Repositories.Interfaces;
 using DevicesManagement.DataTransferObjects.Requests;
 using DevicesManagement.Errors;
 using DevicesManagement.MediatR.Commands;
@@ -21,10 +22,10 @@ public class EmployeeIdUniquenessPipelineBehavior<T, TRequest> : IPipelineBehavi
     public async Task<IActionResult> Handle(TRequest request, RequestHandlerDelegate<IActionResult> next, CancellationToken cancellationToken)
     {
         var existingEmployee = request.Request.EmployeeId is not null
-            ? _usersRepository.FindByEmployeeId(request.Request.EmployeeId)
-            : null;
+            ? _usersRepository.FindByEmployeeIdAsync(request.Request.EmployeeId)
+            : Task.FromResult<User?>(null);
 
-        if (existingEmployee is not null)
+        if (existingEmployee.Result is not null)
         {
             return ErrorResponses.CreateDetailed(
                 StatusCodes.Status409Conflict,

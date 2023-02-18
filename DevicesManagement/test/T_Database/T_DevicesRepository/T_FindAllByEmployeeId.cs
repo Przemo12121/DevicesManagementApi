@@ -5,9 +5,9 @@ namespace T_Database.T_DevicesRepository;
 public partial class T_FindAllByEmployeeId
 {
     [Fact]
-    public void FindAllByEmployeId_ExistingEmployeeId_ReturnsDevicesWithThatEmployeeId()
+    public async void FindAllByEmployeId_ExistingEmployeeId_ReturnsDevicesWithThatEmployeeId()
     {
-        var entities = Repository.FindAllByEmployeeId("some employee id 2", new LimitableSearchOptions(100));
+        var entities = await Repository.FindAllByEmployeeIdAsync("some employee id 2", new LimitableSearchOptions(100));
 
         entities.Should().HaveCount(2);
         entities[0].Should().BeEquivalentTo(SearchedDevice);
@@ -15,43 +15,43 @@ public partial class T_FindAllByEmployeeId
     }
 
     [Fact]
-    public void FindAllByEmployeId_WithLimitOf1_Returns1Device()
+    public async void FindAllByEmployeId_WithLimitOf1_Returns1Device()
     {
-        var entities = Repository.FindAllByEmployeeId("some employee id 2", new LimitableSearchOptions(1));
+        var entities = await Repository.FindAllByEmployeeIdAsync("some employee id 2", new LimitableSearchOptions(1));
 
         entities.Should().HaveCount(1);
     }
 
     [Fact]
-    public void FindAllByEmployeId_WithOffsetOf1_ReturnsSecondMatchingDevice()
+    public async void FindAllByEmployeId_WithOffsetOf1_ReturnsSecondMatchingDevice()
     {
-        var entities = Repository.FindAllByEmployeeId("some employee id 2", new OffsetableSearchOptions(1));
+        var entities = await Repository.FindAllByEmployeeIdAsync("some employee id 2", new OffsetableSearchOptions(1));
 
         entities[0].Should().BeEquivalentTo(SearchedDevice2);
     }
     
     [Fact]
-    public void FindAllByEmployeId_WithOrderByNameAsc_ReturnsDevicesOrderedByNameAsc()
+    public async void FindAllByEmployeId_WithOrderByNameAsc_ReturnsDevicesOrderedByNameAsc()
     {
-        var entities = Repository.FindAllByEmployeeId("some employee id 2", new OrderableByNameAscSearchOptions());
+        var entities = await Repository.FindAllByEmployeeIdAsync("some employee id 2", new OrderableByNameAscSearchOptions());
 
         entities[0].Should().BeEquivalentTo(SearchedDevice2);
         entities[1].Should().BeEquivalentTo(SearchedDevice);
     }
 
     [Fact]
-    public void FindAllByEmployeId_WithOrderByNameDesc_ReturnsDevicesOrderedByNameDesc()
+    public async void FindAllByEmployeId_WithOrderByNameDesc_ReturnsDevicesOrderedByNameDesc()
     {
-        var entities = Repository.FindAllByEmployeeId("some employee id 2", new OrderableByNameDescSearchOptions());
+        var entities = await Repository.FindAllByEmployeeIdAsync("some employee id 2", new OrderableByNameDescSearchOptions());
 
         entities[0].Should().BeEquivalentTo(SearchedDevice);
         entities[1].Should().BeEquivalentTo(SearchedDevice2);
     }
 
     [Fact]
-    public void FindByEmployeId_NonexistingEmployeeId_ReturnsEmptyCollection()
+    public async void FindByEmployeId_NonexistingEmployeeId_ReturnsEmptyCollection()
     {
-        var entities = Repository.FindAllByEmployeeId("non existind eid", new LimitableSearchOptions(100));
+        var entities = await Repository.FindAllByEmployeeIdAsync("non existind eid", new LimitableSearchOptions(100));
 
         entities.Should().HaveCount(0);
     }

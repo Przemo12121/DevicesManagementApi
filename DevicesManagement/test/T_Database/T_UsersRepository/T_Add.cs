@@ -26,7 +26,7 @@ public partial class T_Add: LocalAuthDatabaseTest
                 };
 
                 repo.Add(entity);
-                repo.SaveChanges();
+                repo.SaveAsync();
             }
         }
 
@@ -60,7 +60,7 @@ public partial class T_Add: LocalAuthDatabaseTest
                 };
 
                 repo.Add(entity);
-                repo.SaveChanges();
+                repo.SaveAsync();
             }
         }
 

@@ -24,7 +24,7 @@ public partial class T_AddMessage : DeviceMenagementDatabaseTest
                 };
 
                 repo.AddMessage(testDevice, entity);
-                repo.SaveChanges();
+                repo.SaveAsync();
             }
         }
 
@@ -56,7 +56,7 @@ public partial class T_AddMessage : DeviceMenagementDatabaseTest
                 };
 
                 repo.AddMessage(testDevice, entity);
-                repo.SaveChanges();
+                repo.SaveAsync();
             }
         }
 
@@ -88,7 +88,7 @@ public partial class T_AddMessage : DeviceMenagementDatabaseTest
                 };
 
                 repo.AddMessage(testDevice, entity);
-                repo.SaveChanges();
+                repo.SaveAsync();
             }
         }
 
