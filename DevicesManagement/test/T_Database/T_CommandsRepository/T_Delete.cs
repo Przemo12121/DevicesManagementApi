@@ -13,12 +13,12 @@ public partial class T_Delete : DeviceMenagementDatabaseTest
             EnsureClear(context);
             Seed(context);
 
-            using (var repo = new CommandRepository(context))
+            using (var repo = new CommandsRepository(context))
             {
                 entity = context.Commands.Skip(1).First();
 
                 repo.Delete(entity);
-                repo.SaveChanges();
+                repo.SaveAsync();
             }
         }
 
@@ -36,12 +36,12 @@ public partial class T_Delete : DeviceMenagementDatabaseTest
             EnsureClear(context);
             Seed(context);
 
-            using (var repo = new CommandRepository(context))
+            using (var repo = new CommandsRepository(context))
             {
                 var entity = context.Commands.Skip(1).First();
 
                 repo.Delete(entity);
-                repo.SaveChanges();
+                repo.SaveAsync();
             }
         }
 
@@ -63,14 +63,14 @@ public partial class T_Delete : DeviceMenagementDatabaseTest
             EnsureClear(context);
             Seed(context);
 
-            using (var repo = new CommandRepository(context))
+            using (var repo = new CommandsRepository(context))
             {
                 entity1 = context.Commands.Skip(0).First();
                 deleted = context.Commands.Skip(1).First();
                 entity2 = context.Commands.Skip(2).First();
 
                 repo.Delete(deleted);
-                repo.SaveChanges();
+                repo.SaveAsync();
             }
         }
 

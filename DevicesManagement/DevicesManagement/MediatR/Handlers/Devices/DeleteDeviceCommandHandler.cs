@@ -14,11 +14,11 @@ public class DeleteDeviceCommandHandler : IRequestHandler<DeleteDeviceCommand, I
         _devicesRepository = devicesRepository;
     }
 
-    public Task<IActionResult> Handle(DeleteDeviceCommand request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Handle(DeleteDeviceCommand request, CancellationToken cancellationToken)
     {
         _devicesRepository.Delete(request.Resource!);
-        _devicesRepository.SaveChanges();
+        await _devicesRepository.SaveAsync();
 
-        return Task.FromResult<IActionResult>(new OkResult());
+        return new OkResult();
     }
 }

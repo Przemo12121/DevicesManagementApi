@@ -11,13 +11,13 @@ public partial class T_Update : DeviceMenagementDatabaseTest
             EnsureClear(context);
             Seed(context);
 
-            using (var repo = new CommandRepository(context))
+            using (var repo = new CommandsRepository(context))
             {
                 entity = context.Commands.Skip(1).First();
 
                 entity.Description = "New Description";
                 repo.Update(entity);
-                repo.SaveChanges();
+                repo.SaveAsync();
             }
         }
 
@@ -38,13 +38,13 @@ public partial class T_Update : DeviceMenagementDatabaseTest
             EnsureClear(context);
             Seed(context);
 
-            using (var repo = new CommandRepository(context))
+            using (var repo = new CommandsRepository(context))
             {
                 entity = context.Commands.Skip(1).First();
 
                 entity.Description = "New Description";
                 repo.Update(entity);
-                repo.SaveChanges();
+                repo.SaveAsync();
             }
         }
 
@@ -71,7 +71,7 @@ public partial class T_Update : DeviceMenagementDatabaseTest
             EnsureClear(context);
             Seed(context);
 
-            using (var repo = new CommandRepository(context))
+            using (var repo = new CommandsRepository(context))
             {
                 entity1 = context.Commands.Skip(0).First();
                 entityUpdated = context.Commands.Skip(1).First();
@@ -79,7 +79,7 @@ public partial class T_Update : DeviceMenagementDatabaseTest
 
                 entityUpdated.Description = "New Description";
                 repo.Update(entityUpdated);
-                repo.SaveChanges();
+                repo.SaveAsync();
             }
         }
 

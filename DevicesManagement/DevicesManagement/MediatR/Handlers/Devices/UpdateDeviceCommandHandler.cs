@@ -17,14 +17,13 @@ public class UpdateDeviceCommandHandler : IRequestHandler<UpdateDeviceCommand, I
         _devicesRepository = devicesRepository;
     }
 
-    public Task<IActionResult> Handle(UpdateDeviceCommand request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Handle(UpdateDeviceCommand request, CancellationToken cancellationToken)
     {
         request.Resource.UpdateWith(request.Request);
 
         _devicesRepository.Update(request.Resource);
-        _devicesRepository.SaveChanges();
+        await _devicesRepository.SaveAsync();
 
-        var result = new OkObjectResult(request.Resource.Adapt<DeviceDto>());
-        return Task.FromResult<IActionResult>(result);
+        return new OkObjectResult(request.Resource.Adapt<DeviceDto>());
     }
 }

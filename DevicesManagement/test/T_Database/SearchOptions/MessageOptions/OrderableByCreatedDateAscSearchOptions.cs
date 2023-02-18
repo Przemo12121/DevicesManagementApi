@@ -5,7 +5,7 @@ public class OrderableByCreatedDateAscSearchOptions : ISearchOptions<Message, Da
 
     public int Limit { get; } = 100;
     public int Offset { get; } = 0;
-    public Func<Message, DateTime> Order { get; } = Message => Message.CreatedDate;
+    public Expression<Func<Message, DateTime>> Order { get; } = Message => Message.CreatedDate;
 
     public OrderDirections OrderDirection { get; } = OrderDirections.ASCENDING;
 }

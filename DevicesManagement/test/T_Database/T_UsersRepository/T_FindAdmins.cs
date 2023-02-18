@@ -5,17 +5,17 @@ namespace T_Database.T_UsersRepository;
 public partial class T_FindAdmins
 {
     [Fact]
-    public void FindAllAdmins_ReturnsThreeRecords()
+    public async void FindAllAdmins_ReturnsThreeRecords()
     {
-        var entities = Repository.FindAdmins(new LimitableSearchOptions(100));
+        var entities = await Repository.FindAdminsAsync(new LimitableSearchOptions(100));
 
         entities.Should().HaveCount(3);
     }
 
     [Fact]
-    public void FindAllAdmins_ReturnsOnlyAdminsRecords()
+    public async void FindAllAdmins_ReturnsOnlyAdminsRecords()
     {
-        var entities = Repository.FindAdmins(new LimitableSearchOptions(100));
+        var entities = await Repository.FindAdminsAsync(new LimitableSearchOptions(100));
 
         entities.Should().AllSatisfy(
             e => e.AccessLevel.Value.Should().Be(AccessLevels.Admin)
@@ -23,28 +23,28 @@ public partial class T_FindAdmins
     }
 
     [Fact]
-    public void FindAllAdmins_WithLimitOfTwo_ReturnsTwoRecords()
+    public async void FindAllAdmins_WithLimitOfTwo_ReturnsTwoRecords()
     {
         int limit = 2;
-        var entities = Repository.FindAdmins(new LimitableSearchOptions(limit));
+        var entities = await Repository.FindAdminsAsync(new LimitableSearchOptions(limit));
 
         entities.Should().HaveCount(limit);
     }
 
     [Fact]
-    public void FindAllAdmins_WithOffsetOfTwo_ReturnsOneRecord()
+    public async void FindAllAdmins_WithOffsetOfTwo_ReturnsOneRecord()
     {
         int offset = 2;
-        var entities = Repository.FindAdmins(new OffsetableSearchOptions(offset));
+        var entities = await Repository.FindAdminsAsync(new OffsetableSearchOptions(offset));
 
         entities.Should().HaveCount(1);
     }
 
     [Fact]
-    public void FindAllAdmins_WithOffsetOfOne_ReturnsSecondAndThirdAdmin()
+    public async void FindAllAdmins_WithOffsetOfOne_ReturnsSecondAndThirdAdmin()
     {
         int offset = 1;
-        var entities = Repository.FindAdmins(new OffsetableSearchOptions(offset));
+        var entities = await Repository.FindAdminsAsync(new OffsetableSearchOptions(offset));
 
         entities.Should().AllSatisfy(
             e => e.EmployeeId.Should().BeOneOf(new[] { "some id 4", "some id 5" })
@@ -52,9 +52,9 @@ public partial class T_FindAdmins
     }
 
     [Fact]
-    public void FindAllAdmins_WithOrderNameASC_ReturnsAdminsOrderByNameASC()
+    public async void FindAllAdmins_WithOrderNameASC_ReturnsAdminsOrderByNameASC()
     {
-        var entities = Repository.FindAdmins(new OrderableByNameAscSearchOptions());
+        var entities = await Repository.FindAdminsAsync(new OrderableByNameAscSearchOptions());
             
         entities[0].Name.Should().Be("dummy user");
         entities[1].Name.Should().Be("dummy user 4");
@@ -62,9 +62,9 @@ public partial class T_FindAdmins
     }
 
     [Fact]
-    public void FindAllAdmins_WithOrderNameDESC_ReturnsAdminsOrderByNameDESC()
+    public async void FindAllAdmins_WithOrderNameDESC_ReturnsAdminsOrderByNameDESC()
     {
-        var entities = Repository.FindAdmins(new OrderableByNameDescSearchOptions());
+        var entities = await Repository.FindAdminsAsync(new OrderableByNameDescSearchOptions());
 
         entities[0].Name.Should().Be("dummy user 5");
         entities[1].Name.Should().Be("dummy user 4");

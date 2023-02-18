@@ -9,7 +9,7 @@ public class OffsetableSearchOptions : ISearchOptions<Device, DateTime>
 
     public int Limit { get; } = 100;
     public int Offset { get; }
-    public Func<Device, DateTime> Order { get; } = device => device.CreatedDate;
+    public Expression<Func<Device, DateTime>> Order { get; } = device => device.CreatedDate;
 
 
     public OrderDirections OrderDirection { get; } = OrderDirections.ASCENDING;

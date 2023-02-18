@@ -2,5 +2,5 @@
 
 public interface ITransactionableRepository
 {
-    public void SaveChanges();
+    public Task SaveAsync();
 }

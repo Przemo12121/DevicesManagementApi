@@ -5,17 +5,17 @@ namespace T_Database.T_UsersRepository;
 public partial class T_FindEmployees
 {
     [Fact]
-    public void FindEmployees_ReturnsThreeRecords()
+    public async void FindEmployees_ReturnsThreeRecords()
     {
-        var entities = Repository.FindEmployees(new LimitableSearchOptions(100));
+        var entities = await Repository.FindEmployeesAsync(new LimitableSearchOptions(100));
 
         entities.Should().HaveCount(3);
     }
 
     [Fact]
-    public void FindEmployees_ReturnsOnlyEmployeesRecords()
+    public async void FindEmployees_ReturnsOnlyEmployeesRecords()
     {
-        var entities = Repository.FindEmployees(new LimitableSearchOptions(100));
+        var entities = await Repository.FindEmployeesAsync(new LimitableSearchOptions(100));
 
         entities.Should().AllSatisfy(
             e => e.AccessLevel.Value.Should().Be(AccessLevels.Employee)
@@ -23,28 +23,28 @@ public partial class T_FindEmployees
     }
 
     [Fact]
-    public void FindEmployees_WithLimitOfTwo_ReturnsTwoRecords()
+    public async void FindEmployees_WithLimitOfTwo_ReturnsTwoRecords()
     {
         int limit = 2;
-        var entities = Repository.FindEmployees(new LimitableSearchOptions(limit));
+        var entities = await Repository.FindEmployeesAsync(new LimitableSearchOptions(limit));
 
         entities.Should().HaveCount(limit);
     }
 
     [Fact]
-    public void FindEmployees_WithOffsetOfTwo_ReturnsOneRecord()
+    public async void FindEmployees_WithOffsetOfTwo_ReturnsOneRecord()
     {
         int offset = 2;
-        var entities = Repository.FindEmployees(new OffsetableSearchOptions(offset));
+        var entities = await Repository.FindEmployeesAsync(new OffsetableSearchOptions(offset));
 
         entities.Should().HaveCount(1);
     }
 
     [Fact]
-    public void FindEmployees_WithOffsetOfOne_ReturnsSecondAndThirdEmployee()
+    public async void FindEmployees_WithOffsetOfOne_ReturnsSecondAndThirdEmployee()
     {
         int offset = 1;
-        var entities = Repository.FindEmployees(new OffsetableSearchOptions(offset));
+        var entities = await Repository.FindEmployeesAsync(new OffsetableSearchOptions(offset));
 
         entities.Should().AllSatisfy(
             e => e.EmployeeId.Should().BeOneOf(new[] { "some id 4", "some id 5" })
@@ -52,23 +52,23 @@ public partial class T_FindEmployees
     }
 
     [Fact]
-    public void FindEmployees_WithOrderNameASC_ReturnsEmployeesOrderByNameASC()
+    public async void FindEmployees_WithOrderNameASC_ReturnsEmployeesOrderByNameASC()
     {
-        var entities = Repository.FindEmployees(new OrderableByNameAscSearchOptions());
+        var entities = await Repository.FindEmployeesAsync(new OrderableByNameAscSearchOptions());
 
-        entities[0].Name.Should().Be("dummy user");
-        entities[1].Name.Should().Be("dummy user 4");
-        entities[2].Name.Should().Be("dummy user 5");
+        entities[0].Name.Should().Be("a dummy user");
+        entities[1].Name.Should().Be("d dummy user 4");
+        entities[2].Name.Should().Be("e dummy user 5");
     }
 
     [Fact]
-    public void FindEmployees_WithOrderNameDESC_ReturnsEmployeesOrderByNameDESC()
+    public async void FindEmployees_WithOrderNameDESC_ReturnsEmployeesOrderByNameDESC()
     {
-        var entities = Repository.FindEmployees(new OrderableByNameDescSearchOptions());
+        var entities = await Repository.FindEmployeesAsync(new OrderableByNameDescSearchOptions());
 
-        entities[0].Name.Should().Be("dummy user 5");
-        entities[1].Name.Should().Be("dummy user 4");
-        entities[2].Name.Should().Be("dummy user");
+        entities[0].Name.Should().Be("e dummy user 5");
+        entities[1].Name.Should().Be("d dummy user 4");
+        entities[2].Name.Should().Be("a dummy user");
     }
 }
 
@@ -99,7 +99,7 @@ public class T_FindEmployees_Setup : LocalAuthDatabaseTest
         context.Users.Add(new User
         {
             CreatedDate = DateTime.Now,
-            Name = "dummy user",
+            Name = "a dummy user",
             UpdatedDate = DateTime.Now,
             Id = Guid.NewGuid(),
             EmployeeId = "some id",
@@ -109,7 +109,7 @@ public class T_FindEmployees_Setup : LocalAuthDatabaseTest
         context.Users.Add(new User
         {
             CreatedDate = DateTime.Now,
-            Name = "dummy user 2",
+            Name = "b dummy user 2",
             UpdatedDate = DateTime.Now,
             Id = Guid.NewGuid(),
             EmployeeId = "some id 2",
@@ -119,7 +119,7 @@ public class T_FindEmployees_Setup : LocalAuthDatabaseTest
         context.Users.Add(new User
         {
             CreatedDate = DateTime.Now,
-            Name = "dummy user 3",
+            Name = "c dummy user 3",
             UpdatedDate = DateTime.Now,
             Id = Guid.NewGuid(),
             EmployeeId = "some id 3",
@@ -130,7 +130,7 @@ public class T_FindEmployees_Setup : LocalAuthDatabaseTest
         context.Users.Add(new User
         {
             CreatedDate = DateTime.Now,
-            Name = "dummy user 4",
+            Name = "d dummy user 4",
             UpdatedDate = DateTime.Now,
             Id = Guid.NewGuid(),
             EmployeeId = "some id 4",
@@ -141,7 +141,7 @@ public class T_FindEmployees_Setup : LocalAuthDatabaseTest
         context.Users.Add(new User
         {
             CreatedDate = DateTime.Now,
-            Name = "dummy user 5",
+            Name = "e dummy user 5",
             UpdatedDate = DateTime.Now,
             Id = Guid.NewGuid(),
             EmployeeId = "some id 5",

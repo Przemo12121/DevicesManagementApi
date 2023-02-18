@@ -3,26 +3,26 @@ namespace T_Authentication.T_UserIdentityProvider;
 public partial class T_Identify
 {
     [Fact]
-    public void Identify_WithValidCredentials_ReturnsDummyUser()
+    public async void Identify_WithValidCredentials_ReturnsDummyUser()
     {
-        var user = Provider.Identify("abcd12345678", "dummyPASSWORD1");
+        var user = await Provider.Identify("abcd12345678", "dummyPASSWORD1");
 
         user.Should().NotBeNull();
         user.Should().Be(DummyUser);
     }
 
     [Fact]
-    public void Identify_WithInvalidEmployeeId_ReturnsNull()
+    public async void Identify_WithInvalidEmployeeId_ReturnsNull()
     {
-        var user = Provider.Identify("badx12345678", "dummyPASSWORD1");
+        var user = await Provider.Identify("badx12345678", "dummyPASSWORD1");
 
         user.Should().BeNull();
     }
 
     [Fact]
-    public void Identify_WithInvalidPassword_ReturnsNull()
+    public async void Identify_WithInvalidPassword_ReturnsNull()
     {
-        var user = Provider.Identify("abcd12345678", "badPASSWORD1");
+        var user = await Provider.Identify("abcd12345678", "badPASSWORD1");
 
         user.Should().BeNull();
     }
@@ -53,11 +53,11 @@ public partial class T_Identify
 
         var usersRepositoryMock = new Mock<IUsersRepository>();
 
-        usersRepositoryMock.Setup(mock => mock.FindByEmployeeId("abcd12345678"))
-            .Returns(DummyUser);
+        usersRepositoryMock.Setup(mock => mock.FindByEmployeeIdAsync("abcd12345678"))
+            .Returns(Task.FromResult<User?>(DummyUser));
 
-        usersRepositoryMock.Setup(mock => mock.FindByEmployeeId("badx12345678"))
-            .Returns((User?)null);
+        usersRepositoryMock.Setup(mock => mock.FindByEmployeeIdAsync("badx12345678"))
+            .Returns(Task.FromResult<User?>(null));
 
         Provider = new UserIdentityProvider(usersRepositoryMock.Object);
     }

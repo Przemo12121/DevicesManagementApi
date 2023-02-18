@@ -30,7 +30,7 @@ public partial class T_Add : DeviceMenagementDatabaseTest
                 };
 
                 repo.Add(entity);
-                repo.SaveChanges();
+                repo.SaveAsync();
             }
         }
 
@@ -65,7 +65,7 @@ public partial class T_Add : DeviceMenagementDatabaseTest
                 };
 
                 repo.Add(entity);
-                repo.SaveChanges();
+                repo.SaveAsync();
             }
         }
 

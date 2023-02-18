@@ -5,54 +5,54 @@ namespace T_Database.T_DevicesRepository;
 public partial class T_GetMessages
 {
     [Fact]
-    public void GetMessages_WithDeviceId_ReturnsMessagesBelongingToThatDevice()
+    public async void GetMessages_WithDeviceId_ReturnsMessagesBelongingToThatDevice()
     {
-        var entities = Repository.GetMessages(Searched.Id, new LimitableSearchOptions(100));
+        var entities = await Repository.GetMessagesAsync(Searched.Id, new LimitableSearchOptions(100));
 
         entities.Should().HaveCount(2);
         entities.Should().BeEquivalentTo(Searched.Messages);
     }
 
     [Fact]
-    public void GetMessages_WithLimitOfOne_ReturnsOneRecord()
+    public async void GetMessages_WithLimitOfOne_ReturnsOneRecord()
     {
         int limit = 1;
-        var entities = Repository.GetMessages(Searched.Id, new LimitableSearchOptions(limit));
+        var entities = await Repository.GetMessagesAsync(Searched.Id, new LimitableSearchOptions(limit));
 
         entities.Should().HaveCount(limit);
     }
 
     [Fact]
-    public void GetMessages_WithOffsetOfOne_ReturnsOneRecord()
+    public async void GetMessages_WithOffsetOfOne_ReturnsOneRecord()
     {
         int offset = 1;
-        var entities = Repository.GetMessages(Searched.Id, new OffsetableSearchOptions(offset));
+        var entities = await Repository.GetMessagesAsync(Searched.Id, new OffsetableSearchOptions(offset));
 
         entities.Should().HaveCount(1);
     }
 
     [Fact]
-    public void GetMessages_WithOffsetOfOne_ReturnsSecondMessage()
+    public async void GetMessages_WithOffsetOfOne_ReturnsSecondMessage()
     {
         int offset = 1;
-        var entities = Repository.GetMessages(Searched.Id, new OffsetableSearchOptions(offset));
+        var entities = await Repository.GetMessagesAsync(Searched.Id, new OffsetableSearchOptions(offset));
 
         entities[0].Should().BeEquivalentTo(Searched.Messages[1]);
     }
 
     [Fact]
-    public void GetMessages_WithOrderCreatedDateASC_ReturnsMessagesOrderedByCreatedDateASC()
+    public async void GetMessages_WithOrderCreatedDateASC_ReturnsMessagesOrderedByCreatedDateASC()
     {
-        var entities = Repository.GetMessages(Searched.Id, new OrderableByCreatedDateAscSearchOptions());
+        var entities = await Repository.GetMessagesAsync(Searched.Id, new OrderableByCreatedDateAscSearchOptions());
 
         entities[0].Should().Be(Searched.Messages[0]);
         entities[1].Should().Be(Searched.Messages[1]);
     }
 
     [Fact]
-    public void GetMessages_WithOrderCreatedDateDESC_ReturnsMessagesOrderedByCreatedDateDESC()
+    public async void GetMessages_WithOrderCreatedDateDESC_ReturnsMessagesOrderedByCreatedDateDESC()
     {
-        var entities = Repository.GetMessages(Searched.Id, new OrderableByCreatedDateDescSearchOptions());
+        var entities = await Repository.GetMessagesAsync(Searched.Id, new OrderableByCreatedDateDescSearchOptions());
 
         entities[0].Should().Be(Searched.Messages[1]);
         entities[1].Should().Be(Searched.Messages[0]);

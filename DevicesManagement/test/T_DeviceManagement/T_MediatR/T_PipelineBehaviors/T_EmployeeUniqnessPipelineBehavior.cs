@@ -9,8 +9,8 @@ public class T_EmployeeUniqnessPipelineBehavior
     public async void Handle_GivenNonNullableEmployeeId_Returns200()
     {
         var repositoryMock = new Mock<IUsersRepository>();
-        repositoryMock.Setup(repository => repository.FindByEmployeeId(It.IsAny<string>()))
-            .Returns(new User());
+        repositoryMock.Setup(repository => repository.FindByEmployeeIdAsync(It.IsAny<string>()))
+            .Returns(Task.FromResult<User?>(new User()));
 
         var request = new DummyEmployeeIdContainerRequest()
         {
@@ -37,8 +37,8 @@ public class T_EmployeeUniqnessPipelineBehavior
     public async void Handle_GivenNullableEmployeeId_ReturnsDelegateResponse()
     {
         var repositoryMock = new Mock<IUsersRepository>();
-        repositoryMock.Setup(repository => repository.FindByEmployeeId(It.IsAny<string>()))
-            .Returns(new User());
+        repositoryMock.Setup(repository => repository.FindByEmployeeIdAsync(It.IsAny<string>()))
+            .Returns(Task.FromResult<User?>(new User()));
         var request = new DummyEmployeeIdContainerRequest()
         {
             Request = new()
@@ -64,8 +64,8 @@ public class T_EmployeeUniqnessPipelineBehavior
     public async void Handle_GivenTakenEmployeeId_Returns409()
     {
         var repositoryMock = new Mock<IUsersRepository>();
-        repositoryMock.Setup(repository => repository.FindByEmployeeId(It.IsAny<string>()))
-            .Returns(new User());
+        repositoryMock.Setup(repository => repository.FindByEmployeeIdAsync(It.IsAny<string>()))
+            .Returns(Task.FromResult<User?>(new User()));
         var request = new DummyEmployeeIdContainerRequest()
         {
             Request = new()
@@ -91,8 +91,8 @@ public class T_EmployeeUniqnessPipelineBehavior
     public async void Handle_GivenNonTakenEmployeeId_Returns200()
     {
         var repositoryMock = new Mock<IUsersRepository>();
-        repositoryMock.Setup(repository => repository.FindByEmployeeId(It.IsAny<string>()))
-            .Returns((User?) null);
+        repositoryMock.Setup(repository => repository.FindByEmployeeIdAsync(It.IsAny<string>()))
+            .Returns(Task.FromResult<User?>(null));
 
         var request = new DummyEmployeeIdContainerRequest()
         {

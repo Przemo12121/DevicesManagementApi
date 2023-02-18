@@ -13,9 +13,9 @@ public class UserIdentityProvider : IIdentityProvider<User>
         _usersRepository = usersRepository;
     }
 
-    public User? Identify(string keyName, string password)
+    public async Task<User?> Identify(string keyName, string password)
     {
-        var user = _usersRepository.FindByEmployeeId(keyName);
+        var user = await _usersRepository.FindByEmployeeIdAsync(keyName);
         if (user is null) return null;
 
         var result = PasswordHasher.VerifyHashedPassword(user, user.PasswordHashed, password);

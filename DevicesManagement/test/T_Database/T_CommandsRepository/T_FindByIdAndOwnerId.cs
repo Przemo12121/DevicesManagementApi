@@ -3,25 +3,25 @@
 public partial class T_FindByIdAndOwnerId
 {
     [Fact]
-    public void FindByIdAndAndOwnerId_CorrectIds_ReturnsCammand()
+    public async void FindByIdAndAndOwnerId_CorrectIds_ReturnsCammand()
     {
-        var entity = Repository.FindByIdAndOwnerId(Guid.Parse("abcd1234-abcd-1234-abcd-123456abcdef"), "abcd12345678");
+        var entity = await Repository.FindByIdAndOwnerIdAsync(Guid.Parse("abcd1234-abcd-1234-abcd-123456abcdef"), "abcd12345678");
 
         entity.Should().BeEquivalentTo(SearchedCommand);
     }
 
     [Fact]
-    public void FindByIdAndAndOwnerId_WrongEmployeeId_ReturnsNull()
+    public async void FindByIdAndAndOwnerId_WrongEmployeeId_ReturnsNull()
     {
-        var entity = Repository.FindByIdAndOwnerId(Guid.Parse("abcd1234-abcd-1234-abcd-123456abcdef"), "badx12345678");
+        var entity = await Repository.FindByIdAndOwnerIdAsync(Guid.Parse("abcd1234-abcd-1234-abcd-123456abcdef"), "badx12345678");
 
         entity.Should().BeNull();
     }
 
     [Fact]
-    public void FindByIdAndAndOwnerId_WrongId_ReturnsNull()
+    public async void FindByIdAndAndOwnerId_WrongId_ReturnsNull()
     {
-        var entity = Repository.FindByIdAndOwnerId(Guid.Parse("12345678-1234-1234-1234-123456123456"), "abcd12345678");
+        var entity = await Repository.FindByIdAndOwnerIdAsync(Guid.Parse("12345678-1234-1234-1234-123456123456"), "abcd12345678");
 
         entity.Should().BeNull();
     }
@@ -30,7 +30,7 @@ public partial class T_FindByIdAndOwnerId
 public partial class T_FindByIdAndOwnerId : IClassFixture<T_FindByIdAndOwnerId_Setup>
 {
     private readonly T_FindByIdAndOwnerId_Setup _setupFixture;
-    CommandRepository Repository { get; init; }
+    CommandsRepository Repository { get; init; }
     public Command SearchedCommand { get; init; }
 
 
@@ -38,7 +38,7 @@ public partial class T_FindByIdAndOwnerId : IClassFixture<T_FindByIdAndOwnerId_S
     {
         _setupFixture = setupFixture;
         SearchedCommand = setupFixture.SearchedCommand;
-        Repository = new CommandRepository(setupFixture.Context);
+        Repository = new CommandsRepository(setupFixture.Context);
     }
 }
 

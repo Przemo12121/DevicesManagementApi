@@ -1,9 +1,10 @@
-﻿using Database.Models;
-using Database.Contexts;
+﻿using Database.Contexts;
+using Database.Models;
+using Database.Models.Enums;
 using Database.Repositories.InnerDependencies;
 using Database.Repositories.Interfaces;
-using Database.Models.Enums;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Database.Repositories;
 
@@ -19,54 +20,50 @@ public class UsersRepository : DisposableRepository<LocalAuthStorageContext>, IU
     public void Update(User entity)
         => _context.Users.Update(entity);
 
-    public List<User> FindAdmins<TOrderKey>(ISearchOptions<User, TOrderKey> options)
+    public Task<List<User>> FindAdminsAsync<TOrderKey>(ISearchOptions<User, TOrderKey> options)
     {
-        return options.OrderDirection == OrderDirections.ASCENDING
-            ? _context.Users
-                .Where(user => user.AccessLevel.Value == AccessLevels.Admin)
-                .OrderBy(options.Order)
-                .Skip(options.Offset)
+        var query = _context.Users
+                .Where(user => user.AccessLevel.Value.Equals(AccessLevels.Admin));
+
+        var orderedQuery = options.OrderDirection.Equals(OrderDirections.ASCENDING)
+            ? query.OrderBy(options.Order)
+            : query.OrderByDescending(options.Order);
+
+        return orderedQuery.Skip(options.Offset)
                 .Take(options.Limit)
-                .ToList()
-            : _context.Users
-                .Where(user => user.AccessLevel.Value == AccessLevels.Admin)
-                .OrderByDescending(options.Order)
-                .Skip(options.Offset)
-                .Take(options.Limit)
-                .ToList();
+                .ToListAsync();
     }
 
-    public List<User> FindEmployees<TOrderKey>(ISearchOptions<User, TOrderKey> options)
+    public Task<List<User>> FindEmployeesAsync<TOrderKey>(ISearchOptions<User, TOrderKey> options)
     {
-        return options.OrderDirection == OrderDirections.ASCENDING
-            ? _context.Users
-                .Where(user => user.AccessLevel.Value == AccessLevels.Employee)
-                .OrderBy(options.Order)
-                .Skip(options.Offset)
+        var query = _context.Users
+                .Where(user => user.AccessLevel.Value.Equals(AccessLevels.Employee));
+
+        var orderedQuery = options.OrderDirection.Equals(OrderDirections.ASCENDING)
+            ? query.OrderBy(options.Order)
+            : query.OrderByDescending(options.Order);
+
+        return orderedQuery.Skip(options.Offset)
                 .Take(options.Limit)
-                .ToList()
-            : _context.Users
-                .Where(user => user.AccessLevel.Value == AccessLevels.Employee)
-                .OrderByDescending(options.Order)
-                .Skip(options.Offset)
-                .Take(options.Limit)
-                .ToList();
+                .ToListAsync();
     }
+    public Task<int> CountEmployeesAsync()
+        => _context.Users
+            .CountAsync(user => user.AccessLevel.Value.Equals(AccessLevels.Employee));
 
-    public int CountEmployees()
-        => _context.Users.Count(user => user.AccessLevel.Value == AccessLevels.Employee);
-
-    public User? FindByEmployeeId(string eid)
+    public Task<User?> FindByEmployeeIdAsync(string eid)
      => _context.Users
             .Where(user => user.EmployeeId.Equals(eid))
             .Include(user => user.AccessLevel)
-            .SingleOrDefault();
+            .FirstOrDefaultAsync();
 
-    public User? FindByIdAndOwnerId(Guid id, string ownerId) 
-        => id.Equals(ownerId) ? FindById(id) : null;
+    public Task<User?> FindByIdAndOwnerIdAsync(Guid id, string ownerId) 
+        => id.Equals(ownerId) 
+            ? FindByIdAsync(id) 
+            : Task.FromResult<User?>(null);
 
-    public User? FindById(Guid id)
+    public Task<User?> FindByIdAsync(Guid id)
        => _context.Users
             .Where(user => user.Id.Equals(id))
-            .SingleOrDefault();
+            .FirstOrDefaultAsync();
 }

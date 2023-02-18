@@ -16,14 +16,13 @@ public class UpdateCommandCommandHandler : IRequestHandler<UpdateCommandCommand,
         _commandsRepository = commandsRepository;
     } 
 
-    public Task<IActionResult> Handle(UpdateCommandCommand request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Handle(UpdateCommandCommand request, CancellationToken cancellationToken)
     {
         request.Resource.UpdateWith(request.Request);
 
         _commandsRepository.Update(request.Resource);
-        _commandsRepository.SaveChanges();
+        await _commandsRepository.SaveAsync();
 
-        var result = new OkObjectResult(request.Resource.Adapt<CommandDto>());
-        return Task.FromResult<IActionResult>(result);
+        return new OkObjectResult(request.Resource.Adapt<CommandDto>());
     }
 }

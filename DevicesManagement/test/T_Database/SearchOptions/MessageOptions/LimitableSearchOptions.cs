@@ -6,7 +6,7 @@ public class LimitableSearchOptions : ISearchOptions<Message, DateTime>
 
     public int Limit { get; }
     public int Offset { get; } = 0;
-    public Func<Message, DateTime> Order { get; } = Command => Command.CreatedDate;
+    public Expression<Func<Message, DateTime>> Order { get; } = Command => Command.CreatedDate;
 
     public OrderDirections OrderDirection { get; } = OrderDirections.ASCENDING;
 }

@@ -1,8 +1,11 @@
-﻿using Database.Repositories.InnerDependencies;
-using Database.Contexts;
+﻿using Database.Contexts;
 using Database.Models;
-using Database.Repositories.Interfaces;
 using Database.Models.Enums;
+using Database.Repositories.InnerDependencies;
+using Database.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System.Data;
+using System.Linq.Expressions;
 
 namespace Database.Repositories;
 
@@ -33,118 +36,113 @@ public class DevicesRepository : DisposableRepository<DevicesManagementContext>,
         device.Messages.Add(message);
     }
 
-    public List<Device> FindAll<TOrderKey>(ISearchOptions<Device, TOrderKey> options)
+    public Task<List<Device>> FindAllAsync<TOrderKey>(ISearchOptions<Device, TOrderKey> options)
     {
-        return options.OrderDirection == OrderDirections.ASCENDING
-            ? _context.Devices
-                .OrderBy(options.Order)
-                .Skip(options.Offset)
+        var query = options.OrderDirection.Equals(OrderDirections.ASCENDING)
+            ? _context.Devices.OrderBy(options.Order)
+            : _context.Devices.OrderByDescending(options.Order);
+
+        return query.Skip(options.Offset)
                 .Take(options.Limit)
-                .ToList()
-            : _context.Devices
-                .OrderByDescending(options.Order)
-                .Skip(options.Offset)
-                .Take(options.Limit)
-                .ToList();
+                .ToListAsync();
     }
 
-    public List<Device> FindAllByEmployeeId<T>(string employeeId, ISearchOptions<Device, T> options)
+    public Task<List<Device>> FindAllByEmployeeIdAsync<T>(string employeeId, ISearchOptions<Device, T> options)
     {
-        return options.OrderDirection == OrderDirections.ASCENDING
-            ? _context.Devices
-                .Where(device => device.EmployeeId.Equals(employeeId))
-                .OrderBy(options.Order)
+        var query = _context.Devices
+                .Where(device => device.EmployeeId.Equals(employeeId));
+
+        var orderedQuery = options.OrderDirection == OrderDirections.ASCENDING
+            ? query.OrderBy(options.Order)
+            : query.OrderByDescending(options.Order);
+
+        return orderedQuery
                 .Skip(options.Offset)
                 .Take(options.Limit)
-                .ToList()
-            : _context.Devices
-                .Where(device => device.EmployeeId.Equals(employeeId))
-                .OrderByDescending(options.Order)
-                .Skip(options.Offset)
-                .Take(options.Limit)
-                .ToList();
+                .ToListAsync();
     }
 
-    public Device? FindById(Guid id)
-    {
-        return _context.Devices
+    public Task<Device?> FindByIdAsync(Guid id)
+        => _context.Devices
             .Where(device => device.Id.Equals(id))
-            .SingleOrDefault();
-    }
+            .FirstOrDefaultAsync();
 
-    public List<CommandHistory> GetCommandHistories<U>(Guid deviceId, ISearchOptions<CommandHistory, U> options)
+    public Task<List<CommandHistory>> GetCommandHistoriesAsync<U>(Guid deviceId, ISearchOptions<CommandHistory, U> options)
     {
-        return options.OrderDirection == OrderDirections.ASCENDING
-            ? _context.Devices
+        var query = _context.Devices
                 .Where(device => device.Id.Equals(deviceId))
+                .Take(1)
                 .SelectMany(device => device.Commands)
-                .SelectMany(command => command.CommandHistories)
-                .OrderBy(options.Order)
-                .Skip(options.Offset)
+                .SelectMany(command => command.CommandHistories);
+
+        var orderedQuery = options.OrderDirection == OrderDirections.ASCENDING
+            ? query.OrderBy(options.Order)
+            : query.OrderByDescending(options.Order);
+
+        return orderedQuery.Skip(options.Offset)
                 .Take(options.Limit)
-                .ToList()
-            : _context.Devices
-                .Where(device => device.Id.Equals(deviceId))
-                .SelectMany(device => device.Commands)
-                .SelectMany(command => command.CommandHistories)
-                .OrderByDescending(options.Order)
-                .Skip(options.Offset)
-                .Take(options.Limit)
-                .ToList();
+                .ToListAsync();
     }
 
-    public List<Command> GetCommands<U>(Guid deviceId, ISearchOptions<Command, U> options)
+    public Task<List<CommandHistory>> GetCommandHistories(Guid deviceId)
+        => _context.Devices
+            .SelectMany(device => device.Commands)
+            .SelectMany(command => command.CommandHistories)
+            .Where(device => device.Id.Equals(deviceId))
+            .OrderBy(x => x.Id)
+            .Skip(1)
+            .Take(3)
+            .ToListAsync();
+
+    public Task<List<Command>> GetCommandsAsync<U>(Guid deviceId, ISearchOptions<Command, U> options)
     {
-        return options.OrderDirection == OrderDirections.ASCENDING
-            ? _context.Devices
+        var query = _context.Devices
                 .Where(device => device.Id.Equals(deviceId))
-                .SelectMany(device => device.Commands)
-                .OrderBy(options.Order)
-                .Skip(options.Offset)
+                .Take(1)
+                .SelectMany(device => device.Commands);
+
+        var orderedQuery = options.OrderDirection == OrderDirections.ASCENDING
+            ? query.OrderBy(options.Order)
+            : query.OrderByDescending(options.Order);
+
+        return orderedQuery.Skip(options.Offset)
                 .Take(options.Limit)
-                .ToList()
-            : _context.Devices
-                .Where(device => device.Id.Equals(deviceId))
-                .SelectMany(device => device.Commands)
-                .OrderByDescending(options.Order)
-                .Skip(options.Offset)
-                .Take(options.Limit)
-                .ToList();
+                .ToListAsync();
     }
 
-    public List<Message> GetMessages<U>(Guid deviceId, ISearchOptions<Message, U> options)
+    public Task<List<Message>> GetMessagesAsync<U>(Guid deviceId, ISearchOptions<Message, U> options)
     {
-        return options.OrderDirection == OrderDirections.ASCENDING
-            ? _context.Devices
+        var query = _context.Devices
                 .Where(device => device.Id.Equals(deviceId))
-                .SelectMany(device => device.Messages)
-                .OrderBy(options.Order)
-                .Skip(options.Offset)
+                .Take(1)
+                .SelectMany(device => device.Messages);
+
+        var orderedQuery = options.OrderDirection == OrderDirections.ASCENDING
+            ? query.OrderBy(options.Order)
+            : query.OrderByDescending(options.Order);
+
+        return orderedQuery.Skip(options.Offset)
                 .Take(options.Limit)
-                .ToList()
-            : _context.Devices
-                .Where(device => device.Id.Equals(deviceId))
-                .SelectMany(device => device.Messages)
-                .OrderByDescending(options.Order)
-                .Skip(options.Offset)
-                .Take(options.Limit)
-                .ToList();
+                .ToListAsync();
     }
 
-    public Device? FindByIdAndOwnerId(Guid id, string employeeId)
+    public Task<Device?> FindByIdAndOwnerIdAsync(Guid id, string employeeId)
         => _context.Devices
             .Where(device => device.Id.Equals(id) && device.EmployeeId.Equals(employeeId))
-            .SingleOrDefault();
+            .FirstOrDefaultAsync();
 
-    public int Count(Func<Device, bool> predicate)
-        => _context.Devices.Count(predicate);
-    public int Count()
-       => _context.Devices.Count();
+    public Task<int> CountAsync(Expression<Func<Device, bool>> predicate)
+        => _context.Devices
+            .Where(predicate)
+            .CountAsync();
 
-    public int CountCommands(Guid deviceId) 
+    public Task<int> CountAsync()
+       => _context.Devices.CountAsync();
+
+    public Task<int> CountCommandsAsync(Guid deviceId) 
         => _context.Devices
             .Where(device => device.Id.Equals(deviceId))
             .Take(1)
             .SelectMany(device => device.Commands)
-            .Count();
+            .CountAsync();
 }

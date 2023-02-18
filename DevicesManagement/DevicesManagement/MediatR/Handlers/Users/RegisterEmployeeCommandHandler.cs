@@ -20,7 +20,7 @@ public class RegisterEmployeeCommandHandler : IRequestHandler<RegisterEmployeeCo
         _usersRepository = usersRepository;
     }
 
-    public Task<IActionResult> Handle(RegisterEmployeeCommand request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Handle(RegisterEmployeeCommand request, CancellationToken cancellationToken)
     {
         var newUser = _identityProvider.CreateIdentity(
             request.Request.EmployeeId, 
@@ -30,9 +30,8 @@ public class RegisterEmployeeCommandHandler : IRequestHandler<RegisterEmployeeCo
         );
 
         _usersRepository.Add(newUser);
-        _usersRepository.SaveChanges();
+        await _usersRepository.SaveAsync();
 
-        var result = new OkObjectResult(newUser.Adapt<UserDto>());
-        return Task.FromResult<IActionResult>(result);
+        return new OkObjectResult(newUser.Adapt<UserDto>());
     }
 }

@@ -20,14 +20,13 @@ public class RegisterCommandCommandHandler : IRequestHandler<RegisterCommandComm
         _commandsFactory = commandsFactory;
     }
 
-    public Task<IActionResult> Handle(RegisterCommandCommand request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Handle(RegisterCommandCommand request, CancellationToken cancellationToken)
     {
         var newCommand = _commandsFactory.From(request.Request);
         
         _devicesRepository.AddCommand(request.Resource, newCommand);
-        _devicesRepository.SaveChanges();
+        await _devicesRepository.SaveAsync();
 
-        var result = new OkObjectResult(newCommand.Adapt<CommandDto>());
-        return Task.FromResult<IActionResult>(result);
+        return new OkObjectResult(newCommand.Adapt<CommandDto>());
     }
 }

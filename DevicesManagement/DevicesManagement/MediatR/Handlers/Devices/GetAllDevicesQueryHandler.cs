@@ -1,5 +1,6 @@
 ﻿using Database.Models;
 using Database.Repositories.Interfaces;
+using Database.Repositories.ParallelRepositoryFactories;
 using DevicesManagement.DataTransferObjects.Responses;
 using DevicesManagement.MediatR.Commands.Devices;
 using DevicesManagement.ModelsHandlers.Factories.SearchOptions;
@@ -11,12 +12,12 @@ namespace DevicesManagement.MediatR.Handlers.Devices;
 
 public class GetAllDevicesQueryHandler : IRequestHandler<GetAllDevicesQuery, IActionResult>
 {
-    private readonly IDevicesRepository _devicesRepository;
+    private readonly IDevicesManagementParallelRepositoriesFactory _devicesManagementParallelRepositoriesFactory;
     private readonly ISearchOptionsFactory<Device, string> _searchOptionsFactory;
 
-    public GetAllDevicesQueryHandler(IDevicesRepository devicesRepository, ISearchOptionsFactory<Device, string> searchOptionsFactory)
+    public GetAllDevicesQueryHandler(IDevicesManagementParallelRepositoriesFactory devicesManagementParallelRepositoriesFactory, ISearchOptionsFactory<Device, string> searchOptionsFactory)
     {
-        _devicesRepository = devicesRepository;
+        _devicesManagementParallelRepositoriesFactory = devicesManagementParallelRepositoriesFactory;
         _searchOptionsFactory = searchOptionsFactory;
     }
 
@@ -24,12 +25,19 @@ public class GetAllDevicesQueryHandler : IRequestHandler<GetAllDevicesQuery, IAc
     {
         var options = _searchOptionsFactory.From(request.Request);
 
-        var devices = _devicesRepository.FindAll(options);
-        var totalCount = _devicesRepository.Count();
+        var devices = _devicesManagementParallelRepositoriesFactory.CreateDevicesRepository()
+            .FindAllAsync(options);
+        var totalCount = _devicesManagementParallelRepositoriesFactory.CreateDevicesRepository()
+            .CountAsync();
 
+        Task.WaitAll(new Task[] { devices, totalCount }, cancellationToken);
         var result = new OkObjectResult(
-            new PaginationResponseDto<DeviceDto>(totalCount, devices.Adapt<List<DeviceDto>>())
+            new PaginationResponseDto<DeviceDto>(
+                totalCount.Result, 
+                devices.Result.Adapt<List<DeviceDto>>()
+            )
         );
+
         return Task.FromResult<IActionResult>(result);
     }
 }

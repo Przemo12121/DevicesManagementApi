@@ -14,11 +14,11 @@ public class DeleteCommandCommandHandler : IRequestHandler<DeleteCommandCommand,
         _commandsRepository = commandsRepository;
     }
 
-    public Task<IActionResult> Handle(DeleteCommandCommand request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Handle(DeleteCommandCommand request, CancellationToken cancellationToken)
     {
         _commandsRepository.Delete(request.Resource!);
-        _commandsRepository.SaveChanges();
+        await _commandsRepository.SaveAsync();
 
-        return Task.FromResult<IActionResult>(new OkResult());
+        return new OkResult();
     }
 }

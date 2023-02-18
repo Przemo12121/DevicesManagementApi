@@ -4,8 +4,8 @@ using Database.Contexts;
 using Database.Models;
 using Database.Repositories;
 using Database.Repositories.Interfaces;
+using Database.Repositories.ParallelRepositoryFactories;
 using DevicesManagement.DataTransferObjects.Requests;
-using DevicesManagement.MediatR.Commands.Users;
 using DevicesManagement.ModelsHandlers.Factories;
 using DevicesManagement.ModelsHandlers.Factories.SearchOptions;
 using DevicesManagement.Validations.Authentication;
@@ -25,14 +25,19 @@ internal static class WebApplicationBuilderExtensions
         builder.Services.AddDbContext<DevicesManagementContext>();
 
         #region General repositories
-        builder.Services.AddScoped<ICommandsRepository, CommandRepository>();
+        builder.Services.AddScoped<ICommandsRepository, CommandsRepository>();
         builder.Services.AddScoped<IDevicesRepository, DevicesRepository>();
         builder.Services.AddScoped<IUsersRepository, UsersRepository>();
         builder.Services.AddScoped<IAccessLevelsRepository, AccessLevelsRepository>();
         #endregion
 
+        #region Parallel repositories factories
+        builder.Services.AddSingleton<IDevicesManagementParallelRepositoriesFactory, DevicesManagementParallelRepositoriesFactory>();
+        builder.Services.AddSingleton<ILocalAuthParallelRepositoriesFactory, LocalAuthParallelRepositoriesFactory>();
+        #endregion
+
         #region IAuthorizable<T> repositories
-        builder.Services.AddScoped<IResourceAuthorizableRepository<Command>, CommandRepository>();
+        builder.Services.AddScoped<IResourceAuthorizableRepository<Command>, CommandsRepository>();
         builder.Services.AddScoped<IResourceAuthorizableRepository<User>, UsersRepository>();
         builder.Services.AddScoped<IResourceAuthorizableRepository<Device>, DevicesRepository>();
         #endregion

@@ -3,17 +3,17 @@ namespace T_Database.T_DevicesRepository;
 public partial class T_FindById
 {
     [Fact]
-    public void FindByEmployeId_ExistingId_ReturnsDevicesWithThatId()
+    public async void FindByEmployeId_ExistingId_ReturnsDevicesWithThatId()
     {
-        var entity = Repository.FindById(Guid.Parse("12345678-abcd-1234-abcd-123456abcdef"));
+        var entity = await Repository.FindByIdAsync(Guid.Parse("12345678-abcd-1234-abcd-123456abcdef"));
 
         entity.Should().BeEquivalentTo(SearchedDevice);
     }
 
     [Fact]
-    public void FindByEmployeId_NonexistingId_ReturnsNull()
+    public async void FindByEmployeId_NonexistingId_ReturnsNull()
     {
-        var entity = Repository.FindById(Guid.Parse("abcd5678-abcd-1234-abcd-123456abcdef"));
+        var entity = await Repository.FindByIdAsync(Guid.Parse("abcd5678-abcd-1234-abcd-123456abcdef"));
 
         entity.Should().Be(null);
     }

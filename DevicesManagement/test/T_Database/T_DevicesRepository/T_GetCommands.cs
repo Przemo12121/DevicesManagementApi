@@ -6,54 +6,54 @@ namespace T_Database.T_DevicesRepository;
 public partial class T_GetCommands
 {
     [Fact]
-    public void GetCommands_WithDeviceId_ReturnsCommandsBelongingToThatDevice()
+    public async void GetCommands_WithDeviceId_ReturnsCommandsBelongingToThatDevice()
     {
-        var entities = Repository.GetCommands(Searched.Id, new LimitableSearchOptions(100));
+        var entities = await Repository.GetCommandsAsync(Searched.Id, new LimitableSearchOptions(100));
 
         entities.Should().HaveCount(2);
         entities.Should().BeEquivalentTo(Searched.Commands);
     }
 
     [Fact]
-    public void GetCommands_WithLimitOfOne_ReturnsOneRecord()
+    public async void GetCommands_WithLimitOfOne_ReturnsOneRecord()
     {
         int limit = 1;
-        var entities = Repository.GetCommands(Searched.Id, new LimitableSearchOptions(limit));
+        var entities = await Repository.GetCommandsAsync(Searched.Id, new LimitableSearchOptions(limit));
 
         entities.Should().HaveCount(limit);
     }
 
     [Fact]
-    public void GetCommands_WithOffsetOfOne_ReturnsOneRecord()
+    public async void GetCommands_WithOffsetOfOne_ReturnsOneRecord()
     {
         int offset = 1;
-        var entities = Repository.GetCommands(Searched.Id, new OffsetableSearchOptions(offset));
+        var entities = await Repository.GetCommandsAsync(Searched.Id, new OffsetableSearchOptions(offset));
 
         entities.Should().HaveCount(1);
     }
 
     [Fact]
-    public void GetCommands_WithOffsetOfOne_ReturnsSecondCommand()
+    public async void GetCommands_WithOffsetOfOne_ReturnsSecondCommand()
     {
         int offset = 1;
-        var entities = Repository.GetCommands(Searched.Id, new OffsetableSearchOptions(offset));
+        var entities = await Repository.GetCommandsAsync(Searched.Id, new OffsetableSearchOptions(offset));
 
         entities[0].Should().BeEquivalentTo(Searched.Commands[1]);
     }
 
     [Fact]
-    public void GetCommands_WithOrderNameASC_ReturnsCommandsOrderByNameASC()
+    public async void GetCommands_WithOrderNameASC_ReturnsCommandsOrderByNameASC()
     {
-        var entities = Repository.GetCommands(Searched.Id, new OrderableByNameAscSearchOptions());
+        var entities = await Repository.GetCommandsAsync(Searched.Id, new OrderableByNameAscSearchOptions());
 
         entities[0].Name.Should().Be("a first command");
         entities[1].Name.Should().Be("z second command");
     }
 
     [Fact]
-    public void GetCommands_WithOrderNameDESC_ReturnsCommandsOrderByNameDESC()
+    public async void GetCommands_WithOrderNameDESC_ReturnsCommandsOrderByNameDESC()
     {
-        var entities = Repository.GetCommands(Searched.Id, new OrderableByNameDescSearchOptions());
+        var entities = await Repository.GetCommandsAsync(Searched.Id, new OrderableByNameDescSearchOptions());
 
         entities[0].Name.Should().Be("z second command");
         entities[1].Name.Should().Be("a first command");
