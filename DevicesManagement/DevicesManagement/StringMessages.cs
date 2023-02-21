@@ -10,11 +10,11 @@ public static class StringMessages
     public static class HttpErrors
     {
         public static class Titles
-        {
+        {           
             public static readonly string INTERNAL = "Unexpected internal error occured";
             public static readonly string ACTION_FAILED = "Action failed";
             public static readonly string RESOURCE_NOT_FOUND = "Resource not found";
-            public static readonly string UNAUTHORIZED = "Resource not found";
+            public static readonly string UNAUTHORIZED = "Unauthorized";
             public static readonly string FORBIDDEN = "Access is forbidden";
             public static readonly string CONFLICT = "Conflciting state of the server";
             public static readonly string BAD_REQUEST = "Request is invalid";

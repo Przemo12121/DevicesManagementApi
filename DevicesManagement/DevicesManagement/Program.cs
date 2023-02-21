@@ -1,8 +1,10 @@
 using Database.Contexts;
+using Database.Models;
 using Database.Repositories;
 using DevicesManagement.ModelsHandlers.Factories.SearchOptions;
 using MediatR;
 using MediatR.Extensions.AttributedBehaviors;
+using Microsoft.AspNetCore.Identity;
 using System.Reflection;
 
 var assembly = Assembly.GetExecutingAssembly();
@@ -32,8 +34,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
-/*using (var context = new LocalAuthStorageContext())
+using (var context = new LocalAuthStorageContext())
 {
     AccessLevel a = new()
     {
@@ -52,7 +53,7 @@ app.MapControllers();
     context.AccessLevels.Add(a);
     context.Users.Add(u);
     context.SaveChanges();
-}*/
+}
 
 app.Run();
 
