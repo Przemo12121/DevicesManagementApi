@@ -44,7 +44,7 @@
 					},
 					"response": [
 						{
-							"name": "Successful request",
+							"name": "Successful response",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
@@ -97,7 +97,7 @@
 							"body": null
 						},
 						{
-							"name": "Invalid credentials request",
+							"name": "Invalid credentials response",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
@@ -154,7 +154,7 @@
 							"body": "{\n    \"title\": \"Resource not found\",\n    \"status\": 401,\n    \"detail\": \"Invalid credentials.\"\n}"
 						},
 						{
-							"name": "Bad request",
+							"name": "Bad request response",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
@@ -258,11 +258,11 @@
 								}
 							]
 						},
-						"description": "Updates requested command with provided data. Omitted fields are not modified.\n\nResponses with requested command's new data.\n\n##### Request body description\n\n| Field | Type | Description |\n| --- | --- | --- |\n| name (optional) | string | New command's name. Length must be in range from 1 to 64. Does not need to be unique. |\n| body (optional) | string | New command's body, sent to a device. Length must be in range from 1 to 2048. |\n| description (optional) | string | New command's description. Maximum length if 4096. |\n\n**Note:** At least one field must be sent for request to valid."
+						"description": "Updates requested command with provided data. Omitted fields are not modified.  \nOnly admins and command's owner are authorized to make request.  \nResponses with requested command's new data.\n\n##### Request body description\n\n| Field | Type | Description |\n| --- | --- | --- |\n| name (optional) | string | New command's name. Length must be in range from 1 to 64. Does not need to be unique. |\n| body (optional) | string | New command's body, sent to a device. Length must be in range from 1 to 2048. |\n| description (optional) | string | New command's description. Maximum length if 4096. |\n\n**Note:** At least one field must be sent for request to be valid."
 					},
 					"response": [
 						{
-							"name": "Successful request",
+							"name": "Successful response",
 							"originalRequest": {
 								"method": "PATCH",
 								"header": [],
@@ -321,7 +321,7 @@
 							"body": "{\n    \"id\": \"f86822a0-c1d7-4090-8360-58e714f0f694\",\n    \"updatedDate\": \"2023-02-21T19:43:42.8999063Z\",\n    \"body\": \"start -t 1000\",\n    \"name\": \"New command name\",\n    \"description\": \"New command's description.\"\n}"
 						},
 						{
-							"name": "Bad request",
+							"name": "Bad request response",
 							"originalRequest": {
 								"method": "PATCH",
 								"header": [],
@@ -380,7 +380,7 @@
 							"body": "{\n    \"title\": \"One or more validation errors occurred.\",\n    \"status\": 400,\n    \"errors\": {\n        \"Name\": [\n            \"Długość pola 'Name' musi się zawierać pomiędzy 1 i 64 znaki(ów). Wprowadzono 121 znaki(ów).\"\n        ]\n    }\n}"
 						},
 						{
-							"name": "Not existing resource reuqest",
+							"name": "Not existing resource response",
 							"originalRequest": {
 								"method": "PATCH",
 								"header": [],
@@ -483,11 +483,12 @@
 									"description": "The id of requested command to update."
 								}
 							]
-						}
+						},
+						"description": "Deletes requested command. Only admin and command's owner are authorized to make request."
 					},
 					"response": [
 						{
-							"name": "Successful request",
+							"name": "Successful response",
 							"originalRequest": {
 								"method": "DELETE",
 								"header": [],
@@ -542,7 +543,7 @@
 							"body": null
 						},
 						{
-							"name": "Not existing resource request",
+							"name": "Not existing resource response",
 							"originalRequest": {
 								"method": "DELETE",
 								"header": [],
@@ -634,6 +635,983 @@
 					}
 				}
 			]
+		},
+		{
+			"name": "Devices",
+			"item": [
+				{
+					"name": "Get all devices",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFhYWExMjM0NTY3OCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTY3NzA5NDU1OSwiZXhwIjoxNjc3MTEyNTU5LCJpYXQiOjE2NzcwOTQ1NTksImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9hcGkvYXV0aGVudGljYXRpb24iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUwMDAvYXBpIn0.3-eeFC_-DQiUyd1oPSWh_j2RbB-p_-8oVo5Yl3LLPOw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/devices?limit=3&offset=2&order=name:desc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"devices"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "3",
+									"description": "Quantity of maximum devices returned. Must be integer in range from 0 to 32. (optional) (default = 24)"
+								},
+								{
+									"key": "offset",
+									"value": "2",
+									"description": "Quantity of first devices skipped. Must be positive integer. (optional) (default = 0)"
+								},
+								{
+									"key": "order",
+									"value": "name:desc",
+									"description": "Order string i format field:direction. Fields are: name, address. Directions are: asc, desc. (optional) (default = name:asc)"
+								}
+							]
+						},
+						"description": "Gets all devices in the system. Only admin users are authorized to make requests."
+					},
+					"response": [
+						{
+							"name": "Successful response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/devices?limit=3&offset=2&order=name:desc",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"devices"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "3",
+											"description": "Quantity of maximum devices returned. Must be integer greater than 0. (optional) (default = 24)"
+										},
+										{
+											"key": "offset",
+											"value": "2",
+											"description": "Quantity of first devices skipped. Must be positive integer. (optional) (default = 0)"
+										},
+										{
+											"key": "order",
+											"value": "name:desc",
+											"description": "Order string i format field:direction. Fields are: name, address. Directions are: asc, desc. (optional) (default = name:asc)"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Feb 2023 19:40:53 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"totalCount\": 22,\n    \"results\": [\n        {\n            \"id\": \"3eee25bf-9b74-44fe-9673-035a156a14ab\",\n            \"updatedDate\": \"2023-02-22T19:38:07.936358Z\",\n            \"address\": \"127.0.0.1:3000\",\n            \"name\": \"Zzz-name-7\",\n            \"employeeId\": \"aaaa12345678\"\n        },\n        {\n            \"id\": \"90fd82c2-dc34-44ff-a77e-ea9456e772cf\",\n            \"updatedDate\": \"2023-02-22T19:38:07.923493Z\",\n            \"address\": \"127.0.0.1:3000\",\n            \"name\": \"Zzz-name-6\",\n            \"employeeId\": \"aaaa12345678\"\n        },\n        {\n            \"id\": \"3ef28e96-8ea1-41c2-8fc9-f6cfa53cb591\",\n            \"updatedDate\": \"2023-02-22T19:38:07.911714Z\",\n            \"address\": \"127.0.0.1:3000\",\n            \"name\": \"Zzz-name-5\",\n            \"employeeId\": \"aaaa12345678\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "Unauthorized request response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/devices?limit=3&offset=2&order=name:desc",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"devices"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "3",
+											"description": "Quantity of maximum devices returned. Must be integer greater than 0. (optional) (default = 24)"
+										},
+										{
+											"key": "offset",
+											"value": "2",
+											"description": "Quantity of first devices skipped. Must be positive integer. (optional) (default = 0)"
+										},
+										{
+											"key": "order",
+											"value": "name:desc",
+											"description": "Order string i format field:direction. Fields are: name, address. Directions are: asc, desc. (optional) (default = name:asc)"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Feb 2023 19:44:52 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Get device's commands",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFhYWExMjM0NTY3OCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTY3NzA5NDU1OSwiZXhwIjoxNjc3MTEyNTU5LCJpYXQiOjE2NzcwOTQ1NTksImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9hcGkvYXV0aGVudGljYXRpb24iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUwMDAvYXBpIn0.3-eeFC_-DQiUyd1oPSWh_j2RbB-p_-8oVo5Yl3LLPOw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/devices/:id/commands?limit=100&offset=1&order=name:desc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"devices",
+								":id",
+								"commands"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "100",
+									"description": "Quantity of maximum devices returned. Must be integer in range from 0 to 96 (optional) (default = 48)"
+								},
+								{
+									"key": "offset",
+									"value": "1",
+									"description": "Quantity of first devices skipped. Must be positive integer. (optional) (default = 0)"
+								},
+								{
+									"key": "order",
+									"value": "name:desc",
+									"description": "Order string i format field:direction. Fields are: name, body. Directions are: asc, desc. (optional) (default = name:asc)"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6b898e6c-4851-43ff-ae26-8889e9f0fb23",
+									"description": "Requested device's id."
+								}
+							]
+						},
+						"description": "Gets commands registered to requested device. Only admin and device owners are authorized to make requests."
+					},
+					"response": [
+						{
+							"name": "Successful response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/devices/6b898e6c-4851-43ff-ae26-8889e9f0fb23/commands?limit=3&offset=1&order=name:desc",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"devices",
+										"6b898e6c-4851-43ff-ae26-8889e9f0fb23",
+										"commands"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "3",
+											"description": "Quantity of maximum devices returned. Must be integer in range from 0 to 96 (optional) (default = 48)"
+										},
+										{
+											"key": "offset",
+											"value": "1",
+											"description": "Quantity of first devices skipped. Must be positive integer. (optional) (default = 0)"
+										},
+										{
+											"key": "order",
+											"value": "name:desc",
+											"description": "Order string i format field:direction. Fields are: name, body. Directions are: asc, desc. (optional) (default = name:asc)"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Feb 2023 19:48:34 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"totalCount\": 3,\n    \"results\": [\n        {\n            \"id\": \"be86a88f-d807-4dfb-a415-15a7085cf159\",\n            \"updatedDate\": \"2023-02-22T19:38:07.965547Z\",\n            \"body\": \"Bbb command\",\n            \"name\": \"Bbb-name\",\n            \"description\": null\n        },\n        {\n            \"id\": \"16c83bc4-64bb-4178-acde-1e8cc9b45a41\",\n            \"updatedDate\": \"2023-02-22T19:38:07.965544Z\",\n            \"body\": \"Zzz command\",\n            \"name\": \"Aaa-name\",\n            \"description\": null\n        }\n    ]\n}"
+						},
+						{
+							"name": "Bad request response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/devices/6b898e6c-4851-43ff-ae26-8889e9f0fb23/commands?limit=3&offset=1&order=name:desc",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"devices",
+										"6b898e6c-4851-43ff-ae26-8889e9f0fb23",
+										"commands"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "3",
+											"description": "Quantity of maximum devices returned. Must be integer in range from 0 to 96 (optional) (default = 48)"
+										},
+										{
+											"key": "offset",
+											"value": "1",
+											"description": "Quantity of first devices skipped. Must be positive integer. (optional) (default = 0)"
+										},
+										{
+											"key": "order",
+											"value": "name:desc",
+											"description": "Order string i format field:direction. Fields are: name, body. Directions are: asc, desc. (optional) (default = name:asc)"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Feb 2023 19:52:39 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"title\": \"One or more validation errors occurred.\",\n    \"status\": 400,\n    \"errors\": {\n        \"Limit\": [\n            \"Wartość pola 'Limit' musi być równa lub mniejsza niż '96'.\"\n        ]\n    }\n}"
+						},
+						{
+							"name": "Not existing resource response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/devices/6b898e6c-4851-43ff-ae26-8889e9f0fb24/commands?limit=100&offset=1&order=name:desc",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"devices",
+										"6b898e6c-4851-43ff-ae26-8889e9f0fb24",
+										"commands"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "100",
+											"description": "Quantity of maximum devices returned. Must be integer in range from 0 to 96 (optional) (default = 48)"
+										},
+										{
+											"key": "offset",
+											"value": "1",
+											"description": "Quantity of first devices skipped. Must be positive integer. (optional) (default = 0)"
+										},
+										{
+											"key": "order",
+											"value": "name:desc",
+											"description": "Order string i format field:direction. Fields are: name, body. Directions are: asc, desc. (optional) (default = name:asc)"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Feb 2023 20:03:17 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"title\": \"Resource not found\",\n    \"status\": 404,\n    \"detail\": \"Requested Device resource with id 6b898e6c-4851-43ff-ae26-8889e9f0fb24 does not exist, or access is restricted.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update device",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFhYWExMjM0NTY3OCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTY3NzA5NDU1OSwiZXhwIjoxNjc3MTEyNTU5LCJpYXQiOjE2NzcwOTQ1NTksImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9hcGkvYXV0aGVudGljYXRpb24iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUwMDAvYXBpIn0.3-eeFC_-DQiUyd1oPSWh_j2RbB-p_-8oVo5Yl3LLPOw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"New device's name\",\r\n    \"address\": \"168.123.200.124:4099\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/devices/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"devices",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6b898e6c-4851-43ff-ae26-8889e9f0fb23",
+									"description": "Requested device's id."
+								}
+							]
+						},
+						"description": "Updates requested device with provided data. Omitted fields are not modified.  \nOnly admins and device's owner are authorized to make requests.\n\nResponses with requested device's new data.\n\n##### Request body description\n\n| Field | Type | Description |\n| --- | --- | --- |\n| name (optional) | string | New device's name. Length must be in range from 1 to 256. Does not need to be unique. |\n| address (optional) | string | New device's address. Must match IPv4 address with port. |\n\n**Note:** At least one field must be sent for request to be valid."
+					},
+					"response": [
+						{
+							"name": "Successful response",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"New device's name\",\r\n    \"address\": \"168.123.200.124:4099\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/devices/6b898e6c-4851-43ff-ae26-8889e9f0fb23",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"devices",
+										"6b898e6c-4851-43ff-ae26-8889e9f0fb23"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Feb 2023 20:01:07 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"6b898e6c-4851-43ff-ae26-8889e9f0fb23\",\n    \"updatedDate\": \"2023-02-22T20:01:07.7759529Z\",\n    \"address\": \"168.123.200.124:4099\",\n    \"name\": \"New device's name\",\n    \"employeeId\": \"aaaa12345678\"\n}"
+						},
+						{
+							"name": "Bad request response",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"New device's name\",\r\n    \"address\": \"168.123.200:4099\",\r\n    \"description\": \"New description\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/devices/6b898e6c-4851-43ff-ae26-8889e9f0fb23",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"devices",
+										"6b898e6c-4851-43ff-ae26-8889e9f0fb23"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Feb 2023 19:55:44 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"title\": \"One or more validation errors occurred.\",\n    \"status\": 400,\n    \"errors\": {\n        \"Address\": [\n            \"Określony warunek nie został spełniony dla pola 'Address'.\"\n        ]\n    }\n}"
+						},
+						{
+							"name": "Not existing resource response",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"New device's name\",\r\n    \"address\": \"168.123.200.124:4099\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/devices/6b898e6c-4851-43ff-ae26-8889e9f0fb24",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"devices",
+										"6b898e6c-4851-43ff-ae26-8889e9f0fb24"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Feb 2023 20:03:51 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"title\": \"Resource not found\",\n    \"status\": 404,\n    \"detail\": \"Requested Device resource with id 6b898e6c-4851-43ff-ae26-8889e9f0fb24 does not exist, or access is restricted.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Register device's new command",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFhYWExMjM0NTY3OCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTY3NzA5NDU1OSwiZXhwIjoxNjc3MTEyNTU5LCJpYXQiOjE2NzcwOTQ1NTksImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9hcGkvYXV0aGVudGljYXRpb24iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUwMDAvYXBpIn0.3-eeFC_-DQiUyd1oPSWh_j2RbB-p_-8oVo5Yl3LLPOw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"New device's command\",\r\n    \"body\": \"start -t 1000\",\r\n    \"description\": \"new command\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/devices/:id/commands",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"devices",
+								":id",
+								"commands"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6b898e6c-4851-43ff-ae26-8889e9f0fb23",
+									"description": "Requested device id."
+								}
+							]
+						},
+						"description": "Creates new command for requested device. Only admin and device's owner are authorized to make request.  \nResponses with new command's data.\n\n##### Request body description\n\n| Field | Type | Description |\n| --- | --- | --- |\n| name (optional) | string | New device's name. Length must be in range from 1 to 256. Does not need to be unique. |\n| address (optional) | string | New device's address. Must match IPv4 address with port. |\n\n**Note:** At least one field must be sent for request to be valid."
+					},
+					"response": [
+						{
+							"name": "Successful response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"New device's command\",\r\n    \"body\": \"start -t 1000\",\r\n    \"description\": \"new command\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/devices/6b898e6c-4851-43ff-ae26-8889e9f0fb23/commands",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"devices",
+										"6b898e6c-4851-43ff-ae26-8889e9f0fb23",
+										"commands"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Feb 2023 20:06:05 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"02e1d243-b48c-4e0c-8461-df0c54732d93\",\n    \"updatedDate\": \"2023-02-22T20:06:06.49017Z\",\n    \"body\": \"start -t 1000\",\n    \"name\": \"New device's command\",\n    \"description\": \"new command\"\n}"
+						},
+						{
+							"name": "Not existing resource response",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"New device's name\",\r\n    \"address\": \"168.123.200.124:4099\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/devices/6b898e6c-4851-43ff-ae26-8889e9f0fb24",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"devices",
+										"6b898e6c-4851-43ff-ae26-8889e9f0fb24"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Feb 2023 20:03:51 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"title\": \"Resource not found\",\n    \"status\": 404,\n    \"detail\": \"Requested Device resource with id 6b898e6c-4851-43ff-ae26-8889e9f0fb24 does not exist, or access is restricted.\"\n}"
+						},
+						{
+							"name": "Bad request response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"New device's command\",\r\n    \"description\": \"new command\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/devices/6b898e6c-4851-43ff-ae26-8889e9f0fb23/commands",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"devices",
+										"6b898e6c-4851-43ff-ae26-8889e9f0fb23",
+										"commands"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Feb 2023 20:07:17 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.1\",\n    \"title\": \"One or more validation errors occurred.\",\n    \"status\": 400,\n    \"traceId\": \"00-77af18996445bcd0c69659c7881bb2e8-b10efe921aab5860-00\",\n    \"errors\": {\n        \"Body\": [\n            \"The Body field is required.\"\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete device",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFhYWExMjM0NTY3OCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTY3NzAwNzI4MiwiZXhwIjoxNjc3MDI1MjgyLCJpYXQiOjE2NzcwMDcyODIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9hcGkvYXV0aGVudGljYXRpb24iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUwMDAvYXBpIn0.Nso7yNvYjdlm_rOgkyLoQgHTfVB9Z46JX3NyFcjn6UQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/devce/:id/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"devce",
+								":id",
+								"delete"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "f86822a0-c1d7-4090-8360-58e714f0f694"
+								}
+							]
+						},
+						"description": "Deletes requested command. Only admin and command's owner are authorized to make request."
+					},
+					"response": [
+						{
+							"name": "Successful response",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/commands/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"commands",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "f86822a0-c1d7-4090-8360-58e714f0f694",
+											"description": "The id of requested command to update."
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Feb 2023 19:52:21 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Not existing resource response",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/commands/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"commands",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "f86822a0-c1d7-4090-1234-58e714f0f694",
+											"description": "The id of requested command to update."
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Feb 2023 20:03:00 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"title\": \"Resource not found\",\n    \"status\": 404,\n    \"detail\": \"Requested Device resource with id f86822a0-c1d7-4090-1234-58e714f0f694 does not exist, or access is restricted.\"\n}"
+						}
+					]
+				}
+			],
+			"description": "Complete collection of devices actions."
 		}
 	]
 }
