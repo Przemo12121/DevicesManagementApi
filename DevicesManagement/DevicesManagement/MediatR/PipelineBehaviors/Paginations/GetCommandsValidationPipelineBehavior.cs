@@ -7,7 +7,7 @@ namespace DevicesManagement.MediatR.PipelineBehaviors.Paginations;
 
 public class GetCommandsValidationPipelineBehavior : RequestValidationPipelineBehavior<PaginationRequest, GetCommandsQuery>
 {
-    protected static List<IValidator<PaginationRequest>> _validators = new() { new PaginationRequestValidator(32, new[] { "name", "body" }) };
+    protected static List<IValidator<PaginationRequest>> _validators = new() { new PaginationRequestValidator(96, new[] { "name", "body" }) };
 
     public GetCommandsValidationPipelineBehavior() : base(_validators) { }
 }
