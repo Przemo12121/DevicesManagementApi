@@ -746,7 +746,7 @@
 							"body": "{\n    \"totalCount\": 22,\n    \"results\": [\n        {\n            \"id\": \"3eee25bf-9b74-44fe-9673-035a156a14ab\",\n            \"updatedDate\": \"2023-02-22T19:38:07.936358Z\",\n            \"address\": \"127.0.0.1:3000\",\n            \"name\": \"Zzz-name-7\",\n            \"employeeId\": \"aaaa12345678\"\n        },\n        {\n            \"id\": \"90fd82c2-dc34-44ff-a77e-ea9456e772cf\",\n            \"updatedDate\": \"2023-02-22T19:38:07.923493Z\",\n            \"address\": \"127.0.0.1:3000\",\n            \"name\": \"Zzz-name-6\",\n            \"employeeId\": \"aaaa12345678\"\n        },\n        {\n            \"id\": \"3ef28e96-8ea1-41c2-8fc9-f6cfa53cb591\",\n            \"updatedDate\": \"2023-02-22T19:38:07.911714Z\",\n            \"address\": \"127.0.0.1:3000\",\n            \"name\": \"Zzz-name-5\",\n            \"employeeId\": \"aaaa12345678\"\n        }\n    ]\n}"
 						},
 						{
-							"name": "Unauthorized request response",
+							"name": "Forbidden response",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -1612,6 +1612,1144 @@
 				}
 			],
 			"description": "Complete collection of devices actions."
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get employees",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFhYWExMjM0NTY3OCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTY3NzA5NDU1OSwiZXhwIjoxNjc3MTEyNTU5LCJpYXQiOjE2NzcwOTQ1NTksImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9hcGkvYXV0aGVudGljYXRpb24iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUwMDAvYXBpIn0.3-eeFC_-DQiUyd1oPSWh_j2RbB-p_-8oVo5Yl3LLPOw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/users/employees?limit=3&offset=2&order=name:desc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"employees"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "3",
+									"description": "Quantity of maximum employees returned. Must be integer in range from 0 to 16. (optional) (default = 12)"
+								},
+								{
+									"key": "offset",
+									"value": "2",
+									"description": "Quantity of first devices skipped. Must be positive integer. (optional) (default = 0)"
+								},
+								{
+									"key": "order",
+									"value": "name:desc",
+									"description": "Order string i format field:direction. Fields are: name, eid. Directions are: asc, desc. (optional) (default = name:asc)"
+								}
+							]
+						},
+						"description": "Gets all employees in the system. Only admin users are authorized to make requests."
+					},
+					"response": [
+						{
+							"name": "Successful response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/users/employees?limit=3&offset=2&order=name:desc",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"employees"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "3",
+											"description": "Quantity of maximum employees returned. Must be integer in range from 0 to 16. (optional) (default = 12)"
+										},
+										{
+											"key": "offset",
+											"value": "2",
+											"description": "Quantity of first devices skipped. Must be positive integer. (optional) (default = 0)"
+										},
+										{
+											"key": "order",
+											"value": "name:desc",
+											"description": "Order string i format field:direction. Fields are: name, eid. Directions are: asc, desc. (optional) (default = name:asc)"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Feb 2023 20:38:58 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"totalCount\": 10,\n    \"results\": [\n        {\n            \"id\": \"8d82081c-baf5-4bb7-bd54-70d06bd4c5f7\",\n            \"name\": \"aaa\",\n            \"employeeId\": \"xyzw12312312\",\n            \"updatedDate\": \"0001-01-01T00:00:00\",\n            \"enabled\": false\n        },\n        {\n            \"id\": \"8c97db07-fed5-4ea5-9a1d-a5e84d612acd\",\n            \"name\": \"aaa\",\n            \"employeeId\": \"aaab78945612\",\n            \"updatedDate\": \"0001-01-01T00:00:00\",\n            \"enabled\": false\n        },\n        {\n            \"id\": \"1728b194-0d49-4419-acc3-3c59a3b70e1d\",\n            \"name\": \"aaa\",\n            \"employeeId\": \"aaaa12345678\",\n            \"updatedDate\": \"0001-01-01T00:00:00\",\n            \"enabled\": false\n        }\n    ]\n}"
+						},
+						{
+							"name": "Bad request example",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/users/employees?limit=300&offset=2&order=name:desc",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"employees"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "300",
+											"description": "Quantity of maximum employees returned. Must be integer in range from 0 to 16. (optional) (default = 12)"
+										},
+										{
+											"key": "offset",
+											"value": "2",
+											"description": "Quantity of first devices skipped. Must be positive integer. (optional) (default = 0)"
+										},
+										{
+											"key": "order",
+											"value": "name:desc",
+											"description": "Order string i format field:direction. Fields are: name, eid. Directions are: asc, desc. (optional) (default = name:asc)"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Feb 2023 20:39:48 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"title\": \"One or more validation errors occurred.\",\n    \"status\": 400,\n    \"errors\": {\n        \"Limit\": [\n            \"Wartość pola 'Limit' musi być równa lub mniejsza niż '16'.\"\n        ]\n    }\n}"
+						},
+						{
+							"name": "Forbidden response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/users/employees?limit=3&offset=2&order=name:desc",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"employees"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "3",
+											"description": "Quantity of maximum employees returned. Must be integer in range from 0 to 16. (optional) (default = 12)"
+										},
+										{
+											"key": "offset",
+											"value": "2",
+											"description": "Quantity of first devices skipped. Must be positive integer. (optional) (default = 0)"
+										},
+										{
+											"key": "order",
+											"value": "name:desc",
+											"description": "Order string i format field:direction. Fields are: name, eid. Directions are: asc, desc. (optional) (default = name:asc)"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Feb 2023 20:40:34 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Get user's devices",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFhYWExMjM0NTY3OCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTY3NzA5NDU1OSwiZXhwIjoxNjc3MTEyNTU5LCJpYXQiOjE2NzcwOTQ1NTksImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9hcGkvYXV0aGVudGljYXRpb24iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUwMDAvYXBpIn0.3-eeFC_-DQiUyd1oPSWh_j2RbB-p_-8oVo5Yl3LLPOw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/users/:id/devices?limit=3&offset=2&order=name:desc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								":id",
+								"devices"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "3",
+									"description": "Quantity of maximum devices returned. Must be integer in range from 0 to 32. (optional) (default = 24)"
+								},
+								{
+									"key": "offset",
+									"value": "2",
+									"description": "Quantity of first devices skipped. Must be positive integer. (optional) (default = 0)"
+								},
+								{
+									"key": "order",
+									"value": "name:desc",
+									"description": "Order string i format field:direction. Fields are: name, address. Directions are: asc, desc. (optional) (default = name:asc)"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "23a3c1eb-ed5c-4888-9ef7-ecf439c7931b",
+									"description": "Requested user's id."
+								}
+							]
+						},
+						"description": "Gets devices registered to requested user. Only admin users and account owner are authorized to make requests."
+					},
+					"response": [
+						{
+							"name": "Get user's devices",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/users/23a3c1eb-ed5c-4888-9ef7-ecf439c7931b/devices?limit=3&offset=2&order=name:desc",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"23a3c1eb-ed5c-4888-9ef7-ecf439c7931b",
+										"devices"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "3"
+										},
+										{
+											"key": "offset",
+											"value": "2"
+										},
+										{
+											"key": "order",
+											"value": "name:desc"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Feb 2023 20:51:56 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"totalCount\": 55,\n    \"results\": [\n        {\n            \"id\": \"90fd82c2-dc34-44ff-a77e-ea9456e772cf\",\n            \"updatedDate\": \"2023-02-22T19:38:07.923493Z\",\n            \"address\": \"127.0.0.1:3000\",\n            \"name\": \"Zzz-name-6\",\n            \"employeeId\": \"aaaa12345678\"\n        },\n        {\n            \"id\": \"3ef28e96-8ea1-41c2-8fc9-f6cfa53cb591\",\n            \"updatedDate\": \"2023-02-22T19:38:07.911714Z\",\n            \"address\": \"127.0.0.1:3000\",\n            \"name\": \"Zzz-name-5\",\n            \"employeeId\": \"aaaa12345678\"\n        },\n        {\n            \"id\": \"bd0a8fcf-a222-4482-a2d0-65e088859940\",\n            \"updatedDate\": \"2023-02-22T19:38:07.894724Z\",\n            \"address\": \"127.0.0.1:3000\",\n            \"name\": \"Zzz-name-4\",\n            \"employeeId\": \"aaaa12345678\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "Bad request response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/users/23a3c1eb-ed5c-4888-9ef7-ecf439c7931b/devices?limit=300&offset=2&order=name:desc",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"23a3c1eb-ed5c-4888-9ef7-ecf439c7931b",
+										"devices"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "300",
+											"description": "Quantity of maximum devices returned. Must be integer in range from 0 to 32. (optional) (default = 24)"
+										},
+										{
+											"key": "offset",
+											"value": "2",
+											"description": "Quantity of first devices skipped. Must be positive integer. (optional) (default = 0)"
+										},
+										{
+											"key": "order",
+											"value": "name:desc",
+											"description": "Order string i format field:direction. Fields are: name, address. Directions are: asc, desc. (optional) (default = name:asc)"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Feb 2023 20:54:10 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"title\": \"One or more validation errors occurred.\",\n    \"status\": 400,\n    \"errors\": {\n        \"Limit\": [\n            \"Wartość pola 'Limit' musi być równa lub mniejsza niż '32'.\"\n        ]\n    }\n}"
+						},
+						{
+							"name": "Non existing resource response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/users/23a3c1eb-ed5c-4888-9ef7-ecf439c7931a/devices?limit=30&offset=2&order=name:desc",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"23a3c1eb-ed5c-4888-9ef7-ecf439c7931a",
+										"devices"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "30",
+											"description": "Quantity of maximum devices returned. Must be integer in range from 0 to 32. (optional) (default = 24)"
+										},
+										{
+											"key": "offset",
+											"value": "2",
+											"description": "Quantity of first devices skipped. Must be positive integer. (optional) (default = 0)"
+										},
+										{
+											"key": "order",
+											"value": "name:desc",
+											"description": "Order string i format field:direction. Fields are: name, address. Directions are: asc, desc. (optional) (default = name:asc)"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Feb 2023 20:55:41 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"title\": \"Resource not found\",\n    \"status\": 404,\n    \"detail\": \"Requested User resource with id 23a3c1eb-ed5c-4888-9ef7-ecf439c7931a does not exist, or access is restricted.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Register employee",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFhYWExMjM0NTY3OCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTY3NzA5NDU1OSwiZXhwIjoxNjc3MTEyNTU5LCJpYXQiOjE2NzcwOTQ1NTksImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9hcGkvYXV0aGVudGljYXRpb24iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUwMDAvYXBpIn0.3-eeFC_-DQiUyd1oPSWh_j2RbB-p_-8oVo5Yl3LLPOw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"employeeId\": \"xxaa11113333\",\r\n    \"name\": \"new employee\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/users/employees",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"employees"
+							]
+						},
+						"description": "Creates new employee in the system. Only admin is authorized to make request.  \nOn success responses with new employee data.\n\n##### Request body description\n\n| **Field** | **Type** | **Description** |\n| --- | --- | --- |\n| login | string | New employee's id used as login. Must match format of 4 lower case letters, followed with 8 digits. Must be unique. |\n| name | string | New employee's name. |\n| password | string | New employee's password. Must contain at least 1 lower case letter, 1 upper case letter, 1 digit. Length must be in range from 8 to 32. No special characters allowed. |"
+					},
+					"response": [
+						{
+							"name": "Successful response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"employeeId\": \"xxaa11113333\",\r\n    \"name\": \"new employee\",\r\n    \"password\": \"dummyPWD123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/users/employees",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"employees"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Feb 2023 21:00:35 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"a843d8d3-d9c3-4279-a2b2-15b99b8c3d60\",\n    \"name\": \"new employee\",\n    \"employeeId\": \"xxaa11113333\",\n    \"updatedDate\": \"2023-02-22T21:00:35.3264387Z\",\n    \"enabled\": true\n}"
+						},
+						{
+							"name": "Employee Id taken response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"employeeId\": \"xxaa11113333\",\r\n    \"name\": \"new employee\",\r\n    \"password\": \"dummyPWD123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/users/employees",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"employees"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Feb 2023 21:00:56 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"title\": \"Conflciting state of the server\",\n    \"status\": 409,\n    \"detail\": \"Reqested employee id is already taken.\"\n}"
+						},
+						{
+							"name": "Bad request response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"employeeId\": \"xxaa11113333\",\r\n    \"name\": \"new employee\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/users/employees",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"employees"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Feb 2023 21:01:19 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.1\",\n    \"title\": \"One or more validation errors occurred.\",\n    \"status\": 400,\n    \"traceId\": \"00-5568ab3ebadeb545b5867fc9680bc7db-c6ddc1f8daee1ed1-00\",\n    \"errors\": {\n        \"Password\": [\n            \"The Password field is required.\"\n        ]\n    }\n}"
+						},
+						{
+							"name": "Forbidden response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"employeeId\": \"xxaa11113333\",\r\n    \"name\": \"new employee\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/users/employees",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"employees"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Feb 2023 21:02:04 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Update employee",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFhYWExMjM0NTY3OCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTY3NzA5NDU1OSwiZXhwIjoxNjc3MTEyNTU5LCJpYXQiOjE2NzcwOTQ1NTksImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9hcGkvYXV0aGVudGljYXRpb24iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUwMDAvYXBpIn0.3-eeFC_-DQiUyd1oPSWh_j2RbB-p_-8oVo5Yl3LLPOw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"employeeId\": \"yyaa11113333\",\r\n    \"name\": \"new employee\",\r\n    \"password\": \"dummyPWD123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/users/employees/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"employees",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "a843d8d3-d9c3-4279-a2b2-15b99b8c3d60",
+									"description": "Requested employee id."
+								}
+							]
+						},
+						"description": "Updates requested employee in the system. Only admin is authorized to make request.  \nOn success responses with employee new data.\n\n##### Request body description\n\n| **Field** | **Type** | **Description** |\n| --- | --- | --- |\n| login (optional) | string | Employee's new id used as login. Must match format of 4 lower case letters, followed with 8 digits. Must be unique. |\n| name (optional) | string | Employee's new name. |\n| password (optional) | string | Employee's new password. Must contain at least 1 lower case letter, 1 upper case letter, 1 digit. Length must be in range from 8 to 32. No special characters allowed. |\n\n**Note:** At least one field must be provided for request to be valid."
+					},
+					"response": [
+						{
+							"name": "Successful response",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"employeeId\": \"yyaa11113333\",\r\n    \"name\": \"new employee\",\r\n    \"password\": \"dummyPWD123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/users/employees/a843d8d3-d9c3-4279-a2b2-15b99b8c3d60",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"employees",
+										"a843d8d3-d9c3-4279-a2b2-15b99b8c3d60"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Feb 2023 21:06:21 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"a843d8d3-d9c3-4279-a2b2-15b99b8c3d60\",\n    \"name\": \"new employee\",\n    \"employeeId\": \"yyaa11113333\",\n    \"updatedDate\": \"2023-02-22T21:06:21.4476911Z\",\n    \"enabled\": true\n}"
+						},
+						{
+							"name": "Employee Id taken response",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"employeeId\": \"xxaa11113333\",\r\n    \"name\": \"new employee\",\r\n    \"password\": \"dummyPWD123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/users/employees/a843d8d3-d9c3-4279-a2b2-15b99b8c3d60",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"employees",
+										"a843d8d3-d9c3-4279-a2b2-15b99b8c3d60"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Feb 2023 21:00:56 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"title\": \"Conflciting state of the server\",\n    \"status\": 409,\n    \"detail\": \"Reqested employee id is already taken.\"\n}"
+						},
+						{
+							"name": "Bad request response",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"employeeId\": \"xxaa11113333\",\r\n    \"name\": \"new employee\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/users/employees/a843d8d3-d9c3-4279-a2b2-15b99b8c3d60",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"employees",
+										"a843d8d3-d9c3-4279-a2b2-15b99b8c3d60"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Feb 2023 21:01:19 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.1\",\n    \"title\": \"One or more validation errors occurred.\",\n    \"status\": 400,\n    \"traceId\": \"00-5568ab3ebadeb545b5867fc9680bc7db-c6ddc1f8daee1ed1-00\",\n    \"errors\": {\n        \"Password\": [\n            \"The Password field is required.\"\n        ]\n    }\n}"
+						},
+						{
+							"name": "Forbidden response",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"employeeId\": \"xxaa11113333\",\r\n    \"name\": \"new employee\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/users/employees/a843d8d3-d9c3-4279-a2b2-15b99b8c3d60",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"employees",
+										"a843d8d3-d9c3-4279-a2b2-15b99b8c3d60"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Feb 2023 21:02:04 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Delete employee",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFhYWExMjM0NTY3OCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTY3NzA5NDU1OSwiZXhwIjoxNjc3MTEyNTU5LCJpYXQiOjE2NzcwOTQ1NTksImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9hcGkvYXV0aGVudGljYXRpb24iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUwMDAvYXBpIn0.3-eeFC_-DQiUyd1oPSWh_j2RbB-p_-8oVo5Yl3LLPOw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/users/employees/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"employees",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "a843d8d3-d9c3-4279-a2b2-15b99b8c3d60",
+									"description": "Requested employee's id."
+								}
+							]
+						},
+						"description": "Deletes requested employee from the system. Only admin is authorized to make request."
+					},
+					"response": [
+						{
+							"name": "Successful response",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/users/employees/a843d8d3-d9c3-4279-a2b2-15b99b8c3d60",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"employees",
+										"a843d8d3-d9c3-4279-a2b2-15b99b8c3d60"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Feb 2023 21:09:58 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Forbidden response",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/users/employees/a843d8d3-d9c3-4279-a2b2-15b99b8c3d60",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"employees",
+										"a843d8d3-d9c3-4279-a2b2-15b99b8c3d60"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Feb 2023 21:02:04 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Non existing resource response",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/users/employees/a843d8d3-d9c3-4279-a2b2-15b99b8c3d61",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"employees",
+										"a843d8d3-d9c3-4279-a2b2-15b99b8c3d61"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 22 Feb 2023 21:10:11 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"title\": \"Resource not found\",\n    \"status\": 404,\n    \"detail\": \"Requested User resource with id a843d8d3-d9c3-4279-a2b2-15b99b8c3d61 does not exist, or access is restricted.\"\n}"
+						}
+					]
+				}
+			]
 		}
 	]
 }

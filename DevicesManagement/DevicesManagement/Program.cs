@@ -34,7 +34,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-using (var context = new LocalAuthStorageContext())
+/*using (var context = new LocalAuthStorageContext())
 {
     AccessLevel a = new()
     {
@@ -53,7 +53,7 @@ using (var context = new LocalAuthStorageContext())
     context.AccessLevels.Add(a);
     context.Users.Add(u);
     context.SaveChanges();
-}
+}*/
 
 app.Run();
 
