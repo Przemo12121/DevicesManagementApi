@@ -24,5 +24,6 @@ The project consists of rest api with (currently only) Bearer token authorizatio
  - Add refresh jwt endpoint.
  - Add cookies authentication.
 
-
+### Overall project diagram:
+![project diagram](docs/devicesMenagement_archi.drawio.svg)
 
