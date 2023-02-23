@@ -1,6 +1,6 @@
 ﻿namespace IntegrationTests.Users;
 
-public partial class DeleteEmployee : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<BaseSetup>, IDisposable
+public partial class Delete : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<BaseSetup>, IDisposable
 {
     private readonly WebApplicationFactory<Program> _factory;
     private readonly BaseSetup _setupFixture;
@@ -12,7 +12,7 @@ public partial class DeleteEmployee : IClassFixture<WebApplicationFactory<Progra
     User OtherUser { get; init; }
     User DummyUser { get; init; }
 
-    public DeleteEmployee(WebApplicationFactory<Program> factory, BaseSetup setupFixture)
+    public Delete(WebApplicationFactory<Program> factory, BaseSetup setupFixture)
     {
         _factory = factory;
         _setupFixture = setupFixture;
@@ -48,7 +48,7 @@ public partial class DeleteEmployee : IClassFixture<WebApplicationFactory<Progra
         context.SaveChanges();
     }
 
-    private string Route(IDatabaseModel entity) => $"/api/users/employees/{entity.Id}";
+    private string Route(IDatabaseModel entity) => $"/api/users/{entity.Id}";
 
     public void Dispose()
     {

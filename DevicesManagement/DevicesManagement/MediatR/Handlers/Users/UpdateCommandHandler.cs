@@ -10,18 +10,18 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DevicesManagement.MediatR.Handlers.Users;
 
-public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeCommand, IActionResult>
+public class UpdateCommandHandler : IRequestHandler<UpdateCommand, IActionResult>
 {
     private readonly IUsersRepository _usersRepository;
     private readonly IIdentityProvider<User> _identityProvider;
 
-    public UpdateEmployeeCommandHandler(IUsersRepository usersRepository, IIdentityProvider<User> identityProvider)
+    public UpdateCommandHandler(IUsersRepository usersRepository, IIdentityProvider<User> identityProvider)
     {
         _usersRepository = usersRepository;
         _identityProvider = identityProvider;
     }
 
-    public async Task<IActionResult> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Handle(UpdateCommand request, CancellationToken cancellationToken)
     {
         request.Resource.UpdateWith(request.Request, _identityProvider);
 

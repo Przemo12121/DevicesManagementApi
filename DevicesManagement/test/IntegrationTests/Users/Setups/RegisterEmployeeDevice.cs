@@ -1,6 +1,6 @@
 ﻿namespace IntegrationTests.Users;
 
-public partial class RegisterEmployeeDevice : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<BaseSetup>, IDisposable
+public partial class RegisterDevice : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<BaseSetup>, IDisposable
 {
     private readonly WebApplicationFactory<Program> _factory;
     private readonly BaseSetup _setupFixture;
@@ -9,7 +9,7 @@ public partial class RegisterEmployeeDevice : IClassFixture<WebApplicationFactor
     User RequestingUser { get; init; }
     string RequestingUserJwt { get; init; }
 
-    string Route(IDatabaseModel entity) => $"api/users/employees/{entity.Id}/devices";
+    string Route(IDatabaseModel entity) => $"api/users/{entity.Id}/devices";
 
     static RegisterDeviceRequest DummyRequest { get; } = new()
     {
@@ -17,7 +17,7 @@ public partial class RegisterEmployeeDevice : IClassFixture<WebApplicationFactor
         Address = "127.0.0.1:5060"
     };
 
-    public RegisterEmployeeDevice(WebApplicationFactory<Program> factory, BaseSetup setupFixture)
+    public RegisterDevice(WebApplicationFactory<Program> factory, BaseSetup setupFixture)
     {
         _factory = factory;
         _setupFixture = setupFixture;

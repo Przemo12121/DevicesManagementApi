@@ -1,6 +1,6 @@
 ﻿namespace IntegrationTests.Users;
 
-public partial class UpdateEmployee : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<BaseSetup>, IDisposable
+public partial class Update : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<BaseSetup>, IDisposable
 {
     private readonly WebApplicationFactory<Program> _factory;
     private readonly BaseSetup _setupFixture;
@@ -12,7 +12,7 @@ public partial class UpdateEmployee : IClassFixture<WebApplicationFactory<Progra
     User OtherUser { get; init; }
     User DummyUser { get; init; }
 
-    public UpdateEmployee(WebApplicationFactory<Program> factory, BaseSetup setupFixture)
+    public Update(WebApplicationFactory<Program> factory, BaseSetup setupFixture)
     {
         _factory = factory;
         _setupFixture = setupFixture;
@@ -48,7 +48,7 @@ public partial class UpdateEmployee : IClassFixture<WebApplicationFactory<Progra
         context.SaveChanges();
     }
 
-    private string Route(IDatabaseModel entity) => $"/api/users/employees/{entity.Id}";
+    private string Route(IDatabaseModel entity) => $"/api/users/{entity.Id}";
 
     public void Dispose()
     {

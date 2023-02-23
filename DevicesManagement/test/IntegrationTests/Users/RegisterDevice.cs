@@ -1,7 +1,7 @@
 ﻿namespace IntegrationTests.Users;
 
 [Collection("IntegrationTests")]
-public partial class RegisterEmployeeDevice
+public partial class RegisterDevice
 {
     [Fact]
     public async void RegisterEmployeeDevice_ValidRequest_ResponsesWith200()

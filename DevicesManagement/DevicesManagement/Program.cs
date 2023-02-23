@@ -26,8 +26,7 @@ builder.ConfigureModelsHandlers(); // Models handlers
 
 var app = builder.Build();
 
-// Error routes
-app.ConfigureErrorRoutes();
+app.ConfigureErrorRoutes();        // Error routes
 
 // Configure the HTTP request pipeline.
 app.UseAuthentication();

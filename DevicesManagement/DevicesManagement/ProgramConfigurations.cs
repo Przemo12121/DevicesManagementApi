@@ -5,7 +5,9 @@ using Database.Models;
 using Database.Repositories;
 using Database.Repositories.Interfaces;
 using Database.Repositories.ParallelRepositoryFactories;
+using DevicesManagement;
 using DevicesManagement.DataTransferObjects.Requests;
+using DevicesManagement.Errors;
 using DevicesManagement.ModelsHandlers.Factories;
 using DevicesManagement.ModelsHandlers.Factories.SearchOptions;
 using DevicesManagement.Validations.Authentication;
@@ -14,7 +16,9 @@ using DevicesManagement.Validations.Devices;
 using DevicesManagement.Validations.Users;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System.Text;
 
 internal static class WebApplicationBuilderExtensions
@@ -57,6 +61,8 @@ internal static class WebApplicationBuilderExtensions
 
     public static void ConfigureValidators(this WebApplicationBuilder builder)
     {
+        ValidatorOptions.Global.LanguageManager.Enabled = false;
+
         #region Authentication
         builder.Services.AddSingleton<IValidator<LoginWithCredentialsRequest>, LoginWithCredentialsRequestValidator>();
         #endregion
@@ -76,7 +82,17 @@ internal static class WebApplicationBuilderExtensions
 
     public static void ConfigureErrorRoutes(this WebApplication app)
     {
-        //app.UseMiddleware<HttpExceptionHandler>();
+        app.UseExceptionHandler(app =>
+        {
+            app.Run(async (context) =>
+            {
+                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                context.Response.ContentType = "application/json";
+
+                var error = (ObjectResult)ErrorResponses.CreateDetailed(StatusCodes.Status500InternalServerError, StringMessages.HttpErrors.Details.INTERNAL);
+                await context.Response.WriteAsync(JsonConvert.SerializeObject(error.Value));
+            });
+        });
     }
 
     public static void ConfigureAuthentication(this WebApplicationBuilder builder)

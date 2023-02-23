@@ -377,7 +377,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"title\": \"One or more validation errors occurred.\",\n    \"status\": 400,\n    \"errors\": {\n        \"Name\": [\n            \"Długość pola 'Name' musi się zawierać pomiędzy 1 i 64 znaki(ów). Wprowadzono 121 znaki(ów).\"\n        ]\n    }\n}"
+							"body": "{\n    \"title\": \"One or more validation errors occurred.\",\n    \"status\": 400,\n    \"errors\": {\n        \"Name\": [\n            \"Length of field 'Name' must be contained between 1 and 64 characters. 121 characters were entered.\"\n        ]\n    }\n}"
 						},
 						{
 							"name": "Not existing resource response",
@@ -978,7 +978,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"title\": \"One or more validation errors occurred.\",\n    \"status\": 400,\n    \"errors\": {\n        \"Limit\": [\n            \"Wartość pola 'Limit' musi być równa lub mniejsza niż '96'.\"\n        ]\n    }\n}"
+							"body": "{\n    \"title\": \"One or more validation errors occurred.\",\n    \"status\": 400,\n    \"errors\": {\n        \"Limit\": [\n            \"Value of field 'Limit' must be less than, or equal to '96'.\"\n        ]\n    }\n}"
 						},
 						{
 							"name": "Not existing resource response",
@@ -1617,7 +1617,7 @@
 			"name": "Users",
 			"item": [
 				{
-					"name": "Get employees",
+					"name": "Get employees users",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1782,7 +1782,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"title\": \"One or more validation errors occurred.\",\n    \"status\": 400,\n    \"errors\": {\n        \"Limit\": [\n            \"Wartość pola 'Limit' musi być równa lub mniejsza niż '16'.\"\n        ]\n    }\n}"
+							"body": "{\n    \"title\": \"One or more validation errors occurred.\",\n    \"status\": 400,\n    \"errors\": {\n        \"Limit\": [\n            \"Value of field 'Limit' must be less than, or equal to '16'.\"\n        ]\n    }\n}"
 						},
 						{
 							"name": "Forbidden response",
@@ -2015,7 +2015,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"title\": \"One or more validation errors occurred.\",\n    \"status\": 400,\n    \"errors\": {\n        \"Limit\": [\n            \"Wartość pola 'Limit' musi być równa lub mniejsza niż '32'.\"\n        ]\n    }\n}"
+							"body": "{\n    \"title\": \"One or more validation errors occurred.\",\n    \"status\": 400,\n    \"errors\": {\n        \"Limit\": [\n            \"Value of field 'Limit' must be less than, or equal to '32'.\"\n        ]\n    }\n}"
 						},
 						{
 							"name": "Non existing resource response",
@@ -2081,7 +2081,7 @@
 					]
 				},
 				{
-					"name": "Register employee",
+					"name": "Register employee user",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -2327,7 +2327,7 @@
 					]
 				},
 				{
-					"name": "Update employee",
+					"name": "Update user",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -2351,7 +2351,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/users/employees/:id",
+							"raw": "http://localhost:5000/api/users/:id",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2360,7 +2360,6 @@
 							"path": [
 								"api",
 								"users",
-								"employees",
 								":id"
 							],
 							"variable": [
@@ -2389,7 +2388,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:5000/api/users/employees/a843d8d3-d9c3-4279-a2b2-15b99b8c3d60",
+									"raw": "http://localhost:5000/api/users/a843d8d3-d9c3-4279-a2b2-15b99b8c3d60",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2398,7 +2397,6 @@
 									"path": [
 										"api",
 										"users",
-										"employees",
 										"a843d8d3-d9c3-4279-a2b2-15b99b8c3d60"
 									]
 								}
@@ -2442,7 +2440,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:5000/api/users/employees/a843d8d3-d9c3-4279-a2b2-15b99b8c3d60",
+									"raw": "http://localhost:5000/api/users/a843d8d3-d9c3-4279-a2b2-15b99b8c3d60",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2451,7 +2449,6 @@
 									"path": [
 										"api",
 										"users",
-										"employees",
 										"a843d8d3-d9c3-4279-a2b2-15b99b8c3d60"
 									]
 								}
@@ -2495,7 +2492,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:5000/api/users/employees/a843d8d3-d9c3-4279-a2b2-15b99b8c3d60",
+									"raw": "http://localhost:5000/api/users/a843d8d3-d9c3-4279-a2b2-15b99b8c3d60",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2504,7 +2501,6 @@
 									"path": [
 										"api",
 										"users",
-										"employees",
 										"a843d8d3-d9c3-4279-a2b2-15b99b8c3d60"
 									]
 								}
@@ -2548,7 +2544,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:5000/api/users/employees/a843d8d3-d9c3-4279-a2b2-15b99b8c3d60",
+									"raw": "http://localhost:5000/api/users/a843d8d3-d9c3-4279-a2b2-15b99b8c3d60",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2557,7 +2553,6 @@
 									"path": [
 										"api",
 										"users",
-										"employees",
 										"a843d8d3-d9c3-4279-a2b2-15b99b8c3d60"
 									]
 								}
@@ -2585,7 +2580,7 @@
 					]
 				},
 				{
-					"name": "Delete employee",
+					"name": "Delete",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -2600,7 +2595,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:5000/api/users/employees/:id",
+							"raw": "http://localhost:5000/api/users/:id",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2609,7 +2604,6 @@
 							"path": [
 								"api",
 								"users",
-								"employees",
 								":id"
 							],
 							"variable": [
@@ -2629,7 +2623,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:5000/api/users/employees/a843d8d3-d9c3-4279-a2b2-15b99b8c3d60",
+									"raw": "http://localhost:5000/api/users/a843d8d3-d9c3-4279-a2b2-15b99b8c3d60",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2638,7 +2632,6 @@
 									"path": [
 										"api",
 										"users",
-										"employees",
 										"a843d8d3-d9c3-4279-a2b2-15b99b8c3d60"
 									]
 								}
@@ -2669,7 +2662,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:5000/api/users/employees/a843d8d3-d9c3-4279-a2b2-15b99b8c3d60",
+									"raw": "http://localhost:5000/api/users/a843d8d3-d9c3-4279-a2b2-15b99b8c3d60",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2678,7 +2671,6 @@
 									"path": [
 										"api",
 										"users",
-										"employees",
 										"a843d8d3-d9c3-4279-a2b2-15b99b8c3d60"
 									]
 								}
@@ -2709,7 +2701,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:5000/api/users/employees/a843d8d3-d9c3-4279-a2b2-15b99b8c3d61",
+									"raw": "http://localhost:5000/api/users/a843d8d3-d9c3-4279-a2b2-15b99b8c3d61",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2718,7 +2710,6 @@
 									"path": [
 										"api",
 										"users",
-										"employees",
 										"a843d8d3-d9c3-4279-a2b2-15b99b8c3d61"
 									]
 								}
@@ -2746,6 +2737,264 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"title\": \"Resource not found\",\n    \"status\": 404,\n    \"detail\": \"Requested User resource with id a843d8d3-d9c3-4279-a2b2-15b99b8c3d61 does not exist, or access is restricted.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Register user's new device",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFhYWExMjM0NTY3OCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTY3NzE4MTgyNCwiZXhwIjoxNjc3MTk5ODI0LCJpYXQiOjE2NzcxODE4MjQsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9hcGkvYXV0aGVudGljYXRpb24iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUwMDAvYXBpIn0.o9ncsDZr4yGrVIwYuQlaem0XShJuOZ2nDNd5dAdApmg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"new device\",\r\n    \"address\": \"240.123.90.12:300\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/users/:id/devices",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								":id",
+								"devices"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "f757b2bb-d077-4b2d-983c-3f5ed6bb1d99",
+									"description": "Requested user's id."
+								}
+							]
+						},
+						"description": "Creates new devicein the system, for requested user. Only admin is authorized to make request.  \nOn success responses with new device data.\n\n##### Request body description\n\n| **Field** | **Type** | **Description** |\n| --- | --- | --- |\n| name | string | New device's name. |\n| address | adadstring | New device's address. Must match IPv4 address with port. |"
+					},
+					"response": [
+						{
+							"name": "Successful response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"new device\",\r\n    \"address\": \"240.123.90.12:300\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/users/f757b2bb-d077-4b2d-983c-3f5ed6bb1d98/devices",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"f757b2bb-d077-4b2d-983c-3f5ed6bb1d98",
+										"devices"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 23 Feb 2023 19:51:37 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"d5d21ab1-dcd7-41d3-b7eb-53f25863bfc1\",\n    \"updatedDate\": \"2023-02-23T19:51:37.4337294Z\",\n    \"address\": \"240.123.90.12:300\",\n    \"name\": \"new device\",\n    \"employeeId\": \"aaaa12345678\"\n}"
+						},
+						{
+							"name": "Bad request response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"new device\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/users/f757b2bb-d077-4b2d-983c-3f5ed6bb1d98/devices",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"f757b2bb-d077-4b2d-983c-3f5ed6bb1d98",
+										"devices"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 23 Feb 2023 19:53:03 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.1\",\n    \"title\": \"One or more validation errors occurred.\",\n    \"status\": 400,\n    \"traceId\": \"00-a8d5b3490cbba10dffc59a7b7a123cd1-b1dc1e0d9a4cf4dd-00\",\n    \"errors\": {\n        \"Address\": [\n            \"The Address field is required.\"\n        ]\n    }\n}"
+						},
+						{
+							"name": "Forbidden response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"new device\",\r\n    \"address\": \"240.123.90.12:300\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/users/f757b2bb-d077-4b2d-983c-3f5ed6bb1d98/devices",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"f757b2bb-d077-4b2d-983c-3f5ed6bb1d98",
+										"devices"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 23 Feb 2023 19:54:12 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Non existing resource response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"new device\",\r\n    \"address\": \"240.123.90.12:300\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/users/f757b2bb-d077-4b2d-983c-3f5ed6bb1d99/devices",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"f757b2bb-d077-4b2d-983c-3f5ed6bb1d99",
+										"devices"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 23 Feb 2023 19:54:43 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"title\": \"Resource not found\",\n    \"status\": 404,\n    \"detail\": \"Requested User resource with id f757b2bb-d077-4b2d-983c-3f5ed6bb1d99 does not exist, or access is restricted.\"\n}"
 						}
 					]
 				}

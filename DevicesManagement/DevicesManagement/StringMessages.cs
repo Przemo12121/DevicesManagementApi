@@ -22,6 +22,7 @@ public static class StringMessages
 
         public static class Details
         {
+            public static readonly string INTERNAL = "Unexpected error occurred.";
             public static readonly string EMPLOYEE_ID_TAKEN = "Reqested employee id is already taken.";
             public static readonly string UNAUTHORIZED = "Unauthorized";
             public static readonly string INVALID_CREDENTIALS = "Invalid credentials.";

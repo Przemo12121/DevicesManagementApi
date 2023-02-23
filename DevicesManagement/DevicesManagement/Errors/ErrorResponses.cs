@@ -25,7 +25,7 @@ public static class ErrorResponses
                 details = new() { Title = StringMessages.HttpErrors.Titles.CONFLICT, Detail = detail };
                 return new ConflictObjectResult(details);
             default:
-                details = new() { Title = StringMessages.HttpErrors.Titles.INTERNAL, Detail = detail };
+                details = new() { Title = StringMessages.HttpErrors.Titles.INTERNAL, Detail = detail, Status = StatusCodes.Status500InternalServerError };
                 return new ObjectResult(details) { StatusCode = StatusCodes.Status500InternalServerError };
         }
     }

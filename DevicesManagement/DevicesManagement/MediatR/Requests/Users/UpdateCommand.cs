@@ -8,18 +8,18 @@ using Microsoft.AspNetCore.Mvc;
 namespace DevicesManagement.MediatR.Commands.Users;
 
 [MediatRBehavior(
-    typeof(RequestValidationPipelineBehavior<UpdateEmployeeRequest, UpdateEmployeeCommand>),
+    typeof(RequestValidationPipelineBehavior<UpdateEmployeeRequest, UpdateCommand>),
     order: 1
 )]
 [MediatRBehavior(
-    typeof(ResourceAuthorizationPipelineBehavior<User, UpdateEmployeeCommand>),
+    typeof(ResourceAuthorizationPipelineBehavior<User, UpdateCommand>),
     order: 2
 )]
 [MediatRBehavior(
-    typeof(EmployeeIdUniquenessPipelineBehavior<UpdateEmployeeRequest, UpdateEmployeeCommand>),
+    typeof(EmployeeIdUniquenessPipelineBehavior<UpdateEmployeeRequest, UpdateCommand>),
     order: 3
 )]
-public class UpdateEmployeeCommand 
+public class UpdateCommand 
     : IRequest<IActionResult>, IRequestContainerCommand<UpdateEmployeeRequest>, IResourceAuthorizableCommand<User>
 {
     public UpdateEmployeeRequest Request { get; init; }

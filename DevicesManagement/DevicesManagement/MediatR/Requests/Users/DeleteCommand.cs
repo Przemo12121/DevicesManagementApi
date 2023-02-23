@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace DevicesManagement.MediatR.Commands.Users;
 
 [MediatRBehavior(
-    typeof(ResourceAuthorizationPipelineBehavior<User, DeleteEmployeeCommand>),
+    typeof(ResourceAuthorizationPipelineBehavior<User, DeleteCommand>),
     order: 1
 )]
-public class DeleteEmployeeCommand 
+public class DeleteCommand 
     : IRequest<IActionResult>, IResourceAuthorizableCommand<User>
 {
     public Guid ResourceId { get; init; }
