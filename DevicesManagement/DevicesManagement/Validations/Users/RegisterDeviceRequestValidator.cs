@@ -11,9 +11,12 @@ public class RegisterDeviceRequestValidator : AbstractValidator<RegisterDeviceRe
             .NotNull()
             .Length(1, 256);
 
-        // ?? "" added to workaounr .NotNull not failing validation for null property
-        RuleFor(request => request.Address ?? "")
+        RuleFor(request => request.Address)
             .NotNull()
-            .Must(ValidationUtils.IPv4.IsValid);
+            .DependentRules(() =>
+                RuleFor(request => request.Address)
+                    .Must(ValidationUtils.IPv4.IsValid)
+
+            );
     }
 }

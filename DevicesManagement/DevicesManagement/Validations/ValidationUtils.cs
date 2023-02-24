@@ -11,6 +11,7 @@ public static class ValidationUtils
         public static readonly string REGEX_PATTERN = "^(0|[1-9][0-9]{0,2})(\\.(0|[1-9][0-9]{0,2})){3}:(0|[1-9][0-9]*)$";
         public static bool IsValid(string str)
         {
+            // TODO use built-in methods IPEndPoint
             var splitted = str.Split(':');
             if (splitted.Length > 2) return false;
 
@@ -18,7 +19,7 @@ public static class ValidationUtils
             if (ip is null) return false;
 
             var port = splitted.LastOrDefault();
-            if (port is not null && !Int16.TryParse(port, out _)) return false;
+            if (port is not null && !UInt16.TryParse(port, out _)) return false;
 
             var numbers = ip.Split('.')
                 .Where(s => Regex.IsMatch(s, "^([1-9]{1}[0-9]{0,2}|0)$"));
@@ -31,8 +32,8 @@ public static class ValidationUtils
 
     public static class Users
     {
-        public static readonly string EMPLOYEE_ID_REGEX = "^[a-z]{4}[0-9]{8}$";
-        public static readonly string PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{8,32}$";
+        public static readonly string EmployeeIdRegex = "^[a-z]{4}[0-9]{8}$";
+        public static readonly string PasswordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{8,32}$";
     }
 
     public static class Common

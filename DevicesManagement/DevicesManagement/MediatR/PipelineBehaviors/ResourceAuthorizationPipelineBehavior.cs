@@ -30,7 +30,7 @@ public class ResourceAuthorizationPipelineBehavior<TResource, TRequest> : IPipel
         {
             return ErrorResponses.CreateDetailed(
                 StatusCodes.Status404NotFound,
-                StringMessages.HttpErrors.Details.UNAUTHORIZED_TO_RESOURCE(
+                StringMessages.HttpErrors.Details.UnauthorizedToResource(
                     typeof(TResource).Name, 
                     request.ResourceId.ToString()
                 )

@@ -1,6 +1,5 @@
 ﻿using DevicesManagement.DataTransferObjects.Requests;
 using FluentValidation;
-using Microsoft.IdentityModel.Tokens;
 
 namespace DevicesManagement.Validations.Devices;
 

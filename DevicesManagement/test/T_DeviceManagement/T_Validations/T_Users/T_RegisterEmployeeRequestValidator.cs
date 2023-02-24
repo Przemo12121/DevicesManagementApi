@@ -197,9 +197,24 @@ public class T_RegisterEmployeeRequestValidator
     {
         RegisterEmployeeRequest request = new()
         {
-            Name = null,
+            Name = "dummy name",
             Password = "dummyPassword123",
             EmployeeId = null
+        };
+
+        var result = _validator.Validate(request);
+
+        result.IsValid.Should().BeFalse();
+    }
+
+    [Fact]
+    public void Validate_EmployeeEidAsEmptyString_False()
+    {
+        RegisterEmployeeRequest request = new()
+        {
+            Name = "dummy name",
+            Password = "dummyPassword123",
+            EmployeeId = ""
         };
 
         var result = _validator.Validate(request);

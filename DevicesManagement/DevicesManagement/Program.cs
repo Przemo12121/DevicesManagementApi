@@ -1,38 +1,39 @@
-using Database.Contexts;
-using Database.Models;
-using Database.Repositories;
-using DevicesManagement.ModelsHandlers.Factories.SearchOptions;
 using MediatR;
 using MediatR.Extensions.AttributedBehaviors;
-using Microsoft.AspNetCore.Identity;
 using System.Reflection;
 
 var assembly = Assembly.GetExecutingAssembly();
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddMediatR(assembly);
 builder.Services.AddMediatRAttributedBehaviors(assembly);
 
-#region Custom configurations
-builder.ConfigureRepositories();   // Database   
-builder.ConfigureAuthentication(); // Authentication
-builder.ConfigureValidators();     // Request valdiators
-builder.ConfigureModelsHandlers(); // Models handlers
-#endregion
+builder.ConfigureDatabases();
+builder.ConfigureRepositories();
+builder.ConfigureAuthentication();
+builder.ConfigureValidators();
+builder.ConfigureModelHandlers();
 
 var app = builder.Build();
 
-app.ConfigureErrorRoutes();        // Error routes
+app.ConfigureErrorRoutes();
 
 // Configure the HTTP request pipeline.
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+//// THIS IS IN USE AS TEMPORARY UTILITY !
+/*
+ * using Database.Contexts;
+using Database.Models;
+using Database.Repositories;
+using DevicesManagement.ModelsHandlers.Factories.SearchOptions;
+using Microsoft.AspNetCore.Identity;*/
 /*using (var context = new LocalAuthStorageContext())
 {
     AccessLevel a = new()

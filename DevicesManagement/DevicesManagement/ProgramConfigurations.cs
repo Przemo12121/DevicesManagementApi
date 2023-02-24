@@ -23,61 +23,50 @@ using System.Text;
 
 internal static class WebApplicationBuilderExtensions
 {
-    public static void ConfigureRepositories(this WebApplicationBuilder builder)
+    public static void ConfigureDatabases(this WebApplicationBuilder builder)
     {
         builder.Services.AddDbContext<LocalAuthStorageContext>();
         builder.Services.AddDbContext<DevicesManagementContext>();
-
-        #region General repositories
+    }
+    public static void ConfigureRepositories(this WebApplicationBuilder builder)
+    {
         builder.Services.AddScoped<ICommandsRepository, CommandsRepository>();
         builder.Services.AddScoped<IDevicesRepository, DevicesRepository>();
         builder.Services.AddScoped<IUsersRepository, UsersRepository>();
         builder.Services.AddScoped<IAccessLevelsRepository, AccessLevelsRepository>();
-        #endregion
 
-        #region Parallel repositories factories
         builder.Services.AddSingleton<IDevicesManagementParallelRepositoriesFactory, DevicesManagementParallelRepositoriesFactory>();
         builder.Services.AddSingleton<ILocalAuthParallelRepositoriesFactory, LocalAuthParallelRepositoriesFactory>();
-        #endregion
 
-        #region IAuthorizable<T> repositories
         builder.Services.AddScoped<IResourceAuthorizableRepository<Command>, CommandsRepository>();
         builder.Services.AddScoped<IResourceAuthorizableRepository<User>, UsersRepository>();
         builder.Services.AddScoped<IResourceAuthorizableRepository<Device>, DevicesRepository>();
-        #endregion
     }
 
-    public static void ConfigureModelsHandlers(this WebApplicationBuilder builder)
+    public static void ConfigureModelHandlers(this WebApplicationBuilder builder)
     {
-        #region Factories
         builder.Services.AddSingleton<ICommandsFactory<Command>, CommandsFactory>();
         builder.Services.AddSingleton<IDeviceFactory<Device>, DevicesFactory>();
 
         builder.Services.AddSingleton<ISearchOptionsFactory<Device, string>, DevicesSearchOptionsFactory>();
         builder.Services.AddSingleton<ISearchOptionsFactory<User, string>, UsersSearchOptionsFactory>();
         builder.Services.AddSingleton<ISearchOptionsFactory<Command, string>, CommandsSearchOptionsFactory>();
-        #endregion
     }
 
     public static void ConfigureValidators(this WebApplicationBuilder builder)
     {
         ValidatorOptions.Global.LanguageManager.Enabled = false;
 
-        #region Authentication
         builder.Services.AddSingleton<IValidator<LoginWithCredentialsRequest>, LoginWithCredentialsRequestValidator>();
-        #endregion
-        #region Commands
+
         builder.Services.AddSingleton<IValidator<UpdateCommandRequest>, UpdateCommandRequestValidator>();
-        #endregion
-        #region Devices
+
         builder.Services.AddSingleton<IValidator<UpdateDeviceRequest>, UpdateDeviceRequestValidator>();
         builder.Services.AddSingleton<IValidator<RegisterCommandRequest>, RegisterCommandRequestValidator>();
-        #endregion
-        #region Users
+
         builder.Services.AddSingleton<IValidator<RegisterDeviceRequest>, RegisterDeviceRequestValidator>();
         builder.Services.AddSingleton<IValidator<UpdateEmployeeRequest>, UpdateEmployeeRequestValidator>();
         builder.Services.AddSingleton<IValidator<RegisterEmployeeRequest>, RegisterEmployeeRequestValidator>();
-        #endregion
     }
 
     public static void ConfigureErrorRoutes(this WebApplication app)
@@ -89,7 +78,7 @@ internal static class WebApplicationBuilderExtensions
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 context.Response.ContentType = "application/json";
 
-                var error = (ObjectResult)ErrorResponses.CreateDetailed(StatusCodes.Status500InternalServerError, StringMessages.HttpErrors.Details.INTERNAL);
+                var error = (ObjectResult)ErrorResponses.CreateDetailed(StatusCodes.Status500InternalServerError, StringMessages.HttpErrors.Details.Internal);
                 await context.Response.WriteAsync(JsonConvert.SerializeObject(error.Value));
             });
         });

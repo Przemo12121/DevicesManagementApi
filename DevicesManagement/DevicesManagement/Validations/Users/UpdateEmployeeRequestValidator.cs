@@ -14,9 +14,9 @@ public class UpdateEmployeeRequestValidator : AbstractValidator<UpdateEmployeeRe
             .Length(1, 256);
 
         RuleFor(request => request.Password)
-            .Matches(ValidationUtils.Users.PASSWORD_REGEX);
+            .Matches(ValidationUtils.Users.PasswordRegex);
 
         RuleFor(request => request.EmployeeId)
-            .Matches(ValidationUtils.Users.EMPLOYEE_ID_REGEX);
+            .Matches(ValidationUtils.Users.EmployeeIdRegex);
     }
 }

@@ -1,6 +1,5 @@
 ﻿using DevicesManagement.DataTransferObjects.Requests;
 using DevicesManagement.MediatR.Commands.Devices;
-using DevicesManagement.MediatR.Commands.Users;
 using DevicesManagement.Validations.Common;
 using FluentValidation;
 
