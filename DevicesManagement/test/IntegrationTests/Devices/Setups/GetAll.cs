@@ -1,9 +1,9 @@
 ﻿namespace IntegrationTests.Devices;
 
-public partial class GetAll : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<BaseSetup>, IDisposable
+public partial class GetAll : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<BaseSetupFixture>, IDisposable
 {
     WebApplicationFactory<Program> _factory;
-    BaseSetup _setupFixture;
+    BaseSetupFixture _setupFixture;
 
     List<User> DummyUsers { get; init; }
     List<Device> FirstUserDevices { get; init; }
@@ -14,7 +14,7 @@ public partial class GetAll : IClassFixture<WebApplicationFactory<Program>>, ICl
 
     string Route { get; } = "api/devices";
 
-    public GetAll(WebApplicationFactory<Program> webApplicationFactory, BaseSetup setupFixture) 
+    public GetAll(WebApplicationFactory<Program> webApplicationFactory, BaseSetupFixture setupFixture) 
     {
         _setupFixture = setupFixture;
         _factory = webApplicationFactory;

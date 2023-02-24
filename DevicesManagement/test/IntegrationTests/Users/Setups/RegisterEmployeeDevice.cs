@@ -1,9 +1,9 @@
 ﻿namespace IntegrationTests.Users;
 
-public partial class RegisterDevice : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<BaseSetup>, IDisposable
+public partial class RegisterDevice : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<BaseSetupFixture>, IDisposable
 {
     private readonly WebApplicationFactory<Program> _factory;
-    private readonly BaseSetup _setupFixture;
+    private readonly BaseSetupFixture _setupFixture;
 
     HttpClient HttpClient { get; init; }
     User RequestingUser { get; init; }
@@ -17,7 +17,7 @@ public partial class RegisterDevice : IClassFixture<WebApplicationFactory<Progra
         Address = "127.0.0.1:5060"
     };
 
-    public RegisterDevice(WebApplicationFactory<Program> factory, BaseSetup setupFixture)
+    public RegisterDevice(WebApplicationFactory<Program> factory, BaseSetupFixture setupFixture)
     {
         _factory = factory;
         _setupFixture = setupFixture;

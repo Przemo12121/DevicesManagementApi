@@ -1,10 +1,10 @@
-﻿public class BaseSetup : IDisposable
+﻿public class BaseSetupFixture : IDisposable
 {
     public User RequestingUser { get; init; }
     public AccessLevel AdminAccessLevel { get; init; }
     public AccessLevel EmployeeAccessLevel { get; init; }
 
-    public BaseSetup()
+    public BaseSetupFixture()
     {
         // Seed
         AdminAccessLevel = new AccessLevel()

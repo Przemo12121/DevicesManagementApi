@@ -1,14 +1,14 @@
 ﻿namespace IntegrationTests.Authentication;
 
-public partial class JwtLogin : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<BaseSetup>
+public partial class JwtLogin : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<BaseSetupFixture>
 {
     private readonly WebApplicationFactory<Program> _factory;
-    private readonly BaseSetup _setupFixture;
+    private readonly BaseSetupFixture _setupFixture;
 
     private HttpClient HttpClient { get; init; }
     private User RequestingUser { get; init; }
 
-    public JwtLogin(WebApplicationFactory<Program> factory, BaseSetup setupFixture)
+    public JwtLogin(WebApplicationFactory<Program> factory, BaseSetupFixture setupFixture)
     {
         _factory = factory;
         _setupFixture = setupFixture;

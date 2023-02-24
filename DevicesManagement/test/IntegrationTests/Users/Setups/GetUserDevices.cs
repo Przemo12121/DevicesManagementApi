@@ -1,9 +1,9 @@
 ﻿namespace IntegrationTests.Users;
 
-public partial class GetUserDevices : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<BaseSetup>, IDisposable
+public partial class GetUserDevices : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<BaseSetupFixture>, IDisposable
 {
     WebApplicationFactory<Program> _factory;
-    BaseSetup _setupFixture;
+    BaseSetupFixture _setupFixture;
 
     List<User> DummyUsers { get; init; }
     List<Device> FirstUserDevices { get; init; }
@@ -14,7 +14,7 @@ public partial class GetUserDevices : IClassFixture<WebApplicationFactory<Progra
 
     string Route(IDatabaseModel entity) => $"api/users/{entity.Id}/devices";
 
-    public GetUserDevices(WebApplicationFactory<Program> webApplicationFactory, BaseSetup setupFixture) 
+    public GetUserDevices(WebApplicationFactory<Program> webApplicationFactory, BaseSetupFixture setupFixture) 
     {
         _setupFixture = setupFixture;
         _factory = webApplicationFactory;

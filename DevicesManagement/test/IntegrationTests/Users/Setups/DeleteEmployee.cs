@@ -1,9 +1,9 @@
 ﻿namespace IntegrationTests.Users;
 
-public partial class Delete : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<BaseSetup>, IDisposable
+public partial class Delete : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<BaseSetupFixture>, IDisposable
 {
     private readonly WebApplicationFactory<Program> _factory;
-    private readonly BaseSetup _setupFixture;
+    private readonly BaseSetupFixture _setupFixture;
 
     HttpClient HttpClient { get; init; }
     User RequestingUser { get; init; }
@@ -12,7 +12,7 @@ public partial class Delete : IClassFixture<WebApplicationFactory<Program>>, ICl
     User OtherUser { get; init; }
     User DummyUser { get; init; }
 
-    public Delete(WebApplicationFactory<Program> factory, BaseSetup setupFixture)
+    public Delete(WebApplicationFactory<Program> factory, BaseSetupFixture setupFixture)
     {
         _factory = factory;
         _setupFixture = setupFixture;

@@ -1,9 +1,9 @@
 ﻿namespace IntegrationTests.Users;
 
-public partial class RegisterEmployee : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<BaseSetup>, IDisposable
+public partial class RegisterEmployee : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<BaseSetupFixture>, IDisposable
 {
     private readonly WebApplicationFactory<Program> _factory;
-    private readonly BaseSetup _setupFixture;
+    private readonly BaseSetupFixture _setupFixture;
 
     HttpClient HttpClient { get; init; }
     User RequestingUser { get; init; }
@@ -20,7 +20,7 @@ public partial class RegisterEmployee : IClassFixture<WebApplicationFactory<Prog
 
     User ExistingEmployee { get; init; }
 
-    public RegisterEmployee(WebApplicationFactory<Program> factory, BaseSetup setupFixture)
+    public RegisterEmployee(WebApplicationFactory<Program> factory, BaseSetupFixture setupFixture)
     {
         _factory = factory;
         _setupFixture = setupFixture;
