@@ -16,6 +16,7 @@ public partial class Delete : IClassFixture<WebApplicationFactory<Program>>, ICl
     {
         _factory = factory;
         _setupFixture = setupFixture;
+        _setupFixture.Init(factory);
 
         HttpClient = _factory.CreateClient();
         RequestingUser = setupFixture.RequestingUser;
@@ -45,7 +46,9 @@ public partial class Delete : IClassFixture<WebApplicationFactory<Program>>, ICl
             UpdatedDate = DateTime.UtcNow
         };
 
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         context.Devices.AddRange(new[] { DummyDevice, OtherDevice });
         context.SaveChanges();
 
@@ -55,11 +58,15 @@ public partial class Delete : IClassFixture<WebApplicationFactory<Program>>, ICl
 
     public void Dispose()
     {
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         context.Devices.RemoveRange(
             context.Devices.Where(d => new[] { DummyDevice, OtherDevice }.Contains(d))
         );
         context.SaveChanges();
+
+        _setupFixture.Clear();
 
         GC.SuppressFinalize(this);
     }

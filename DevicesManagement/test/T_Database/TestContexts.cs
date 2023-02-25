@@ -5,14 +5,10 @@ namespace T_Database;
 
 public class DeviceManagementContextTest : DevicesManagementContext
 {
-    private string Key { get; }
-    public DeviceManagementContextTest(string key) 
+    static DbContextOptionsBuilder<DevicesManagementContext> optionsBuilder = new();
+    public DeviceManagementContextTest(string key) : base(optionsBuilder.UseInMemoryDatabase(key).Options)
     {
-        Key = key;
     }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseInMemoryDatabase(Key);
 }
 
 public class LocalAuthContextTest : LocalAuthContext

@@ -1,6 +1,6 @@
-﻿using T_Database.SearchOptions.DeviceOptions;
+﻿namespace T_Database.T_DevicesRepository;
 
-namespace T_Database.T_DevicesRepository;
+[Collection("RepositoriesTests")]
 
 public partial class T_Add : DeviceMenagementDatabaseTest
 {

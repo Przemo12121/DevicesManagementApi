@@ -2,7 +2,7 @@ using T_Database.SearchOptions.UserOptions;
 
 namespace T_Database.T_UsersRepository;
 
-[Collection("UsersRepositoryTests")]
+[Collection("RepositoriesTests")]
 public partial class T_FindEmployees
 {
     [Fact]

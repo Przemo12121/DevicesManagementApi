@@ -32,6 +32,11 @@ internal static class WebApplicationBuilderExtensions
                 .UseNpgsql("Host=127.0.0.1:6001;Database=devices_menagement_auth;Username=devices_auth;Password=testpassword_auth")
                 .Options
         );
+        builder.Services.AddTransient<DbContextOptions<DevicesManagementContext>>(serviceProvider =>
+            new DbContextOptionsBuilder<DevicesManagementContext>()
+                .UseNpgsql("Host=127.0.0.1:6000;Database=devices_menagement;Username=devices;Password=testpassword")
+                .Options
+        );
 
         builder.Services.AddDbContext<LocalAuthContext>();
         builder.Services.AddDbContext<DevicesManagementContext>();

@@ -32,7 +32,9 @@ public partial class Update
 
         var response = await HttpClient.PatchAsync(Route(DummyCommand), body);
 
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         var command = context.Commands.Where(c => c.Equals(DummyCommand)).First();
         command.Name.Should().Be("New command name");
         command.Body.Should().Be("New body from request");
@@ -51,7 +53,9 @@ public partial class Update
 
         var response = await HttpClient.PatchAsync(Route(DummyCommand), body);
 
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         var command = context.Commands.Where(c => c.Equals(DummyCommand)).First();
         command.Description.Should().Be("dummy description");
     }
@@ -69,7 +73,9 @@ public partial class Update
 
         var response = await HttpClient.PatchAsync(Route(DummyCommand), body);
 
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         var command = context.Commands.Where(c => c.Equals(DummyCommand)).First();
         command.UpdatedDate.Date.Should().Be(DateTime.UtcNow.Date);
         command.UpdatedDate.Hour.Should().Be(DateTime.UtcNow.Hour);
@@ -89,7 +95,9 @@ public partial class Update
 
         var response = await HttpClient.PatchAsync(Route(DummyCommand), body);
 
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         var command = context.Commands.Where(c => c.Equals(OtherCommand)).First();
         command.Name.Should().Be("other command");
         command.Body.Should().Be("other body");
@@ -122,7 +130,9 @@ public partial class Update
 
         var response = await HttpClient.PatchAsync(Route(DummyCommand), body);
 
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         var command = context.Commands.Where(c => c.Equals(DummyCommand)).First();
         command.Name.Should().Be("dummy command");
         command.Body.Should().Be("dummy body");
@@ -172,7 +182,9 @@ public partial class Update
 
         var response = await HttpClient.PatchAsync(Route(DummyCommand), body);
 
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         var command = context.Commands.Where(c => c.Equals(DummyCommand)).First();
         command.Name.Should().Be("dummy command");
         command.Body.Should().Be("dummy body");

@@ -19,7 +19,9 @@ public partial class RegisterDevice
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", RequestingUserJwt);
 
         int countBefore;
-        using (var context = new DevicesManagementContext())
+        using (var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        ))
         {
             countBefore = context.Devices.Count();
         }
@@ -27,7 +29,9 @@ public partial class RegisterDevice
         var response = await HttpClient.PostAsync(Route(RequestingUser), JsonContent.Create(DummyRequest));
 
 
-        using (var context = new DevicesManagementContext())
+        using (var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        ))
         {
             context.Devices.Should().HaveCount(countBefore + 1);
         }
@@ -40,7 +44,9 @@ public partial class RegisterDevice
 
         var response = await HttpClient.PostAsync(Route(RequestingUser), JsonContent.Create(DummyRequest));
 
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         var newDevice = context.Devices.First();
         newDevice.EmployeeId.Should().Be(RequestingUser.EmployeeId);
     }
@@ -52,7 +58,9 @@ public partial class RegisterDevice
 
         var response = await HttpClient.PostAsync(Route(RequestingUser), JsonContent.Create(DummyRequest));
 
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         var newUser = context.Devices.First();
         newUser.Name.Should().Be(DummyRequest.Name);
     }
@@ -64,7 +72,9 @@ public partial class RegisterDevice
 
         var response = await HttpClient.PostAsync(Route(RequestingUser), JsonContent.Create(DummyRequest));
 
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         var newUser = context.Devices.First();
         newUser.Address.Should().Be(DummyRequest.Address);
     }
@@ -81,14 +91,18 @@ public partial class RegisterDevice
     public async void RegisterEmployeeDevice_RequestWithoutToken_DoesNotCreateDevice()
     {
         int countBefore;
-        using (var context = new DevicesManagementContext())
+        using (var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        ))
         {
             countBefore = context.Devices.Count();
         }
 
         var response = await HttpClient.PostAsync(Route(RequestingUser), JsonContent.Create(DummyRequest));
 
-        using (var context = new DevicesManagementContext())
+        using (var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        ))
         {
             context.Devices.Should().HaveCount(countBefore);
         }
@@ -112,7 +126,9 @@ public partial class RegisterDevice
     public async void RegisterEmployeeDevice_BadRequest_DoesNotCreateNewDevice()
     {
         int countBefore;
-        using (var context = new DevicesManagementContext())
+        using (var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+            ))
         {
             countBefore = context.Devices.Count();
         }
@@ -126,7 +142,9 @@ public partial class RegisterDevice
 
         var response = await HttpClient.PostAsync(Route(RequestingUser), JsonContent.Create(invalidRequest));
 
-        using (var context = new DevicesManagementContext())
+        using (var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        ))
         {
             context.Devices.Should().HaveCount(countBefore);
         }

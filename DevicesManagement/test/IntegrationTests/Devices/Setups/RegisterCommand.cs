@@ -22,6 +22,7 @@ public partial class RegisterCommand : IClassFixture<WebApplicationFactory<Progr
     {
         _factory = factory;
         _setupFixture = setupFixture;
+        _setupFixture.Init(factory);
 
         HttpClient = _factory.CreateClient();
         RequestingUser = setupFixture.RequestingUser;
@@ -39,7 +40,9 @@ public partial class RegisterCommand : IClassFixture<WebApplicationFactory<Progr
             UpdatedDate = DateTime.UtcNow
         };
 
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         context.Devices.Add(DummyDevice);
         context.SaveChanges();
 
@@ -49,7 +52,9 @@ public partial class RegisterCommand : IClassFixture<WebApplicationFactory<Progr
 
     public void Dispose()
     {
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         context.Commands.RemoveRange(
             context.Commands.Where(
                 c => c.Name.Equals(DummyRequest.Name) && c.Body.Equals(DummyRequest.Body)
@@ -59,6 +64,8 @@ public partial class RegisterCommand : IClassFixture<WebApplicationFactory<Progr
             context.Devices.Where(d => d.Equals(DummyDevice))
         );
         context.SaveChanges();
+
+        _setupFixture.Clear();
 
         GC.SuppressFinalize(this);
     }

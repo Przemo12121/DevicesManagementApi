@@ -15,10 +15,11 @@ public partial class GetCommands : IClassFixture<WebApplicationFactory<Program>>
 
     string Route(IDatabaseModel entity) => $"api/devices/{entity.Id}/commands";
 
-    public GetCommands(WebApplicationFactory<Program> webApplicationFactory, BaseSetupFixture setupFixture) 
+    public GetCommands(WebApplicationFactory<Program> factory, BaseSetupFixture setupFixture) 
     {
         _setupFixture = setupFixture;
-        _factory = webApplicationFactory;
+        _factory = factory;
+        _setupFixture.Init(factory);
 
         HttpClient = _factory.CreateClient();
         RequestingUser = _setupFixture.RequestingUser;
@@ -87,7 +88,9 @@ public partial class GetCommands : IClassFixture<WebApplicationFactory<Program>>
             Commands = SecondDeviceCommands
         };
 
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         context.Commands.AddRange(SecondDeviceCommands);
         context.Commands.AddRange(SecondDeviceCommands);
         context.Devices.Add(FirstDevice);
@@ -97,12 +100,16 @@ public partial class GetCommands : IClassFixture<WebApplicationFactory<Program>>
 
     public void Dispose()
     {
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         context.Commands.RemoveRange(FirstDeviceCommands);
         context.Commands.RemoveRange(SecondDeviceCommands);
         context.Devices.Remove(FirstDevice);
         context.Devices.Remove(SecondDevice);
         context.SaveChanges();
+
+        _setupFixture.Clear();
 
         GC.SuppressFinalize(this);
     }

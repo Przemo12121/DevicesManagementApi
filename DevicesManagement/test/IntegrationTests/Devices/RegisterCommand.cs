@@ -21,7 +21,9 @@ public partial class RegisterCommand
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", RequestingUserJwt);
 
         int countBefore;
-        using (var context = new DevicesManagementContext())
+        using (var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        ))
         {
             countBefore = context.Commands.Count();
         }
@@ -29,7 +31,9 @@ public partial class RegisterCommand
         var response = await HttpClient.PostAsync(Route(DummyDevice), JsonContent.Create(DummyRequest));
 
 
-        using (var context = new DevicesManagementContext())
+        using (var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        ))
         {
             context.Commands.Should().HaveCount(countBefore + 1);
         }
@@ -42,7 +46,9 @@ public partial class RegisterCommand
 
         var response = await HttpClient.PostAsync(Route(DummyDevice), JsonContent.Create(DummyRequest));
 
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         var newCommand = context.Commands.First();
         newCommand.Name.Should().Be(DummyRequest.Name);
     }
@@ -54,7 +60,9 @@ public partial class RegisterCommand
 
         var response = await HttpClient.PostAsync(Route(DummyDevice), JsonContent.Create(DummyRequest));
 
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         var newCommand = context.Commands.First();
         newCommand.Body.Should().Be(DummyRequest.Body);
     }
@@ -66,7 +74,9 @@ public partial class RegisterCommand
 
         var response = await HttpClient.PostAsync(Route(DummyDevice), JsonContent.Create(DummyRequest));
 
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         var newCommand = context.Commands.First();
         newCommand.Description.Should().Be(DummyRequest.Description);
     }
@@ -78,7 +88,9 @@ public partial class RegisterCommand
 
         var response = await HttpClient.PostAsync(Route(DummyDevice), JsonContent.Create(DummyRequest));
 
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         var newCommand = context.Commands.First();
         var device = context.Devices
             .Where(device => device.Id.Equals(DummyDevice.Id))
@@ -99,14 +111,18 @@ public partial class RegisterCommand
     public async void RegisterCommand_RequestWithoutToken_DoesNotCreateCommand()
     {
         int countBefore;
-        using (var context = new DevicesManagementContext())
+        using (var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        ))
         {
             countBefore = context.Commands.Count();
         }
 
         var response = await HttpClient.PostAsync(Route(DummyDevice), JsonContent.Create(DummyRequest));
 
-        using (var context = new DevicesManagementContext())
+        using (var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+            ))
         {
             context.Commands.Should().HaveCount(countBefore);
         }
@@ -130,7 +146,9 @@ public partial class RegisterCommand
     public async void RegisterCommand_BadRequest_DoesNotCreateNewCommand()
     {
         int countBefore;
-        using (var context = new DevicesManagementContext())
+        using (var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+            ))
         {
             countBefore = context.Commands.Count();
         }
@@ -144,7 +162,9 @@ public partial class RegisterCommand
 
         var response = await HttpClient.PostAsync(Route(DummyDevice), JsonContent.Create(invalidRequest));
 
-        using (var context = new DevicesManagementContext())
+        using (var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+            ))
         {
             context.Commands.Should().HaveCount(countBefore);
         }

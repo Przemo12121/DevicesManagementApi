@@ -1,4 +1,6 @@
-﻿namespace IntegrationTests.Commands;
+﻿using Database.Contexts;
+
+namespace IntegrationTests.Commands;
 
 public partial class Update : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<BaseSetupFixture>, IDisposable
 {
@@ -17,6 +19,7 @@ public partial class Update : IClassFixture<WebApplicationFactory<Program>>, ICl
     {
         _factory = factory;
         _setupFixture = setupFixture;
+        _setupFixture.Init(factory);
 
         HttpClient = _factory.CreateClient();
         RequestingUser = setupFixture.RequestingUser;
@@ -54,7 +57,9 @@ public partial class Update : IClassFixture<WebApplicationFactory<Program>>, ICl
             UpdatedDate = DateTime.UtcNow
         };
 
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         context.Commands.AddRange(DummyDevice.Commands);
         context.Devices.Add(DummyDevice);
         context.SaveChanges();
@@ -65,7 +70,9 @@ public partial class Update : IClassFixture<WebApplicationFactory<Program>>, ICl
 
     public void Dispose()
     {
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         context.Commands.RemoveRange(
             context.Commands.Where(c => DummyDevice.Commands.Contains(c)).ToArray()
         );
@@ -73,6 +80,8 @@ public partial class Update : IClassFixture<WebApplicationFactory<Program>>, ICl
             context.Devices.Where(d => d.Equals(DummyDevice))
         );
         context.SaveChanges();
+
+        _setupFixture.Clear();
 
         GC.SuppressFinalize(this);
     }

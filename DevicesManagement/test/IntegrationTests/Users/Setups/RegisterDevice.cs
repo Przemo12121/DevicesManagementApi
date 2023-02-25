@@ -30,7 +30,9 @@ public partial class RegisterDevice : IClassFixture<WebApplicationFactory<Progra
 
     public void Dispose()
     {
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+            );
         context.Devices.RemoveRange(
             context.Devices.Where(
                 d => d.EmployeeId.Equals(RequestingUser.EmployeeId) && d.Name.Equals(DummyRequest.Name)

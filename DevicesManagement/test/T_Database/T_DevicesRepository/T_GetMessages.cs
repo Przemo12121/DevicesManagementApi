@@ -2,6 +2,7 @@ using T_Database.SearchOptions.MessageOptions;
 
 namespace T_Database.T_DevicesRepository;
 
+[Collection("RepositoriesTests")]
 public partial class T_GetMessages
 {
     [Fact]
