@@ -18,6 +18,7 @@ public partial class GetUserDevices : IClassFixture<WebApplicationFactory<Progra
     {
         _setupFixture = setupFixture;
         _factory = webApplicationFactory;
+        _setupFixture.Init(webApplicationFactory);
 
         HttpClient = _factory.CreateClient();
         RequestingUser = _setupFixture.RequestingUser;
@@ -96,7 +97,9 @@ public partial class GetUserDevices : IClassFixture<WebApplicationFactory<Progra
         };
 
 
-        using var context = new LocalAuthStorageContext();
+        using var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        );
         context.Users.AddRange(DummyUsers);
         context.SaveChanges();
 
@@ -108,7 +111,9 @@ public partial class GetUserDevices : IClassFixture<WebApplicationFactory<Progra
 
     public void Dispose()
     {
-        using var context = new LocalAuthStorageContext();
+        using var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        );
         context.Users.RemoveRange(DummyUsers);
         context.SaveChanges();
 
@@ -116,6 +121,8 @@ public partial class GetUserDevices : IClassFixture<WebApplicationFactory<Progra
         context2.Devices.RemoveRange(FirstUserDevices);
         context2.Devices.RemoveRange(SecondUserDevices);
         context2.SaveChanges();
+
+        _setupFixture.Clear();
 
         GC.SuppressFinalize(this);
     }

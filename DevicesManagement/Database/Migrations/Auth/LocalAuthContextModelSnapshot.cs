@@ -3,24 +3,21 @@ using System;
 using Database.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Database.Migrations.LocalAuthStorage
+namespace Database.Migrations.Auth
 {
-    [DbContext(typeof(LocalAuthStorageContext))]
-    [Migration("20221207094306_InitDb")]
-    partial class InitDb
+    [DbContext(typeof(LocalAuthContext))]
+    partial class LocalAuthContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0")
+                .HasAnnotation("ProductVersion", "7.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -61,15 +58,11 @@ namespace Database.Migrations.LocalAuthStorage
                     b.Property<bool>("Enabled")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("Login")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("PasswordHashed")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -86,12 +79,17 @@ namespace Database.Migrations.LocalAuthStorage
             modelBuilder.Entity("Database.Models.User", b =>
                 {
                     b.HasOne("Database.Models.AccessLevel", "AccessLevel")
-                        .WithMany()
+                        .WithMany("Users")
                         .HasForeignKey("AccessLevelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("AccessLevel");
+                });
+
+            modelBuilder.Entity("Database.Models.AccessLevel", b =>
+                {
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

@@ -2,6 +2,7 @@ using T_Database.SearchOptions.UserOptions;
 
 namespace T_Database.T_UsersRepository;
 
+[Collection("UsersRepositoryTests")]
 public partial class T_FindAdmins
 {
     [Fact]

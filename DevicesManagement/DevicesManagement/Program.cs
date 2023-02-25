@@ -2,6 +2,13 @@ using MediatR;
 using MediatR.Extensions.AttributedBehaviors;
 using System.Reflection;
 
+using Database.Contexts;
+using Database.Models;
+using Database.Repositories;
+using DevicesManagement.ModelsHandlers.Factories.SearchOptions;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 var assembly = Assembly.GetExecutingAssembly();
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,13 +35,11 @@ app.UseAuthorization();
 app.MapControllers();
 
 //// THIS IS IN USE AS TEMPORARY UTILITY !
-/*
- * using Database.Contexts;
-using Database.Models;
-using Database.Repositories;
-using DevicesManagement.ModelsHandlers.Factories.SearchOptions;
-using Microsoft.AspNetCore.Identity;*/
-/*using (var context = new LocalAuthStorageContext())
+/*using (var context = new LocalAuthStorageContext(
+    new DbContextOptionsBuilder<LocalAuthStorageContext>()
+        .UseNpgsql("Host=127.0.0.1:6001;Database=devices_menagement_auth;Username=devices_auth;Password=testpassword_auth")
+            .Options
+        ))
 {
     AccessLevel a = new()
     {

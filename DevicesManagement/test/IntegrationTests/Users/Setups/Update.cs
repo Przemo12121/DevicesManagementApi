@@ -16,6 +16,7 @@ public partial class Update : IClassFixture<WebApplicationFactory<Program>>, ICl
     {
         _factory = factory;
         _setupFixture = setupFixture;
+        _setupFixture.Init(factory);
 
         HttpClient = _factory.CreateClient();
         RequestingUser = setupFixture.RequestingUser;
@@ -43,7 +44,9 @@ public partial class Update : IClassFixture<WebApplicationFactory<Program>>, ICl
             PasswordHashed = "not important"
         };
 
-        using var context = new LocalAuthStorageContext();
+        using var context = new LocalAuthContext(
+            factory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        );
         context.Users.AddRange(new[] { DummyUser, OtherUser });
         context.SaveChanges();
     }
@@ -52,11 +55,14 @@ public partial class Update : IClassFixture<WebApplicationFactory<Program>>, ICl
 
     public void Dispose()
     {
-        using var context = new LocalAuthStorageContext();
+        using var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        );
         context.Users.RemoveRange(
             context.Users.Where(d => new[] { DummyUser, OtherUser }.Contains(d))
         );
         context.SaveChanges();
+        _setupFixture.Clear();
 
         GC.SuppressFinalize(this);
     }

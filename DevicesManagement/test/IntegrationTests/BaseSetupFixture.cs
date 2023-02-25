@@ -1,11 +1,15 @@
-﻿public class BaseSetupFixture : IDisposable
+﻿public class BaseSetupFixture
 {
-    public User RequestingUser { get; init; }
-    public AccessLevel AdminAccessLevel { get; init; }
-    public AccessLevel EmployeeAccessLevel { get; init; }
+    public User RequestingUser { get; set; }
+    public AccessLevel AdminAccessLevel { get; set; }
+    public AccessLevel EmployeeAccessLevel { get; set; }
 
-    public BaseSetupFixture()
+    private WebApplicationFactory<Program> WebApplicationFactory { get; set; }
+
+    public void Init(WebApplicationFactory<Program> webApplicationFactory)
     {
+        WebApplicationFactory = webApplicationFactory;
+
         // Seed
         AdminAccessLevel = new AccessLevel()
         {
@@ -31,21 +35,23 @@
         };
         RequestingUser.PasswordHashed = new PasswordHasher<User>().HashPassword(RequestingUser, "dummyPWD123");
 
-        using var context = new LocalAuthStorageContext();
+        using var context = new LocalAuthContext(
+            WebApplicationFactory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        );
         context.AccessLevels.Add(AdminAccessLevel);
         context.AccessLevels.Add(EmployeeAccessLevel);
         context.Users.Add(RequestingUser);
         context.SaveChanges();
     }
 
-    public void Dispose()
+    public void Clear()
     {
-        using var context = new LocalAuthStorageContext();
+        using var context = new LocalAuthContext(
+            WebApplicationFactory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        );
         context.Users.Remove(RequestingUser);
         context.AccessLevels.Remove(AdminAccessLevel);
         context.AccessLevels.Remove(EmployeeAccessLevel);
         context.SaveChanges();
-
-        GC.SuppressFinalize(this);
     }
 }

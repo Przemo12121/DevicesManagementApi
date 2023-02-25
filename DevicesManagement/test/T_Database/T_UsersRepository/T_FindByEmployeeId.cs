@@ -1,5 +1,6 @@
 namespace T_Database.T_UsersRepository;
 
+[Collection("UsersRepositoryTests")]
 public partial class T_FindByEmployeId
 {
     [Fact]

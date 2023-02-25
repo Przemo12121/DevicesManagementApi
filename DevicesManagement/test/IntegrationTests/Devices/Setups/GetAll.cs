@@ -96,7 +96,9 @@ public partial class GetAll : IClassFixture<WebApplicationFactory<Program>>, ICl
         };
 
 
-        using var context = new LocalAuthStorageContext();
+        using var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptionsBuilder<LocalAuthContext>>().Options
+        );
         context.Users.AddRange(DummyUsers);
         context.SaveChanges();
 
@@ -108,7 +110,9 @@ public partial class GetAll : IClassFixture<WebApplicationFactory<Program>>, ICl
 
     public void Dispose()
     {
-        using var context = new LocalAuthStorageContext();
+        using var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptionsBuilder<LocalAuthContext>>().Options
+        );
         context.Users.RemoveRange(DummyUsers);
         context.SaveChanges();
 

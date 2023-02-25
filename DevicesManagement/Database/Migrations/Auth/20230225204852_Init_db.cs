@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Database.Migrations.LocalAuthStorage
+namespace Database.Migrations.Auth
 {
     /// <inheritdoc />
-    public partial class InitDb : Migration
+    public partial class Initdb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -31,8 +31,7 @@ namespace Database.Migrations.LocalAuthStorage
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     EmployeeId = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    Login = table.Column<string>(type: "text", nullable: false),
-                    Password = table.Column<string>(type: "text", nullable: false),
+                    PasswordHashed = table.Column<string>(type: "text", nullable: false),
                     Enabled = table.Column<bool>(type: "boolean", nullable: false),
                     AccessLevelId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),

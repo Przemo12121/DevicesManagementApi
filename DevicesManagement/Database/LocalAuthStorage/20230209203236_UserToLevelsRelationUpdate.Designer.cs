@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Database.LocalAuthStorage
 {
-    [DbContext(typeof(LocalAuthStorageContext))]
+    [DbContext(typeof(LocalAuthContext))]
     [Migration("20230209203236_UserToLevelsRelationUpdate")]
     partial class UserToLevelsRelationUpdate
     {

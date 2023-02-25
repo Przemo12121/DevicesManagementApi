@@ -17,15 +17,23 @@ using DevicesManagement.Validations.Users;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System.Text;
 
 internal static class WebApplicationBuilderExtensions
 {
+
     public static void ConfigureDatabases(this WebApplicationBuilder builder)
     {
-        builder.Services.AddDbContext<LocalAuthStorageContext>();
+        builder.Services.AddTransient<DbContextOptions<LocalAuthContext>>(serviceProvider =>
+            new DbContextOptionsBuilder<LocalAuthContext>()
+                .UseNpgsql("Host=127.0.0.1:6001;Database=devices_menagement_auth;Username=devices_auth;Password=testpassword_auth")
+                .Options
+        );
+
+        builder.Services.AddDbContext<LocalAuthContext>();
         builder.Services.AddDbContext<DevicesManagementContext>();
     }
     public static void ConfigureRepositories(this WebApplicationBuilder builder)

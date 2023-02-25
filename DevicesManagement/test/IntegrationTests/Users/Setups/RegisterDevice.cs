@@ -21,6 +21,7 @@ public partial class RegisterDevice : IClassFixture<WebApplicationFactory<Progra
     {
         _factory = factory;
         _setupFixture = setupFixture;
+        _setupFixture.Init(factory);
 
         HttpClient = _factory.CreateClient();
         RequestingUser = setupFixture.RequestingUser;
@@ -36,6 +37,7 @@ public partial class RegisterDevice : IClassFixture<WebApplicationFactory<Progra
             )
         );
         context.SaveChanges();
+        _setupFixture.Clear();
 
         GC.SuppressFinalize(this);
     }
