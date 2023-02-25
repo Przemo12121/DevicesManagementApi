@@ -16,7 +16,6 @@ public class RegisterDeviceRequestValidator : AbstractValidator<RegisterDeviceRe
             .DependentRules(() =>
                 RuleFor(request => request.Address)
                     .Must(ValidationUtils.IPv4.IsValid)
-
             );
     }
 }

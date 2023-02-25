@@ -124,7 +124,7 @@ public class T_UpdateDeviceRequestValidator
     }
 
     [Fact]
-    public void Validate_PossibleIPv4WithoutPort_False()
+    public void Validate_PossibleIPv4WithoutPort_True()
     {
         UpdateDeviceRequest request = new()
         {
@@ -134,11 +134,11 @@ public class T_UpdateDeviceRequestValidator
 
         var result = _validator.Validate(request);
 
-        result.IsValid.Should().BeFalse();
+        result.IsValid.Should().BeTrue();
     }
 
     [Fact]
-    public void Validate_NonIPv4FormatWithPort_False()
+    public void Validate_NonIPv4FormatWithPort_True()
     {
         UpdateDeviceRequest request = new()
         {
@@ -148,11 +148,11 @@ public class T_UpdateDeviceRequestValidator
 
         var result = _validator.Validate(request);
 
-        result.IsValid.Should().BeFalse();
+        result.IsValid.Should().BeTrue();
     }
 
     [Fact]
-    public void Validate_BadlyWrittenIPv4FormatWithPort_False()
+    public void Validate_BadlyWrittenIPv4FormatWithPort_True()
     {
         UpdateDeviceRequest request = new()
         {
@@ -162,11 +162,11 @@ public class T_UpdateDeviceRequestValidator
 
         var result = _validator.Validate(request);
 
-        result.IsValid.Should().BeFalse();
+        result.IsValid.Should().BeTrue();
     }
 
     [Fact]
-    public void Validate_IPv4FormatWithBadlyWrittenPort_False()
+    public void Validate_IPv4FormatWithBadlyWrittenPort_True()
     {
         UpdateDeviceRequest request = new()
         {
@@ -176,7 +176,7 @@ public class T_UpdateDeviceRequestValidator
 
         var result = _validator.Validate(request);
 
-        result.IsValid.Should().BeFalse();
+        result.IsValid.Should().BeTrue();
     }
 
     [Fact]

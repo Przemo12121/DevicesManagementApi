@@ -1,5 +1,4 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using System.Reflection;
+﻿using System.Net;
 using System.Text.RegularExpressions;
 
 namespace DevicesManagement.Validations;
@@ -8,26 +7,8 @@ public static class ValidationUtils
 {
     public static class IPv4
     {
-        public static readonly string REGEX_PATTERN = "^(0|[1-9][0-9]{0,2})(\\.(0|[1-9][0-9]{0,2})){3}:(0|[1-9][0-9]*)$";
         public static bool IsValid(string str)
-        {
-            // TODO use built-in methods IPEndPoint
-            var splitted = str.Split(':');
-            if (splitted.Length > 2) return false;
-
-            var ip = splitted.FirstOrDefault();
-            if (ip is null) return false;
-
-            var port = splitted.LastOrDefault();
-            if (port is not null && !UInt16.TryParse(port, out _)) return false;
-
-            var numbers = ip.Split('.')
-                .Where(s => Regex.IsMatch(s, "^([1-9]{1}[0-9]{0,2}|0)$"));
-            if (numbers.Count() != 4) return false;
-
-            return numbers.Select(value => Int16.Parse(value))
-                .All(value => value <= 255);
-        }
+            => IPEndPoint.TryParse(str, out _);
     }
 
     public static class Users
