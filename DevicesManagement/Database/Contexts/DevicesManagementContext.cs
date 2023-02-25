@@ -12,4 +12,5 @@ public class DevicesManagementContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseNpgsql($"Host=127.0.0.1:6000;Database=devices_menagement;Username=devices;Password=testpassword");
             //.LogTo(Console.WriteLine);
+            //TODO hide connection strings
 }

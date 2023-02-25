@@ -23,10 +23,10 @@ public class CredentialsVerificationPipelineBehavior : IPipelineBehavior<LoginWi
         var user = await _identityProvider.Identify(request.Request.Login, request.Request.Password);
         if (user is null)
         {
-            _httpContextAccessor.HttpContext!.Response.Headers.WWWAuthenticate = StringMessages.HttpErrors.Details.INVALID_CREDENTIALS;
+            _httpContextAccessor.HttpContext!.Response.Headers.WWWAuthenticate = StringMessages.HttpErrors.Details.InvalidCredentials;
             return ErrorResponses.CreateDetailed(
                 StatusCodes.Status401Unauthorized, 
-                StringMessages.HttpErrors.Details.INVALID_CREDENTIALS
+                StringMessages.HttpErrors.Details.InvalidCredentials
             );
         }
 

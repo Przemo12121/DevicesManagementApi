@@ -4,7 +4,6 @@ using Database.Models.Enums;
 using Database.Repositories.InnerDependencies;
 using Database.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace Database.Repositories;
 

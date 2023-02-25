@@ -1,9 +1,9 @@
 ﻿namespace IntegrationTests.Commands;
 
-public partial class Update : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<BaseSetup>, IDisposable
+public partial class Update : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<BaseSetupFixture>, IDisposable
 {
     private readonly WebApplicationFactory<Program> _factory;
-    private readonly BaseSetup _setupFixture;
+    private readonly BaseSetupFixture _setupFixture;
 
     HttpClient HttpClient { get; init; }
     User RequestingUser { get; init; }
@@ -13,7 +13,7 @@ public partial class Update : IClassFixture<WebApplicationFactory<Program>>, ICl
     Command OtherCommand { get; init; }
     Device DummyDevice { get; init; }
 
-    public Update(WebApplicationFactory<Program> factory, BaseSetup setupFixture)
+    public Update(WebApplicationFactory<Program> factory, BaseSetupFixture setupFixture)
     {
         _factory = factory;
         _setupFixture = setupFixture;

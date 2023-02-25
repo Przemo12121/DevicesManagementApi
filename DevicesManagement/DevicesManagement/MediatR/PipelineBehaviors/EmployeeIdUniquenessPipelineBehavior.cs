@@ -29,7 +29,7 @@ public class EmployeeIdUniquenessPipelineBehavior<T, TRequest> : IPipelineBehavi
         {
             return ErrorResponses.CreateDetailed(
                 StatusCodes.Status409Conflict,
-                StringMessages.HttpErrors.Details.EMPLOYEE_ID_TAKEN
+                StringMessages.HttpErrors.Details.EmployeeIdTaken
             );
         }
 

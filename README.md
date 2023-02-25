@@ -17,6 +17,7 @@ The project consists of rest api with (currently only) Bearer token authorizatio
 ### What is yet to be done:
  - Dockerizing the api itself.
  - Adding startup scripts with first admin user credentials and databases ports.
+ - Adding security headers.
  - Refactor DeviceManagement database, so relation between devices and users is M:N.
  - Replace LocalAuth database to credentials only database.
  - Add docker container with message-bus and C# programs imitating network of devices. Integrate API to send and listen for

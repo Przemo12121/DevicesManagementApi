@@ -38,6 +38,21 @@ public class T_EditCommandRequestValidator
     }
 
     [Fact]
+    public void Validate_EmptyName_False()
+    {
+        UpdateCommandRequest request = new()
+        {
+            Name = "",
+            Description = "dummy description",
+            Body = null
+        };
+
+        var result = _validator.Validate(request);
+
+        result.IsValid.Should().BeFalse();
+    }
+
+    [Fact]
     public void Validate_AnyName_True()
     {
         UpdateCommandRequest request = new()

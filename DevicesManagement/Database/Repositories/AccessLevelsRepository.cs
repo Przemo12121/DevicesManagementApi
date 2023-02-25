@@ -1,7 +1,6 @@
 ﻿using Database.Contexts;
 using Database.Models;
 using Database.Models.Enums;
-using Database.Models.Interfaces;
 using Database.Repositories.InnerDependencies;
 using Database.Repositories.Interfaces;
 

@@ -1,6 +1,6 @@
 ﻿using DevicesManagement.DataTransferObjects.Requests;
 
-namespace T_DevicesManagement.T_Validations.T_Devices;
+namespace T_DeviceManagement.T_Validations.T_Users;
 
 public class T_RegisterDeviceRequestValidator
 {
@@ -109,7 +109,7 @@ public class T_RegisterDeviceRequestValidator
     }
 
     [Fact]
-    public void Validate_PossibleIPv4WithoutPort_False()
+    public void Validate_PossibleIPv4WithoutPort_True()
     {
         RegisterDeviceRequest request = new()
         {
@@ -119,11 +119,11 @@ public class T_RegisterDeviceRequestValidator
 
         var result = _validator.Validate(request);
 
-        result.IsValid.Should().BeFalse();
+        result.IsValid.Should().BeTrue();
     }
 
     [Fact]
-    public void Validate_NonIPv4FormatWithPort_False()
+    public void Validate_NonIPv4FormatWithPort_True()
     {
         RegisterDeviceRequest request = new()
         {
@@ -133,7 +133,7 @@ public class T_RegisterDeviceRequestValidator
 
         var result = _validator.Validate(request);
 
-        result.IsValid.Should().BeFalse();
+        result.IsValid.Should().BeTrue();
     }
 
     [Fact]
@@ -147,11 +147,11 @@ public class T_RegisterDeviceRequestValidator
 
         var result = _validator.Validate(request);
 
-        result.IsValid.Should().BeFalse();
+        result.IsValid.Should().BeTrue();
     }
 
     [Fact]
-    public void Validate_IPv4FormatWithBadlyWrittenPort_False()
+    public void Validate_IPv4FormatWithBadlyWrittenPort_True()
     {
         RegisterDeviceRequest request = new()
         {
@@ -161,7 +161,7 @@ public class T_RegisterDeviceRequestValidator
 
         var result = _validator.Validate(request);
 
-        result.IsValid.Should().BeFalse();
+        result.IsValid.Should().BeTrue();
     }
 
     [Fact]

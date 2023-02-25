@@ -9,7 +9,7 @@ public class LoginWithCredentialsRequestValidator : AbstractValidator<LoginWithC
     {
         RuleFor(request => request.Login)
             .NotNull()
-            .Matches(ValidationUtils.Users.EMPLOYEE_ID_REGEX);
+            .Matches(ValidationUtils.Users.EmployeeIdRegex);
 
         RuleFor(request => request.Password)
             .NotNull()

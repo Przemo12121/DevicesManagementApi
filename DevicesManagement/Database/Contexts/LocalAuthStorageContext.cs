@@ -11,4 +11,5 @@ public class LocalAuthStorageContext : DbContext
         //TODO change postgres database to lighter, much more appropriate database system for storing credentials
         => optionsBuilder.UseNpgsql($"Host=127.0.0.1:6001;Database=devices_menagement_auth;Username=devices_auth;Password=testpassword_auth")
             .LogTo(Console.WriteLine);
+            //TODO hide connection strings
 }
