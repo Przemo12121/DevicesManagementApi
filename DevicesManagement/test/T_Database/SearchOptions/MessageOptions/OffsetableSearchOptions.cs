@@ -12,5 +12,5 @@ public class OffsetableSearchOptions : ISearchOptions<Message, DateTime>
     public Expression<Func<Message, DateTime>> Order { get; } = Message => Message.CreatedDate;
 
 
-    public OrderDirections OrderDirection { get; } = OrderDirections.ASCENDING;
+    public OrderDirections OrderDirection { get; } = OrderDirections.Ascending;
 }

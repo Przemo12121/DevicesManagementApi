@@ -15,21 +15,23 @@ public class GetCommandsQueryHandler : IRequestHandler<GetCommandsQuery, IAction
     private readonly IDevicesManagementParallelRepositoriesFactory _parallelRepositoriesFactory;
     private readonly ISearchOptionsFactory<Command, string> _searchOptionsFactory;
 
-    public GetCommandsQueryHandler(IDevicesManagementParallelRepositoriesFactory parallelRepositoriesFactory, ISearchOptionsFactory<Command, string> searchOptionsFactory)
+    public GetCommandsQueryHandler(
+        IDevicesManagementParallelRepositoriesFactory parallelRepositoriesFactory, 
+        ISearchOptionsFactory<Command, string> searchOptionsFactory)
     {
         _parallelRepositoriesFactory = parallelRepositoriesFactory;
         _searchOptionsFactory = searchOptionsFactory;
     }
-    public Task<IActionResult> Handle(GetCommandsQuery request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Handle(GetCommandsQuery request, CancellationToken cancellationToken)
     {
-        var options = _searchOptionsFactory.From(request.Request);
+        var options = _searchOptionsFactory.CreateFromRequest(request.Request);
 
         var commands = _parallelRepositoriesFactory.CreateDevicesRepository()
             .GetCommandsAsync(request.Resource.Id, options);
         var totalCount = _parallelRepositoriesFactory.CreateDevicesRepository()
             .CountCommandsAsync(request.Resource.Id);
 
-        Task.WaitAll(new Task[] { commands, totalCount }, cancellationToken);
+        await Task.WhenAll(new Task[] { commands, totalCount });
         var result = new OkObjectResult(
             new PaginationResponseDto<CommandDto>(
                 totalCount.Result, 
@@ -37,6 +39,6 @@ public class GetCommandsQueryHandler : IRequestHandler<GetCommandsQuery, IAction
             )
         );
 
-        return Task.FromResult<IActionResult>(result);
+        return result;
     }
 }

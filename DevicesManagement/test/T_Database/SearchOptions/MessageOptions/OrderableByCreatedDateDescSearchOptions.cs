@@ -7,5 +7,5 @@ public class OrderableByCreatedDateDescSearchOptions : ISearchOptions<Message, s
     public int Offset { get; } = 0;
     public Expression<Func<Message, string>> Order { get; } = Message => Message.Content;
 
-    public OrderDirections OrderDirection { get; } = OrderDirections.DESCENDING;
+    public OrderDirections OrderDirection { get; } = OrderDirections.Descending;
 }

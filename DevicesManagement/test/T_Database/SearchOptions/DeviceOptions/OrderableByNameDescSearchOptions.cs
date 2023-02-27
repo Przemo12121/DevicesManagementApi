@@ -10,5 +10,5 @@ public class OrderableByNameDescSearchOptions : ISearchOptions<Device, string>
     public int Offset { get; } = 0;
     public Expression<Func<Device, string>> Order { get; } = device => device.Name;
 
-    public OrderDirections OrderDirection { get; } = OrderDirections.DESCENDING;
+    public OrderDirections OrderDirection { get; } = OrderDirections.Descending;
 }

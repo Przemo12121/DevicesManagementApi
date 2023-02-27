@@ -7,5 +7,5 @@ public class OrderableByCreatedDateDescSearchOptions : ISearchOptions<CommandHis
     public int Offset { get; } = 0;
     public Expression<Func<CommandHistory, DateTime>> Order { get; } = CommandHistory => CommandHistory.CreatedDate;
 
-    public OrderDirections OrderDirection { get; } = OrderDirections.DESCENDING;
+    public OrderDirections OrderDirection { get; } = OrderDirections.Descending;
 }

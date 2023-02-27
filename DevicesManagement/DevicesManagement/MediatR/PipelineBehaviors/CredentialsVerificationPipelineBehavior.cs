@@ -18,7 +18,10 @@ public class CredentialsVerificationPipelineBehavior : IPipelineBehavior<LoginWi
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<IActionResult> Handle(LoginWithCredentialsCommand request, RequestHandlerDelegate<IActionResult> next, CancellationToken cancellationToken)
+    public async Task<IActionResult> Handle(
+        LoginWithCredentialsCommand request, 
+        RequestHandlerDelegate<IActionResult> next, 
+        CancellationToken cancellationToken)
     {
         var user = await _identityProvider.Identify(request.Request.Login, request.Request.Password);
         if (user is null)

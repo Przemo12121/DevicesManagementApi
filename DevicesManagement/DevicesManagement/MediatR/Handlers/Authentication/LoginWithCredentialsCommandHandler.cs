@@ -3,7 +3,7 @@ using DevicesManagement.MediatR.Commands.Authentication;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DevicesManagement.Handlers.Authentication;
+namespace DevicesManagement.MediatR.Handlers.Authentication;
 
 public class LoginWithCredentialsCommandHandler : IRequestHandler<LoginWithCredentialsCommand, IActionResult>
 {

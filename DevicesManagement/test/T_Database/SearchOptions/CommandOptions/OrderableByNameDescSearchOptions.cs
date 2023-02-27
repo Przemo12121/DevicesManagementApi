@@ -7,5 +7,5 @@ public class OrderableByNameDescSearchOptions : ISearchOptions<Command, string>
     public int Offset { get; } = 0;
     public Expression<Func<Command, string>> Order { get; } = Command => Command.Name;
 
-    public OrderDirections OrderDirection { get; } = OrderDirections.DESCENDING;
+    public OrderDirections OrderDirection { get; } = OrderDirections.Descending;
 }

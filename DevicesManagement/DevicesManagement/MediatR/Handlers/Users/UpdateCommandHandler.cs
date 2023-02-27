@@ -28,6 +28,8 @@ public class UpdateCommandHandler : IRequestHandler<UpdateCommand, IActionResult
         _usersRepository.Update(request.Resource);
         await _usersRepository.SaveAsync();
 
-        return new OkObjectResult(request.Resource.Adapt<UserDto>());
+        return new OkObjectResult(
+            request.Resource.Adapt<UserDto>()
+        );
     }
 }

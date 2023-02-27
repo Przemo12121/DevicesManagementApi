@@ -9,5 +9,5 @@ public class OffsetableSearchOptions : ISearchOptions<User, DateTime>
     public Expression<Func<User, DateTime>> Order { get; } = device => device.CreatedDate;
 
 
-    public OrderDirections OrderDirection { get; } = OrderDirections.ASCENDING;
+    public OrderDirections OrderDirection { get; } = OrderDirections.Ascending;
 }

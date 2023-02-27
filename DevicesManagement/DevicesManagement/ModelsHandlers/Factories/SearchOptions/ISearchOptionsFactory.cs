@@ -1,11 +1,10 @@
 ﻿using Database.Models.Base;
 using Database.Repositories.Interfaces;
 using DevicesManagement.DataTransferObjects.Requests;
-using System.Linq;
 
 namespace DevicesManagement.ModelsHandlers.Factories.SearchOptions;
 
 public interface ISearchOptionsFactory<T, U> where T : IDatabaseModel
 {
-    ISearchOptions<T, U> From(PaginationRequest request);
+    ISearchOptions<T, U> CreateFromRequest(PaginationRequest request);
 }
