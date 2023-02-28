@@ -35,9 +35,9 @@ app.UseAuthorization();
 app.MapControllers();
 
 //// THIS IS IN USE AS TEMPORARY UTILITY !
-/*using (var context = new LocalAuthStorageContext(
-    new DbContextOptionsBuilder<LocalAuthStorageContext>()
-        .UseNpgsql("Host=127.0.0.1:6001;Database=devices_menagement_auth;Username=devices_auth;Password=testpassword_auth")
+using (var context = new LocalAuthContext(
+    new DbContextOptionsBuilder<LocalAuthContext>()
+        .UseNpgsql("Server=auth_db;Database=devices_menagement_auth;Username=devices_auth;Password=testpassword_auth")
             .Options
         ))
 {
@@ -58,7 +58,7 @@ app.MapControllers();
     context.AccessLevels.Add(a);
     context.Users.Add(u);
     context.SaveChanges();
-}*/
+}
 
 app.Run();
 
