@@ -7,7 +7,7 @@ namespace Authentication;
 public class UserIdentityProvider : IIdentityProvider<User>
 {
     private readonly IUsersRepository _usersRepository;
-    private PasswordHasher<User> PasswordHasher { get; } = new();
+    private readonly PasswordHasher<User> _passwordHasher = new();
     public UserIdentityProvider(IUsersRepository usersRepository)
     {
         _usersRepository = usersRepository;
@@ -18,7 +18,7 @@ public class UserIdentityProvider : IIdentityProvider<User>
         var user = await _usersRepository.FindByEmployeeIdAsync(keyName);
         if (user is null) return null;
 
-        var result = PasswordHasher.VerifyHashedPassword(user, user.PasswordHashed, password);
+        var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHashed, password);
         if (result.Equals(PasswordVerificationResult.Success)) return user;
 
         return null;
@@ -44,5 +44,5 @@ public class UserIdentityProvider : IIdentityProvider<User>
 
 
     public string HashPassword(User identity, string password)
-        => PasswordHasher.HashPassword(identity, password);
+        => _passwordHasher.HashPassword(identity, password);
 }

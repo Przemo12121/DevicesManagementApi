@@ -10,11 +10,11 @@ namespace DevicesManagement.MediatR.PipelineBehaviors;
 public class RequestValidationPipelineBehavior<T, TRequest> : IPipelineBehavior<TRequest, IActionResult>
     where TRequest : IRequest<IActionResult>, IRequestContainerCommand<T>
 {
-    protected IEnumerable<IValidator<T>> Validators { get; init; }
+    private readonly IEnumerable<IValidator<T>> _valdiators;
 
     public RequestValidationPipelineBehavior(IEnumerable<IValidator<T>> validators)
     {
-        Validators = validators ?? throw new ArgumentNullException(nameof(validators));
+        _valdiators = validators ?? throw new ArgumentNullException(nameof(validators));
     }
 
     public async Task<IActionResult> Handle(TRequest request, RequestHandlerDelegate<IActionResult> next, CancellationToken cancellationToken)
@@ -32,7 +32,7 @@ public class RequestValidationPipelineBehavior<T, TRequest> : IPipelineBehavior<
 
     protected ValidationResult Validate(T request)
     {
-        var errors = Validators.Select(validator => validator.Validate(request))
+        var errors = _valdiators.Select(validator => validator.Validate(request))
             .Where(result => !result.IsValid)
             .SelectMany(result => result.Errors)
             .ToList();

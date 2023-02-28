@@ -7,7 +7,7 @@ namespace DevicesManagement.MediatR.PipelineBehaviors.Paginations;
 
 public class GetUserDevicesValidationPipelineBehavior : RequestValidationPipelineBehavior<PaginationRequest, GetUserDevicesQuery>
 {
-    protected static List<IValidator<PaginationRequest>> _validators = new() { new PaginationRequestValidator(32, new[] { "name", "address" }) };
+    private static List<IValidator<PaginationRequest>> _validators = new() { new PaginationRequestValidator(32, new[] { "name", "address" }) };
 
     public GetUserDevicesValidationPipelineBehavior() : base(_validators) { }
 }
