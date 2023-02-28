@@ -24,7 +24,7 @@ public class UsersRepository : DisposableRepository<LocalAuthStorageContext>, IU
         var query = _context.Users
                 .Where(user => user.AccessLevel.Value.Equals(AccessLevels.Admin));
 
-        var orderedQuery = options.OrderDirection.Equals(OrderDirections.ASCENDING)
+        var orderedQuery = options.OrderDirection.Equals(OrderDirections.Ascending)
             ? query.OrderBy(options.Order)
             : query.OrderByDescending(options.Order);
 
@@ -38,7 +38,7 @@ public class UsersRepository : DisposableRepository<LocalAuthStorageContext>, IU
         var query = _context.Users
                 .Where(user => user.AccessLevel.Value.Equals(AccessLevels.Employee));
 
-        var orderedQuery = options.OrderDirection.Equals(OrderDirections.ASCENDING)
+        var orderedQuery = options.OrderDirection.Equals(OrderDirections.Ascending)
             ? query.OrderBy(options.Order)
             : query.OrderByDescending(options.Order);
 

@@ -38,7 +38,7 @@ public class DevicesRepository : DisposableRepository<DevicesManagementContext>,
 
     public Task<List<Device>> FindAllAsync<TOrderKey>(ISearchOptions<Device, TOrderKey> options)
     {
-        var query = options.OrderDirection.Equals(OrderDirections.ASCENDING)
+        var query = options.OrderDirection.Equals(OrderDirections.Ascending)
             ? _context.Devices.OrderBy(options.Order)
             : _context.Devices.OrderByDescending(options.Order);
 
@@ -52,7 +52,7 @@ public class DevicesRepository : DisposableRepository<DevicesManagementContext>,
         var query = _context.Devices
                 .Where(device => device.EmployeeId.Equals(employeeId));
 
-        var orderedQuery = options.OrderDirection == OrderDirections.ASCENDING
+        var orderedQuery = options.OrderDirection == OrderDirections.Ascending
             ? query.OrderBy(options.Order)
             : query.OrderByDescending(options.Order);
 
@@ -75,7 +75,7 @@ public class DevicesRepository : DisposableRepository<DevicesManagementContext>,
                 .SelectMany(device => device.Commands)
                 .SelectMany(command => command.CommandHistories);
 
-        var orderedQuery = options.OrderDirection == OrderDirections.ASCENDING
+        var orderedQuery = options.OrderDirection == OrderDirections.Ascending
             ? query.OrderBy(options.Order)
             : query.OrderByDescending(options.Order);
 
@@ -101,7 +101,7 @@ public class DevicesRepository : DisposableRepository<DevicesManagementContext>,
                 .Take(1)
                 .SelectMany(device => device.Commands);
 
-        var orderedQuery = options.OrderDirection == OrderDirections.ASCENDING
+        var orderedQuery = options.OrderDirection == OrderDirections.Ascending
             ? query.OrderBy(options.Order)
             : query.OrderByDescending(options.Order);
 
@@ -117,7 +117,7 @@ public class DevicesRepository : DisposableRepository<DevicesManagementContext>,
                 .Take(1)
                 .SelectMany(device => device.Messages);
 
-        var orderedQuery = options.OrderDirection == OrderDirections.ASCENDING
+        var orderedQuery = options.OrderDirection == OrderDirections.Ascending
             ? query.OrderBy(options.Order)
             : query.OrderByDescending(options.Order);
 

@@ -1,5 +1,4 @@
 ﻿using Database.Models;
-using Database.Repositories.Interfaces;
 using Database.Repositories.ParallelRepositoryFactories;
 using DevicesManagement.DataTransferObjects.Responses;
 using DevicesManagement.MediatR.Commands.Users;
@@ -15,22 +14,24 @@ public class GetEmployeesQueryHandler : IRequestHandler<GetEmployeesQuery, IActi
     private readonly ILocalAuthParallelRepositoriesFactory _parallelRepositoriesFactory;
     private readonly ISearchOptionsFactory<User, string> _searchOptionsFactory;
 
-    public GetEmployeesQueryHandler(ILocalAuthParallelRepositoriesFactory parallelRepositoriesFactory, ISearchOptionsFactory<User, string> searchOptionsFactory)
+    public GetEmployeesQueryHandler(
+        ILocalAuthParallelRepositoriesFactory parallelRepositoriesFactory, 
+        ISearchOptionsFactory<User, string> searchOptionsFactory)
     {
         _parallelRepositoriesFactory = parallelRepositoriesFactory;
         _searchOptionsFactory = searchOptionsFactory;
     }
 
-    public Task<IActionResult> Handle(GetEmployeesQuery request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Handle(GetEmployeesQuery request, CancellationToken cancellationToken)
     {
-        var options = _searchOptionsFactory.From(request.Request);
+        var options = _searchOptionsFactory.CreateFromRequest(request.Request);
 
         var employees = _parallelRepositoriesFactory.CreateUsersRepository()
             .FindEmployeesAsync(options);
         var totalCount = _parallelRepositoriesFactory.CreateUsersRepository()
             .CountEmployeesAsync();
 
-        Task.WaitAll(new Task[] { employees, totalCount }, cancellationToken);
+        await Task.WhenAll(new Task[] { employees, totalCount });
         var result = new OkObjectResult(
             new PaginationResponseDto<UserDto>(
                 totalCount.Result, 
@@ -38,6 +39,6 @@ public class GetEmployeesQueryHandler : IRequestHandler<GetEmployeesQuery, IActi
             )
         );
 
-        return Task.FromResult<IActionResult>(result);
+        return result;
     }
 }

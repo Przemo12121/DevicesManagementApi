@@ -8,5 +8,5 @@ public class LimitableSearchOptions : ISearchOptions<Message, DateTime>
     public int Offset { get; } = 0;
     public Expression<Func<Message, DateTime>> Order { get; } = Command => Command.CreatedDate;
 
-    public OrderDirections OrderDirection { get; } = OrderDirections.ASCENDING;
+    public OrderDirections OrderDirection { get; } = OrderDirections.Ascending;
 }

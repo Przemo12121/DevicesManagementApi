@@ -15,24 +15,23 @@ public class GetUserDevicesQueryHandler : IRequestHandler<GetUserDevicesQuery, I
     private readonly IDevicesManagementParallelRepositoriesFactory _parrallelRepositoriesFactory;
     private readonly ISearchOptionsFactory<Device, string> _searchOptionsFactory;
 
-    public GetUserDevicesQueryHandler(IDevicesManagementParallelRepositoriesFactory parallelRepositoriesFactory, ISearchOptionsFactory<Device, string> searchOptionsFactory)
+    public GetUserDevicesQueryHandler(
+        IDevicesManagementParallelRepositoriesFactory parallelRepositoriesFactory, 
+        ISearchOptionsFactory<Device, string> searchOptionsFactory)
     {
         _parrallelRepositoriesFactory = parallelRepositoriesFactory;
         _searchOptionsFactory = searchOptionsFactory;
     }
     public async Task<IActionResult> Handle(GetUserDevicesQuery request, CancellationToken cancellationToken)
     {
-        var options = _searchOptionsFactory.From(request.Request);
+        var options = _searchOptionsFactory.CreateFromRequest(request.Request);
 
         var devices = _parrallelRepositoriesFactory.CreateDevicesRepository()
             .FindAllByEmployeeIdAsync(request.Resource.EmployeeId, options);
         var totalCount = _parrallelRepositoriesFactory.CreateDevicesRepository()
             .CountAsync(device => device.EmployeeId.Equals(request.Resource.EmployeeId));
 
-        await devices;
-        await totalCount;
-
-        Task.WaitAll(new Task[] { devices, totalCount }, cancellationToken);
+        await Task.WhenAll(new Task[] { devices, totalCount });
         var result =  new OkObjectResult(
             new PaginationResponseDto<DeviceDto>(
                 totalCount.Result, 
@@ -41,6 +40,5 @@ public class GetUserDevicesQueryHandler : IRequestHandler<GetUserDevicesQuery, I
         );
 
         return result;
-        //return Task.FromResult<IActionResult>(result);
     }
 }

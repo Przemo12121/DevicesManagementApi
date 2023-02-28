@@ -10,7 +10,8 @@ public class JwtBearerProvider : IJwtProvider
 {
     private readonly JwtOptions _options;
     private readonly SigningCredentials _signingCredentials;
-    private JwtSecurityTokenHandler Handler { get; } = new();
+    private readonly JwtSecurityTokenHandler _handler = new();
+
     public JwtBearerProvider(JwtOptions options)
     {
         _options = options;
@@ -36,6 +37,6 @@ public class JwtBearerProvider : IJwtProvider
             })
         };
 
-        return (JwtSecurityToken)Handler.CreateToken(descriptor);
+        return (JwtSecurityToken)_handler.CreateToken(descriptor);
     }
 }

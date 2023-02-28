@@ -1,6 +1,5 @@
 ﻿using Database.Models.Base;
 using Database.Models.Enums;
-using Database.Repositories;
 using Database.Repositories.Interfaces;
 using DevicesManagement.Errors;
 using DevicesManagement.MediatR.Commands;
@@ -15,7 +14,7 @@ public class ResourceAuthorizationPipelineBehavior<TResource, TRequest> : IPipel
     where TRequest : IRequest<IActionResult>, IResourceAuthorizableCommand<TResource>
 {
     protected readonly IHttpContextAccessor _httpContentAccessor;
-    protected IResourceAuthorizableRepository<TResource> Repository { get; init; }
+    protected IResourceAuthorizableRepository<TResource> Repository { get; }
 
     public ResourceAuthorizationPipelineBehavior(IResourceAuthorizableRepository<TResource> repository, IHttpContextAccessor httpContentAccessor)
     {
@@ -25,8 +24,8 @@ public class ResourceAuthorizationPipelineBehavior<TResource, TRequest> : IPipel
 
     public async Task<IActionResult> Handle(TRequest request, RequestHandlerDelegate<IActionResult> next, CancellationToken cancellationToken)
     {
-        var isAuthorized = await Authorize(request);
-        if (!isAuthorized)
+        var resource = await Authorize(request);
+        if (resource is null)
         {
             return ErrorResponses.CreateDetailed(
                 StatusCodes.Status404NotFound,
@@ -36,28 +35,26 @@ public class ResourceAuthorizationPipelineBehavior<TResource, TRequest> : IPipel
                 )
             );
         }
+        request.Resource = resource;
 
         return await next();
     }
 
-    protected async Task<bool> Authorize(TRequest request)
+    private async Task<TResource?> Authorize(TRequest request)
     {
         var ownerId = _httpContentAccessor.HttpContext?.User.Identity?.Name 
             ?? throw new Exception(StringMessages.InternalErrors.SUBJECT_NOT_FOUND);
 
         var role = _httpContentAccessor.HttpContext?.User.Claims
-            .Where(claim => claim.Type.Equals(ClaimTypes.Role))
-            .SingleOrDefault() ?? throw new Exception(StringMessages.InternalErrors.ROLE_NOT_FOUND);
+            .SingleOrDefault(claim => claim.Type.Equals(ClaimTypes.Role)) 
+            ?? throw new Exception(StringMessages.InternalErrors.ROLE_NOT_FOUND);
 
         // admin does not need to be owner of the resoruce
         bool isAdmin = role.Value.Equals(AccessLevels.Admin.ToString());
         var resource = isAdmin
-            ? Repository.FindByIdAsync(request.ResourceId)
-            : Repository.FindByIdAndOwnerIdAsync(request.ResourceId, ownerId);
+            ? await Repository.FindByIdAsync(request.ResourceId)
+            : await Repository.FindByIdAndOwnerIdAsync(request.ResourceId, ownerId);
 
-        await resource;
-        request.Resource = resource.Result;
-
-        return resource.Result is not null;
+        return resource;
     }
 }

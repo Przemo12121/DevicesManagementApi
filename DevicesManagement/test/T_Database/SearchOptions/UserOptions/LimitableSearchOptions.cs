@@ -8,5 +8,5 @@ public class LimitableSearchOptions : ISearchOptions<User, DateTime>
     public int Offset { get; } = 0;
     public Expression<Func<User, DateTime>> Order { get; } = device => device.CreatedDate;
 
-    public OrderDirections OrderDirection { get; } = OrderDirections.ASCENDING;
+    public OrderDirections OrderDirection { get; } = OrderDirections.Ascending;
 }

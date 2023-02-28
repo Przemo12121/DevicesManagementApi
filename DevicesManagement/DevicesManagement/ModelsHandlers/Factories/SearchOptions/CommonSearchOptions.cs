@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace DevicesManagement.ModelsHandlers.Factories.SearchOptions;
 
-public class CommonSearchOptions<T, U> : ISearchOptions<T, U>
+public record CommonSearchOptions<T, U> : ISearchOptions<T, U>
     where T : IDatabaseModel
 {
     public int Limit { get; init; }

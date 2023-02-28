@@ -2,9 +2,9 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DevicesManagement.Handlers.Commands;
+namespace DevicesManagement.MediatR.Handlers.Commands;
 
-public class RunCommandCommandandler : IRequestHandler<RunCommandCommand, IActionResult>
+public class RunCommandCommandHandler : IRequestHandler<RunCommandCommand, IActionResult>
 {
     public Task<IActionResult> Handle(RunCommandCommand request, CancellationToken cancellationToken)
     {

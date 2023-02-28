@@ -22,10 +22,10 @@ public class EmployeeIdUniquenessPipelineBehavior<T, TRequest> : IPipelineBehavi
     public async Task<IActionResult> Handle(TRequest request, RequestHandlerDelegate<IActionResult> next, CancellationToken cancellationToken)
     {
         var existingEmployee = request.Request.EmployeeId is not null
-            ? _usersRepository.FindByEmployeeIdAsync(request.Request.EmployeeId)
-            : Task.FromResult<User?>(null);
+            ? await _usersRepository.FindByEmployeeIdAsync(request.Request.EmployeeId)
+            : null;
 
-        if (existingEmployee.Result is not null)
+        if (existingEmployee is not null)
         {
             return ErrorResponses.CreateDetailed(
                 StatusCodes.Status409Conflict,

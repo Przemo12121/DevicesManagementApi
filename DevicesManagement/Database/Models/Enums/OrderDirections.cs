@@ -2,6 +2,6 @@
 
 public enum OrderDirections
 {
-    ASCENDING,
-    DESCENDING
+    Ascending,
+    Descending
 }
