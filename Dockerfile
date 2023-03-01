@@ -12,7 +12,7 @@ WORKDIR /App/src/DevicesManagement
 RUN dotnet restore
 RUN dotnet publish -c Release -o ../../out
 
-## apply ef migrations
+## install ef
 #WORKDIR /App/src/Database
 #RUN dotnet tool install -g dotnet-ef
 #ENV PATH="$PATH:/root/.dotnet/tools"
@@ -23,13 +23,13 @@ RUN dotnet publish -c Release -o ../../out
 
 ###
 
-# create container
+# create lightweight container
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 
 ## copy built .dll files
-WORKDIR /App
+WORKDIR /App/out
 COPY --from=build ./App/out .
 
 ## init container
 EXPOSE 5000
-ENTRYPOINT ["dotnet", "DevicesManagement.dll"]
+ENTRYPOINT ["dotnet", "DevicesManagement.dll", "--environment=Docker"]

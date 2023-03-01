@@ -24,17 +24,17 @@ using System.Text;
 
 internal static class WebApplicationBuilderExtensions
 {
-
     public static void ConfigureDatabases(this WebApplicationBuilder builder)
     {
+
         builder.Services.AddTransient<DbContextOptions<LocalAuthContext>>(serviceProvider =>
             new DbContextOptionsBuilder<LocalAuthContext>()
-                .UseNpgsql("Username=devices_auth;Password=testpassword_auth;Server=auth_db;Database=devices_menagement_auth")
+                .UseNpgsql(builder.Configuration.GetConnectionString("AuthDb"))
                 .Options
         );
         builder.Services.AddTransient<DbContextOptions<DevicesManagementContext>>(serviceProvider =>
             new DbContextOptionsBuilder<DevicesManagementContext>()
-                .UseNpgsql("Username=devices;Password=testpassword;Server=device_db;Database=devices_menagement")
+                .UseNpgsql(builder.Configuration.GetConnectionString("DevicesDb"))
                 .Options
         );
 
@@ -132,5 +132,20 @@ internal static class WebApplicationBuilderExtensions
             service => new JwtBearerProvider(jwtOptions)
         );
         builder.Services.AddScoped<IIdentityProvider<User>, UserIdentityProvider>();
+    }
+
+    public static void InitDb(this WebApplication app)
+    {
+        /*var x = app.Configuration.GetValue<bool>("FirstStartup");
+        Console.WriteLine(x);
+        if (!x)
+        {
+            return;
+        }*/
+        using (var scope = app.Services.CreateScope())
+        {
+            var devicesContext = scope.ServiceProvider.GetRequiredService<DevicesManagementContext>();
+            devicesContext.Database.Migrate();
+        }
     }
 }

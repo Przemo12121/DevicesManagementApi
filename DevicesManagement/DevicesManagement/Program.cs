@@ -35,7 +35,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 //// THIS IS IN USE AS TEMPORARY UTILITY !
-using (var context = new LocalAuthContext(
+/*using (var context = new LocalAuthContext(
     new DbContextOptionsBuilder<LocalAuthContext>()
         .UseNpgsql("Server=auth_db;Database=devices_menagement_auth;Username=devices_auth;Password=testpassword_auth")
             .Options
@@ -58,8 +58,9 @@ using (var context = new LocalAuthContext(
     context.AccessLevels.Add(a);
     context.Users.Add(u);
     context.SaveChanges();
-}
+}*/
 
+app.InitDb();
 app.Run();
 
 // Allow integration tests

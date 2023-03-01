@@ -18,9 +18,9 @@ services:
         ports:
           - 127.0.0.1:6000:5432
         healthcheck:
-            test: ["CMD", "nc", "-z", "localhost:6000"]
+            test: ["CMD-SHELL", "pg_isready", "-d", "devices_menagement"]
             interval: 3s
-            timeout: 1s
+            timeout: 3s
             retries: 3
 
     auth_db:
@@ -40,9 +40,9 @@ services:
         ports:
           - 127.0.0.1:6001:5432
         healthcheck:
-            test: ["CMD", "nc", "-z", "localhost:6001"]
+            test: ["CMD-SHELL", "pg_isready", "-d", "devices_menagement_auth"]
             interval: 3s
-            timeout: 1s
+            timeout: 3s
             retries: 3
 
     api:
@@ -51,11 +51,11 @@ services:
         restart: unless-stopped
         networks:
           - xyz
-        # depends_on:
-        #     device_db:
-        #         condition: service_healthy
-        #     auth_db:
-        #         condition: service_healthy
+        depends_on:
+            device_db:
+                condition: service_healthy
+            auth_db:
+                condition: service_healthy
         ports: 
             - "5000:5000"
         expose: 
