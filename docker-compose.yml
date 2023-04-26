@@ -6,8 +6,6 @@ services:
         restart: unless-stopped
         container_name: device_db
         hostname: device_db
-        networks:
-          - xyz
         environment:
             POSTGRES_USER: devices
             POSTGRES_PASSWORD: testpassword
@@ -28,8 +26,6 @@ services:
         restart: unless-stopped
         hostname: auth_db
         container_name: auth_db
-        networks:
-          - xyz
         environment:
             POSTGRES_USER: devices_auth
             POSTGRES_PASSWORD: testpassword_auth
@@ -49,8 +45,6 @@ services:
         build: .
         container_name: api
         restart: unless-stopped
-        networks:
-          - xyz
         depends_on:
             device_db:
                 condition: service_healthy
@@ -60,9 +54,6 @@ services:
             - "5000:5000"
         expose: 
             - 5000
-
-networks:
-  xyz:
 
 volumes:
     device_db:

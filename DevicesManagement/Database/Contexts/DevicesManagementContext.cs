@@ -11,4 +11,9 @@ public class DevicesManagementContext : DbContext
     public DbSet<Device> Devices { get; set; } 
     public DbSet<CommandHistory> DevicesCommandHistory { get; set; }
     public DbSet<Message> DevicesMessageHistory { get; set; }
+
+    public void Init()
+    {
+        Database.Migrate();
+    }
 }

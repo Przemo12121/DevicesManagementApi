@@ -1,7 +1,7 @@
 # publish code
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 
-## copy files 
+## copy project files 
 WORKDIR /App
 ADD ./DevicesManagement/DevicesManagement ./src/DevicesManagement
 ADD ./DevicesManagement/Database ./src/Database
@@ -12,16 +12,9 @@ WORKDIR /App/src/DevicesManagement
 RUN dotnet restore
 RUN dotnet publish -c Release -o ../../out
 
-## install ef
-#WORKDIR /App/src/Database
-#RUN dotnet tool install -g dotnet-ef
-#ENV PATH="$PATH:/root/.dotnet/tools"
-#RUN dotnet ef migrations add InitDb -c DevicesManagementContext -o ./Migrations/DevicesDb -s ../DevicesManagement
-#RUN dotnet ef database update -c DevicesManagementContext -s ../DevicesManagement
-#RUN dotnet ef migrations add InitDb -c LocalAuthContext -o ./Migrations/AuthDb -s ../DevicesManagement
-#RUN dotnet ef database update -c LocalAuthContext -s ../DevicesManagement
-
-###
+WORKDIR /App/src/Database
+RUN dotnet restore
+RUN dotnet publish -c Release -o ../../out/DatabaseInit
 
 # create lightweight container
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
@@ -29,7 +22,9 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0
 ## copy built .dll files
 WORKDIR /App/out
 COPY --from=build ./App/out .
+ADD entrypoint.sh .
+ADD .env .
 
 ## init container
 EXPOSE 5000
-ENTRYPOINT ["dotnet", "DevicesManagement.dll", "--environment=Docker"]
+ENTRYPOINT ["./entrypoint.sh"]

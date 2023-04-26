@@ -18,6 +18,8 @@ using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System.Text;
@@ -132,20 +134,5 @@ internal static class WebApplicationBuilderExtensions
             service => new JwtBearerProvider(jwtOptions)
         );
         builder.Services.AddScoped<IIdentityProvider<User>, UserIdentityProvider>();
-    }
-
-    public static void InitDb(this WebApplication app)
-    {
-        /*var x = app.Configuration.GetValue<bool>("FirstStartup");
-        Console.WriteLine(x);
-        if (!x)
-        {
-            return;
-        }*/
-        using (var scope = app.Services.CreateScope())
-        {
-            var devicesContext = scope.ServiceProvider.GetRequiredService<DevicesManagementContext>();
-            devicesContext.Database.Migrate();
-        }
     }
 }
