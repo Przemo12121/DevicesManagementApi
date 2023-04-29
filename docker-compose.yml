@@ -7,16 +7,15 @@ services:
         container_name: device_db
         hostname: device_db
         environment:
-            POSTGRES_USER: devices
-            POSTGRES_PASSWORD: testpassword
-            POSTGRES_DB: devices_menagement
+            POSTGRES_USER: ${DEVICES_POSTGRES_USER}
+            POSTGRES_PASSWORD: ${DEVICES_POSTGRES_PASSWORD}
+            POSTGRES_DB: ${DEVICES_POSTGRES_DB}
         volumes:
           - device_db:/var/lib/postgresql
-          #- ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
         ports:
-          - 127.0.0.1:6000:5432
+          - 127.0.0.1:${DEVICES_POSTGRES_PORT}:5432
         healthcheck:
-            test: ["CMD-SHELL", "pg_isready", "-d", "devices_menagement"]
+            test: ["CMD-SHELL", "pg_isready", "-d", "${DEVICES_POSTGRES_USER}"]
             interval: 3s
             timeout: 3s
             retries: 3
@@ -27,22 +26,27 @@ services:
         hostname: auth_db
         container_name: auth_db
         environment:
-            POSTGRES_USER: devices_auth
-            POSTGRES_PASSWORD: testpassword_auth
-            POSTGRES_DB: devices_menagement_auth
+            POSTGRES_USER: ${AUTH_POSTGRES_USER}
+            POSTGRES_PASSWORD: ${AUTH_POSTGRES_PASSWORD}
+            POSTGRES_DB: ${AUTH_POSTGRES_DB}
         volumes:
           - auth_db:/var/lib/postgresql
-          #- ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
         ports:
-          - 127.0.0.1:6001:5432
+          - 127.0.0.1:${AUTH_POSTGRES_PORT}:5432
         healthcheck:
-            test: ["CMD-SHELL", "pg_isready", "-d", "devices_menagement_auth"]
+            test: ["CMD-SHELL", "pg_isready", "-d", "${AUTH_POSTGRES_DB}"]
             interval: 3s
             timeout: 3s
             retries: 3
 
     api:
-        build: .
+        build: 
+            context: .
+            args: 
+                DEVICES_DB_CONNECTION_STRING: Username=${DEVICES_POSTGRES_USER};Password=${DEVICES_POSTGRES_PASSWORD};Server=device_db;Database=${DEVICES_POSTGRES_DB}
+                AUTH_DB_CONNECTION_STRING: Username=${AUTH_POSTGRES_USER};Password=${AUTH_POSTGRES_PASSWORD};Server=auth_db;Database=${AUTH_POSTGRES_DB}
+                ADMIN_EMPLOYEE_ID: ${API_ADMIN_EMPLOYEE_ID}
+                ADMIN_PASSWORD: ${API_ADMIN_PASSWORD}
         container_name: api
         restart: unless-stopped
         depends_on:
@@ -51,9 +55,9 @@ services:
             auth_db:
                 condition: service_healthy
         ports: 
-            - "5000:5000"
+            - "${API_PORT}:${API_PORT}"
         expose: 
-            - 5000
+            - ${API_PORT}
 
 volumes:
     device_db:

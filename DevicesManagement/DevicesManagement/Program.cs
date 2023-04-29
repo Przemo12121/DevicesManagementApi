@@ -16,6 +16,7 @@ builder.ConfigureRepositories();
 builder.ConfigureAuthentication();
 builder.ConfigureValidators();
 builder.ConfigureModelHandlers();
+builder.Configuration.AddEnvironmentVariables();
 
 var app = builder.Build();
 
