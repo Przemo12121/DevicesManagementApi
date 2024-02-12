@@ -20,7 +20,9 @@ public partial class Delete
 
         var response = await HttpClient.DeleteAsync(Route(DummyCommand));
 
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         context.Commands.Should().NotContain(DummyCommand);
     }
 
@@ -31,7 +33,9 @@ public partial class Delete
 
         var response = await HttpClient.DeleteAsync(Route(DummyCommand));
 
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         context.Commands.Should().Contain(OtherCommand);
     }
 
@@ -48,7 +52,9 @@ public partial class Delete
     {
         var response = await HttpClient.DeleteAsync(Route(DummyCommand));
 
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         context.Commands.Should().Contain(DummyCommand);
     }
 

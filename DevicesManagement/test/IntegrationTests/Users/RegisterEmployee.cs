@@ -19,7 +19,9 @@ public partial class RegisterEmployee
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", RequestingUserJwt);
 
         int countBefore;
-        using (var context = new LocalAuthStorageContext())
+        using (var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        ))
         {
             countBefore = context.Users.Count();
         }
@@ -27,7 +29,9 @@ public partial class RegisterEmployee
         var response = await HttpClient.PostAsync(Route, JsonContent.Create(DummyRequest));
 
 
-        using (var context = new LocalAuthStorageContext())
+        using (var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        ))
         {
             context.Users.Should().HaveCount(countBefore + 1);
         }
@@ -41,7 +45,9 @@ public partial class RegisterEmployee
 
         var response = await HttpClient.PostAsync(Route, JsonContent.Create(DummyRequest));
 
-        using var context = new LocalAuthStorageContext();
+        using var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        );
         var newUser = context.Users
             .Where(u => u.Name.Equals(DummyRequest.Name) && u.EmployeeId.Equals(DummyRequest.EmployeeId))
             .FirstOrDefault();
@@ -55,7 +61,9 @@ public partial class RegisterEmployee
 
         var response = await HttpClient.PostAsync(Route, JsonContent.Create(DummyRequest));
 
-        using var context = new LocalAuthStorageContext();
+        using var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        );
         var newUser = context.Users
             .Where(u => u.Name.Equals(DummyRequest.Name) && u.EmployeeId.Equals(DummyRequest.EmployeeId))
             .Include(u => u.AccessLevel)
@@ -72,7 +80,9 @@ public partial class RegisterEmployee
 
         var passwordHasher = new PasswordHasher<User>();
 
-        using var context = new LocalAuthStorageContext();
+        using var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        );
         var newUser = context.Users
             .Where(u => u.Name.Equals(DummyRequest.Name) && u.EmployeeId.Equals(DummyRequest.EmployeeId))
             .First();
@@ -94,14 +104,18 @@ public partial class RegisterEmployee
     public async void RegisterEmployee_RequestWithoutToken_DoesNotCreateUser()
     {
         int countBefore;
-        using (var context = new LocalAuthStorageContext())
+        using (var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        ))
         {
             countBefore = context.Users.Count();
         }
 
         var response = await HttpClient.PostAsync(Route, JsonContent.Create(DummyRequest));
 
-        using (var context = new LocalAuthStorageContext())
+        using (var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        ))
         {
             context.Users.Should().HaveCount(countBefore);
         }
@@ -127,7 +141,9 @@ public partial class RegisterEmployee
     public async void RegisterEmployee_RequestedExistingEmployeeId_DoesNotCreateNewUser()
     {
         int countBefore;
-        using (var context = new LocalAuthStorageContext())
+        using (var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        ))
         {
             countBefore = context.Users.Count();
         }
@@ -142,7 +158,9 @@ public partial class RegisterEmployee
 
         var response = await HttpClient.PostAsync(Route, JsonContent.Create(invalidRequest));
 
-        using (var context = new LocalAuthStorageContext())
+        using (var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        ))
         {
             context.Users.Should().HaveCount(countBefore);
         }
@@ -167,7 +185,9 @@ public partial class RegisterEmployee
     public async void RegisterEmployee_BadRequest_DoesNotCreateNewUser()
     {
         int countBefore;
-        using (var context = new LocalAuthStorageContext())
+        using (var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        ))
         {
             countBefore = context.Users.Count();
         }
@@ -182,7 +202,9 @@ public partial class RegisterEmployee
 
         var response = await HttpClient.PostAsync(Route, JsonContent.Create(invalidRequest));
 
-        using (var context = new LocalAuthStorageContext())
+        using (var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        ))
         {
             context.Users.Should().HaveCount(countBefore);
         }

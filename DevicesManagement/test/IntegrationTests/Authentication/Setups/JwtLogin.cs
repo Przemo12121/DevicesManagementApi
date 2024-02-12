@@ -1,6 +1,6 @@
 ﻿namespace IntegrationTests.Authentication;
 
-public partial class JwtLogin : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<BaseSetupFixture>
+public partial class JwtLogin : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<BaseSetupFixture>, IDisposable
 {
     private readonly WebApplicationFactory<Program> _factory;
     private readonly BaseSetupFixture _setupFixture;
@@ -12,6 +12,7 @@ public partial class JwtLogin : IClassFixture<WebApplicationFactory<Program>>, I
     {
         _factory = factory;
         _setupFixture = setupFixture;
+        _setupFixture.Init(factory);
 
         HttpClient = _factory.CreateClient();
         RequestingUser = setupFixture.RequestingUser;
@@ -39,4 +40,11 @@ public partial class JwtLogin : IClassFixture<WebApplicationFactory<Program>>, I
     };
 
     private LoginWithCredentialsRequest WrongPasswordRequest { get; init; }
+
+    public void Dispose()
+    {
+        _setupFixture.Clear();
+
+        GC.SuppressFinalize(this);
+    }
 }

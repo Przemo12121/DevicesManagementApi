@@ -1,8 +1,8 @@
-using Database.Repositories;
 using T_Database.SearchOptions.CommandOptions;
 
 namespace T_Database.T_DevicesRepository;
 
+[Collection("RepositoriesTests")]
 public partial class T_GetCommands
 {
     [Fact]

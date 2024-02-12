@@ -1,5 +1,6 @@
 namespace T_Database.T_CommandsRepository;
 
+[Collection("RepositoriesTests")]
 public partial class T_Update : DeviceMenagementDatabaseTest
 {
     [Fact]

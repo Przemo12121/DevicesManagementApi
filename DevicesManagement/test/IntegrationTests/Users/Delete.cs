@@ -20,7 +20,9 @@ public partial class Delete
 
         var response = await HttpClient.DeleteAsync(Route(DummyUser));
 
-        using var context = new LocalAuthStorageContext();
+        using var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        );
         context.Users.Should().NotContain(DummyUser);
     }
 
@@ -31,7 +33,9 @@ public partial class Delete
 
         var response = await HttpClient.DeleteAsync(Route(DummyUser));
 
-        using var context = new LocalAuthStorageContext();
+        using var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        );
         context.Users.Should().Contain(OtherUser);
     }
 
@@ -48,7 +52,9 @@ public partial class Delete
     {
         var response = await HttpClient.DeleteAsync(Route(DummyUser));
 
-        using var context = new LocalAuthStorageContext();
+        using var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        );
         context.Users.Should().Contain(DummyUser);
     }
 

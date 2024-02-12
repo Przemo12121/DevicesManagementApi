@@ -16,6 +16,7 @@ builder.ConfigureRepositories();
 builder.ConfigureAuthentication();
 builder.ConfigureValidators();
 builder.ConfigureModelHandlers();
+builder.Configuration.AddEnvironmentVariables();
 
 var app = builder.Build();
 
@@ -27,33 +28,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-//// THIS IS IN USE AS TEMPORARY UTILITY !
-/*
- * using Database.Contexts;
-using Database.Models;
-using Database.Repositories;
-using DevicesManagement.ModelsHandlers.Factories.SearchOptions;
-using Microsoft.AspNetCore.Identity;*/
-/*using (var context = new LocalAuthStorageContext())
-{
-    AccessLevel a = new()
-    {
-        Value = Database.Models.Enums.AccessLevels.Admin,
-        Id = Guid.NewGuid()
-    };
-    User u = new()
-    {
-        EmployeeId = "aaaa12345678",
-        AccessLevelId = a.Id,
-        Name = "aaa",
-        Id = Guid.NewGuid(),
-    };
-    var pwd = new PasswordHasher<User>().HashPassword(u, "testPWD1");
-    u.PasswordHashed = pwd;
-    context.AccessLevels.Add(a);
-    context.Users.Add(u);
-    context.SaveChanges();
-}*/
 
 app.Run();
 

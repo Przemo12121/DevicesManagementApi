@@ -17,6 +17,7 @@ using DevicesManagement.Validations.Users;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System.Text;
@@ -25,7 +26,19 @@ internal static class WebApplicationBuilderExtensions
 {
     public static void ConfigureDatabases(this WebApplicationBuilder builder)
     {
-        builder.Services.AddDbContext<LocalAuthStorageContext>();
+
+        builder.Services.AddTransient<DbContextOptions<LocalAuthContext>>(serviceProvider =>
+            new DbContextOptionsBuilder<LocalAuthContext>()
+                .UseNpgsql(builder.Configuration.GetConnectionString("AuthDb"))
+                .Options
+        );
+        builder.Services.AddTransient<DbContextOptions<DevicesManagementContext>>(serviceProvider =>
+            new DbContextOptionsBuilder<DevicesManagementContext>()
+                .UseNpgsql(builder.Configuration.GetConnectionString("DevicesDb"))
+                .Options
+        );
+
+        builder.Services.AddDbContext<LocalAuthContext>();
         builder.Services.AddDbContext<DevicesManagementContext>();
     }
     public static void ConfigureRepositories(this WebApplicationBuilder builder)

@@ -16,6 +16,7 @@ public partial class GetEmployees : IClassFixture<WebApplicationFactory<Program>
     {
         _setupFixture = setupFixture;
         _factory = webApplicationFactory;
+        _setupFixture.Init(webApplicationFactory);
 
         HttpClient = _factory.CreateClient();
         RequestingUser = _setupFixture.RequestingUser;
@@ -61,16 +62,21 @@ public partial class GetEmployees : IClassFixture<WebApplicationFactory<Program>
             },
         };
 
-        using var context = new LocalAuthStorageContext();
+        using var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()   );
         context.Users.AddRange(DummyUsers);
         context.SaveChanges();
     }
 
     public void Dispose()
     {
-        using var context = new LocalAuthStorageContext();
+        using var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        );
         context.Users.RemoveRange(DummyUsers);
         context.SaveChanges();
+
+        _setupFixture.Clear();
 
         GC.SuppressFinalize(this);
     }

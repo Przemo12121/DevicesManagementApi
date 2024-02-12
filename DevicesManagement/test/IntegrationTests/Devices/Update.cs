@@ -32,7 +32,9 @@ public partial class Update
 
         var response = await HttpClient.PatchAsync(Route(DummyDevice), body);
 
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         var device = context.Devices.Where(c => c.Equals(DummyDevice)).First();
         device.Name.Should().Be("New Device name");
         device.Address.Should().Be("255.255.255.255:255");
@@ -51,7 +53,9 @@ public partial class Update
 
         var response = await HttpClient.PatchAsync(Route(DummyDevice), body);
 
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         var device = context.Devices.Where(c => c.Equals(DummyDevice)).First();
         device.EmployeeId.Should().Be(RequestingUser.EmployeeId);
     }
@@ -69,7 +73,9 @@ public partial class Update
 
         var response = await HttpClient.PatchAsync(Route(DummyDevice), body);
 
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         var device = context.Devices.Where(c => c.Equals(DummyDevice)).First();
         device.UpdatedDate.Date.Should().Be(DateTime.UtcNow.Date);
         device.UpdatedDate.Hour.Should().Be(DateTime.UtcNow.Hour);
@@ -89,7 +95,9 @@ public partial class Update
 
         var response = await HttpClient.PatchAsync(Route(DummyDevice), body);
 
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         var device = context.Devices.Where(c => c.Equals(OtherDevice)).First();
         device.Name.Should().Be("other device");
         device.Address.Should().Be("127.0.0.1:3010");
@@ -122,7 +130,9 @@ public partial class Update
 
         var response = await HttpClient.PatchAsync(Route(DummyDevice), body);
 
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         var device = context.Devices.Where(c => c.Equals(DummyDevice)).First();
         device.Name.Should().Be("dummy device");
         device.Address.Should().Be("127.0.0.1:1010");
@@ -172,7 +182,9 @@ public partial class Update
 
         var response = await HttpClient.PatchAsync(Route(DummyDevice), body);
 
-        using var context = new DevicesManagementContext();
+        using var context = new DevicesManagementContext(
+            _factory.Services.GetRequiredService<DbContextOptions<DevicesManagementContext>>()
+        );
         var device = context.Devices.Where(c => c.Equals(DummyDevice)).First();
         device.Name.Should().Be("dummy device");
         device.Address.Should().Be("127.0.0.1:1010");

@@ -6,9 +6,9 @@ using Database.Repositories.Interfaces;
 
 namespace Database.Repositories;
 
-public class AccessLevelsRepository : DisposableRepository<LocalAuthStorageContext>, IAccessLevelsRepository
+public class AccessLevelsRepository : DisposableRepository<LocalAuthContext>, IAccessLevelsRepository
 {
-    public AccessLevelsRepository(LocalAuthStorageContext context) : base(context)
+    public AccessLevelsRepository(LocalAuthContext context) : base(context)
     {
     }
 

@@ -30,7 +30,9 @@ public partial class Update
 
         var response = await HttpClient.PatchAsync(Route(DummyUser), body);
 
-        using var context = new LocalAuthStorageContext();
+        using var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        );
         var User = context.Users.Where(c => c.Equals(DummyUser)).First();
         User.Name.Should().Be("New employee name");
     }
@@ -47,7 +49,9 @@ public partial class Update
 
         var response = await HttpClient.PatchAsync(Route(DummyUser), body);
 
-        using var context = new LocalAuthStorageContext();
+        using var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        );
         var User = context.Users.Where(c => c.Equals(DummyUser)).First();
         User.EmployeeId.Should().Be(DummyUser.EmployeeId);
     }
@@ -64,7 +68,9 @@ public partial class Update
 
         var response = await HttpClient.PatchAsync(Route(DummyUser), body);
 
-        using var context = new LocalAuthStorageContext();
+        using var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        );
         var User = context.Users.Where(c => c.Equals(DummyUser)).First();
         User.UpdatedDate.Date.Should().Be(DateTime.UtcNow.Date);
         User.UpdatedDate.Hour.Should().Be(DateTime.UtcNow.Hour);
@@ -83,7 +89,9 @@ public partial class Update
 
         var response = await HttpClient.PatchAsync(Route(DummyUser), body);
 
-        using var context = new LocalAuthStorageContext();
+        using var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        );
         var User = context.Users.Where(c => c.Equals(OtherUser)).First();
         User.Name.Should().Be("other user");
     }
@@ -113,7 +121,9 @@ public partial class Update
 
         var response = await HttpClient.PatchAsync(Route(DummyUser), body);
 
-        using var context = new LocalAuthStorageContext();
+        using var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        );
         var User = context.Users.Where(c => c.Equals(DummyUser)).First();
         User.Name.Should().Be("dummy user");
     }
@@ -159,7 +169,9 @@ public partial class Update
 
         var response = await HttpClient.PatchAsync(Route(DummyUser), body);
 
-        using var context = new LocalAuthStorageContext();
+        using var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        );
         var User = context.Users.Where(c => c.Equals(DummyUser)).First();
         User.Name.Should().Be("dummy user");
     }

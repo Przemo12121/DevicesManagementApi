@@ -24,12 +24,15 @@ public partial class RegisterEmployee : IClassFixture<WebApplicationFactory<Prog
     {
         _factory = factory;
         _setupFixture = setupFixture;
+        _setupFixture.Init(_factory);
 
         HttpClient = _factory.CreateClient();
         RequestingUser = setupFixture.RequestingUser;
         RequestingUserJwt = factory.Services.GetRequiredService<IJwtProvider>().Generate(RequestingUser).RawData;
 
-        using var context = new LocalAuthStorageContext();
+        using var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        );
         ExistingEmployee = new()
         {
             AccessLevelId = _setupFixture.AdminAccessLevel.Id,
@@ -46,7 +49,9 @@ public partial class RegisterEmployee : IClassFixture<WebApplicationFactory<Prog
 
     public void Dispose()
     {
-        using var context = new LocalAuthStorageContext();
+        using var context = new LocalAuthContext(
+            _factory.Services.GetRequiredService<DbContextOptions<LocalAuthContext>>()
+        );
         context.Users.RemoveRange(
             context.Users.Where(
                 d => d.EmployeeId.Equals(DummyRequest.EmployeeId) && d.Name.Equals(DummyRequest.Name)
@@ -54,6 +59,7 @@ public partial class RegisterEmployee : IClassFixture<WebApplicationFactory<Prog
         );
         context.Users.Remove(ExistingEmployee);
         context.SaveChanges();
+        _setupFixture.Clear();
 
         GC.SuppressFinalize(this);
     }

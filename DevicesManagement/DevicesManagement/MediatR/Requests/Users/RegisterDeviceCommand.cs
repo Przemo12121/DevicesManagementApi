@@ -9,11 +9,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace DevicesManagement.MediatR.Commands.Users;
 
 [MediatRBehavior(
-    typeof(ResourceAuthorizationPipelineBehavior<User, RegisterDeviceCommand>),
+    typeof(RequestValidationPipelineBehavior<RegisterDeviceRequest, RegisterDeviceCommand>),
     order: 1
 )]
 [MediatRBehavior(
-    typeof(RequestValidationPipelineBehavior<RegisterDeviceRequest, RegisterDeviceCommand>),
+    typeof(ResourceAuthorizationPipelineBehavior<User, RegisterDeviceCommand>),
     order: 2
 )]
 public class RegisterDeviceCommand 
